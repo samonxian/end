@@ -1,0 +1,12 @@
+.b{
+	border:1px solid red;
+}
+.sidebar-left{
+	width: 180px;
+	height: 100%;
+	float:left;
+	background: #404040;
+}
+.contents{
+	flex:1;	
+}
