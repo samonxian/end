@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 const { routeReducer } = require('redux-simple-router');
-import { selectedReddit, postsByReddit } from './demo/reducer'
+import { selectedReddit, postsByReddit } from './tracker_monitor/reducer'
 
 const rootReducer = combineReducers({
     selectedReddit,

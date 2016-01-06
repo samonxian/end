@@ -17,6 +17,7 @@ module.exports = {
 	module: {
         loaders: [
             { test: /\.css$/, loader: "style!css" },
+			{test: /\.(jpg|png)$/, loader: "url?limit=8192"},
 			{
 				test : /\.js[x]?$/,
 				loader: 'react-hot',

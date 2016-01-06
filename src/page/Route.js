@@ -1,13 +1,14 @@
 import Layout from './Layout'
 import App from './App'
-import demo from './demo' 
-import test from './test' 
+import tracker_monitor from './tracker_monitor' 
+import get_camera_info from './tracker_monitor/get_camera_info' 
 
-let demo_route = { path : '/demo',components : demo} 
-let test_route = { path : '/test',components : test} 
+let tracker_monitor_route = { path : '/tracker_monitor',components : tracker_monitor} 
+let get_camera_info_route = { path : '/tracker_monitor/get_camera_info',components : get_camera_info} 
+tracker_monitor_route.childRoutes = [get_camera_info_route]
 
 export const rootRoute = {
 	path : "/",
     component: App,
-    childRoutes: [demo_route,test_route] 
+    childRoutes: [tracker_monitor_route] 
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Menu, Icon, Row ,Col}from 'antd';
+import 'antd/lib/index.css';
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const MenuItemGroup = Menu.ItemGroup;
@@ -19,48 +20,28 @@ class Layout extends React.Component {
 		const { current, theme } = this.props;
 		console.log("Layout",this.props);
         return (
-			<div>
-				<Menu onClick={this.handleClick} selectedKeys={[current]} theme={theme} mode="horizontal">
-					<MenuItem key="title">
-						羚羊后台监控
-					</MenuItem>
-					<MenuItem key="mail" disabled>
-						<Icon type="mail" />消息
-					</MenuItem>
-					<SubMenu title={<span> <Icon type="user" />管理员</span>}>
-						<MenuItem key="setting:1">选项1</MenuItem>
-						<MenuItem key="setting:2">选项2</MenuItem>
-						<MenuItem key="setting:3">选项3</MenuItem>
-						<MenuItem key="setting:4">选项4</MenuItem>
-					</SubMenu>
-				</Menu>
-				<Row type="flex" justify="start">
-					<Col className="sidebar-left">
-						<Menu  theme={theme }>
-							<MenuItem>
-								<Link to="/demo">存储服务监控</Link>
-							</MenuItem>
-							<MenuItem>
-								<Link to="/udp">UDP转发地理监控</Link>
-							</MenuItem>
-							<MenuItem>
-								<Link to="/rtmp_position">RTMP转发地理监控</Link>
-							</MenuItem>
-							<MenuItem>
-								<Link to="/rtmp_service">RTMP转发服务监控</Link>
-							</MenuItem>
-							<MenuItem>
-								<Link to="/index_service">索引服务监控</Link>
-							</MenuItem>
-						</Menu>
-					</Col>
-					<Col className="contents b">
-					{
-						this.props.contents || ""
-					}
-					</Col>
-				</Row>
-			</div>	
+			<Row type="flex" justify="start">
+				<Col className="sidebar-left">
+					<Menu onClick={this.handleClick} selectedKeys={[current]} theme={theme} mode="horizontal">
+						<MenuItem key="title">
+							<div className="logo fl"></div>
+							<h2>
+								<Link to="/">羚羊管理后台</Link>
+							</h2>
+						</MenuItem>
+						
+					</Menu>
+					<Menu  theme={theme}>
+						<MenuItem>
+							<Link to="/tracker_monitor">tracker信息查询</Link>
+						</MenuItem>
+					</Menu>
+						
+				</Col>	
+				<Col className="contents b">
+				{ this.props.contents || "" }
+				</Col>
+			</Row>
 			
         )
 
