@@ -48,9 +48,9 @@ class Get_relay_info extends React.Component {
 	
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props.dispatch(replacePath('/get_relay_info?sid='+this.props.get_relay_info.id),{
-			avoidRouterUpdate : true
-		});
+		//this.props.dispatch(replacePath('/get_relay_info?sid='+this.props.get_relay_info.id),{
+			//avoidRouterUpdate : true
+		//});
 		this.props.dispatch(fetchData(this.props.get_relay_info.id));	
 	}
    
@@ -66,7 +66,7 @@ class Get_relay_info extends React.Component {
 
     render() {
 		let { get_relay_info ,location} = this.props;
-		if(get_relay_info.posts){
+		if(get_relay_info.posts && get_relay_info.posts.result_code == 0){
 			let center_data = get_relay_info.posts.center_data;	
 			let tracker_data = get_relay_info.posts.tracker_data;	
 			

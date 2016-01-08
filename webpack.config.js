@@ -1,4 +1,5 @@
 var webpack = require('webpack')
+var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 /**
  * 开发环境开react热替换
@@ -10,6 +11,7 @@ module.exports = {
 	devtool: 'inline-source-map',
 	entry: entry, 
     output: {
+		publicPath: '/js/',
 		path: __dirname + '/public/js/',
         filename: 'bundle.js',
         chunkFilename: '[id].chunk.js'

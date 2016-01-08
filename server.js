@@ -4,7 +4,7 @@ var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');
 var port = 8000;
 new WebpackDevServer(webpack(config), {
-    publicPath: '/js/',
+	publicPath: config.output.publicPath,//必须跟webpack.config.js一致
     hot: true,
     historyApiFallback: true,
 	contentBase : "./public/"

@@ -48,15 +48,15 @@ class Get_mobile_info extends React.Component {
 
 	componentDidMount(){
 		let { get_mobile_info ,location,dispatch } = this.props;
-		if(location.query.id){
-			dispatch(fetchData(location.query.id));
+		if(location.query.uid){
+			dispatch(fetchData(location.query.uid));
 		}
 	}
 	
 	handleSubmit(e) {
 		e.preventDefault();
-			this.props.dispatch(replacePath('/get_mobile_info?id='+this.props.get_mobile_info.id),{
-		});
+		//this.props.dispatch(replacePath('/get_mobile_info?uid='+this.props.get_mobile_info.id),{
+		//});
 		this.props.dispatch(fetchData(this.props.get_mobile_info.id));	
 	}
    
@@ -72,7 +72,7 @@ class Get_mobile_info extends React.Component {
 
     render() {
 		let { get_mobile_info ,location} = this.props;
-		if(get_mobile_info.posts){
+		if(get_mobile_info.posts && get_mobile_info.posts.result_code == 0){
 			let center_data = get_mobile_info.posts.center_data;	
 			let tracker_data = get_mobile_info.posts.tracker_data;	
 			var last_relay = '';

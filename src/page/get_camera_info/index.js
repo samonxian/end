@@ -40,6 +40,7 @@ const columns = [
 let data = [ ];
 let data2 = [ ];
 
+
 class Get_camera_info extends React.Component {
 
 	constructor(){
@@ -49,15 +50,15 @@ class Get_camera_info extends React.Component {
 
 	componentDidMount(){
 		let { get_camera_info ,location,dispatch } = this.props;
-		if(location.query.id){
-			dispatch(fetchData(location.query.id));
+		if(location.query.cid){
+			dispatch(fetchData(location.query.cid));
 		}
 	}
 	
 	handleSubmit(e) {
 		e.preventDefault();
-		this.props.dispatch(replacePath('/get_camera_info?id='+this.props.get_camera_info.id),{
-		});
+		//this.props.dispatch(rplacePath('/get_camera_info?cid='+this.props.get_camera_info.id),{
+		//});
 		this.props.dispatch(fetchData(this.props.get_camera_info.id));	
 	}
    
@@ -73,7 +74,7 @@ class Get_camera_info extends React.Component {
 
     render() {
 		let { get_camera_info ,location} = this.props;
-		if(get_camera_info.posts){
+		if(get_camera_info.posts && get_camera_info.posts.result_code == 0){
 			let center_data = get_camera_info.posts.center_data;	
 			let tracker_data = get_camera_info.posts.tracker_data;	
 			var last_relay = '';
@@ -213,6 +214,10 @@ class Get_camera_info extends React.Component {
 					column4: ''
 				}
 			]
+		}else{
+			data = data2 = [
+
+			]	
 		}
 		let icon = 'plus';
 		if(get_camera_info.show_flag){
