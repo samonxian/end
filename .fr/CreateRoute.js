@@ -5,13 +5,13 @@ var fs = require('fs');
 var Q = require('q')
 var path = './src/page/'
 var import_tpl = "import {var} from './{filename}' \n";
-var childRoutes_tpl = "let {filename}_route = { path : '/{path}',components : {filename}} \n"
+var childRoutes_tpl = "let {filename}_route = { path : '/{path}',component : {filename}} \n"
 var childRoutes_tpl2 = "{parent}_route.childRoutes = {child2}\n"
 var contents = '';
 var import_contents = '';
 var child_contents = '';
 //设置忽略目录
-var ingoreDir = ['layout'];
+var ingoreDir = ['layout','sidebar'];
 var tempIngore = [];
 ingoreDir.map(function(value){
 	tempIngore[value] = true;	
@@ -79,12 +79,14 @@ each_file(path,function(dir){
 	route_files.push(dir);
 }).then(function(dir){
 	var routes2 = [];
-	each_file(path+dir+'/',function(dir2){
-		create_route_import(dir2,dir+"/"+dir2);		
-		create_route_child(dir2,dir+"/"+dir2);
-		routes2.push(dir2+"_route");
-	})	
-	create_route_child2(dir,routes2);
+	if(fs.existsSync(path+dir)){
+		each_file(path+dir+'/',function(dir2){
+			create_route_import(dir2,dir+"/"+dir2);		
+			create_route_child(dir2,dir+"/"+dir2);
+			routes2.push(dir2+"_route");
+		})	
+		create_route_child2(dir,routes2);
+	}
 	routes_tpl_contents =  routes_tpl_contents.replace(/{import_tpl}/,import_contents);	
 	routes_tpl_contents = routes_tpl_contents.replace(/{child_tpl}/,child_contents);	
 	routes_tpl_contents = routes_tpl_contents.replace(/{setting_tpl}/,JSON.stringify(routes).replace(/\"/g,''));	

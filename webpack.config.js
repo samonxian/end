@@ -35,6 +35,11 @@ module.exports = {
 			
         ]
     },
+	resolve: {
+		alias: {
+			'JSONP': __dirname + '/src/libs/jsonp.js'
+		}
+	},
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),

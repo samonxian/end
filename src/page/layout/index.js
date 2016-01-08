@@ -18,7 +18,7 @@ class Layout extends React.Component {
 
     render() {
 		const { current, theme } = this.props;
-		console.log("Layout",this.props);
+		//console.log("Layout",this.props);
         return (
 			<Row type="flex" justify="start">
 				<Col className="sidebar-left">
@@ -33,7 +33,7 @@ class Layout extends React.Component {
 					</Menu>
 					<Menu  theme={theme}>
 						<MenuItem>
-							<Link to="/tracker_monitor">tracker信息查询</Link>
+							<Link to="/get_camera_info">tracker信息查询</Link>
 						</MenuItem>
 					</Menu>
 						

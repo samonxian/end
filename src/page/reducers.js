@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux'
-const { routeReducer } = require('redux-simple-router');
-import { selectedReddit, postsByReddit } from './tracker_monitor/reducer'
+import { routeReducer } from 'redux-simple-router';
+import { get_camera_info } from './get_camera_info/reducer'
+import { get_mobile_info } from './get_mobile_info/reducer'
+import { get_relay_info } from './get_relay_info/reducer'
 
 const rootReducer = combineReducers({
-    selectedReddit,
-	postsByReddit,
+	get_camera_info,
+	get_mobile_info,
+	get_relay_info,
 	routing: routeReducer
 })
 

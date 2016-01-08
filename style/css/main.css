@@ -1,10 +1,26 @@
 .b {
 	/*border:1px solid red;*/
 }
+body{
+    background: #404040;
+}
+table{
+	font-size:13px;
+}
+pre{
+	white-space:pre-wrap;
+	white-space:-moz-pre-wrap;
+	white-space:-pre-wrap;
+	white-space:-o-pre-wrap;
+	word-wrap:break-word;
+}
 /**overide ant**/
 
 .ant-tabs-nav .ant-tabs-tab {
     height: auto;
+}
+.ant-table td{
+	word-break: break-all
 }
 
 
@@ -47,4 +63,25 @@
 .contents {
 	padding:20px 40px;
     flex: 1;
+    background: #fff;
+}
+.contents .camera_info_column2{
+	width:30%;
+}
+.camera_info_table1{
+	margin:15px 0 15px 0;
+}
+.camera_info_table1 .ant-table-thead,.camera_info_table2 .ant-table-thead{
+	display:none;	
+}
+.camera_info_table2{
+	margin-top:20px;
+}
+.center-title,.center-plus{
+	float:left;
+}
+.center-plus{
+	cursor:pointer;
+	margin:7px 0 0 10px;
+	color:#11D211;
 }

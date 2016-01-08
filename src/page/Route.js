@@ -1,14 +1,15 @@
 import Layout from './Layout'
 import App from './App'
-import tracker_monitor from './tracker_monitor' 
-import get_camera_info from './tracker_monitor/get_camera_info' 
+import get_camera_info from './get_camera_info' 
+import get_mobile_info from './get_mobile_info' 
+import get_relay_info from './get_relay_info' 
 
-let tracker_monitor_route = { path : '/tracker_monitor',components : tracker_monitor} 
-let get_camera_info_route = { path : '/tracker_monitor/get_camera_info',components : get_camera_info} 
-tracker_monitor_route.childRoutes = [get_camera_info_route]
+let get_camera_info_route = { path : '/get_camera_info',component : get_camera_info} 
+let get_mobile_info_route = { path : '/get_mobile_info',component : get_mobile_info} 
+let get_relay_info_route = { path : '/get_relay_info',component : get_relay_info} 
 
 export const rootRoute = {
 	path : "/",
     component: App,
-    childRoutes: [tracker_monitor_route] 
+    childRoutes: [get_camera_info_route,get_mobile_info_route,get_relay_info_route] 
 }

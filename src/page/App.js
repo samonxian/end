@@ -6,7 +6,7 @@ require('../../style/css/main.css')
 class App extends React.Component {
 
     render() {
-		console.log("App",this.props)
+		//console.log("App",this.props)
 		return (
 			<div> 
 				<Layout contents={this.props.children || "" }/>
