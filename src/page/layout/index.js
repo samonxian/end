@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Menu,Icon,Row,Col } from 'antd_c'
+import { Menu,Icon } from 'antd_c'
+import { Row,Col } from 'antd_c'
 require('antd/lib/index.css');
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
