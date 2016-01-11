@@ -6,7 +6,7 @@ var libs = [];
 var p_libs = [];
 
 function createLibsString(temp_con){
-	var con = temp_con.match(/import(.*)\{(.*)\}(.*)\'antd_c\'/g);
+	var con = temp_con.match(/import(.*?)\{(.*?)\}(.*?)\'antd_c\'/g);
 	if(con){
 		con.forEach(function(data){
 			var temp = data.match(/\{(.*)\}/g)[0].replace('{','').replace('}','');
