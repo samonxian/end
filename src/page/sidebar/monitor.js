@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Tabs } from 'antd'
+import { Tabs } from 'antd_c'
 import { pushPath,replacePath } from 'redux-simple-router'
 const TabPane = Tabs.TabPane;
 

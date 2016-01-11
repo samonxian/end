@@ -1,12 +1,23 @@
 var webpack = require('webpack')
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack_config = require('./webpack.config.js');
+var vendor = require('./src/page/vendor.js');
 var config = Object.assign({},webpack_config,{
 	devtool : 'source-map',
-	entry : './src/index.js',
+	entry: {
+		app : './src/index.js',
+		vendor : vendor 
+	},
+	resolve: {
+		alias: {
+			'JSONP': __dirname + '/src/libs/jsonp.js',
+			'antd_c': __dirname + '/src/libs/antd/production.js',
+		}
+	},
 	plugins: [
 		new webpack.NoErrorsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin('chunk.js'),
+		new webpack.optimize.CommonsChunkPlugin("vendor","vendor.bundle.js"),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify("production")  //定义为生产环境
 		}),
@@ -14,7 +25,8 @@ var config = Object.assign({},webpack_config,{
             compress: {
                 warnings: false
             }
-        })
+        }),
+		new ExtractTextPlugin('css/styles.css'),
     ]
 });
 console.log(config.entry);

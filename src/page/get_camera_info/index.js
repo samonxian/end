@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { pushPath ,replacePath} from 'redux-simple-router'
 import Monitor from '../sidebar/monitor'
 import { inputValue ,fetchData,displayTable2 } from './action'
-import {Form, Input, Button, Checkbox, message} from 'antd'
-import { Table, Icon } from 'antd';
+import { Form,Input,Button,Table,Icon } from 'antd_c'
 const FormItem = Form.Item;
 const columns = [
 	{
@@ -281,4 +280,4 @@ function mapStateToProps(state){
 		routing : state.routing
 	};
 }
-export default connect(mapStateToProps)(Get_camera_info)
+module.exports = connect(mapStateToProps)(Get_camera_info)

@@ -1,23 +1,35 @@
+var fs = require('fs');
+var Q = require('q')
+/**
+ *	生成index.html
+ */
+var index_html = './.fr/index.html';
+var new_index_html = './public/index.html';
+if(!fs.existsSync(new_index_html)){
+	var index_contents = fs.readFileSync(index_html,options = {
+		encoding : 'utf-8'
+	});
+	var i_temp = fs.openSync(new_index_html,'a',0755);
+	fs.write(i_temp,index_contents,function(){
+		console.log('copy index.html success!')
+		fs.close(i_temp);
+	});
+}
+
 /**
  * 框架Route处理
  */
 var fs = require('fs');
 var Q = require('q')
 var path = './src/page/'
-var import_tpl = "import {var} from './{filename}' \n";
-var childRoutes_tpl = "let {filename}_route = { path : '/{path}',component : {filename}} \n"
-var childRoutes_tpl2 = "{parent}_route.childRoutes = {child2}\n"
 var contents = '';
-var import_contents = '';
-var child_contents = '';
-//设置忽略目录
-var ingoreDir = ['layout','sidebar'];
-var tempIngore = [];
-ingoreDir.map(function(value){
-	tempIngore[value] = true;	
-})
+
 //获取tpl
 var routes_tpl_contents = fs.readFileSync('./.fr/routes_tpl.js',options = {
+	encoding : 'utf-8'
+});
+//获取chunk_tpl
+var chunk_tpl_contents = fs.readFileSync('./.fr/chunk_tpl.js',options = {
 	encoding : 'utf-8'
 });
 //存放routes
@@ -29,69 +41,32 @@ if(fs.existsSync(route_file)){
 	fs.unlinkSync(route_file);
 }
 var routes_config = fs.openSync(route_file,'a',0755);
-
-function each_file(path,callback){
-	var deferred = Q.defer();
-	var files = fs.readdirSync(path);
-	files.map(function(file){
-		var stat =	fs.lstatSync(path+file);
-		if(stat.isDirectory()){
-			if(!(file in tempIngore)){
-				callback(file);	
-			}
-		}
-	})
-	
-	deferred.resolve(route_files);
-	return deferred.promise;
-}
-
-function create_route_import(com,filename){
-	if(contents == ''){
-		contents += "import Layout from './Layout' \n";
-		contents += "import App from './App' \n";
-	}
-	var temp = import_tpl.replace(/\{var\}/g,com);
-	import_contents += temp.replace(/\{filename\}/g,filename);
-}
-/**
- *一级目录
- */
-function create_route_child(filename,path){
-	var temp = childRoutes_tpl.replace(/\{path\}/g,path);
-	child_contents += temp.replace(/\{filename\}/g,filename);
-}
-/**
- * 二级目录
- */
-function create_route_child2(dir1,child){
-	var temp = childRoutes_tpl2.replace(/\{parent\}/g,dir1);
-	child_contents += temp.replace(/\{child2\}/g,JSON.stringify(child).replace(/\"/g,''));
-}
-
-
+var require_tpl = "require('../../.fr/chunks/{filename}')";
 
 //遍历获取path模块
-each_file(path,function(dir){
-	create_route_import(dir,dir);	
-	create_route_child(dir,dir);
-	routes.push(dir+"_route");
-	route_files.push(dir);
-}).then(function(dir){
-	var routes2 = [];
-	if(fs.existsSync(path+dir)){
-		each_file(path+dir+'/',function(dir2){
-			create_route_import(dir2,dir+"/"+dir2);		
-			create_route_child(dir2,dir+"/"+dir2);
-			routes2.push(dir2+"_route");
-		})	
-		create_route_child2(dir,routes2);
+var fn = require('./function.js')
+fn.each_file(path,function(dir){
+	//生成每个router的chunk模块
+	var temp_con = chunk_tpl_contents;
+	var chunk_file = './.fr/chunks/'+ dir +'.js';
+	if(fs.existsSync(chunk_file)){
+		fs.unlinkSync(chunk_file);
 	}
-	routes_tpl_contents =  routes_tpl_contents.replace(/{import_tpl}/,import_contents);	
-	routes_tpl_contents = routes_tpl_contents.replace(/{child_tpl}/,child_contents);	
-	routes_tpl_contents = routes_tpl_contents.replace(/{setting_tpl}/,JSON.stringify(routes).replace(/\"/g,''));	
+	var chunk_config = fs.openSync(chunk_file,'a',0755);
+	temp_con = temp_con.replace(/{filename}/g,dir);	
+	fs.writeSync(chunk_config,temp_con);
+	fs.close(chunk_config);
+	//构建childRoutes 对象
+	routes.push(require_tpl.replace('{filename}',dir));
+	route_files.push(dir);
+}).then(function(files){
+	var setting_tpl = JSON.stringify(routes).replace(/\"/g,'')
+											.replace(/\,/g,',\n	')
+											.replace(/\[/g,'').replace(/\]/g,'');
+	routes_tpl_contents = routes_tpl_contents.replace(/{setting_tpl}/,setting_tpl);	
 	fs.writeSync(routes_config,routes_tpl_contents);
 	fs.close(routes_config);
+	console.log('create routes success!')
 });
 
 

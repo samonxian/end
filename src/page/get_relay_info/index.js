@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { pushPath ,replacePath } from 'redux-simple-router'
 import { inputValue ,fetchData,displayTable2 } from './action'
-import {Form, Input, Button, Checkbox, message} from 'antd'
-import { Table, Icon } from 'antd';
+import {Form, Input, Button, Icon,Table} from 'antd_c'
 import Monitor from '../sidebar/monitor'
 const FormItem = Form.Item;
 const columns = [
@@ -295,4 +294,4 @@ function mapStateToProps(state){
 		routing : state.routing
 	};
 }
-export default connect(mapStateToProps)(Get_relay_info)
+module.exports = connect(mapStateToProps)(Get_relay_info)
