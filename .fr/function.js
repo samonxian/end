@@ -1,11 +1,10 @@
 var Q = require('q')
 var fs = require('fs');
-//设置忽略目录
-var ingoreDir = ['layout','sidebar','.DS_Store'];
-var tempIngore = [];
-ingoreDir.map(function(value){
-	tempIngore[value] = true;	
-})
+//设置忽略目录和文件
+var ignoreDir = ['layout','sidebar'];
+var ignoreFiles = ['.DS_Store'];
+var ignoreFilesWithSffix = ['.swp'];
+
 /**
  *	遍历文件夹文件，包括文件和文件夹
  *@params callback [function] 文件夹回调函数,function(dir){ }
@@ -18,11 +17,24 @@ module.exports = {
 		files.map(function(file){
 			var stat =	fs.lstatSync(path+file);
 			if(stat.isDirectory()){
-				if(!(file in tempIngore)){
+				if(ignoreDir.indexOf(file) == -1){
+					//console.log(file)
 					callback && callback(file);	
 				}
 			}else{
-				callback2 && callback2(file);
+				if(ignoreFiles.indexOf(file) == -1){
+					var flag = true;
+					ignoreFilesWithSffix.forEach(function(value){
+						if(file.indexOf(value) != -1){
+							flag = false;
+							return;
+						}
+					});
+					if(flag){
+						//console.log(file)
+						callback2 && callback2(file);
+					}
+				}
 			}
 		})
 		

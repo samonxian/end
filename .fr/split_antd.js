@@ -7,6 +7,7 @@ var p_libs = [];
 
 function createLibsString(temp_con){
 	var con = temp_con.match(/import(.*?)\{(.*?)\}(.*?)\'antd_c\'/g);
+			//console.log(con);
 	if(con){
 		con.forEach(function(data){
 			var temp = data.match(/\{(.*)\}/g)[0].replace('{','').replace('}','');
@@ -14,6 +15,16 @@ function createLibsString(temp_con){
 			//console.log(lib);
 			lib.map(function(l){
 				var l_origin = l.replace(/\ /g,''); 
+				switch(l_origin){
+					case 'DatePicker':
+						l_origin = 'date-picker';
+					case 'InputNumber':
+						l_origin = 'input-picker';
+					case 'QueueAnim':
+						l_origin = 'queue-anim';
+					case 'TimePicker':
+						l_origin = 'time-picker';
+				}
 				var l_t = 'antd/lib/'+l_origin.toLowerCase();
 				var l_p = l_origin + ": require('antd/lib/"+l_origin.toLowerCase()+"')";
 				if(libs.indexOf(l_t) == -1){
