@@ -4,7 +4,8 @@ var childRoutes = [
 	require('../../.fr/chunks/get_mobile_info'),
 	require('../../.fr/chunks/get_relay_info'),
 	require('../../.fr/chunks/new_index'),
-	require('../../.fr/chunks/user_log')
+	require('../../.fr/chunks/user_log'),
+	require('../../.fr/chunks/user_log_query')
 ];
 export const rootRoute = {
 	path : "/",

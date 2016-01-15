@@ -33,6 +33,9 @@ class User_log extends React.Component {
 	getData(params={}){
 		let { user_log ,location,dispatch } = this.props;
 		let type = location.query.type;
+		if(!type){
+			type = 'start_service';	
+		}
 		params = Object.assign({}, user_log.params,params);
 		dispatch(fetchData(params,type));	
 	}
@@ -109,7 +112,7 @@ class User_log extends React.Component {
 			data = logData(user_log); 
 		}
         return (
-			<Monitor location={location}>
+			<Monitor location={location} params={params}>
 				<h2>{title[location.query.type]}</h2>
 				<br/>
 				<Form inline onSubmit={this.handleSubmit.bind(this)}>

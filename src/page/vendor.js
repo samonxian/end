@@ -10,6 +10,7 @@ module.exports = [
 	"antd/lib/button",
 	"antd/lib/table",
 	"antd/lib/select",
-	"antd/lib/time-picker",
-	"antd/lib/pagination"
+	"antd/lib/date-picker",
+	"antd/lib/pagination",
+	"antd/lib/spin"
 ] 

@@ -1,4 +1,5 @@
-import { JSONP } from 'JSONP'
+import fetch from 'isomorphic-fetch'
+import { params } from '../../libs/function'
 
 export const LOG_SELECT_CLIENT_TYPE = 'LOG_SELECT_NODE'
 export const LOG_INPUT_PEERID = 'LOG_INPUT_UID'
@@ -94,7 +95,7 @@ function requestPosts(params={}) {
     }
 }
 
-export function fetchData(params={},modules) {
+export function fetchData(_params={},modules) {
 	let obj = {
 		p:1,
 		//client_type:'',
@@ -102,17 +103,20 @@ export function fetchData(params={},modules) {
 		//sn:'',
 		start_time:'',
 		end_time:'',
+		return_type: 'json',
 	}
-	params = Object.assign(obj,params);
+	_params = Object.assign(obj,_params);
     return dispatch => {
-        dispatch(requestPosts(params))
-		var url = JSONP.params(`http://120.26.74.53:8077/logs/${modules}`,params);
-		return JSONP.getJSON(url,{
-	
-		},function(json){
-			dispatch(receivePosts(params,json));
-			dispatch(set_change_data_false());
-		})
+        dispatch(requestPosts(_params))
+		var url = params(`http://120.26.74.53:8077/logs/${modules}`,_params);
+		return fetch(url)
+            .then(response => response.json())
+            .then(function(json){
+				dispatch(receivePosts(_params,json));
+				dispatch(set_change_data_false());
+			}).catch(function(e){
+				console.log('parsing failed', e)
+			})
     }
 }
 

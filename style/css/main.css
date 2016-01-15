@@ -107,3 +107,18 @@ pre{
 .contents .ant-pagination{
 	display:inline-block;
 }
+
+/**
+ *user_log_query
+ *
+ */
+.user_log_query_table .ant-table{
+	margin:10px 0 10px 0px;
+}
+.ulq_h2{
+	padding: 0px 0px 15px 0;
+    line-height: 18px;
+}
+.ulq_count{
+	padding-left:20px;
+}

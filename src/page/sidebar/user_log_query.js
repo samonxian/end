@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
 import { pushPath,replacePath } from 'redux-simple-router'
-import { fetchData } from '../user_log/action'
+import * as action from '../user_log_query/action'
 import { title } from '../user_log/data/title.js'
 const TabPane = Tabs.TabPane;
 
-class user_log_sidebar extends React.Component {
+class user_log_query_sidebar extends React.Component {
 
 	constructor(){
 		super(); 
@@ -96,4 +96,4 @@ function mapStateToProps(state){
 		routing : state.routing
 	};
 }
-export default connect(mapStateToProps)(user_log_sidebar)
+export default connect(mapStateToProps)(user_log_query_sidebar)

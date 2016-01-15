@@ -92,6 +92,6 @@ export function logData(user_log){
 			}
 		})
 	}
-	console.log(re)
+	//console.log(re)
 	return re;
 }

@@ -15,18 +15,24 @@ function createLibsString(temp_con){
 			//console.log(lib);
 			lib.map(function(l){
 				var l_origin = l.replace(/\ /g,''); 
+				var p_origin = l_origin;
 				switch(l_origin){
 					case 'DatePicker':
 						l_origin = 'date-picker';
+						break;
 					case 'InputNumber':
 						l_origin = 'input-picker';
+						break;
 					case 'QueueAnim':
 						l_origin = 'queue-anim';
+						break;
 					case 'TimePicker':
 						l_origin = 'time-picker';
+						break;
 				}
 				var l_t = 'antd/lib/'+l_origin.toLowerCase();
-				var l_p = l_origin + ": require('antd/lib/"+l_origin.toLowerCase()+"')";
+				var l_p = p_origin + ": require('antd/lib/"+l_origin.toLowerCase()+"')";
+				//console.log(l_p)
 				if(libs.indexOf(l_t) == -1){
 					libs.push(l_t);	
 					p_libs.push(l_p);	

@@ -18,7 +18,8 @@ module.exports = {
 	devtool: 'inline-source-map',
 	entry: {
 		app : entry,
-		vendor : vendor 
+		vendor : vendor, 
+		libs : ['react'], 
 	}, 
     output: {
 		publicPath: '/js/',
@@ -56,7 +57,8 @@ module.exports = {
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
-		new webpack.optimize.CommonsChunkPlugin("vendor","vendor.bundle.js"),
+		new webpack.optimize.CommonsChunkPlugin("vendor","vendor.bundle.js",['app']),
+		new webpack.optimize.CommonsChunkPlugin("libs","libs.bundle.js",['vendor','chunk']),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(NODE_ENV)  //定义开发和生产环境
 		}),

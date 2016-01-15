@@ -66,3 +66,23 @@ export function createAntdColumns(num){
 	}
 	return columns;
 }
+/**
+ *	更加json对象拼接url参数(一级)
+ *@params url [string] 需要拼接的url
+ *@params params [objct] 需要拼接的url json参数
+ */
+export function params(url,params){
+	var p = '';
+	var i = 0;
+	for(var key in params){
+		var value = params[key];
+		if(i == 0 && url.indexOf('?')==-1){
+			p += '?'+key+'='+value;
+		}else{
+			p += '&'+key+'='+value;
+		}
+		i++;
+	}
+	//console.log(p)
+	return url + p;
+}
