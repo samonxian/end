@@ -1,4 +1,8 @@
-import {DISK_DETAIL_STATUS_REQ,CAMERA_FRAME_STATUS_QUERY,CAMERA_FRAME_STATUS_REQ,INDEX_MONITOR_STATUS_REQ} from './action'
+import {DISK_DETAIL_STATUS_REQ,
+	    CAMERA_FRAME_STATUS_QUERY,
+	    CAMERA_FRAME_STATUS_REQ,
+	    DISK_STORAGE_STATUS_REQ,
+	    INDEX_MONITOR_STATUS_REQ} from './action'
 
 export function diskDetailResponse(state = {},action){
 	switch(action.type){
@@ -10,10 +14,15 @@ export function diskDetailResponse(state = {},action){
 		     break;
 		case CAMERA_FRAME_STATUS_REQ : 
 		     return Object.assign({},state, {
-		     	data : {},
+		     	data : action['param'],
 		        type : CAMERA_FRAME_STATUS_REQ
-		     });;
+		     });
 		     break;
+		case CAMERA_FRAME_STATUS_QUERY : 
+		     return Object.assign({}, state, {
+		        data : action['param'],
+		        type : CAMERA_FRAME_STATUS_QUERY
+		     });
 		case INDEX_MONITOR_STATUS_REQ : 
 		     return Object.assign({}, state, {
 		        data : action['param'],
@@ -23,4 +32,14 @@ export function diskDetailResponse(state = {},action){
 		     return state;
 		     break;
 	}
+}
+
+export function getStorageResponse(state={},action){
+    if(action.type === DISK_STORAGE_STATUS_REQ){
+    	return  Object.assign({}, state, {
+	        data : action['param'],
+	        type : DISK_STORAGE_STATUS_REQ
+	     });
+    }
+    return state;
 }

@@ -1,0 +1,36 @@
+.footer{
+	margin-top: 20px;
+}
+.header{
+	margin-bottom: 20px;
+	border-bottom: 2px solid #d9d9d9;
+}
+.header h1{
+	font-size: 18px;
+	height: 40px;
+	line-height: 40px;
+}
+.boxContainer a{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border: 1px solid #57c5f7;
+	margin-right: 10px;
+	text-indent: -9999px;
+}
+.boxContainer a.box_solid{
+	background: #57c5f7;
+}
+.loading_container{
+	position: absolute;
+	top:50%;
+	left: 50%;
+	width: 100px;
+	height: 100px;
+	margin-top: -50px;
+	margin-left: -50px;
+	text-align: center;
+}
+.ant-modal .ant-modal-footer{
+	display: none;
+}

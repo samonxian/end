@@ -37,7 +37,7 @@ class Layout extends React.Component {
 							<Link to="/get_camera_info">tracker信息查询</Link>
 						</MenuItem>
 						<MenuItem>
-							<Link to="/new_index">新版本索引</Link>
+							<Link to="/new_index_disk">新版本索引</Link>
 						</MenuItem>
 					</Menu>
 						
