@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table,Timeline } from 'antd_c'
-import { title } from '../../user_log/start_service/data/title.js'
+import { title } from '../../user_log/title.js'
 const Item = Timeline.Item
 let columns_a = []
 let data_a = []

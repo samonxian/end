@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
 import { pushPath,replacePath } from 'redux-simple-router'
-import { title } from '../user_log/start_service/data/title.js'
+import { title } from '../user_log/title.js'
 const TabPane = Tabs.TabPane;
 
 class user_log_sidebar extends React.Component {
