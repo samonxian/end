@@ -52,6 +52,7 @@ module.exports = {
 		alias: {
 			'JSONP': __dirname + '/src/libs/jsonp.js',
 			'antd_c': __dirname + '/src/libs/antd',
+			'function': __dirname + '/src/libs/function.js',
 		}
 	},
 	plugins: [

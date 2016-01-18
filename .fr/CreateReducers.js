@@ -11,7 +11,7 @@ function writeImport(dir,imports){
 }
 
 var reducers_fn = [];
-function createLibsString(temp_con,dir){
+function createReducers(temp_con,dir){
 	var con = temp_con.match(/export(.*?)function(.*?)\(/g);
 	if(con){
 		var reducers = [];
@@ -30,14 +30,28 @@ function createLibsString(temp_con,dir){
 	}
 }
 
-fn.each_file(path,function(dir){
+/**
+ *	按文件夹提取page中每个模块的reducer
+ */
+function getReducers(dir){
 	var temppath = path + dir + '/reducer.js';
 	//console.log(temppath)
 	if(fs.existsSync(temppath)){
 		var temp_con = fs.readFileSync(temppath,options = {
 			encoding : 'utf-8'
 		});
-		createLibsString(temp_con,dir);	
+		createReducers(temp_con,dir);	
+	}
+}
+
+fn.each_file(path,function(dir){
+	if(!fs.existsSync(path + dir +'/index.js')){
+		var path2 = path + dir + "/";
+		fn.each_file(path2,function(dir2){
+			getReducers(dir + "/" +dir2);
+		});
+	}else{
+		getReducers(dir);
 	}
 })
 
@@ -60,6 +74,6 @@ function writeRecucers(){
 	temp_con = temp_con.replace(/{import_tpl}/g,import_con);	
 	fs.writeSync(fd,temp_con);
 	fs.close(fd);
-
+	console.log('create Reducers success!')
 }
 writeRecucers();
