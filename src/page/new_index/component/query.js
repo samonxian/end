@@ -1,6 +1,6 @@
 import React from 'react'
 import { DatePicker,Form,Input,Button,message} from 'antd'
-import {CAMERA_FRAME_STATUS_QUERY,cameraFrameFetch} from '../action'
+import {CAMERA_FRAME_STATUS_QUERY,cameraFrameFetch} from '../../new_index_camera/action'
 
 export const Queryfrom = React.createClass({
 	getInitialState() {

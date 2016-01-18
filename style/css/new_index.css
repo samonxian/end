@@ -34,3 +34,25 @@
 .ant-modal .ant-modal-footer{
 	display: none;
 }
+.total_capacity{
+	font-weight: bold;
+	font-size: 14px;
+	border-radius: 5px;
+	text-align: center;
+	color: #31b0d5;
+}
+.ant-modal-content .tooltip{
+	font-weight: bold;
+	color:#D62728;
+}
+.used_time{
+	text-align: center;
+	font-size: 12px;
+}
+.used_time span.used_start_time{
+	padding-right: 20px;
+}
+.used_time span{
+	height: 30px;
+	line-height: 30px;
+}

@@ -19,9 +19,17 @@ pre{
 .ant-tabs-nav .ant-tabs-tab {
     height: auto;
 }
+.none_head_table .ant-table-thead{
+	display:none;
+}
 .ant-table td{
 	word-break: break-all
 }
+.ant-pagination-item{
+	padding:0 10px;
+	min-width:auto;
+}
+
 
 
 .fl {
@@ -84,4 +92,33 @@ pre{
 	cursor:pointer;
 	margin:7px 0 0 10px;
 	color:#11D211;
+}
+/**
+ *user_log
+ */
+.icon_down{
+	font-size: 11px;
+	margin-right: 0;
+}
+.pagination{
+	margin:20px 0 0 0;
+	text-align:center;
+}
+.contents .ant-pagination{
+	display:inline-block;
+}
+
+/**
+ *user_log_query
+ *
+ */
+.user_log_query_table .ant-table{
+	margin:10px 0 10px 0px;
+}
+.ulq_h2{
+	padding: 0px 0px 15px 0;
+    line-height: 18px;
+}
+.ulq_count{
+	padding-left:20px;
 }

@@ -39,6 +39,9 @@ class Layout extends React.Component {
 						<MenuItem>
 							<Link to="/new_index_disk">新版本索引</Link>
 						</MenuItem>
+						<MenuItem>
+							<Link to="/user_log/start_service">用户操作日志</Link>
+						</MenuItem>
 					</Menu>
 						
 				</Col>	

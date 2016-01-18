@@ -9,6 +9,18 @@ const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 require('../../../../style/css/new_index.css');
 
+export class HeaderOption extends React.Component{
+
+	render(){
+        let value = this.props.value
+        let text = this.props.text
+        console.log("value:"+value);
+        console.log("text:"+text);
+        alert(0);
+		return (<Option value={ value }>{ text }</Option>)
+	}
+}
+
 export class Header extends React.Component {
 
 	callback(key) {
@@ -46,8 +58,9 @@ export class Header extends React.Component {
 
 	render(){
 		 
-		const { router, dispatch, backData, currentCity } = this.props
+		const { router, dispatch, backData, currentCity, cityList} = this.props
 		let route = router.path;
+		let optionRow = [];
 		let active = 1;
 		if(route.indexOf('new_index_disk') != -1 ){
 			active = 1;
@@ -59,6 +72,9 @@ export class Header extends React.Component {
 			active = 3;
 		}
         
+        // for(let i=0,len=cityList.length;i<len;i++){
+        // 	optionRow.push(<HeaderOption value={cityList[i]["value"]} text={cityList[i]["city"]} key={ "header_option_key_"+new Date().getTime()+Math.random()}/>)
+        // }
 		return (
 		<div>
 			<Row type="flex" justify="end">
