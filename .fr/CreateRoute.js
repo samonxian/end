@@ -34,7 +34,6 @@ var chunk_tpl_contents = fs.readFileSync('./.fr/chunk_tpl.js',options = {
 });
 //存放routes
 var routes = [ ];
-var route_files = [ ];
 //打开route配置文件
 var route_file = './src/page/Route.js';
 if(fs.existsSync(route_file)){
@@ -43,22 +42,39 @@ if(fs.existsSync(route_file)){
 var routes_config = fs.openSync(route_file,'a',0755);
 var require_tpl = "require('../../.fr/chunks/{filename}')";
 
-//遍历获取path模块
-var fn = require('./function.js')
-fn.each_file(path,function(dir){
-	//生成每个router的chunk模块
+/**
+ * 生成每个router的chunk模块
+ *@param dir [string] 需要处理的page目录
+ */
+function chunks(dir,filename){
 	var temp_con = chunk_tpl_contents;
 	var chunk_file = './.fr/chunks/'+ dir +'.js';
 	if(fs.existsSync(chunk_file)){
 		fs.unlinkSync(chunk_file);
 	}
 	var chunk_config = fs.openSync(chunk_file,'a',0755);
-	temp_con = temp_con.replace(/{filename}/g,dir);	
+	temp_con = temp_con.replace(/{filename}/g,filename);	
 	fs.writeSync(chunk_config,temp_con);
 	fs.close(chunk_config);
-	//构建childRoutes 对象
-	routes.push(require_tpl.replace('{filename}',dir));
-	route_files.push(dir);
+}
+
+//遍历获取path模块
+var fn = require('./function.js')
+fn.each_file(path,function(dir){
+	if(!fs.existsSync(path + dir +'/index.js')){
+		//处理含有多个page目录,根据是否有index.js来判断
+		var path2 = path + dir + "/";
+		fn.each_file(path2,function(dir2){
+			chunks(dir2,dir + "/" +dir2);	
+			//构建childRoutes 对象
+			routes.push(require_tpl.replace('{filename}',dir2));
+		});
+	}else{
+		//处理本身就是page的目录，不包含其他的page目录
+		chunks(dir,dir);	
+		//构建childRoutes 对象
+		routes.push(require_tpl.replace('{filename}',dir));
+	}
 }).then(function(files){
 	var setting_tpl = JSON.stringify(routes).replace(/\"/g,'')
 											.replace(/\,/g,',\n	')

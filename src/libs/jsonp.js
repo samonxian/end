@@ -69,5 +69,6 @@ export const JSONP = {
         if(head && head[0]) {
             head[0].appendChild(script);
         }
-    }
+    },
+	
 };
