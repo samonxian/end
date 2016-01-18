@@ -86,3 +86,13 @@ export function params(url,params){
 	//console.log(p)
 	return url + p;
 }
+/**
+ *	获取url以"/"这个为分割
+ */
+export function getUrlParams(url){
+	var p = url.split('?')[0]
+				.replace(/http(.*?)\:\/\/(.*?)\//g,'')
+                .replace(/^\//g,'')
+				.split('/');		
+	return p;
+}

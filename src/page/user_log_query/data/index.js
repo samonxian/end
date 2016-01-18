@@ -1,4 +1,4 @@
-import { title } from '../../user_log/data/title.js'
+import { title } from '../../user_log/start_service/data/title.js'
 let type = {
 	'257':'start_service',
 	'258':'stop_service',

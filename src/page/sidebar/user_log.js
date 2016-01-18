@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
 import { pushPath,replacePath } from 'redux-simple-router'
-import { fetchData } from '../user_log/action'
-import { title } from '../user_log/data/title.js'
+import { title } from '../user_log/start_service/data/title.js'
 const TabPane = Tabs.TabPane;
 
 class user_log_sidebar extends React.Component {
@@ -18,7 +17,7 @@ class user_log_sidebar extends React.Component {
 	}
 	
 	menuclick({key}){
-		this.props.dispatch(fetchData(this.props.params,key));
+		//this.props.dispatch(fetchData(this.props.params,key));
 	}
 
 	callback(key) {
@@ -26,7 +25,7 @@ class user_log_sidebar extends React.Component {
 		let { dispatch } = this.props;
 		switch(key){
 			case 1:
-				dispatch(pushPath('/user_log'));
+				dispatch(pushPath('/user_log/start_service'));
 			break;
 			case 2:
 				dispatch(pushPath('/user_log_query'));
@@ -52,7 +51,7 @@ class user_log_sidebar extends React.Component {
 		const menu = <Menu onClick={this.menuclick.bind(this)}>
 						{
 							title_contents.map(function(data,index){
-								var url = 'user_log?type='+title_keys[index];
+								var url = '/user_log/'+title_keys[index];
 								var key =  title_keys[index];
 								return (
 									<Menu.Item key={key}>
