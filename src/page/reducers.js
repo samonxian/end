@@ -3,7 +3,9 @@ import { routeReducer } from 'redux-simple-router';
 import { get_camera_info } from './get_camera_info/reducer'
 import { get_mobile_info } from './get_mobile_info/reducer'
 import { get_relay_info } from './get_relay_info/reducer'
-import { diskDetailResponse } from './new_index/reducer'
+import { new_index_camera } from './new_index_camera/reducer'
+import { new_index_disk,getStorageResponse,cityTab } from './new_index_disk/reducer'
+import { new_index_monitor } from './new_index_monitor/reducer'
 import { camera_debug,camera_debug_form } from './user_log/camera_debug/reducer'
 import { camera_debug_last,camera_debug_last_form } from './user_log/camera_debug_last/reducer'
 import { camera_time,camera_time_form } from './user_log/camera_time/reducer'
@@ -26,7 +28,11 @@ const rootReducer = combineReducers({
 	get_camera_info,
 	get_mobile_info,
 	get_relay_info,
-	diskDetailResponse,
+	new_index_camera,
+	new_index_disk,
+	getStorageResponse,
+	cityTab,
+	new_index_monitor,
 	camera_debug,
 	camera_debug_form,
 	camera_debug_last,
