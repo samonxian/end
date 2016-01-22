@@ -1,7 +1,7 @@
 var open_smart_function = {
 	//routes : true, 
 	//reducers : true, 
-	antd_splitting : true, 
+	//antd_splitting : true, 
 }
 if(open_smart_function){
 	var o = open_smart_function;

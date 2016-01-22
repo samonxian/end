@@ -1,10 +1,10 @@
 import React from 'react'
-import { Table,Timeline } from 'antd_c'
+import { Tabs,Table,Timeline,Icon,Row,Col,Alert } from 'antd_c'
 import { title } from '../../user_log/title.js'
+import NCollapse from './collapse'
+import NTable from './table.js'
 const Item = Timeline.Item
-let columns_a = []
-let data_a = []
-
+const TabPane = Tabs.TabPane;
 class LogData extends React.Component {
 	
 	getType(type){
@@ -25,39 +25,71 @@ class LogData extends React.Component {
 	
     render() {
 		let _this = this;
-		let { data,deal,index } =  this.props;
-		//console.log(data)
-		//console.log(index)
-		var count = "共" +(data && data.length)  + "条数据"
+		let { data,deal_table,dispatch,time,switch_type,parent } =  this.props;
+		let columns = [];
+		let left_data = [];
+		for(var key in data){
+			if(title[key]){
+				data[key].typeName = key;
+				left_data.push(data[key]);
+			}
+		}
+		//console.log(this.props)
+
+		let active_key = 'other';
         return (
-			<div className={this.props.className}>
-				<h2>
-					{ count }
-				</h2>
-				<br/>
-				<Timeline> 
-					{
-						data && data.map(function(d,key){
-							var type = _this.getType(d.type); 
-							var create_at = d.create_at;
-							var user_log = { }
-							user_log.posts = { }
-							user_log.posts.logs = [];
-							user_log.posts.logs.push(d);
-							var t_data = deal[type].logData(user_log)
-							var columns = deal[type].columns; 
-							return(
-								<Item key={key} color='green'>
-									<h3 className="ulq_h2">{ create_at +" / "+ title[d.type] }</h3>
-									<Table  size="middle"
-										columns={columns} dataSource={t_data} pagination={false} bordered/>
-								</Item>
-							)
-						})
-					}
-				</Timeline>
+			<div>
 				
+				<Row className="ulq_logs_bottom" type="flex" align="top">
+					<Col >
+						<Row className="ulq_left_log" type="flex" align="top">
+						{
+							left_data.map(function(value,key){
+								var type = "info";
+								let message = title[value.typeName] + ":" 
+								switch(parseInt(value.status,10)){
+									case 0:
+										type = "success";
+										message += "优";
+										break;
+									case 1:
+										type = "info";
+										message += "良";
+										break;
+									case 2:
+										type = "warn";
+										message += "中";
+										break;
+									case 3:
+										type = "error";
+										message += "差";
+										break;
+								}
+								return(
+									<div title={message} className="color_bar" key={ key } onClick={switch_type.bind(parent,value.typeName)} >
+										<Alert type={type} />
+									</div>
+								)
+							})
+						}
+						</Row>
+					</Col>	
+					<Col className="ulq_right_log">
+						<NCollapse data={data.logs} deal_table={deal_table} active={ _this.props.active } typeName="other"/>	
+						{
+							left_data.map(function(value,key){
+								return (
+									<NTable active={ _this.props.active } typeName={value.typeName}
+										key={key} data={value.details} deal_table={deal_table}/>	
+								)
+							})
+						}
+					</Col>	
+					
+				</Row>
+
 			</div>
+			
         )
     }
 }

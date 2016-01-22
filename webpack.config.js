@@ -53,6 +53,7 @@ module.exports = {
 			'JSONP': __dirname + '/src/libs/jsonp.js',
 			'antd_c': __dirname + '/src/libs/antd',
 			'function': __dirname + '/src/libs/function.js',
+			'common': __dirname + '/src/libs/temp/user_log.js',
 		}
 	},
 	plugins: [

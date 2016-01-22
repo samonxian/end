@@ -40,6 +40,8 @@ export function fieldSort(data,fields,columns,callback){
 		
 		//react组件，key值设定
 		reData[key]['key'] = key;
+		data[key]['key'] = key  + "_";
+		data[key]['_key_'] = key + "_";
 	}
 	columns && columns.forEach(function(value,key){
 		columns[key]['dataIndex'] = fields[key];

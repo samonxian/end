@@ -11,12 +11,9 @@ var config = Object.assign({},webpack_config,{
 		vendor : vendor, 
 		libs : ['react'], 
 	},
-	resolve: {
-		alias: {
-			'JSONP': __dirname + '/src/libs/jsonp.js',
-			'antd_c': __dirname + '/src/libs/antd/production.js',
-		}
-	},
+	resolve: Object.assign(webpack_config.resolve,{
+		'antd_c': __dirname + '/src/libs/antd/production.js',
+	}),
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.optimize.CommonsChunkPlugin("vendor","vendor.bundle.js",['app']),
@@ -32,7 +29,7 @@ var config = Object.assign({},webpack_config,{
 		new ExtractTextPlugin('css/styles.css'),
     ]
 });
-console.log(config.entry);
+//console.log(config.entry);
 module.exports = function(grunt){
 	grunt.initConfig({
 		webpack : {

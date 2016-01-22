@@ -71,14 +71,14 @@ class user_log_sidebar extends React.Component {
 			<div>
 				<Tabs defaultActiveKey={active.toString() } 
 						onChange={this.callback.bind(this)} type="card">
-					<TabPane tab={operations} key="1">
-						{
-							route.indexOf('user_log') != -1 &&  this.props.children
-						}
-					</TabPane>
 					<TabPane tab="日志查询" key="2">
 						{
 							route.indexOf('user_log_query') != -1 &&  this.props.children
+						}
+					</TabPane>
+					<TabPane tab={operations} key="1">
+						{
+							route.indexOf('user_log') != -1 &&  this.props.children
 						}
 					</TabPane>
 				</Tabs>

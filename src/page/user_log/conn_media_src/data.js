@@ -109,7 +109,6 @@ export function logData(user_log){
 									+ "/" + temp_data.tracker_ip_isp
 			
 		})
-		user_log.posts.logs = re;
 	}
 	//console.log(re)
 	return re;

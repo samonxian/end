@@ -93,7 +93,6 @@ export function logData(user_log){
 			
 			
 		})
-		user_log.posts.logs = re;
 	}
 	//console.log(re)
 	return re;
