@@ -9,9 +9,9 @@ var origin_antd = {
 	Input: require('antd/lib/input'),
 	Button: require('antd/lib/button'),
 	Table: require('antd/lib/table'),
-	DatePicker: require('antd/lib/date-picker'),
-	Pagination: require('antd/lib/pagination'),
-	Spin: require('antd/lib/spin')
+	Spin: require('antd/lib/spin'),
+	Timeline: require('antd/lib/timeline'),
+	Alert: require('antd/lib/alert')
 };
 
 module.exports = origin_antd;

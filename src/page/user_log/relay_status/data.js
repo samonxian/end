@@ -1,5 +1,6 @@
 import React from 'react'
-import { Table } from 'antd_c'
+import { Table,Collapse } from 'antd_c'
+const Panel = Collapse.Panel;
 
 import { fieldSort ,toUpperCase,createAntdColumns } from 'function'
 
@@ -56,9 +57,13 @@ export let columns = [
 			]
 			data = fieldSort(data,column_dataIndexs,columns);
 			return (
-				<Table size="small" columns={columns} dataSource={data} pagination={false} >
+				<Collapse >
+					<Panel header="IP / 目标接受率 / 转发接受率 / 延迟" > 
+						<Table size="small" columns={columns} dataSource={data} pagination={false} >
 
-				</Table>
+						</Table>
+					</Panel>
+				</Collapse>
 			) 
 		}
 	}
@@ -75,7 +80,6 @@ export function logData(user_log){
 									+ "/" + temp_data.public_ip_city 
 									+ "/" + temp_data.public_ip_isp
 		})
-		user_log.posts.logs = re;
 	}
 	//console.log(re)
 	return re;

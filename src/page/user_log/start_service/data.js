@@ -65,7 +65,6 @@ export function logData(user_log){
 									+ "/" + temp_data.public_ip_city 
 									+ "/" + temp_data.public_ip_isp
 		})
-		user_log.posts.logs = re;
 	}
 	return re;
 }

@@ -24,10 +24,10 @@ import { start_service,start_service_form } from './user_log/start_service/reduc
 import { start_transfer,start_transfer_form } from './user_log/start_transfer/reducer'
 import { stop_service,stop_service_form } from './user_log/stop_service/reducer'
 import { work_status,work_status_form } from './user_log/work_status/reducer'
-import { user_log_query,user_log_query_form } from './user_log_query/reducer'
 import { app_camera_list } from './app_camera_list/reducer'
 import { app_manager, get_app_type } from './app_manager/reducer'
 import { app_user_list } from './app_user_list/reducer'
+import { user_log_query,user_log_query_form,user_log_query_showTable } from './user_log_query/reducer'
  
 const rootReducer = combineReducers({
 	get_layout_info,
@@ -78,6 +78,7 @@ const rootReducer = combineReducers({
 	app_manager,
 	app_user_list,
 	get_app_type,
+	user_log_query_showTable,
 	routing: routeReducer
 })
 

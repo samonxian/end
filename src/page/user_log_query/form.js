@@ -17,16 +17,12 @@ class form extends React.Component {
 	}
    
 	onChange(value) {
-		this.props.dispatch(log_query_action.input_start_time(value[0].Format("yyyy-MM-dd hh:mm:ss")));	
-		this.props.dispatch(log_query_action.input_end_time(value[1].Format("yyyy-MM-dd hh:mm:ss")));	
+		//this.props.dispatch(log_query_action.input_start_time(value[0].Format("yyyy-MM-dd hh:mm:ss")));	
+		this.props.dispatch(log_query_action.input_end_time(value.Format("yyyy-MM-dd hh:mm:ss")));	
 	}
 
-	setSessionValue(e){
-		this.props.dispatch(log_query_action.input_session(e.target.value))
-	}
-
-	setIpValue(e){
-		this.props.dispatch(log_query_action.input_ip(e.target.value))
+	setCidValue(e){
+		this.props.dispatch(log_query_action.input_cid(e.target.value))
 	}
 
     render() {
@@ -37,17 +33,12 @@ class form extends React.Component {
 			<Form inline onSubmit={this.handleSubmit.bind(this)}>
 
 				<FormItem>
-					<Input name="log_session"  placeholder="请输入session" onChange={this.setSessionValue.bind(this)}
-						value={params && params.session}/>
+					<Input name="log_uid"  placeholder="请输入uid" onChange={this.setCidValue.bind(this)}
+						value={params && params.cid}/>
 				</FormItem>
 
 				<FormItem>
-					<Input name="user_log_ip" placeholder="请输入IP" onChange={this.setIpValue.bind(this)} 
-						value={params && params.ip}/>
-				</FormItem>
-
-				<FormItem>
-					<RangePicker format="yyyy-MM-dd HH:mm:ss" showTime value={params && [params.start_time,params.end_time] } 
+					<DatePicker format="yyyy-MM-dd HH:mm:ss" showTime value={params && params.end_time } 
 						onChange={this.onChange.bind(this)} />
 				</FormItem>
 				

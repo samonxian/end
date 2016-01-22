@@ -32,6 +32,27 @@ pre{
 .fr {
     float: right;
 }
+.tl {
+    text-align: left;
+}
+.tr {
+    text-align: right;
+}
+.color_green{
+	color:#87D068;
+}
+.color_blue{
+	color:#2DB7F5;
+}
+.color_success{
+	color:#F3FAF0;
+}
+.color_warning{
+	color:#FFF7E6;
+}
+.color_error{
+	color:#ffeee6;
+}
 .sidebar-left {
     width: 200px;
     height: 100%;
@@ -118,10 +139,106 @@ pre{
 .user_log_query_table .ant-table{
 	margin:10px 0 10px 0px;
 }
+.uql_count_title{
+
+}
 .ulq_h2{
 	padding: 0px 0px 15px 0;
     line-height: 18px;
 }
 .ulq_count{
 	padding-left:20px;
+}
+.ulq_plus{
+	/*color:green ;*/
+	padding-left:20px;
+}
+.user_log_query_table{
+	margin:20px 0 0 0px;
+}
+.uql_timeline .ant-timeline-item{
+	position:relative;
+}
+.user_log_query_table .ant-alert {
+    padding: 9px 9px 9px 9px;
+    border-radius: 5px;
+    line-height: 17px;
+	text-align:center;
+	cursor:pointer;
+}
+.user_log_query_table .ulq_left_log{
+	width:100px;
+	margin:25px 0 0 -23px;
+	height: 100%;
+    position: absolute;
+    display: flex;
+}
+.user_log_query_table .color_bar{
+	flex:1; 
+	padding-bottom:12px;
+	height:100%;
+}
+
+.user_log_query_table .color_bar .ant-alert{
+	flex:1; 
+	padding:0;
+	margin-right:2px;
+	height:100%;
+}
+.user_log_query_table .ulq_right_log{
+	flex:1;
+	margin:25px 0 0 105px;
+}
+.user_log_query_table .ant-timeline-item-head{
+	margin-left:110px;
+}
+.user_log_query_table .ant-timeline-item-tail{
+	left:115px;
+}
+.user_log_query_table .uql_h4{
+	position:absolute;
+	top:0px;
+	left:2px;
+}
+.user_log_query_table .show{
+	display:block;
+}
+.info_define{
+	margin:0 0 5px 0px;
+	height:50px;
+}
+.info_define .ant-alert{
+	margin-right:5px;
+    padding: 9px 9px 9px 9px;
+	text-align:center;
+}
+.ulq_logs_bottom{
+	min-height: 100px;
+}
+.get-more-data{
+	width:100%;
+	border-color: transparent;
+}
+.uql_hide_table{
+	display:none;
+}
+.uql_title_bar{
+	margin:20px 0 0 0;
+    width: 100%;
+}
+.uql_title_bar_fixed{
+    position: fixed;
+    top: -20px;
+    left: 0;
+    z-index: 10000;
+}
+.uql_title_bar .ant-menu{
+    display: flex;
+}
+.uql_title_bar_fixed .ant-menu{
+    margin: 0 40px 0 239px;
+}
+.uql_title_bar .ant-menu .ant-menu-item{
+	flex:1;
+	text-align:center;
 }
