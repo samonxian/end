@@ -9,37 +9,26 @@ const TabPane = Tabs.TabPane;
 const FormItem = Form.Item;
 require('../../../../style/css/new_index.css');
 
-export class HeaderOption extends React.Component{
-
-	render(){
-        let value = this.props.value
-        let text = this.props.text
-        console.log("value:"+value);
-        console.log("text:"+text);
-        alert(0);
-		return (<Option value={ value }>{ text }</Option>)
-	}
-}
-
-export class Header extends React.Component {
+export class Appheader extends React.Component {
 
 	callback(key) {
 		key = parseInt(key,10)
-		let { dispatch } = this.props;
+		let { dispatch } = this.props
 		switch(key){
 			case 1:
-				dispatch(pushPath('/new_index_disk'));
+				dispatch(pushPath('/app_manager'));
 			break;
 			case 2:
-				dispatch(pushPath('/new_index_camera'));
+				dispatch(pushPath('/app_user_list'));
 			break;
 			case 3:
-				dispatch(pushPath('/new_index_monitor'));
+				dispatch(pushPath('/app_camera_list'));
 			break;
 		}
 	}
 
     handleSelectChange(value){
+
     	const { backData , dispatch } = this.props
     	if(backData["type"] === DISK_DETAIL_STATUS_REQ){
     		dispatch(fetchDiskData({ area : value,p : 1}));
@@ -57,45 +46,29 @@ export class Header extends React.Component {
     }
 
 	render(){
-		 
-		const { router, dispatch, backData, currentCity, cityList} = this.props
+		const { router, backData, dispatch, currentCity, cityList} = this.props
 		let route = router.path;
 		let optionRow = [];
 		let active = 1;
-		if(route.indexOf('new_index_disk') != -1 ){
+		if(route.indexOf('app_manager') != -1 ){
 			active = 1;
 		}
-		if(route.indexOf('new_index_camera') != -1 ){
+		if(route.indexOf('app_user_list') != -1 ){
 			active = 2;
 		}
-		if(route.indexOf('new_index_monitor') != -1 ){
+		if(route.indexOf('app_camera_list') != -1 ){
 			active = 3;
 		}
         
-        // for(let i=0,len=cityList.length;i<len;i++){
-        // 	optionRow.push(<HeaderOption value={cityList[i]["value"]} text={cityList[i]["city"]} key={ "header_option_key_"+new Date().getTime()+Math.random()}/>)
-        // }
 		return (
 		<div>
-			<Row type="flex" justify="end">
-		        <Form horizontal>
-		             <FormItem
-					    id="select">
-					    <Select id="select" size="large" defaultValue={currentCity["data"]["area"]} style={{width:200}} onChange={(dispatch,backData)=>this.handleSelectChange(dispatch,backData)}>
-					        <Option value="北京">北京</Option>
-					        <Option value="佛山">佛山</Option>
-					        <Option value="台州">台州</Option>
-					    </Select>
-					</FormItem>
-		        </Form>
-		    </Row>
 		    <Row type="flex" justify="start" className="header">
-		        <h1>磁盘索引信息</h1>
+		        <h1>APP管理</h1>
 		    </Row>
 			<Tabs defaultActiveKey={active.toString()} type="card" onChange={dispatch => this.callback(dispatch)}>
-				<TabPane tab="磁盘详细状态" key="1"></TabPane>
-				<TabPane tab="摄像头时间信息片" key="2"></TabPane>
-				<TabPane tab="索引监控数据" key="3"></TabPane>
+				<TabPane tab="APP管理" key="1"></TabPane>
+				<TabPane tab="用户列表" key="2"></TabPane>
+				<TabPane tab="摄像头列表" key="3"></TabPane>
 			</Tabs>
 		</div>);
 	}

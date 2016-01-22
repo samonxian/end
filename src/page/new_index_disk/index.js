@@ -5,6 +5,7 @@ import { Dialog } from '../new_index/component/dialog'
 import { fetchDiskData, DISK_DETAIL_STATUS_REQ, DISK_STORAGE_STATUS_REQ } from './action'
 import { isEmptyObj, renderContent } from '../new_index/component/util'
 import { Page } from '../new_index/component/page'
+import { GET_AREA_LIST, getAreaListFetch } from '../new_index/action'
 import { Table } from 'antd'
 require('../../../style/css/new_index.css');
 
@@ -12,34 +13,44 @@ class Indexdisk extends React.Component {
 
   componentWillMount(){
 		const disk = this.props.new_index_disk
+    const areaList = this.props.get_area_list
+    const dispatch = this.props.dispatch
 		if(isEmptyObj(disk)){
-			const dispatch = this.props.dispatch
 		    dispatch(fetchDiskData({area : '北京',p : 1}));
 		}
+    // if(isEmptyObj(areaList)){
+    //    dispatch(getAreaListFetch());
+    // }
 	}
 
 	render(){ 
 
-		const { routing, dispatch, backData, storageData, currentCity } = this.props
+		const { routing, dispatch, backData, storageData, currentCity, cityList } = this.props
 		let total
 		let currentPage
 		let list
     let loading = true
+    let totalCapacity
 		let dialogData ={
        label:"",
        values : []
     }
 
     if(!isEmptyObj(storageData) && storageData["type"] == DISK_STORAGE_STATUS_REQ){
+         console.log(storageData);
         if(storageData["data"]["ok"]){
-            var tempData = storageData["data"]["data"]
+            var tempData = storageData["data"]["data"];
+            var totalNum = 0;
             for(var i=0,len=tempData.length;i<len;i++){
                if(i>0){
-                  dialogData.values.push({x:tempData[i][4],y:(tempData[i][2]-tempData[i-1][2])/(360*tempData[i][3])})
+                 totalNum = totalNum + tempData[i][2] - tempData[i-1][2]
+                 dialogData.values.push({x:tempData[i][4],y:tempData[i][2]-tempData[i-1][2]})
                }else{
-                  dialogData.values.push({x:tempData[i][4],y:0})
+                 dialogData.values.push({x:tempData[i][4],y:tempData[i][2]})
                }
             }
+            totalCapacity = Math.ceil(tempData[0][3]/1024/1024/1024)
+            dialogData.values.push({x:"剩余存储",y:(tempData[0][3]-totalNum)})
         }
     }
 
@@ -114,7 +125,7 @@ class Indexdisk extends React.Component {
             {
               title: '操作',
               render: function(text, record){
-                 return <Dialog keyId={record.did} dispatch={dispatch} dialogData={dialogData}/>;
+                 return <Dialog keyId={record.did} dispatch={dispatch} dialogData={dialogData} totalCapacity = {totalCapacity}/>;
               }
             }
         ]
@@ -135,6 +146,7 @@ function mapStateToProps(state){
 		routing : state.routing,
 		storageData : state.getStorageResponse,
 		backData : state.new_index_disk,
+//    cityList : state.get_area_list,
     currentCity : state.cityTab
 	};
 }

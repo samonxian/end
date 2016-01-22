@@ -1,6 +1,6 @@
 import React from 'react'
 import { DatePicker,Form,Input,Button,message} from 'antd'
-import {CAMERA_FRAME_STATUS_QUERY,cameraFrameFetch} from '../action'
+import {CAMERA_FRAME_STATUS_QUERY,cameraFrameFetch} from '../../new_index_camera/action'
 
 export const Queryfrom = React.createClass({
 	getInitialState() {
@@ -24,7 +24,7 @@ export const Queryfrom = React.createClass({
 	handleSubmit(e){
 		e.preventDefault();
 		const { dispatch , formData } = this.props
-		const temp = Object.assign({}, this.state, {area : formData["area"]});
+		const temp = Object.assign({}, this.state);
 		dispatch(cameraFrameFetch(temp));
 	},
 	render(){

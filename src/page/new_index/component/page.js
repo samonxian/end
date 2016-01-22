@@ -1,5 +1,6 @@
 import React from 'react'
-import {fetchDiskData,DISK_DETAIL_STATUS_REQ,INDEX_MONITOR_STATUS_REQ,indexMonitorFetch} from '../action'
+import { DISK_DETAIL_STATUS_REQ, fetchDiskData } from '../../new_index_disk/action'
+import { INDEX_MONITOR_STATUS_REQ, indexMonitorFetch } from '../../new_index_monitor/action'
 import { Pagination , Row } from 'antd'
 
 export class Page extends React.Component{

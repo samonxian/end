@@ -30,12 +30,12 @@ class Indexcamera extends React.Component {
         	for(let i=0,len=tempList.length;i<len;i++){
         		var temp = tempList[i],
         		    detailList = temp["details"],
-        		    timeline = new Date(temp["start_time"]).Format("yyyy-MM-dd hh:mm:ss")+" "+new Date(temp["end_time"]).Format("yyyy-MM-dd hh:mm:ss");
+        		    timeline = new Date(temp["start_time"]*1000).Format("yyyy-MM-dd hh:mm:ss")+" ~ "+new Date(temp["end_time"]*1000).Format("yyyy-MM-dd hh:mm:ss");
                 for(let j=0,delen = detailList.length;j<delen;j++){
-                	var start = new Date(detailList[j]["start_time"]).Format("yyyy-MM-dd hh:mm:ss");
+                	var start = new Date(detailList[j]["start_time"]*1000).Format("yyyy-MM-dd hh:mm:ss");
                 	var key = "timeline_"+ new Date().getTime()+Math.random();
-                	var end = new Date(detailList[j]["end_time"]).Format("yyyy-MM-dd hh:mm:ss");
-                	list.push({key: key,timeline: timeline,group: temp["group"],length: delen,start_time: start,end_time: end,detail: {
+                	var end = new Date(detailList[j]["end_time"]*1000).Format("yyyy-MM-dd hh:mm:ss");
+                	list.push({key: key,timeline: timeline,area : temp["area"],group: temp["group"],length: delen,start_time: start,end_time: end,detail: {
                         desc : detailList[j]["discs"],
                         filterArra : temp["disc_list"]
                     }})
