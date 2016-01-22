@@ -21,7 +21,7 @@ class Layout extends React.Component {
 		const { current, theme } = this.props;
 		//console.log("Layout",this.props);
         return (
-			<Row type="flex" justify="start">
+			<Row className="layout" type="flex" justify="start">
 				<Col className="sidebar-left">
 					<Menu onClick={this.handleClick} selectedKeys={[current]} theme={theme} mode="horizontal">
 						<MenuItem key="title">

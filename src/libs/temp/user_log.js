@@ -36,6 +36,9 @@ export function getCameraState(type){
 			t_type = "连接转发中";
 			break;
 		case 4:
+			t_type = "推流中";
+			break;
+		case 5:
 			t_type = "断开转发中";
 			break;
 	}

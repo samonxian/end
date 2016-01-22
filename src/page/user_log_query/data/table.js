@@ -38,7 +38,7 @@ class NTable extends React.Component {
 		}
 		let className = "uql_hide_table " + show; 
 
-		console.log(className)
+		//console.log(className)
 		if(data && data[0] && data[0].type){
 			var type = _this.getType(data[0].type);
 			let user_log = { }

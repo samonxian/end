@@ -29,6 +29,9 @@ pre{
 	padding:0 10px;
 	min-width:auto;
 }
+.ant-tabs-nav-scroll{
+	width:100%;
+}
 
 
 
@@ -58,6 +61,11 @@ pre{
 }
 .color_error{
 	color:#ffeee6;
+}
+
+
+.layout{
+	/*height:100%;*/
 }
 .sidebar-left {
     width: 200px;

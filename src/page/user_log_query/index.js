@@ -16,7 +16,7 @@ import LogData from './data/data'
 const Item = Timeline.Item
 const Panel = Collapse.Panel;
 let data = [];
-
+let once = true;
 class user_log_query extends React.Component {
 	constructor(){
 		super(); 
@@ -33,7 +33,7 @@ class user_log_query extends React.Component {
 			if(_this.table_co_dom){
 				top = _this.table_co_dom.offsetTop;
 			}
-			scrollTop = document.body.scrollTop;
+			scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
 			if(top < (scrollTop-10)){
 				_this.setState({
 					fixed : "uql_title_bar_fixed"
@@ -45,11 +45,18 @@ class user_log_query extends React.Component {
 				})
 			}
 
-			console.log('top',top)
-			console.log('scrollTop',scrollTop)
+			//console.log('top',top)
+			//console.log('scrollTop',scrollTop)
 		});
 	}
 	
+	componentWillUnmount(){
+			console.log('1removeEventListerner scroll succes')
+		document.removeEventListener('scroll',function(e){
+			console.log('removeEventListerner scroll succes')
+		},false) 
+	}
+
 	getType(type){
 		switch(type){
 			case 'camera_debug':
@@ -89,8 +96,14 @@ class user_log_query extends React.Component {
 
 	
 	switch_type(type){
+		var _type;
+		if(type.key){
+			_type = type.key;
+		}else{
+			_type = type;
+		}
 		this.setState({
-			title_bar_item : type.key
+			title_bar_item : _type
 		})
 	}
 	
@@ -118,7 +131,6 @@ class user_log_query extends React.Component {
 		}
 			
 		let title_bar_item = 'other';
-		let title_bar_item_all = { };
 		let uql_title_bar_class  = "uql_title_bar ";
 		if(this.state){
 			if(this.state.title_bar_item){
@@ -128,8 +140,7 @@ class user_log_query extends React.Component {
 				uql_title_bar_class = "uql_title_bar " + this.state.fixed;
 			}
 		}else{
-			//var other = true;
-			//title_bar_item_all['other'] = true; 
+			var other = true;
 		}
         return (
 			<Monitor location={location} >

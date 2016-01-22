@@ -70,9 +70,23 @@ class NCollapse extends React.Component {
 							}
 							d.key2 = key + 1;
 							columns = deal_table[type].columns; 
-							var t_title = create_at + " / " + title[d.type];
+							var color = '';
+							switch(parseInt(d.status)){
+								case 2:
+									color = "#FA0";
+									break;
+								case 3:
+									color = "red";
+									break;
+							}
+							var _t = create_at + " / " + title[d.type];
+							var t_title = <span style={ {color} }>
+								{
+									_t
+								}
+							</span> 
 							return (
-								<Panel header={ t_title } key={key} > 
+								<Panel  header={ t_title } key={key} > 
 									{
 										<Table  size="middle" ref="table"
 											columns={columns} dataSource={t_data[key]} pagination={false} bordered/>

@@ -155,6 +155,7 @@ let time2_dataIndexs = [
 	'y_ip',
 	'open_time_update_at',
 	'open_time',
+	'msg_split',
 ]
 export let time2_columns = [
 	{
@@ -166,6 +167,44 @@ export let time2_columns = [
 	{
 		title: '最近打开耗时',
 	}, 
+	{
+		title: '发送比',
+		render : function(text,columns){
+			let live_stat_dataIndexs = [ 
+				'T5_T1',
+				'Tpe_Tns',
+				'Ts_Te',
+			]
+			let live_stat_columns = [
+				{
+					title: '总时间',
+				}, 
+				{
+					title: '等待时间',
+				}, 
+				{
+					title: '发送时间',
+				}, 
+			];
+
+			function live_statData(data){
+				let t_data = [] ;
+				t_data.push(data);
+				let re = [];
+				if(data){
+					re = fieldSort(t_data,live_stat_dataIndexs,live_stat_columns,function(key,data){
+						var temp_data = data[key];
+					})
+				}
+				//console.log(re)
+				return re;
+			}
+			return(
+				<Table  size="small" 
+						columns={live_stat_columns} dataSource={live_statData(text)} pagination={false} bordered/>
+			)
+		}
+	}, 
 ];
 
 export function time2Data(data){
@@ -176,6 +215,7 @@ export function time2Data(data){
 		re = fieldSort(t_data,time2_dataIndexs,time2_columns,function(key,data){
 			var temp_data = data[key];
 			temp_data.y_ip = temp_data.relay_ip.concat(':',temp_data.relay_port);
+			//temp_data.f_rate = temp_data.msg_split.Ts_Te / temp_data.msg_split.T5_T1;
 		})
 	}
 	//console.log(re)
