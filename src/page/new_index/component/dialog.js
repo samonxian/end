@@ -53,7 +53,7 @@ export const Dialog = React.createClass({
         
     	return (<div>
     		    <a href="#" onClick={(keyId,dispatch)=>this.showStorestatus(keyId,dispatch)}>存储状态</a>
-    		    <Modal title="磁盘存储状态" okText="确认" cancelText="取消" width={582} onOk={this.handleOk} onCancel={this.handleCancel} visible={this.state.visible}>
+    		    <Modal title="磁盘存储状态" okText="确认" className="new_index_disk_model" cancelText="取消" width={582} onOk={this.handleOk} onCancel={this.handleCancel} visible={this.state.visible}>
                     <div className="total_capacity">磁盘总容量：{ totalCapacity }G</div>
                     {
                         showUsed

@@ -31,7 +31,7 @@
 	margin-left: -50px;
 	text-align: center;
 }
-.ant-modal .ant-modal-footer{
+.new_index_disk_model .ant-modal-footer{
 	display: none;
 }
 .total_capacity{
@@ -55,4 +55,36 @@
 .used_time span{
 	height: 30px;
 	line-height: 30px;
+}
+.app_manager_add_btn{
+	margin-bottom: 10px;
+}
+.app_manager_key_operate,
+.app_manager_reset_key_operate,
+.app_manager_delete_operate,
+.app_manager_edit_operate{
+	display: inline-block;
+	margin-right: 10px;
+	color:#fff;
+	padding:5px 10px;
+	border-radius: 5px;
+}
+.app_manager_key_operate{
+	background: #31b0d5;
+	border-color: #269abc;
+}
+.app_manager_reset_key_operate{
+	background-color: #ec971f;
+    border-color: #d58512;
+}
+.app_manager_delete_operate{
+	background-color: #c9302c;
+    border-color: #ac2925;
+}
+.app_manager_edit_operate{
+	background-color: #337ab7;
+    border-color: #2e6da4; 
+}
+.app_manager_operate_warn{
+	color:red;
 }

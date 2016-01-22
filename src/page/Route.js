@@ -3,6 +3,7 @@ var childRoutes = [
 	require('../../.fr/chunks/get_camera_info'),
 	require('../../.fr/chunks/get_mobile_info'),
 	require('../../.fr/chunks/get_relay_info'),
+	require('../../.fr/chunks/layout'),
 	require('../../.fr/chunks/new_index'),
 	require('../../.fr/chunks/new_index_camera'),
 	require('../../.fr/chunks/new_index_disk'),
@@ -23,7 +24,10 @@ var childRoutes = [
 	require('../../.fr/chunks/start_transfer'),
 	require('../../.fr/chunks/stop_service'),
 	require('../../.fr/chunks/work_status'),
-	require('../../.fr/chunks/user_log_query')
+	require('../../.fr/chunks/user_log_query'),
+	require('../../.fr/chunks/app_camera_list'),
+	require('../../.fr/chunks/app_manager'),
+	require('../../.fr/chunks/app_user_list')
 ];
 export const rootRoute = {
 	path : "/",

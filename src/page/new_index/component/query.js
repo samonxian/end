@@ -24,7 +24,7 @@ export const Queryfrom = React.createClass({
 	handleSubmit(e){
 		e.preventDefault();
 		const { dispatch , formData } = this.props
-		const temp = Object.assign({}, this.state, {area : formData["area"]});
+		const temp = Object.assign({}, this.state);
 		dispatch(cameraFrameFetch(temp));
 	},
 	render(){

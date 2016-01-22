@@ -10,19 +10,6 @@ export const renderContent = function(value, row, index) {
   return obj
 }
 
-export const renderTimeline = function(value, row, index){
-	let obj = {
-	    children: value,
-	    props: {}
-	 };
-	 console.log("row:"+row);
-	 console.log("index:"+index);
-	 if(row == 0){
-	 	 obj.props.colSpan = 0;
-	 }
-	 return obj;
-}
-
 export const STOREAGE_HEADER = [{
 		title : "磁盘容量",
 		dataIndex : "total",
@@ -54,7 +41,12 @@ export const INDEX_CAMERA = [
     {
       title: '时间轴',
       dataIndex: 'timeline',
-      render: renderTimeline
+      render: renderContent
+    },
+    {
+      title: '区域',
+      dataIndex: 'area',
+      render: renderContent
     },
     {
       title: '分组号',

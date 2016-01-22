@@ -96,3 +96,13 @@ export function getUrlParams(url){
 				.split('/');		
 	return p;
 }
+/**
+ *	判断对象是否为空
+ */
+export function isEmptyObj(obj){
+	var name;
+	for ( name in obj ) {
+		return false;
+	}
+	return true;
+}

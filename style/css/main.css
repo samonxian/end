@@ -1,9 +1,6 @@
 .b {
 	/*border:1px solid red;*/
 }
-body{
-    background: #404040;
-}
 table{
 	font-size:13px;
 }
@@ -29,9 +26,6 @@ pre{
 	padding:0 10px;
 	min-width:auto;
 }
-
-
-
 .fl {
     float: left;
 }
@@ -44,21 +38,30 @@ pre{
     float: left;
     background: #404040;
 }
-.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
+.layout_logo{
+	width: 200px;
+	float: left;
+    background: #404040;
+}
+.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu,.layout_logo .ant-menu-horizontal > .ant-menu-item{
 	padding:0;
 }
-.sidebar-left .ant-menu-horizontal{
+.sidebar-left .ant-menu-horizontal,.layout_logo .ant-menu-horizontal{
 	margin-left:-5px;
 }
-.sidebar-left .ant-menu-item > h2{
+.layout_logo .ant-menu-item > h2{
 	margin-top:3px;
 }
-.sidebar-left .ant-menu-item a{
+.sidebar-left .ant-menu-item a,.layout_logo .ant-menu-item a{
 	color:#ccc;
 	font-size:15px;
 }
 .sidebar-left .ant-menu-item{
 	margin-left:20px;
+}
+.layout_right{
+	background: #404040;
+	flex:1;
 }
 /**nav**/
 
