@@ -1,3 +1,20 @@
+var open_smart_function = {
+	//routes : true, 
+	//reducers : true, 
+	//antd_splitting : true, 
+}
+if(open_smart_function){
+	var o = open_smart_function;
+	if(o.routes){
+		require('./.fr/CreateRoute.js');
+	}
+	if(o.reducers){
+		require('./.fr/CreateReducers.js');
+	}
+	if(o.antd_splitting){
+		require('./.fr/split_antd.js');
+	}
+}
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.config');

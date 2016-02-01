@@ -11,7 +11,6 @@
     "react-dom": "^0.14.3",
     "react-redux": "^4.0.6",
     "react-router": "^1.0.3",
-    "react-router-redux": "^2.1.0",
     "redux": "^3.0.5",
     "redux-logger": "^2.3.1",
     "redux-simple-router": "^1.0.2",
@@ -41,7 +40,7 @@
     "build": "grunt webpack",
     "start": "node server.js",
     "start2": "http-server -a 0.0.0.0 -p 8080",
-    "ac": "node ./.fr/autoCreator/index.js",
+    "ac": "node ./.fr/CreateRoute.js && node ./.fr/CreateReducers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sam",

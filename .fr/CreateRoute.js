@@ -1,6 +1,5 @@
 var fs = require('fs');
 var Q = require('q')
-var fn = require('../../libs/function.js')
 /**
  *	生成index.html
  */
@@ -26,11 +25,11 @@ var path = './src/page/'
 var contents = '';
 
 //获取tpl
-var routes_tpl_contents = fs.readFileSync('./.fr/autoCreator/tpl/routes_tpl.js',options = {
+var routes_tpl_contents = fs.readFileSync('./.fr/routes_tpl.js',options = {
 	encoding : 'utf-8'
 });
 //获取chunk_tpl
-var chunk_tpl_contents = fs.readFileSync('./.fr/autoCreator/tpl/chunk_tpl.js',options = {
+var chunk_tpl_contents = fs.readFileSync('./.fr/chunk_tpl.js',options = {
 	encoding : 'utf-8'
 });
 //存放routes
@@ -41,7 +40,7 @@ if(fs.existsSync(route_file)){
 	fs.unlinkSync(route_file);
 }
 var routes_config = fs.openSync(route_file,'a',0755);
-var require_tpl = "require('.fr/autoCreator/chunks/{filename}')";
+var require_tpl = "require('../../.fr/chunks/{filename}')";
 
 /**
  * 生成每个router的chunk模块
@@ -49,7 +48,7 @@ var require_tpl = "require('.fr/autoCreator/chunks/{filename}')";
  */
 function chunks(dir,filename){
 	var temp_con = chunk_tpl_contents;
-	var chunk_file = './.fr/autoCreator/chunks/'+ dir +'.js';
+	var chunk_file = './.fr/chunks/'+ dir +'.js';
 	if(fs.existsSync(chunk_file)){
 		fs.unlinkSync(chunk_file);
 	}
@@ -60,9 +59,9 @@ function chunks(dir,filename){
 }
 
 //遍历获取path模块
-
+var fn = require('./function.js')
 fn.each_file(path,function(dir){
-	if(!fs.existsSync(path + dir +'/index.jsx')){
+	if(!fs.existsSync(path + dir +'/index.js')){
 		//处理含有多个page目录,根据是否有index.js来判断
 		var path2 = path + dir + "/";
 		fn.each_file(path2,function(dir2){
