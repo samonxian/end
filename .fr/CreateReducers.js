@@ -1,6 +1,6 @@
 var fs = require('fs');
 var Q = require('q')
-var fn = require('../../libs/function');
+var fn = require('./function');
 var path = './src/page/'
 var import_tpl = "import { {import_tpl} } from './{dir}/reducer'";
 
@@ -61,7 +61,7 @@ function writeRecucers(){
 	if(fs.existsSync(w_file)){
 		fs.unlinkSync(w_file);
 	}
-	var antd_tpl = fs.readFileSync('./.fr/autoCreator/tpl/reducers_tpl.js',options = {
+	var antd_tpl = fs.readFileSync('./.fr/reducers_tpl.js',options = {
 		encoding : 'utf-8'
 	});
 	var fd = fs.openSync(w_file,'a',0755);

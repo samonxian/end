@@ -1,8 +1,8 @@
 module.exports = {
-    path: '/{filename}',
+    path: '/get_relay_info',
     getComponent(location, cb) {
         require.ensure([], (require) => {
-            cb(null, require('page/{filename}'))
+            cb(null, require('../../src/page/get_relay_info'))
         })
     }
 }
