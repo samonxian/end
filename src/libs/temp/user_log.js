@@ -45,3 +45,19 @@ export function getCameraState(type){
 	return t_type;
 }
 
+export function getType(type){
+	switch(type){
+		case 'camera_debug':
+			type = 'rtmp_device';
+		case 'camera_time':
+			type = 'rtmp_device';
+		case 'mobile_debug':
+			type = 'rtmp_device';
+		case 'camera_time_last':
+			type = 'rtmp_device';
+		case 'camera_debug_last':
+			type = 'rtmp_device';
+	}
+	return type;
+}
+
