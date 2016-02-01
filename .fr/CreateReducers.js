@@ -45,7 +45,7 @@ function getReducers(dir){
 }
 
 fn.each_file(path,function(dir){
-	if(!fs.existsSync(path + dir +'/index.js')){
+	if(!fs.existsSync(path + dir +'/index.jsx')){
 		var path2 = path + dir + "/";
 		fn.each_file(path2,function(dir2){
 			getReducers(dir + "/" +dir2);

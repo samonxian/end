@@ -61,7 +61,7 @@ function chunks(dir,filename){
 //遍历获取path模块
 var fn = require('./function.js')
 fn.each_file(path,function(dir){
-	if(!fs.existsSync(path + dir +'/index.js')){
+	if(!fs.existsSync(path + dir +'/index.jsx')){
 		//处理含有多个page目录,根据是否有index.js来判断
 		var path2 = path + dir + "/";
 		fn.each_file(path2,function(dir2){
