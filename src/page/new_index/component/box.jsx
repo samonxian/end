@@ -1,4 +1,4 @@
-import React from 'React'
+import React from 'react'
 import { Tooltip } from 'antd'
 
 export class Box extends React.Component{
