@@ -1,6 +1,6 @@
 var fs = require('fs');
 var Q = require('q')
-var fn = require('./function.js');
+var fn = require('./function');
 var path = './src/page/'
 var import_tpl = "import { {import_tpl} } from './{dir}/reducer'";
 

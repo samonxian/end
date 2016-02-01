@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Table } from 'antd_c'
 import { title } from '../../user_log/title.js'
-import * as deal from './index.js'
+import * as deal from './index'
 let t_data = [];
 class NTable extends React.Component {
 

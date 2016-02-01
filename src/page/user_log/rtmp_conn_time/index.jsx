@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class exception_event extends React.Component {
+class rtmp_conn_time extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.exception_event.posts){
+		if(!this.props.rtmp_conn_time.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class exception_event extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,exception_event } = this.props
+		let { dispatch,rtmp_conn_time } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,16 +40,17 @@ class exception_event extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { exception_event ,location,dispatch } = this.props;
-		let { params } = exception_event;
-		if(this.hasMount && exception_event.posts && exception_event.posts.logs){
-			if(exception_event.posts.logs[0]){
-				if( !exception_event.posts.logs[0].key){
-					data = logData(exception_event);
+		let { rtmp_conn_time ,location,dispatch } = this.props;
+		let { params } = rtmp_conn_time;
+		if(this.hasMount && rtmp_conn_time.posts && rtmp_conn_time.posts.logs){
+			if(rtmp_conn_time.posts.logs[0]){
+				if( !rtmp_conn_time.posts.logs[0].key){
+					data = logData(rtmp_conn_time);
 				}
 			}else{
 				data = [];
 			}
+			
 		}
         return (
 			<Monitor location={location} >
@@ -58,17 +59,17 @@ class exception_event extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!exception_event.posts &&
-					<Table className="" loading={exception_event.isFetching} size="middle"
+					!rtmp_conn_time.posts &&
+					<Table className="" loading={rtmp_conn_time.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					exception_event.posts &&
-					<Table className="" loading={exception_event.isFetching} size="middle"
+					rtmp_conn_time.posts &&
+					<Table className="" loading={rtmp_conn_time.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					exception_event.posts && exception_event.posts.total_pages > 1 &&
+					rtmp_conn_time.posts && rtmp_conn_time.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -79,11 +80,11 @@ class exception_event extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("exception_event组件初始props",state);
+	//console.log("rtmp_conn_time组件初始props",state);
 	return {
 		//routing : state.routing,
-	    exception_event : state.exception_event
+	    rtmp_conn_time : state.rtmp_conn_time
 	};
 }
-module.exports = connect(mapStateToProps)(exception_event)
-module.exports.component = exception_event;
+module.exports = connect(mapStateToProps)(rtmp_conn_time)
+module.exports.component = rtmp_conn_time;

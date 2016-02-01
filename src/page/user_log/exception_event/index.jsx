@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class rtmp_device extends React.Component {
+class exception_event extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.rtmp_device.posts){
+		if(!this.props.exception_event.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class rtmp_device extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,rtmp_device } = this.props
+		let { dispatch,exception_event } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,17 +40,16 @@ class rtmp_device extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { rtmp_device ,location,dispatch } = this.props;
-		let { params } = rtmp_device;
-		if(this.hasMount && rtmp_device.posts && rtmp_device.posts.logs){
-			if(rtmp_device.posts.logs[0]){
-				if( !rtmp_device.posts.logs[0].key){
-					data = logData(rtmp_device);
+		let { exception_event ,location,dispatch } = this.props;
+		let { params } = exception_event;
+		if(this.hasMount && exception_event.posts && exception_event.posts.logs){
+			if(exception_event.posts.logs[0]){
+				if( !exception_event.posts.logs[0].key){
+					data = logData(exception_event);
 				}
 			}else{
 				data = [];
 			}
-			
 		}
         return (
 			<Monitor location={location} >
@@ -59,17 +58,17 @@ class rtmp_device extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!rtmp_device.posts &&
-					<Table className="" loading={rtmp_device.isFetching} size="middle"
+					!exception_event.posts &&
+					<Table className="" loading={exception_event.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					rtmp_device.posts &&
-					<Table className="" loading={rtmp_device.isFetching} size="middle"
+					exception_event.posts &&
+					<Table className="" loading={exception_event.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					rtmp_device.posts && rtmp_device.posts.total_pages > 1 &&
+					exception_event.posts && exception_event.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +79,11 @@ class rtmp_device extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("rtmp_device组件初始props",state);
+	//console.log("exception_event组件初始props",state);
 	return {
 		//routing : state.routing,
-	    rtmp_device : state.rtmp_device
+	    exception_event : state.exception_event
 	};
 }
-module.exports = connect(mapStateToProps)(rtmp_device)
-module.exports.component = rtmp_device;
+module.exports = connect(mapStateToProps)(exception_event)
+module.exports.component = exception_event;

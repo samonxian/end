@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class start_play extends React.Component {
+class relay_status extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.start_play.posts){
+		if(!this.props.relay_status.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class start_play extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,start_play } = this.props
+		let { dispatch,relay_status } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,12 +40,12 @@ class start_play extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { start_play ,location,dispatch } = this.props;
-		let { params } = start_play;
-		if(this.hasMount && start_play.posts && start_play.posts.logs){
-			if(start_play.posts.logs[0]){
-				if( !start_play.posts.logs[0].key){
-					data = logData(start_play);
+		let { relay_status ,location,dispatch } = this.props;
+		let { params } = relay_status;
+		if(this.hasMount && relay_status.posts && relay_status.posts.logs){
+			if(relay_status.posts.logs[0]){
+				if( !relay_status.posts.logs[0].key){
+					data = logData(relay_status);
 				}
 			}else{
 				data = [];
@@ -59,17 +59,17 @@ class start_play extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!start_play.posts &&
-					<Table className="" loading={start_play.isFetching} size="middle"
+					!relay_status.posts &&
+					<Table className="" loading={relay_status.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					start_play.posts &&
-					<Table className="" loading={start_play.isFetching} size="middle"
+					relay_status.posts &&
+					<Table className="" loading={relay_status.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					start_play.posts && start_play.posts.total_pages > 1 &&
+					relay_status.posts && relay_status.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +80,11 @@ class start_play extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("start_play组件初始props",state);
+	//console.log("relay_status组件初始props",state);
 	return {
 		//routing : state.routing,
-	    start_play : state.start_play
+	    relay_status : state.relay_status
 	};
 }
-module.exports = connect(mapStateToProps)(start_play)
-module.exports.component = start_play;
+module.exports = connect(mapStateToProps)(relay_status)
+module.exports.component = relay_status;

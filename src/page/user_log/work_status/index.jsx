@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class start_service extends React.Component {
+class work_status extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.start_service.posts){
+		if(!this.props.work_status.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,8 +28,8 @@ class start_service extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,start_service } = this.props
-		dispatch(action.fetchData(params,this.type));	
+		let { dispatch,work_status } = this.props
+		dispatch(action.fetchData(params));	
 	}
 	
 	onPaginationChange(p){
@@ -40,11 +40,12 @@ class start_service extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { start_service ,location,dispatch } = this.props;
-		if(this.hasMount && start_service.posts && start_service.posts.logs){
-			if(start_service.posts.logs[0]){
-				if( !start_service.posts.logs[0].key){
-					data = logData(start_service);
+		let { work_status ,location,dispatch } = this.props;
+		let { params } = work_status;
+		if(this.hasMount && work_status.posts && work_status.posts.logs){
+			if(work_status.posts.logs[0]){
+				if( !work_status.posts.logs[0].key){
+					data = logData(work_status);
 				}
 			}else{
 				data = [];
@@ -58,17 +59,17 @@ class start_service extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!start_service.posts &&
-					<Table className="" loading={start_service.isFetching} size="middle"
+					!work_status.posts &&
+					<Table className="" loading={work_status.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					start_service.posts &&
-					<Table className="" loading={start_service.isFetching} size="middle"
+					work_status.posts &&
+					<Table className="" loading={work_status.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					start_service.posts && start_service.posts.total_pages > 1 &&
+					work_status.posts && work_status.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -79,10 +80,11 @@ class start_service extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("start_service组件初始props",state);
+	//console.log("work_status组件初始props",state);
 	return {
 		//routing : state.routing,
-	    start_service : state.start_service
+	    work_status : state.work_status
 	};
 }
-module.exports = connect(mapStateToProps)(start_service)
+module.exports = connect(mapStateToProps)(work_status)
+module.exports.component = work_status;

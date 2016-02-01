@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class stop_service extends React.Component {
+class start_service extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.stop_service.posts){
+		if(!this.props.start_service.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class stop_service extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,stop_service } = this.props
+		let { dispatch,start_service } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,12 +40,11 @@ class stop_service extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { stop_service ,location,dispatch } = this.props;
-		let { params } = stop_service;
-		if(this.hasMount && stop_service.posts && stop_service.posts.logs){
-			if(stop_service.posts.logs[0]){
-				if( !stop_service.posts.logs[0].key){
-					data = logData(stop_service);
+		let { start_service ,location,dispatch } = this.props;
+		if(this.hasMount && start_service.posts && start_service.posts.logs){
+			if(start_service.posts.logs[0]){
+				if( !start_service.posts.logs[0].key){
+					data = logData(start_service);
 				}
 			}else{
 				data = [];
@@ -59,17 +58,17 @@ class stop_service extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!stop_service.posts &&
-					<Table className="" loading={stop_service.isFetching} size="middle"
+					!start_service.posts &&
+					<Table className="" loading={start_service.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					stop_service.posts &&
-					<Table className="" loading={stop_service.isFetching} size="middle"
+					start_service.posts &&
+					<Table className="" loading={start_service.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					stop_service.posts && stop_service.posts.total_pages > 1 &&
+					start_service.posts && start_service.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +79,10 @@ class stop_service extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("stop_service组件初始props",state);
+	//console.log("start_service组件初始props",state);
 	return {
 		//routing : state.routing,
-	    stop_service : state.stop_service
+	    start_service : state.start_service
 	};
 }
-module.exports = connect(mapStateToProps)(stop_service)
-module.exports.component = stop_service;
+module.exports = connect(mapStateToProps)(start_service)

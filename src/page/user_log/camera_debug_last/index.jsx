@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class recv_src_conn extends React.Component {
+class camera_debug_last extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.recv_src_conn.posts){
+		if(!this.props.camera_debug_last.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class recv_src_conn extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,recv_src_conn } = this.props
+		let { dispatch,camera_debug_last } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,12 +40,12 @@ class recv_src_conn extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { recv_src_conn ,location,dispatch } = this.props;
-		let { params } = recv_src_conn;
-		if(this.hasMount && recv_src_conn.posts && recv_src_conn.posts.logs){
-			if(recv_src_conn.posts.logs[0]){
-				if( !recv_src_conn.posts.logs[0].key){
-					data = logData(recv_src_conn);
+		let { camera_debug_last ,location,dispatch } = this.props;
+		let { params } = camera_debug_last;
+		if(this.hasMount && camera_debug_last.posts && camera_debug_last.posts.logs){
+			if(camera_debug_last.posts.logs[0]){
+				if( !camera_debug_last.posts.logs[0].key){
+					data = logData(camera_debug_last);
 				}
 			}else{
 				data = [];
@@ -59,17 +59,17 @@ class recv_src_conn extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!recv_src_conn.posts &&
-					<Table className="" loading={recv_src_conn.isFetching} size="middle"
+					!camera_debug_last.posts &&
+					<Table className="" loading={camera_debug_last.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					recv_src_conn.posts &&
-					<Table className="" loading={recv_src_conn.isFetching} size="middle"
+					camera_debug_last.posts &&
+					<Table className="" loading={camera_debug_last.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					recv_src_conn.posts && recv_src_conn.posts.total_pages > 1 &&
+					camera_debug_last.posts && camera_debug_last.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +80,11 @@ class recv_src_conn extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("recv_src_conn组件初始props",state);
+	//console.log("camera_debug_last组件初始props",state);
 	return {
 		//routing : state.routing,
-	    recv_src_conn : state.recv_src_conn
+	    camera_debug_last : state.camera_debug_last
 	};
 }
-module.exports = connect(mapStateToProps)(recv_src_conn)
-module.exports.component = recv_src_conn;
+module.exports = connect(mapStateToProps)(camera_debug_last)
+module.exports.component = camera_debug_last;

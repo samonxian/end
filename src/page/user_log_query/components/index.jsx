@@ -1,5 +1,5 @@
 import React from 'react'
-import { title } from '../../user_log/title.js'
+import { title } from '../../user_log/title'
 import { Table } from 'antd_c'
 import { fieldSort ,toUpperCase } from 'function'
 import * as common from 'common'

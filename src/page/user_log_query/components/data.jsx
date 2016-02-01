@@ -2,7 +2,7 @@ import React from 'react'
 import { Tabs,Table,Timeline,Icon,Row,Col,Alert } from 'antd_c'
 import { title } from '../../user_log/title.js'
 import NCollapse from './collapse'
-import NTable from './table.js'
+import NTable from './table'
 const Item = Timeline.Item
 const TabPane = Tabs.TabPane;
 class LogData extends React.Component {

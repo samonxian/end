@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class work_status extends React.Component {
+class disc_connect extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.work_status.posts){
+		if(!this.props.disc_connect.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,8 +28,8 @@ class work_status extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,work_status } = this.props
-		dispatch(action.fetchData(params));	
+		let { dispatch,disc_connect } = this.props
+		dispatch(action.fetchData(params,this.type));	
 	}
 	
 	onPaginationChange(p){
@@ -40,12 +40,12 @@ class work_status extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { work_status ,location,dispatch } = this.props;
-		let { params } = work_status;
-		if(this.hasMount && work_status.posts && work_status.posts.logs){
-			if(work_status.posts.logs[0]){
-				if( !work_status.posts.logs[0].key){
-					data = logData(work_status);
+		let { disc_connect ,location,dispatch } = this.props;
+		let { params } = disc_connect;
+		if(this.hasMount && disc_connect.posts && disc_connect.posts.logs){
+			if(disc_connect.posts.logs[0]){
+				if( !disc_connect.posts.logs[0].key){
+					data = logData(disc_connect);
 				}
 			}else{
 				data = [];
@@ -59,17 +59,17 @@ class work_status extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!work_status.posts &&
-					<Table className="" loading={work_status.isFetching} size="middle"
+					!disc_connect.posts &&
+					<Table className="" loading={disc_connect.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					work_status.posts &&
-					<Table className="" loading={work_status.isFetching} size="middle"
+					disc_connect.posts &&
+					<Table className="" loading={disc_connect.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					work_status.posts && work_status.posts.total_pages > 1 &&
+					disc_connect.posts && disc_connect.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +80,11 @@ class work_status extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("work_status组件初始props",state);
+	//console.log("disc_connect组件初始props",state);
 	return {
 		//routing : state.routing,
-	    work_status : state.work_status
+	    disc_connect : state.disc_connect
 	};
 }
-module.exports = connect(mapStateToProps)(work_status)
-module.exports.component = work_status;
+module.exports = connect(mapStateToProps)(disc_connect)
+module.exports.component = disc_connect;

@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class mobile_debug extends React.Component {
+class conn_media_src extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.mobile_debug.posts){
+		if(!this.props.conn_media_src.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,8 +28,8 @@ class mobile_debug extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,mobile_debug } = this.props
-		dispatch(action.fetchData(params,this.type));	
+		let { dispatch,conn_media_src } = this.props
+		dispatch(action.fetchData(params));	
 	}
 	
 	onPaginationChange(p){
@@ -40,18 +40,19 @@ class mobile_debug extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { mobile_debug ,location,dispatch } = this.props;
-		let { params } = mobile_debug;
-		if(this.hasMount && mobile_debug.posts && mobile_debug.posts.logs){
-			if(mobile_debug.posts.logs[0]){
-				if( !mobile_debug.posts.logs[0].key){
-					data = logData(mobile_debug);
+		let { conn_media_src ,location,dispatch } = this.props;
+		let { params } = conn_media_src;
+		if(this.hasMount && conn_media_src.posts && conn_media_src.posts.logs){
+			if(conn_media_src.posts.logs[0]){
+				if( !conn_media_src.posts.logs[0].key){
+					data = logData(conn_media_src);
 				}
 			}else{
 				data = [];
 			}
 			
 		}
+
         return (
 			<Monitor location={location} >
 				<h2>{title[this.type]}</h2>
@@ -59,17 +60,17 @@ class mobile_debug extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!mobile_debug.posts &&
-					<Table className="" loading={mobile_debug.isFetching} size="middle"
+					!conn_media_src.posts &&
+					<Table className="" loading={conn_media_src.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					mobile_debug.posts &&
-					<Table className="" loading={mobile_debug.isFetching} size="middle"
+					conn_media_src.posts &&
+					<Table className="" loading={conn_media_src.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					mobile_debug.posts && mobile_debug.posts.total_pages > 1 &&
+					conn_media_src.posts && conn_media_src.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +81,10 @@ class mobile_debug extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("mobile_debug组件初始props",state);
+	//console.log("conn_media_src组件初始props",state);
 	return {
 		//routing : state.routing,
-	    mobile_debug : state.mobile_debug
+	    conn_media_src : state.conn_media_src
 	};
 }
-module.exports = connect(mapStateToProps)(mobile_debug)
-module.exports.component = mobile_debug;
+module.exports = connect(mapStateToProps)(conn_media_src)

@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class relay_status extends React.Component {
+class start_transfer extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.relay_status.posts){
+		if(!this.props.start_transfer.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class relay_status extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,relay_status } = this.props
+		let { dispatch,start_transfer } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,12 +40,12 @@ class relay_status extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { relay_status ,location,dispatch } = this.props;
-		let { params } = relay_status;
-		if(this.hasMount && relay_status.posts && relay_status.posts.logs){
-			if(relay_status.posts.logs[0]){
-				if( !relay_status.posts.logs[0].key){
-					data = logData(relay_status);
+		let { start_transfer ,location,dispatch } = this.props;
+		let { params } = start_transfer;
+		if(this.hasMount && start_transfer.posts && start_transfer.posts.logs){
+			if(start_transfer.posts.logs[0]){
+				if( !start_transfer.posts.logs[0].key){
+					data = logData(start_transfer);
 				}
 			}else{
 				data = [];
@@ -59,17 +59,17 @@ class relay_status extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!relay_status.posts &&
-					<Table className="" loading={relay_status.isFetching} size="middle"
+					!start_transfer.posts &&
+					<Table className="" loading={start_transfer.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					relay_status.posts &&
-					<Table className="" loading={relay_status.isFetching} size="middle"
+					start_transfer.posts &&
+					<Table className="" loading={start_transfer.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					relay_status.posts && relay_status.posts.total_pages > 1 &&
+					start_transfer.posts && start_transfer.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +80,11 @@ class relay_status extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("relay_status组件初始props",state);
+	//console.log("start_transfer组件初始props",state);
 	return {
 		//routing : state.routing,
-	    relay_status : state.relay_status
+	    start_transfer : state.start_transfer
 	};
 }
-module.exports = connect(mapStateToProps)(relay_status)
-module.exports.component = relay_status;
+module.exports = connect(mapStateToProps)(start_transfer)
+module.exports.component = start_transfer;

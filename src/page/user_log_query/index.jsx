@@ -104,7 +104,7 @@ class user_log_query extends Component {
 				for(var key in title){
 					key = common.getType(key);
 					if(key != "other"){
-						obj[key] =  require('../user_log/'+key+'/data.js');
+						obj[key] =  require('../user_log/'+key+'/data');
 					}
 				}
 				return obj;

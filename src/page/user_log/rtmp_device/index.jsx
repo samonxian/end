@@ -4,22 +4,22 @@ import { pushPath ,replacePath } from 'redux-simple-router'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
-import Pagination from '../pagination.js'
+import Pagination from '../pagination'
 import { title } from '../title.js'
-import LogForm from '../form.js'
+import LogForm from '../form'
 import { getUrlParams } from 'function'
 import { columns,logData } from './data'
 const FormItem = Form.Item;
 let data = []; 
 
-class camera_time extends React.Component {
+class rtmp_device extends React.Component {
 	constructor(){
 		super(); 
 		this.type = null;
 	}
 
 	componentDidMount(){
-		if(!this.props.camera_time.posts){
+		if(!this.props.rtmp_device.posts){
 			this.getData({ })	
 		}
 		this.hasMount = true;
@@ -28,7 +28,7 @@ class camera_time extends React.Component {
 	}
 
 	getData(params={}){
-		let { dispatch,camera_time } = this.props
+		let { dispatch,rtmp_device } = this.props
 		dispatch(action.fetchData(params,this.type));	
 	}
 	
@@ -40,12 +40,12 @@ class camera_time extends React.Component {
 
     render() {
 		//console.log(this.props)
-		let { camera_time ,location,dispatch } = this.props;
-		let { params } = camera_time;
-		if(this.hasMount && camera_time.posts && camera_time.posts.logs){
-			if(camera_time.posts.logs[0]){
-				if( !camera_time.posts.logs[0].key){
-					data = logData(camera_time);
+		let { rtmp_device ,location,dispatch } = this.props;
+		let { params } = rtmp_device;
+		if(this.hasMount && rtmp_device.posts && rtmp_device.posts.logs){
+			if(rtmp_device.posts.logs[0]){
+				if( !rtmp_device.posts.logs[0].key){
+					data = logData(rtmp_device);
 				}
 			}else{
 				data = [];
@@ -59,17 +59,17 @@ class camera_time extends React.Component {
 				<LogForm action={action}/>
 				
 				{
-					!camera_time.posts &&
-					<Table className="" loading={camera_time.isFetching} size="middle"
+					!rtmp_device.posts &&
+					<Table className="" loading={rtmp_device.isFetching} size="middle"
 						columns={columns} dataSource={[]} pagination={false} bordered/>
 				}
 				{
-					camera_time.posts &&
-					<Table className="" loading={camera_time.isFetching} size="middle"
+					rtmp_device.posts &&
+					<Table className="" loading={rtmp_device.isFetching} size="middle"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}
 				{
-					camera_time.posts && camera_time.posts.total_pages > 1 &&
+					rtmp_device.posts && rtmp_device.posts.total_pages > 1 &&
 					<Pagination action={action}/>
 				}
 			</Monitor>
@@ -80,11 +80,11 @@ class camera_time extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state,props){
-	//console.log("camera_time组件初始props",state);
+	//console.log("rtmp_device组件初始props",state);
 	return {
 		//routing : state.routing,
-	    camera_time : state.camera_time
+	    rtmp_device : state.rtmp_device
 	};
 }
-module.exports = connect(mapStateToProps)(camera_time)
-module.exports.component = camera_time;
+module.exports = connect(mapStateToProps)(rtmp_device)
+module.exports.component = rtmp_device;

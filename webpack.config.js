@@ -7,7 +7,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
  */
 var entry,leb;
 var NODE_ENV = 'development';
-entry = ['webpack-dev-server/client?http://localhost:8000','webpack/hot/only-dev-server','./src/index.js']; 
+entry = ['webpack-dev-server/client?http://localhost:8000','webpack/hot/only-dev-server','./src/index.jsx']; 
 var vendor = require('./src/page/vendor.js');
 if(!vendor){
 	vendor = [];
@@ -55,7 +55,8 @@ module.exports = {
 			'antd_c': __dirname + '/src/libs/antd',
 			'function': __dirname + '/src/libs/function.js',
 			'common': __dirname + '/src/libs/temp/user_log.js',
-		}
+		}, 
+		extensions: ['', '.js', '.jsx']
 	},
 	plugins: [
 		new webpack.NoErrorsPlugin(),
