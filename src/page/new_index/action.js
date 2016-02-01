@@ -33,7 +33,7 @@ export function getStorageResponse(reddit,json){
 export function storageFetch(reddit){
     return dispatch => {
         dispatch(getStorageReq(reddit))
-        return fetch('http://120.26.74.53:8077/disc_monitor/query/discstatus?id='+reddit["id"])
+        return fetch('http://120.26.74.53/api/disc_monitor/query/discstatus?id='+reddit["id"])
             .then(response => response.json())
             .then(json => dispatch(getStorageResponse(reddit, json)))
     }

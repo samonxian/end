@@ -27,7 +27,7 @@ export function cameraFrameQueryResponse(reddit, json){
 export function cameraFrameFetch(reddit){
     return dispatch => {
         dispatch(cameraFrameQuery(reddit))
-        return fetch('http://120.26.74.53:8077/monitor/store_timeline_json?cid='+reddit["cid"]+'&start_time='+reddit["start_time"]+'&end_time='+reddit["end_time"])
+        return fetch('http://120.26.74.53/api/monitor/store_timeline_json?cid='+reddit["cid"]+'&start_time='+reddit["start_time"]+'&end_time='+reddit["end_time"])
             .then(response => response.json())
             .then(json => dispatch(cameraFrameQueryResponse(reddit, json)))
     }

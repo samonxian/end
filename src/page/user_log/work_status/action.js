@@ -59,7 +59,7 @@ export function fetchData(_params={}) {
 	_params = Object.assign(obj,_params);
     return dispatch => {
         dispatch(requestPosts(_params))
-		var url = params(`http://120.26.74.53:8077/logs/${modules}`,_params);
+		var url = params(`http://120.26.74.53/api/logs/${modules}`,_params);
 		return fetch(url)
             .then(response => response.json())
             .then(function(json){

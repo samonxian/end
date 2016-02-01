@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
-import { routeReducer } from 'redux-simple-router'
-import { get_layout_info } from './layout/reducer'
+import { routeReducer } from 'redux-simple-router';
+import { app_camera_list } from './app_camera_list/reducer'
+import { app_manager,get_app_type } from './app_manager/reducer'
+import { app_user_list } from './app_user_list/reducer'
 import { get_camera_info } from './get_camera_info/reducer'
 import { get_mobile_info } from './get_mobile_info/reducer'
 import { get_relay_info } from './get_relay_info/reducer'
@@ -8,6 +10,7 @@ import { get_area_list } from './new_index/reducer'
 import { new_index_camera } from './new_index_camera/reducer'
 import { new_index_disk,getStorageResponse,cityTab } from './new_index_disk/reducer'
 import { new_index_monitor } from './new_index_monitor/reducer'
+import { rtmp_tracker,rtmp_tracker_form } from './rtmp_tracker/reducer'
 import { camera_debug,camera_debug_form } from './user_log/camera_debug/reducer'
 import { camera_debug_last,camera_debug_last_form } from './user_log/camera_debug_last/reducer'
 import { camera_time,camera_time_form } from './user_log/camera_time/reducer'
@@ -15,6 +18,7 @@ import { camera_time_last,camera_time_last_form } from './user_log/camera_time_l
 import { conn_media_src,conn_media_src_form } from './user_log/conn_media_src/reducer'
 import { disc_connect,disc_connect_form } from './user_log/disc_connect/reducer'
 import { exception_event,exception_event_form } from './user_log/exception_event/reducer'
+import { mobile_debug,mobile_debug_form } from './user_log/mobile_debug/reducer'
 import { recv_src_conn,recv_src_conn_form } from './user_log/recv_src_conn/reducer'
 import { relay_status,relay_status_form } from './user_log/relay_status/reducer'
 import { rtmp_conn_time,rtmp_conn_time_form } from './user_log/rtmp_conn_time/reducer'
@@ -24,22 +28,24 @@ import { start_service,start_service_form } from './user_log/start_service/reduc
 import { start_transfer,start_transfer_form } from './user_log/start_transfer/reducer'
 import { stop_service,stop_service_form } from './user_log/stop_service/reducer'
 import { work_status,work_status_form } from './user_log/work_status/reducer'
-import { app_camera_list } from './app_camera_list/reducer'
-import { app_manager, get_app_type } from './app_manager/reducer'
-import { app_user_list } from './app_user_list/reducer'
 import { user_log_query,user_log_query_form,user_log_query_showTable } from './user_log_query/reducer'
  
 const rootReducer = combineReducers({
-	get_layout_info,
+	app_camera_list,
+	app_manager,
+	get_app_type,
+	app_user_list,
 	get_camera_info,
 	get_mobile_info,
 	get_relay_info,
+	get_area_list,
 	new_index_camera,
 	new_index_disk,
 	getStorageResponse,
 	cityTab,
-	get_area_list,
 	new_index_monitor,
+	rtmp_tracker,
+	rtmp_tracker_form,
 	camera_debug,
 	camera_debug_form,
 	camera_debug_last,
@@ -54,6 +60,8 @@ const rootReducer = combineReducers({
 	disc_connect_form,
 	exception_event,
 	exception_event_form,
+	mobile_debug,
+	mobile_debug_form,
 	recv_src_conn,
 	recv_src_conn_form,
 	relay_status,
@@ -74,10 +82,6 @@ const rootReducer = combineReducers({
 	work_status_form,
 	user_log_query,
 	user_log_query_form,
-	app_camera_list,
-	app_manager,
-	app_user_list,
-	get_app_type,
 	user_log_query_showTable,
 	routing: routeReducer
 })

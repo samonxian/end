@@ -27,7 +27,7 @@ export function newIndexTab(data){
 export function fetchDiskData(reddit) {
     return dispatch => {
         dispatch(diskDtailReq(reddit))
-        return fetch('http://120.26.74.53:8077/monitor/discInfo_json?area='+reddit["area"]+'&p='+reddit["p"])
+        return fetch('http://120.26.74.53/api/monitor/discInfo_json?area='+reddit["area"]+'&p='+reddit["p"])
             .then(response => response.json())
             .then(json => dispatch(diskDtailRespone(reddit, json)))
     }

@@ -25,7 +25,7 @@ class LogData extends React.Component {
 	
     render() {
 		let _this = this;
-		let { data,deal_table,dispatch,time,switch_type,parent } =  this.props;
+		let { data,deal_table,dispatch,time,switch_type,parent,post_count } =  this.props;
 		let columns = [];
 		let left_data = [];
 		for(var key in data){
@@ -49,25 +49,29 @@ class LogData extends React.Component {
 								let message = title[value.typeName] + ":" 
 								switch(parseInt(value.status,10)){
 									case 0:
-										type = "success";
+										type = "bg_success";
 										message += "优";
 										break;
 									case 1:
-										type = "info";
+										type = "bg_info";
 										message += "良";
 										break;
 									case 2:
-										type = "warn";
+										type = "bg_warn";
 										message += "中";
 										break;
 									case 3:
-										type = "error";
+										type = "bg_error";
 										message += "差";
 										break;
 								}
+								//console.debug(post_count[value.typeName])
+								if(post_count[value.typeName] == 0){
+									type = 'bg_gray'	
+									message = '无数据'
+								}
 								return(
-									<div title={message} className="color_bar" key={ key } onClick={switch_type.bind(parent,value.typeName)} >
-										<Alert type={type} />
+									<div title={message} className={'color_bar ' + type} key={ key } onClick={switch_type.bind(parent,value.typeName)} >
 									</div>
 								)
 							})

@@ -2,11 +2,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { Table,Collapse } from 'antd_c'
-import { title } from '../../user_log/title.js'
-import * as deal from './index.js'
+import { title } from '../../user_log/title'
+import * as deal from './index'
+import CollapseItem from 'libs/antd/collapseItemTable'
 const Panel = Collapse.Panel;
 let t_data = [];
 class NCollapse extends React.Component {
+
+	shouldComponentUpdate(){
+		//console.debug(this.props)
+		//return false;
+		return true;
+	}
 
 	componentDidMount(){
 		
@@ -49,12 +56,11 @@ class NCollapse extends React.Component {
 			show = "show";
 		}
 		let className = "uql_hide_table " + show; 
-		//console.log(this.state)
         return (
 			<div className={className}>
 				{
 					data.length > 0 && 
-					<Collapse >
+					<div className="ant-collapse">
 						{
 						data.map(function(d,key){
 							if(!d.t_create_at){ d.t_create_at = d.create_at; }
@@ -81,23 +87,15 @@ class NCollapse extends React.Component {
 							}
 							var _t = create_at + " / " + title[d.type];
 							var t_title = <span style={ {color} }>
-								{
-									_t
-								}
+								{ _t }
 							</span> 
 							return (
-								<Panel  header={ t_title } key={key} > 
-									{
-										<Table  size="middle" ref="table"
-											columns={columns} dataSource={t_data[key]} pagination={false} bordered/>
-									}
-								</Panel>	
-								
+								<CollapseItem data={ t_data[key] } columns={columns} title={t_title} key={key}/>
 							)
 
 						})
 						}
-					</Collapse>
+					</div>
 				}
 			</div>
 			

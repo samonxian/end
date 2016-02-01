@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
 import { pushPath,replacePath } from 'redux-simple-router'
-import { title } from '../user_log/title.js'
+import { title_menu } from '../user_log/title.js'
 const TabPane = Tabs.TabPane;
 
 class user_log_sidebar extends React.Component {
@@ -21,66 +21,65 @@ class user_log_sidebar extends React.Component {
 	}
 
 	callback(key) {
-		key = parseInt(key,10)
 		let { dispatch } = this.props;
+		//console.debug(key)
 		switch(key){
-			case 1:
-				dispatch(pushPath('/user_log/start_service'));
-			break;
-			case 2:
+			case 'other':
 				dispatch(pushPath('/user_log_query'));
 			break;
 		}
+		this.title_keys.forEach(function(value,k){
+			if(value == key){
+				dispatch(pushPath('/user_log/' + value));
+			}
+		})
 	}
 	
+	getUrlKey(route){
+		var title_keys = [],title_contents = [];
+		if(!this.title_keys){
+			for(var key in title_menu){
+				title_keys.push(key);	
+				title_contents.push(title_menu[key]);	
+				if(route.indexOf(key) != -1){
+					this.active = key;	
+				}
+			}
+			this.title_keys = title_keys; 
+			this.title_contents= title_contents 
+		}
+	}
 
     render() {
+		var _this = this;
 		let route = this.props.routing.path;
-		let active = 1;
-		if(route.indexOf('user_log') != -1 ){
-			active = 1;
+		let active = 'other';
+		this.getUrlKey(route);	
+		if(this.active){
+			active = this.active;
 		}
-		if(route.indexOf('user_log_query') != -1 ){
-			active = 2;
-		}
-		var title_keys = [],title_contents = [];
-		for(var key in title){
-			title_keys.push(key);	
-			title_contents.push(title[key]);	
-		}
-		const menu = <Menu onClick={this.menuclick.bind(this)}>
-						{
-							title_contents.map(function(data,index){
-								var url = '/user_log/'+title_keys[index];
-								var key =  title_keys[index];
-								return (
-									<Menu.Item key={key}>
-										<Link to={url}>{data}</Link>
-									</Menu.Item>
-								)
-							})
-						}
-						
-					</Menu>;
-		const operations = <Dropdown overlay={menu}>
-								<span>
-									日志页面 <Icon  type="caret-down" className="icon_down"/>
-								</span>
-						  </Dropdown>;
-        return (
+		return (
 			<div>
 				<Tabs defaultActiveKey={active.toString() } 
 						onChange={this.callback.bind(this)} type="card">
-					<TabPane tab="日志查询" key="2">
+					<TabPane tab="日志查询" key="other">
 						{
 							route.indexOf('user_log_query') != -1 &&  this.props.children
 						}
 					</TabPane>
-					<TabPane tab={operations} key="1">
-						{
-							route.indexOf('user_log') != -1 &&  this.props.children
-						}
-					</TabPane>
+					{
+						_this.title_contents.map(function(data,index){
+							var key = _this.title_keys[index]
+							var url = '/user_log/'+key;
+							return (
+								<TabPane tab={data} key={ key }>
+									{
+										route.indexOf(key) != -1 &&  _this.props.children
+									}
+								</TabPane>
+							)
+						})
+					}
 				</Tabs>
 			</div>
         )

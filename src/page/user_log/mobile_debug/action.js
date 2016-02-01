@@ -1,11 +1,11 @@
 import fetch from 'isomorphic-fetch'
 import { params } from 'function'
 
-export const LOG_INPUT_PEERID_8 = 'LOG_INPUT_PEERID_8'
-export const LOG_INPUT_START_TIME_8 = 'LOG_INPUT_BEGIN_TIME'
-export const LOG_INPUT_END_TIME_8 = 'LOG_INPUT_END_TIME_8'
-export const RECIEVE_LOG_8 = 'RECIEVE_LOG_8'
-export const REQUEST_LOG_8 = 'REQUEST_LOG_8'
+export const LOG_INPUT_PEERID_18 = 'LOG_INPUT_PEERID_18'
+export const LOG_INPUT_START_TIME_18 = 'LOG_INPUT_START_TIME_18'
+export const LOG_INPUT_END_TIME_18 = 'LOG_INPUT_END_TIME_18'
+export const RECIEVE_LOG_18 = 'RECIEVE_LOG_18'
+export const REQUEST_LOG_18 = 'REQUEST_LOG_18'
 
 let common = {
 	isFetching : false,//正在获取数据
@@ -14,28 +14,28 @@ let common = {
 
 export function input_peerid(text){
 	return {
-		type : LOG_INPUT_PEERID_8,
+		type : LOG_INPUT_PEERID_18,
 		peer_id : text
 	}
 }
 
 export function input_start_time(text){
 	return {
-		type : LOG_INPUT_START_TIME_8,
+		type : LOG_INPUT_START_TIME_18,
 		start_time : text
 	}
 }
 
 export function input_end_time(text){
 	return {
-		type : LOG_INPUT_END_TIME_8,
+		type : LOG_INPUT_END_TIME_18,
 		end_time : text
 	}
 }
 
 function requestPosts(params={}) {
 	return	Object.assign({},common,{
-        type: REQUEST_LOG_8,
+        type: REQUEST_LOG_18,
 		isFetching : true,
 		posts : null,
 	});
@@ -43,7 +43,7 @@ function requestPosts(params={}) {
 
 function receivePosts(params={},json) {
 	return	Object.assign({},common,{
-        type: RECIEVE_LOG_8,
+        type: RECIEVE_LOG_18,
 		fetched : true,
         posts: json,
         receivedAt: Date.now()
@@ -51,7 +51,7 @@ function receivePosts(params={},json) {
 }
 
 export function fetchData(_params={}) {
-	let modules = 'relay_status';
+	let modules = 'mobile_debug';
 	let obj = {
 		p:1,
 		return_type: 'json',

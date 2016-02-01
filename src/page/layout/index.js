@@ -18,10 +18,10 @@ class Layout extends React.Component {
 
     render() {
 		const { current, theme } = this.props;
-		console.log("Layout",this.props);
+		//console.log("Layout",this.props);
         return (
-        	<div>
-	        	<Row type="flex" justify="start">
+        	<Row className="flex_con">
+	        	<Row className="flex_nav" type="flex" justify="start">
 	        	    <Col className="layout_logo">
 	        	        <Menu onClick={this.handleClick} selectedKeys={[current]} theme={theme} mode="horizontal">
 							<MenuItem key="title">
@@ -35,11 +35,11 @@ class Layout extends React.Component {
 	        	    <Col className="layout_right">
 	        	    </Col>
 	        	</Row>
-				<Row type="flex" justify="start">
+				<Row className="flex_content" type="flex" justify="start">
 					<Col className="sidebar-left">
 						<Menu theme={theme}>
 							<MenuItem>
-								<Link to="/get_camera_info">tracker信息查询</Link>
+								<Link to="/get_camera_info">调度信息查询</Link>
 							</MenuItem>
 							<MenuItem>
 								<Link to="/app_manager">APP管理</Link>
@@ -48,7 +48,10 @@ class Layout extends React.Component {
 								<Link to="/new_index_disk">新版本索引</Link>
 							</MenuItem>
 							<MenuItem>
-								<Link to="/user_log/start_service">用户操作日志</Link>
+								<Link to="/user_log_query">用户操作日志</Link>
+							</MenuItem>
+							<MenuItem>
+								<Link to="/rtmp_tracker">RTMP地理监控</Link>
 							</MenuItem>
 						</Menu>
 							
@@ -57,7 +60,7 @@ class Layout extends React.Component {
 					{ this.props.contents || "" }
 					</Col>
 				</Row>
-			</div>
+			</Row>
         )
 
     }

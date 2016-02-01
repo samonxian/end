@@ -10,6 +10,9 @@ export const REQUEST_LOG_QUERY = 'REQUEST_LOG_QUERY'
 export const RECIEVE_MORE_LOG_QUERY = 'RECIEVE_MORE_LOG_QUERY'
 export const REQUEST_MORE_LOG_QUERY = 'REQUEST_MORE_LOG_QUERY'
 
+//const _URL_ = "120.26.74.53";
+const _URL_ = "120.26.74.53/api";
+
 let common = {
 	isFetching : false,//正在获取数据
 	fetched : false,//已经获取到数据
@@ -67,14 +70,16 @@ export function fetchData(_params={}) {
 	_params = Object.assign(obj,_params);
     return dispatch => {
         dispatch(requestPosts(_params))
-		var url = fn.params('http://120.26.74.53:8077/query/all_camera_logs',_params);
-		var url2 = fn.params('http://120.26.74.53:8077/query/camera_stat',_params);
+		var url = fn.params('http://'+_URL_+'/query/all_camera_logs',_params);
+		var url2 = fn.params('http://'+_URL_+'/query/camera_stat',_params);
 		//var url = fn.params('/js/test.json',_params);
+		console.time('user_log_query获取数据时间：')
 		return fetch(url)
             .then(response => response.json())
             .then(function(json){
 				fetch(url2).then(response => response.json())
 					.then(function(json2){
+						console.timeEnd('user_log_query获取数据时间：')
 						dispatch(receivePosts(_params,json,json2));
 					});
 			}).catch(function(e){
@@ -112,7 +117,7 @@ export function fetchMoreData(_params={}) {
 	_params = Object.assign(obj,_params);
     return dispatch => {
         dispatch(requestMorePosts(_params))
-		var url = fn.params('http://120.26.74.53:8077/query/all_camera_logs',_params);
+		var url = fn.params('http://'+_URL_+'/query/all_camera_logs',_params);
 		//var url = fn.params('/js/test.json',_params);
 		return fetch(url)
             .then(response => response.json())

@@ -2,7 +2,7 @@
 	/*border:1px solid red;*/
 }
 body{
-    background: #404040;
+	background:#404040;
 }
 table{
 	font-size:13px;
@@ -33,8 +33,6 @@ pre{
 	width:100%;
 }
 
-
-
 .fl {
     float: left;
 }
@@ -46,6 +44,9 @@ pre{
 }
 .tr {
     text-align: right;
+}
+.t_c{
+	text-align:center;
 }
 .color_green{
 	color:#87D068;
@@ -62,32 +63,66 @@ pre{
 .color_error{
 	color:#ffeee6;
 }
-
+.bg_success{
+	background-color:#F3FAF0;
+}
+.bg_info{
+	background-color:#eaf8fe;
+}
+.bg_warn{
+	background-color:#FFF7E6;
+}
+.bg_error{
+	background-color:#ffeee6;
+}
+.bg_gray{
+	background-color:#ccc;
+}
 
 .layout{
 	/*height:100%;*/
 }
+.flex_con{
+	flex-flow:column;
+	height:100%
+}
+.flex_content{
+	/*flex:1;*/
+	min-height:100%; 
+	position:absolute;
+	top:0;
+	padding-top:50px;
+}
 .sidebar-left {
     width: 200px;
-    height: 100%;
-    float: left;
+	/*height: 100%;*/
+    /*float: left;*/
     background: #404040;
 }
-.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu{
+.layout_logo{
+	width: 200px;
+	float: left;
+    background: #404040;
+}
+.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu,.layout_logo .ant-menu-horizontal > .ant-menu-item{
 	padding:0;
 }
-.sidebar-left .ant-menu-horizontal{
+.sidebar-left .ant-menu-horizontal,.layout_logo .ant-menu-horizontal{
 	margin-left:-5px;
 }
-.sidebar-left .ant-menu-item > h2{
+.layout_logo .ant-menu-item > h2{
 	margin-top:3px;
 }
-.sidebar-left .ant-menu-item a{
+.sidebar-left .ant-menu-item a,.layout_logo .ant-menu-item a{
 	color:#ccc;
 	font-size:15px;
 }
 .sidebar-left .ant-menu-item{
 	margin-left:20px;
+}
+.layout_right{
+	background: #404040;
+	flex:1;
 }
 /**nav**/
 
@@ -101,6 +136,7 @@ pre{
 	padding:20px 40px;
     flex: 1;
     background: #fff;
+	position:relative;
 }
 .contents .camera_info_column2{
 	width:30%;
@@ -177,19 +213,15 @@ pre{
 	height: 100%;
     position: absolute;
     display: flex;
+	padding-bottom:12px;
 }
 .user_log_query_table .color_bar{
 	flex:1; 
-	padding-bottom:12px;
+	border-radius:2px;
 	height:100%;
+	margin-right:2px;
 }
 
-.user_log_query_table .color_bar .ant-alert{
-	flex:1; 
-	padding:0;
-	margin-right:2px;
-	height:100%;
-}
 .user_log_query_table .ulq_right_log{
 	flex:1;
 	margin:25px 0 0 105px;
@@ -209,13 +241,17 @@ pre{
 	display:block;
 }
 .info_define{
-	margin:0 0 5px 0px;
-	height:50px;
+	position:absolute;
+	top:0;
+	right:0;
 }
-.info_define .ant-alert{
+.info_define_item{
+	float:left;
 	margin-right:5px;
-    padding: 9px 9px 9px 9px;
+    padding: 6px 9px 6px 9px;
 	text-align:center;
+	border-radius:5px;
+	width:50px;
 }
 .ulq_logs_bottom{
 	min-height: 100px;
@@ -247,3 +283,37 @@ pre{
 	flex:1;
 	text-align:center;
 }
+/**
+ * rtmp_tracker
+ */
+.svg_china_map{
+	width:100%;
+	height:100%;
+	position: absolute;
+    top: 0;
+    padding: 20px 0 0 40px;
+    left: 0;
+}
+.rt_con{
+	position: absolute;
+	padding: 20px 40px;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+.rt_left{
+	flex:1 1 15%;
+}
+.rt_right{
+	flex:1;
+}
+.rt_color_line{
+	z-index:10000;	
+    height: 20px;
+    line-height: 20px;
+    background: linear-gradient(to right, rgb(40,63,98) , rgb(195,215,244));
+    border-radius: 5px;
+	padding:0 10px;
+	color:#fff;
+}
+

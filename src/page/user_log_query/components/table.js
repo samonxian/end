@@ -52,7 +52,7 @@ class NTable extends React.Component {
         return (
 			<div className={className}>
 				{
-					data.length > 0 && 
+					show && data.length > 0 && 
 					<Table  size="middle" ref="table"
 						columns={columns} dataSource={data} pagination={false} bordered/>
 				}

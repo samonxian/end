@@ -1,20 +1,16 @@
 import React from 'react'
-import { Table,Collapse } from 'antd_c'
-import CollapseItem from 'libs/antd/collapseItemTable'
-import { fieldSort ,toUpperCase,createAntdColumns } from 'function'
-const Panel = Collapse.Panel;
-
+import { fieldSort ,toUpperCase } from 'function'
 
 let column_dataIndexs = [ 
 	'create_at',
 	'peer_id',
+	//'msg_sn',
+	//'client_type',
 	'ip_port',
 	'area',
 	'session',
 	'msg',
 ]
-
-
 export let columns = [
 	{
 		title: '汇报时间',
@@ -33,37 +29,8 @@ export let columns = [
 		title: 'session',
 	},
 	{
-		title: '转发信息',
-		render : function(text,record){
-			let data = text; 
-			let columns = [
-				{
-					title : 'IP',
-				},
-				{
-					title : '目标接受率',
-				},
-				{
-					title : '转发接受率',
-				},
-				{
-					title : '延迟',
-				},
-			];
-			let column_dataIndexs = [
-				'ip',	
-				'recv_rate_to_relay',	
-				'recv_rate',	
-				'time',	
-			]
-			data = fieldSort(data,column_dataIndexs,columns);
-			return (
-				<div className="ant-collapse">
-					<CollapseItem title="IP / 目标接受率 / 转发接受率 / 延迟" columns={ columns } data={ data }/> 
-				</div>
-			) 
-		}
-	}
+		title: 'msg',
+	},
 ];
 
 export function logData(user_log){

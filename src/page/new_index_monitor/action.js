@@ -18,7 +18,7 @@ export function indexMonitorResponse(reddit,json){
 export function indexMonitorFetch(reddit){
     return dispatch => {
         dispatch(indexMonitorReq(reddit))
-        return fetch('http://120.26.74.53:8077/disc_monitor/query/monitors_json?area='+reddit["area"]+'&p='+reddit["p"])
+        return fetch('http://120.26.74.53/api/disc_monitor/query/monitors_json?area='+reddit["area"]+'&p='+reddit["p"])
             .then(response => response.json())
             .then(json => dispatch(indexMonitorResponse(reddit, json)))
     }

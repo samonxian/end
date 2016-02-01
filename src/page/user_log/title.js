@@ -17,3 +17,11 @@ export let title = {
 	'camera_time_last':'摄像头时间日志(最后)',
 	'camera_debug_last':'摄像头日志(最后)',
 }
+
+export let title_menu = {
+	'start_service':'启动云服务',
+	'rtmp_device':'RTMP设备日志',
+	'camera_debug':'摄像头日志',
+	'camera_time':'摄像头时间日志',
+	'mobile_debug':'用户操作日志',
+}

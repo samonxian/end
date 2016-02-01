@@ -50,6 +50,7 @@ module.exports = {
     },
 	resolve: {
 		alias: {
+			'libs': __dirname + '/src/libs/',
 			'JSONP': __dirname + '/src/libs/jsonp.js',
 			'antd_c': __dirname + '/src/libs/antd',
 			'function': __dirname + '/src/libs/function.js',

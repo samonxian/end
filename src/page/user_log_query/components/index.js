@@ -117,7 +117,7 @@ export function stateData(data){
 
 let time_dataIndexs = [ 
 	'start_service_time',
-	'time_update_at',
+	'time_update_at_1',
 	'state',
 	't_ip',
 ]
@@ -145,6 +145,7 @@ export function timeData(data){
 			var temp_data = data[key];
 			temp_data.state = common.getCameraState(temp_data.state);
 			temp_data.t_ip = temp_data.tracker_ip.concat(':',temp_data.tracker_port);
+			temp_data.time_update_at_1 = new Date(temp_data.time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
 		})
 	}
 	//console.log(re)
@@ -153,7 +154,7 @@ export function timeData(data){
 
 let time2_dataIndexs = [ 
 	'y_ip',
-	'open_time_update_at',
+	'open_time_update_at_1',
 	'open_time',
 	'msg_split',
 ]
@@ -171,19 +172,19 @@ export let time2_columns = [
 		title: '发送比',
 		render : function(text,columns){
 			let live_stat_dataIndexs = [ 
-				'T5_T1',
-				'Tpe_Tns',
-				'Ts_Te',
+				'T5_T1_1',
+				'Tpe_Tns_1',
+				'Ts_Te_1',
 			]
 			let live_stat_columns = [
 				{
 					title: '总时间',
 				}, 
 				{
-					title: '等待时间',
+					title: '空闲',
 				}, 
 				{
-					title: '发送时间',
+					title: '发送',
 				}, 
 			];
 
@@ -194,13 +195,16 @@ export let time2_columns = [
 				if(data){
 					re = fieldSort(t_data,live_stat_dataIndexs,live_stat_columns,function(key,data){
 						var temp_data = data[key];
+						temp_data.T5_T1_1 = '总时间：'.concat(temp_data.T5_T1) ;
+						temp_data.Tpe_Tns_1 = '空闲：'.concat(temp_data.Tpe_Tns) ;
+						temp_data.Ts_Te_1 = '发送：'.concat(temp_data.Ts_Te) ;
 					})
 				}
 				//console.log(re)
 				return re;
 			}
 			return(
-				<Table  size="small" 
+				<Table className="none_head_table"  size="small" 
 						columns={live_stat_columns} dataSource={live_statData(text)} pagination={false} bordered/>
 			)
 		}
@@ -216,6 +220,7 @@ export function time2Data(data){
 			var temp_data = data[key];
 			temp_data.y_ip = temp_data.relay_ip.concat(':',temp_data.relay_port);
 			//temp_data.f_rate = temp_data.msg_split.Ts_Te / temp_data.msg_split.T5_T1;
+			temp_data.open_time_update_at_1 = new Date(temp_data.open_time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
 		})
 	}
 	//console.log(re)
