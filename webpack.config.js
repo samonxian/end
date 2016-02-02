@@ -7,7 +7,12 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
  */
 var entry,leb;
 var NODE_ENV = 'development';
-entry = ['webpack-dev-server/client?http://localhost:8000','webpack/hot/only-dev-server','./src/index.jsx']; 
+//entry = ['webpack-dev-server/client?http://localhost:8000','webpack/hot/only-dev-server','./src/index.jsx']; 
+entry = [
+    'eventsource-polyfill', // necessary for hot reloading with IE
+    'webpack-hot-middleware/client',
+    './src/index.jsx'
+]
 var vendor = require('./src/page/vendor.js');
 if(!vendor){
 	vendor = [];
@@ -40,9 +45,6 @@ module.exports = {
             	test: /\.js[x]?$/, 
             	loader: 'babel',
 				exclude: /node_modules/,//设置node_modules目录为根目录下的node_modules,根目录以package为参考
-            	query: {
-			        presets: ['es2015', 'react']
-			    }
             },
             { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
 			

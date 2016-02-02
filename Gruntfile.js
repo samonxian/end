@@ -7,7 +7,7 @@ var vendor = require('./src/page/vendor.js');
 var config = Object.assign({}, webpack_config, {
     devtool: '',
     entry: {
-        app: './src/index.js',
+        app: './src/index.jsx',
         vendor: vendor,
         libs: ['react'],
     },
