@@ -73,14 +73,14 @@ class RtmpTracker extends Component {
 						<Antd.Col className="rt_left">
 							<ChinaMap min_users={ min_users } max_users={ max_users } posts={ p_data } posts2={ posts2.data.data } parent={ _this }/>	
 						</Antd.Col>
-						{
-							this.state && this.state.show_table &&
-							<Antd.Col className="rt_right">
-									<Antd.Table size="middle" columns={data_setting.columns} 
-										dataSource={data_setting.getData(posts2.data.data[_this.state.show_table].RelayServer)}
-										pagination={false} bordered/>
-							</Antd.Col>
-						}
+						<Antd.Col className="rt_right">
+							{
+								this.state && this.state.show_table &&
+										<Antd.Table size="middle" columns={data_setting.columns} 
+											dataSource={data_setting.getData(posts2.data.data[_this.state.show_table].RelayServer)}
+											pagination={false} bordered/>
+							}
+						</Antd.Col>
 					</Antd.Row>
 				</div>
 			)

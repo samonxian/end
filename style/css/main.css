@@ -86,45 +86,17 @@ pre{
 	flex-flow:column;
 	height:100%
 }
-.flex_content{
-	/*flex:1;*/
-	min-height:100%; 
-	position:absolute;
-	top:0;
-	padding-top:50px;
-}
-.sidebar-left {
-    width: 200px;
-	/*height: 100%;*/
-    /*float: left;*/
-    background: #404040;
-}
-.layout_logo{
-	width: 200px;
-	float: left;
-    background: #404040;
-}
-.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu,.layout_logo .ant-menu-horizontal > .ant-menu-item{
-	padding:0;
-}
-.sidebar-left .ant-menu-horizontal,.layout_logo .ant-menu-horizontal{
-	margin-left:-5px;
-}
-.layout_logo .ant-menu-item > h2{
-	margin-top:3px;
-}
-.sidebar-left .ant-menu-item a,.layout_logo .ant-menu-item a{
-	color:#ccc;
-	font-size:15px;
-}
-.sidebar-left .ant-menu-item{
-	margin-left:20px;
-}
-.layout_right{
-	background: #404040;
-	flex:1;
-}
 /**nav**/
+.flex_nav{
+	z-index:10000;
+}
+.flex_nav .ant-menu{
+	width:100%;
+}
+.icon_scan{
+	font-size:18px;
+	margin:17px 0 0 0;
+}
 
 .logo {
     background: url('../img/logo.png') no-repeat 10px 10px;
@@ -132,15 +104,57 @@ pre{
     width: 55px;
     height: 50px;
 }
+.title_logo{
+	width:200px;
+}
+
+.flex_nav h2{
+	margin-top:3px;
+	color:#ccc;
+}
+.ant-menu-horizontal > .ant-menu-item.full_screen{
+	float:right;
+}
+/**contents**/
+.flex_content{
+	/*flex:1;*/
+	min-height:100%; 
+	position:absolute;
+	top:0;
+	padding-top:50px;
+}
 .contents {
 	padding:20px 40px;
     flex: 1;
     background: #fff;
 	position:relative;
+	width:100%;
 }
+.sidebar-left {
+    width: 200px;
+	/*height: 100%;*/
+    /*float: left;*/
+    background: #404040;
+}
+.sidebar-left .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu,.layout_logo .ant-menu-horizontal > .ant-menu-item{
+	padding:0;
+}
+.sidebar-left .ant-menu-horizontal{
+	margin-left:-5px;
+}
+.sidebar-left .ant-menu-item a,.flex_nav .ant-menu-item a{
+	color:#ccc;
+	font-size:15px;
+}
+.sidebar-left .ant-menu-item{
+	margin-left:20px;
+}
+
+/**tranker**/
 .contents .camera_info_column2{
 	width:30%;
 }
+
 .camera_info_table1{
 	margin:15px 0 15px 0;
 }
@@ -248,7 +262,7 @@ pre{
 .info_define_item{
 	float:left;
 	margin-right:5px;
-    padding: 6px 9px 6px 9px;
+    /*padding: 6px 9px 6px 9px;*/
 	text-align:center;
 	border-radius:5px;
 	width:50px;
@@ -302,6 +316,7 @@ pre{
     left: 0;
 }
 .rt_left{
+	height:100%;
 	flex:1 1 15%;
 }
 .rt_right{

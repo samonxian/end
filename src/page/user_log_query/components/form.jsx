@@ -46,7 +46,7 @@ class Form extends Component {
 				</FormItem>
 				
 				<FormItem>
-					<Antd.Button type="primary" htmlType="submit">提交</Antd.Button>
+					<Antd.Button type="primary" htmlType="submit" size="middle">提交</Antd.Button>
 				</FormItem>
 				<FormItem >
 					<div className="info_define">

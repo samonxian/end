@@ -58,18 +58,19 @@ class ChinaMap extends Component {
 				})
 			},
 			setD3ChinaMapPath : function(){
-				var dom = ReactDOM.findDOMNode(this).parentNode.parentNode,	
-					width = dom.offsetWidth,
-					height = dom.offsetHeight;
+				var	width = this.conDom.offsetWidth,
+					height = this.conDom.offsetHeight;
+				var scale = width;
+				if(width > height){
+					scale = height;
+				}
 				this.projection = d3.geo.mercator()
-									.center([120, 38])
-									.scale(height+50)
+									.center([100, 38])
+									.scale(scale + 60)
 									.translate([width/2, height/2]);
 			
 				this.path = d3.geo.path()
 								.projection(this.projection);
-				//触发渲染
-				this.setState({ render : true })
 			}
 		}
 	}
@@ -102,20 +103,21 @@ class ChinaMap extends Component {
 
 	componentDidMount(){
 		let { posts,max_users } = this.props
-		//处理d3
-		this.setD3ChinaMapPath();
+		this.conDom = ReactDOM.findDOMNode(this).parentNode;	
 		//处理省份颜色
 		this.setProvFillColor(posts,max_users);
 		//console.debug(this.fillColor)
+		this.setState({
+			render : true
+		})
 	}
-
-	
-	
 
     render() {
 		var _this = this;
 		let { posts,posts2,parent } = this.props
 	    if(this.state && this.state.render){
+			//处理d3
+			this.setD3ChinaMapPath();
 			return (
 				<svg className="svg_china_map">
 					<g transform="translate(0,0)">
