@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath ,replacePath } from 'redux-simple-router'
+import { push ,replace } from 'react-router-redux'
 import * as action from './action'
 import {Form, Input, Button, Icon,Table } from 'antd_c'
 import Monitor from '../../sidebar/user_log'
@@ -23,7 +23,7 @@ class start_play extends React.Component {
 			this.getData({ })	
 		}
 		this.hasMount = true;
-		this.type = getUrlParams(this.props.route.path)[1];
+		this.type = getUrlParams(this.props.location.pathname)[1];
 		//console.log(1)
 	}
 
@@ -82,7 +82,7 @@ class start_play extends React.Component {
 function mapStateToProps(state,props){
 	//console.log("start_play组件初始props",state);
 	return {
-		//routing : state.routing,
+		
 	    start_play : state.start_play
 	};
 }

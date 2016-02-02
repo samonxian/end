@@ -131,21 +131,21 @@ class user_log_query extends Component {
 								posts2._id &&
 								<div>
 									<Antd.Table  size="small" 
-										columns={base.base_columns} dataSource={base.baseData(posts2)} pagination={false} bordered/>
+										columns={base.base_columns} dataSource={base.baseData(posts2)} pagination={false} />
 									<br/>
 									<Antd.Table  size="small" 
-										columns={base.state_columns} dataSource={base.stateData(posts2)} pagination={false} bordered/>
+										columns={base.state_columns} dataSource={base.stateData(posts2)} pagination={false} />
 									<br/>
 									<Antd.Table  size="small" 
-										columns={base.time_columns} dataSource={base.timeData(posts2)} pagination={false} bordered/>
+										columns={base.time_columns} dataSource={base.timeData(posts2)} pagination={false} />
 									<br/>
 									<Antd.Table  size="small" 
-										columns={base.time2_columns} dataSource={base.time2Data(posts2)} pagination={false} bordered/>
+										columns={base.time2_columns} dataSource={base.time2Data(posts2)} pagination={false} />
 									<br/>
 									<Antd.Collapse >
 										<Antd.Collapse.Panel header="转发ip / 推流时间 / 接收时间差 / 码率 / 推送状态"> 
 											<Antd.Table  size="small" 
-												columns={base.live_stat_columns} dataSource={base.live_statData(posts2)} pagination={false} bordered/>
+												columns={base.live_stat_columns} dataSource={base.live_statData(posts2)} pagination={false} />
 										</Antd.Collapse.Panel>
 									</Antd.Collapse>
 								</div>
@@ -200,7 +200,6 @@ function mapStateToProps(state){
 	//console.log("user_log_query组件初始props",state);
 	return {
 	    user_log_query : state.user_log_query,
-		//routing : state.routing
 	};
 }
 module.exports = connect(mapStateToProps)(user_log_query)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 import { inputValue ,fetchData,displayTable2 } from './action'
 import {Form, Input, Button, Icon,Table} from 'antd_c'
 import Monitor from '../sidebar/monitor'
@@ -54,7 +54,7 @@ class Get_mobile_info extends React.Component {
 	
 	handleSubmit(e) {
 		e.preventDefault();
-		//this.props.dispatch(replacePath('/get_mobile_info?uid='+this.props.get_mobile_info.id),{
+		//this.props.dispatch(replace('/get_mobile_info?uid='+this.props.get_mobile_info.id),{
 		//});
 		this.props.dispatch(fetchData(this.props.get_mobile_info.id));	
 	}
@@ -226,7 +226,7 @@ class Get_mobile_info extends React.Component {
 			input_value = location.query.id;
 		}
         return (
-			<Monitor>
+			<Monitor location={location}>
 				<Form inline onSubmit={this.handleSubmit.bind(this)}>
 					<FormItem id="userName" >
 						<Input size="large" placeholder="请输入手机ID" onChange={this.setValue.bind(this)}
@@ -271,7 +271,6 @@ function mapStateToProps(state){
 	//console.log("get_mobile_info组件初始props",state);
 	return {
 	    get_mobile_info : state.get_mobile_info,
-		routing : state.routing
 	};
 }
 module.exports = connect(mapStateToProps)(Get_mobile_info)

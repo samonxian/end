@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 import { Form, Input, Row, Button, Col, Icon, Checkbox } from 'antd'
 require('antd/lib/index.css')
 require('../../../style/css/login.css')
@@ -42,7 +42,7 @@ export const Userlogin = React.createClass({
         });
        return false;
      }
-     dispatch(pushPath('/layout'));
+     dispatch(push('/layout'));
   },
   
   handleChange(e){
@@ -136,7 +136,6 @@ function mapStateToProps(state){
   console.log("登录界面init:");
   console.log(state);
 	return {
-		routing : state.routing
 	};
 }
 module.exports = connect(mapStateToProps)(Userlogin)

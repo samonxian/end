@@ -25,7 +25,7 @@ class Indexdisk extends React.Component {
 
 	render(){ 
 
-		const { routing, dispatch, backData, storageData, currentCity, cityList } = this.props
+		const { location, dispatch, backData, storageData, currentCity, cityList } = this.props
 		let total
 		let currentPage
 		let list
@@ -132,7 +132,7 @@ class Indexdisk extends React.Component {
 
 		return (
 			<div>
-				<Header router = {routing} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
+				<Header router = {location} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
 				<Table columns = {INDEX_HEAD} dataSource={list} pagination={false}  bordered loading={ loading }/>
 				<Page currentCity = { currentCity["data"]["area"] } currentPage = {currentPage} dispatch = {dispatch} total = {total} type= {DISK_DETAIL_STATUS_REQ}/>
 			</div>
@@ -143,7 +143,6 @@ class Indexdisk extends React.Component {
 function mapStateToProps(state){
 	console.log("组件初始props",state);
 	return {
-		routing : state.routing,
 		storageData : state.getStorageResponse,
 		backData : state.new_index_disk,
 //    cityList : state.get_area_list,

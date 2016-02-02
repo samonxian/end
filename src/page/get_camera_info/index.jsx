@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath ,replacePath} from 'redux-simple-router'
+import { push ,replace} from 'react-router-redux'
 import Monitor from '../sidebar/monitor'
 import { inputValue ,fetchData,displayTable2 } from './action'
 import { Form,Input,Button,Table,Icon } from 'antd_c'
@@ -232,7 +232,7 @@ class Get_camera_info extends React.Component {
 			input_value = location.query.id;
 		}
         return (
-			<Monitor>
+			<Monitor location={location}>
 				<Form inline onSubmit={this.handleSubmit.bind(this)}>
 					<FormItem id="userName" >
 						<Input size="large" placeholder="请输入摄像头ID" onChange={this.setValue.bind(this)}
@@ -277,7 +277,6 @@ function mapStateToProps(state){
 	//console.log("Get_camera_info组件初始props",state);
 	return {
 	    get_camera_info : state.get_camera_info,
-		routing : state.routing
 	};
 }
 module.exports = connect(mapStateToProps)(Get_camera_info)

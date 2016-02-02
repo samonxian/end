@@ -11,12 +11,12 @@ class Appcameralist extends React.Component {
 	}
 
 	render(){ 
-		const { routing, dispatch} = this.props
+		const { location, dispatch} = this.props
 		let cameraList = []
 
 		return (
 			<div>
-				<Appheader router = { routing } dispatch={ dispatch }/>
+				<Appheader router = { location } dispatch={ dispatch }/>
 				<Table columns = {CAMERA_HEADER} dataSource={ cameraList } pagination={false} bordered loading={false}/>
 			</div>
 		)
@@ -26,7 +26,6 @@ class Appcameralist extends React.Component {
 function mapStateToProps(state){
 	console.log("组件初始props",state);
 	return {
-		routing : state.routing
 	};
 }
 module.exports = connect(mapStateToProps)(Appcameralist)

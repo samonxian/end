@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 import { DISK_DETAIL_STATUS_REQ, newIndexTab, fetchDiskData } from '../../new_index_disk/action'
 import { INDEX_MONITOR_STATUS_REQ, indexMonitorFetch } from '../../new_index_monitor/action'
 import { CAMERA_FRAME_STATUS_REQ, CAMERA_FRAME_STATUS_QUERY, cameraFrameFetch } from '../../new_index_camera/action'
@@ -16,13 +16,13 @@ export class Appheader extends React.Component {
 		let { dispatch } = this.props
 		switch(key){
 			case 1:
-				dispatch(pushPath('/app_manager'));
+				dispatch(push('/app_manager'));
 			break;
 			case 2:
-				dispatch(pushPath('/app_user_list'));
+				dispatch(push('/app_user_list'));
 			break;
 			case 3:
-				dispatch(pushPath('/app_camera_list'));
+				dispatch(push('/app_camera_list'));
 			break;
 		}
 	}
@@ -47,7 +47,7 @@ export class Appheader extends React.Component {
 
 	render(){
 		const { router, backData, dispatch, currentCity, cityList} = this.props
-		let route = router.path;
+		let route = router.pathname;
 		let optionRow = [];
 		let active = 1;
 		if(route.indexOf('app_manager') != -1 ){

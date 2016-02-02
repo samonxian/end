@@ -1,4 +1,4 @@
-import { UPDATE_PATH } from 'redux-simple-router'
+import { UPDATE_PATH } from 'react-router-redux'
 import {
 	LOG_QUERY_INPUT_CID,
 	LOG_QUERY_INPUT_START_TIME,

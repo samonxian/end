@@ -17,7 +17,7 @@ class Appmanager extends React.Component {
 	}
 
 	render(){ 
-		const { routing, appTableData, dispatch, appType } = this.props
+		const { appTableData, dispatch, appType } = this.props
 		let appData = []
 		let type = []
 
@@ -45,7 +45,6 @@ class Appmanager extends React.Component {
 
 function mapStateToProps(state){
 	return {
-		routing : state.routing,
 		appTableData : state.app_manager,
 		appType : state.get_app_type
 	};

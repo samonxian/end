@@ -19,7 +19,7 @@ class Indexmonitor extends React.Component {
 
 	render(){
 		
-		const { routing, dispatch, backData, currentCity} = this.props
+		const { location, dispatch, backData, currentCity} = this.props
         let total
 		let currentPage
 		let list
@@ -40,7 +40,7 @@ class Indexmonitor extends React.Component {
 
 		return (
 			<div>
-			    <Header router = {routing} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
+			    <Header router = {location} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
 			    <Table columns={INDEX_MONITOR} dataSource={list} pagination={false} bordered loading={ isloading }/>
 			    <Page currentCity = { currentCity["data"]["area"] } currentPage = {currentPage} dispatch = {dispatch} total = {total} type= {INDEX_MONITOR_STATUS_REQ}/>
 			</div>
@@ -51,7 +51,6 @@ class Indexmonitor extends React.Component {
 function mapStateToProps(state){
 	console.log("组件初始props",state);
 	return {
-		routing : state.routing,
 		backData : state.new_index_monitor,
 		currentCity : state.cityTab
 	};

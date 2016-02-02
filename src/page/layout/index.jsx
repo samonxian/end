@@ -73,7 +73,6 @@ class Layout extends React.Component {
 
 function mapStateToProps(state){
 	return {
-		routing : state.routing,
 		current : 'mail',
 		theme : 'dark'
 	};

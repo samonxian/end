@@ -1,4 +1,4 @@
-import { UPDATE_PATH } from 'redux-simple-router'
+import { UPDATE_PATH } from 'react-router-redux'
 import {
 	LOG_INPUT_PEERID_14,
 	LOG_INPUT_SN,

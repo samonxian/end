@@ -35,7 +35,7 @@ class NPagination extends Pagination {
  */
 function mapStateToProps(state){
 	// console.log("user_log_query组件初始props",state);
-	var target = getUrlParams(state.routing.path)[1];
+	var target = getUrlParams(state.routing.location.pathname)[1];
 	if(state[target]){
 		// console.log(target)
 		var p = state[target].posts && state[target].posts.p;

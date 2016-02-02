@@ -11,7 +11,7 @@ class Indexcamera extends React.Component {
 
 	render(){
         
-		const { routing, dispatch, backData, currentCity } = this.props
+		const { location, dispatch, backData, currentCity } = this.props
         let total
 		let currentPage
 		let list = []
@@ -51,7 +51,7 @@ class Indexcamera extends React.Component {
 
 		return (
 			<div>
-			     <Header router = {routing} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
+			     <Header router = {location} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
 			     <Queryfrom dispatch = {dispatch} formData={queryData}/>
 			     <Table columns={INDEX_CAMERA} dataSource={list} pagination={false} bordered loading={isloading}/>
 			</div>
@@ -62,7 +62,6 @@ class Indexcamera extends React.Component {
 function mapStateToProps(state){
 	console.log("组件初始props",state);
 	return {
-		routing : state.routing,
         backData : state.new_index_camera,
         currentCity : state.cityTab
 	};

@@ -3,13 +3,11 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { Router, Route, IndexRoute } from 'react-router'
 import createBrowserHistory from 'history/lib/createBrowserHistory'  
-import { syncReduxAndRouter } from 'redux-simple-router' 
 import configureStore from './page/store'
 import { rootRoute } from './page/Route'
 
-const store = configureStore();
 const history = createBrowserHistory();
-syncReduxAndRouter(history, store);
+const store = configureStore({ },history);
 render(
 	<Provider store={store}>
 		<div>

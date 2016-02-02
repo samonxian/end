@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Tabs } from 'antd_c'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 const TabPane = Tabs.TabPane;
 
 class Monitor extends React.Component {
@@ -11,19 +11,20 @@ class Monitor extends React.Component {
 		let { dispatch } = this.props;
 		switch(key){
 			case 1:
-				dispatch(pushPath('/get_camera_info'));
+				dispatch(push('/get_camera_info'));
 			break;
 			case 2:
-				dispatch(pushPath('/get_mobile_info'));
+				dispatch(push('/get_mobile_info'));
 			break;
 			case 3:
-				dispatch(pushPath('/get_relay_info'));
+				dispatch(push('/get_relay_info'));
 			break;
 		}
 	}
 
     render() {
-		let route = this.props.routing.path;
+		let route = this.props.location.pathname;
+
 		let active = 1;
 		if(route.indexOf('get_camera_info') != -1 ){
 			active = 1;
@@ -63,7 +64,6 @@ class Monitor extends React.Component {
 function mapStateToProps(state){
 	//console.log("Get_camera_info组件初始props",state);
 	return {
-		routing : state.routing
 	};
 }
 export default connect(mapStateToProps)(Monitor)

@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 import { title_menu } from '../user_log/title.js'
 const TabPane = Tabs.TabPane;
 
@@ -25,12 +25,12 @@ class user_log_sidebar extends React.Component {
 		//console.debug(key)
 		switch(key){
 			case 'other':
-				dispatch(pushPath('/user_log_query'));
+				dispatch(push('/user_log_query'));
 			break;
 		}
 		this.title_keys.forEach(function(value,k){
 			if(value == key){
-				dispatch(pushPath('/user_log/' + value));
+				dispatch(push('/user_log/' + value));
 			}
 		})
 	}
@@ -52,7 +52,7 @@ class user_log_sidebar extends React.Component {
 
     render() {
 		var _this = this;
-		let route = this.props.routing.path;
+		let route = this.props.location.pathname;
 		let active = 'other';
 		this.getUrlKey(route);	
 		if(this.active){
@@ -91,7 +91,6 @@ class user_log_sidebar extends React.Component {
 function mapStateToProps(state){
 	//console.log("Get_camera_info组件初始props",state);
 	return {
-		routing : state.routing
 	};
 }
 export default connect(mapStateToProps)(user_log_sidebar)

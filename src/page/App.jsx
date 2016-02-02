@@ -13,8 +13,7 @@ class App extends React.Component {
 	}
 
     render() {
-		const { routing } = this.props
-		let url = routing.path
+		let url = this.props.location.pathname;
 		let container 
 
         if(url.indexOf("user_login")!=-1 || url.length<5){
@@ -30,8 +29,8 @@ class App extends React.Component {
     }
 }
 function mapStateToProps(state){
+	//console.debug('组件初始props:',state)
 	return {
-		routing : state.routing,
 		current : 'mail',
 		theme : 'dark'
 	};

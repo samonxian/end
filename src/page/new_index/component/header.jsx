@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { pushPath,replacePath } from 'redux-simple-router'
+import { push,replace } from 'react-router-redux'
 import { DISK_DETAIL_STATUS_REQ, newIndexTab, fetchDiskData } from '../../new_index_disk/action'
 import { INDEX_MONITOR_STATUS_REQ, indexMonitorFetch } from '../../new_index_monitor/action'
 import { CAMERA_FRAME_STATUS_REQ, CAMERA_FRAME_STATUS_QUERY, cameraFrameFetch } from '../../new_index_camera/action'
@@ -28,13 +28,13 @@ export class Header extends React.Component {
 		let { dispatch } = this.props;
 		switch(key){
 			case 1:
-				dispatch(pushPath('/new_index_disk'));
+				dispatch(push('/new_index_disk'));
 			break;
 			case 2:
-				dispatch(pushPath('/new_index_camera'));
+				dispatch(push('/new_index_camera'));
 			break;
 			case 3:
-				dispatch(pushPath('/new_index_monitor'));
+				dispatch(push('/new_index_monitor'));
 			break;
 		}
 	}
@@ -59,7 +59,7 @@ export class Header extends React.Component {
 	render(){
 		 
 		const { router, dispatch, backData, currentCity, cityList} = this.props
-		let route = router.path;
+		let route = router.pathname;
 		let optionRow = [];
 		let active = 1;
 		if(route.indexOf('new_index_disk') != -1 ){
