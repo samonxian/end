@@ -108,14 +108,14 @@ class ChinaMap extends Component {
 		this.setProvFillColor(posts,max_users);
 		//console.debug(this.fillColor)
 		this.setState({
-			render : true
+			canRender : true
 		})
 	}
 
     render() {
 		var _this = this;
 		let { posts,posts2,parent } = this.props
-	    if(this.state && this.state.render){
+	    if(this.state && this.state.canRender){
 			//处理d3
 			this.setD3ChinaMapPath();
 			return (
