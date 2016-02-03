@@ -44,7 +44,7 @@ class disc_connect extends React.Component {
 		let { params } = disc_connect;
 		if(this.hasMount && disc_connect.posts && disc_connect.posts.logs){
 			if(disc_connect.posts.logs[0]){
-				if( !disc_connect.posts.logs[0].key){
+				if( !disc_connect.posts.logs[0].key || module.hot){
 					data = logData(disc_connect);
 				}
 			}else{

@@ -44,7 +44,7 @@ class rtmp_conn_time extends React.Component {
 		let { params } = rtmp_conn_time;
 		if(this.hasMount && rtmp_conn_time.posts && rtmp_conn_time.posts.logs){
 			if(rtmp_conn_time.posts.logs[0]){
-				if( !rtmp_conn_time.posts.logs[0].key){
+				if( !rtmp_conn_time.posts.logs[0].key || module.hot){
 					data = logData(rtmp_conn_time);
 				}
 			}else{

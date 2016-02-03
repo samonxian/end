@@ -44,7 +44,7 @@ class camera_time_last extends React.Component {
 		let { params } = camera_time_last;
 		if(this.hasMount && camera_time_last.posts && camera_time_last.posts.logs){
 			if(camera_time_last.posts.logs[0]){
-				if( !camera_time_last.posts.logs[0].key){
+				if( !camera_time_last.posts.logs[0].key || module.hot){
 					data = logData(camera_time_last);
 				}
 			}else{

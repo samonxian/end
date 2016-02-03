@@ -44,7 +44,7 @@ class relay_status extends React.Component {
 		let { params } = relay_status;
 		if(this.hasMount && relay_status.posts && relay_status.posts.logs){
 			if(relay_status.posts.logs[0]){
-				if( !relay_status.posts.logs[0].key){
+				if( !relay_status.posts.logs[0].key || module.hot){
 					data = logData(relay_status);
 				}
 			}else{

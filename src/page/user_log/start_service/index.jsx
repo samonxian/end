@@ -23,9 +23,6 @@ class start_service extends React.Component {
 		if(!this.props.start_service.posts){
 			this.getData({ })	
 		}
-		this.hasMount = true;
-
-		this.type = getUrlParams(this.props.location.pathname)[1];
 		//console.log(1)
 	}
 
@@ -42,15 +39,9 @@ class start_service extends React.Component {
 
     render() {
 		let { start_service ,location,dispatch } = this.props;
-		if(this.hasMount && start_service.posts && start_service.posts.logs){
-			if(start_service.posts.logs[0]){
-				if( !start_service.posts.logs[0].key){
-					data = logData(start_service);
-				}
-			}else{
-				data = [];
-			}
-			
+		this.type = getUrlParams(this.props.location.pathname)[1];
+		if(start_service.posts && start_service.posts.logs && start_service.posts.logs[0]){
+			data = logData(start_service);
 		}
         return (
 			<Monitor location={location} >

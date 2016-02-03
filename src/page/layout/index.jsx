@@ -32,7 +32,7 @@ class Layout extends React.Component {
 						<MenuItem key="logo" className="title_logo">
 							<div className="logo fl"></div>
 							<h2>
-								<Link to="/">羚羊管理后台</Link>
+								羚羊管理后台
 							</h2>
 						</MenuItem>
 						<MenuItem className="full_screen" key="fullScreen">

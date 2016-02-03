@@ -44,7 +44,7 @@ class exception_event extends React.Component {
 		let { params } = exception_event;
 		if(this.hasMount && exception_event.posts && exception_event.posts.logs){
 			if(exception_event.posts.logs[0]){
-				if( !exception_event.posts.logs[0].key){
+				if( !exception_event.posts.logs[0].key || module.hot){
 					data = logData(exception_event);
 				}
 			}else{

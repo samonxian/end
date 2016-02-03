@@ -44,7 +44,7 @@ class start_play extends React.Component {
 		let { params } = start_play;
 		if(this.hasMount && start_play.posts && start_play.posts.logs){
 			if(start_play.posts.logs[0]){
-				if( !start_play.posts.logs[0].key){
+				if( !start_play.posts.logs[0].key || module.hot){
 					data = logData(start_play);
 				}
 			}else{

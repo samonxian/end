@@ -44,7 +44,7 @@ class conn_media_src extends React.Component {
 		let { params } = conn_media_src;
 		if(this.hasMount && conn_media_src.posts && conn_media_src.posts.logs){
 			if(conn_media_src.posts.logs[0]){
-				if( !conn_media_src.posts.logs[0].key){
+				if( !conn_media_src.posts.logs[0].key || module.hot){
 					data = logData(conn_media_src);
 				}
 			}else{

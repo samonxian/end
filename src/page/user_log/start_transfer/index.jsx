@@ -44,7 +44,7 @@ class start_transfer extends React.Component {
 		let { params } = start_transfer;
 		if(this.hasMount && start_transfer.posts && start_transfer.posts.logs){
 			if(start_transfer.posts.logs[0]){
-				if( !start_transfer.posts.logs[0].key){
+				if( !start_transfer.posts.logs[0].key || module.hot){
 					data = logData(start_transfer);
 				}
 			}else{

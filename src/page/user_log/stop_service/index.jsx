@@ -44,7 +44,7 @@ class stop_service extends React.Component {
 		let { params } = stop_service;
 		if(this.hasMount && stop_service.posts && stop_service.posts.logs){
 			if(stop_service.posts.logs[0]){
-				if( !stop_service.posts.logs[0].key){
+				if( !stop_service.posts.logs[0].key || module.hot){
 					data = logData(stop_service);
 				}
 			}else{

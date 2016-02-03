@@ -44,7 +44,7 @@ class work_status extends React.Component {
 		let { params } = work_status;
 		if(this.hasMount && work_status.posts && work_status.posts.logs){
 			if(work_status.posts.logs[0]){
-				if( !work_status.posts.logs[0].key){
+				if( !work_status.posts.logs[0].key || module.hot){
 					data = logData(work_status);
 				}
 			}else{

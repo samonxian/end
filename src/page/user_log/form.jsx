@@ -56,8 +56,7 @@ class form extends React.Component {
  *	组件初始props,过state传递到props
  */
 function mapStateToProps(state){
-	//console.log("user_log_query组件初始props",state);
-	
+	//console.log("user_log_query组件初始props",state);	
 	var target = getUrlParams(state.routing.location.pathname)[1];
 	if(state[target]){
 		// console.log("user_log_query组件初始props",state);

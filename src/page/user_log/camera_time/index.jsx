@@ -42,16 +42,11 @@ class camera_time extends React.Component {
 		//console.log(this.props)
 		let { camera_time ,location,dispatch } = this.props;
 		let { params } = camera_time;
-		if(this.hasMount && camera_time.posts && camera_time.posts.logs){
-			if(camera_time.posts.logs[0]){
-				if( !camera_time.posts.logs[0].key){
-					data = logData(camera_time);
-				}
-			}else{
-				data = [];
-			}
-			
+		this.type = getUrlParams(this.props.location.pathname)[1];
+		if(camera_time.posts && camera_time.posts.logs && camera_time.posts.logs[0]){
+			data = logData(camera_time);
 		}
+		
         return (
 			<Monitor location={location} >
 				<h2>{title[this.type]}</h2>

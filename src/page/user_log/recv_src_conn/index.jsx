@@ -44,7 +44,7 @@ class recv_src_conn extends React.Component {
 		let { params } = recv_src_conn;
 		if(this.hasMount && recv_src_conn.posts && recv_src_conn.posts.logs){
 			if(recv_src_conn.posts.logs[0]){
-				if( !recv_src_conn.posts.logs[0].key){
+				if( !recv_src_conn.posts.logs[0].key || module.hot){
 					data = logData(recv_src_conn);
 				}
 			}else{

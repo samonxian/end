@@ -44,7 +44,7 @@ class camera_debug_last extends React.Component {
 		let { params } = camera_debug_last;
 		if(this.hasMount && camera_debug_last.posts && camera_debug_last.posts.logs){
 			if(camera_debug_last.posts.logs[0]){
-				if( !camera_debug_last.posts.logs[0].key){
+				if( !camera_debug_last.posts.logs[0].key || module.hot){
 					data = logData(camera_debug_last);
 				}
 			}else{

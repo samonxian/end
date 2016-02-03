@@ -23,7 +23,6 @@ class rtmp_device extends React.Component {
 			this.getData({ })	
 		}
 		this.hasMount = true;
-		this.type = getUrlParams(this.props.location.pathname)[1];
 		//console.log(1)
 	}
 
@@ -42,15 +41,9 @@ class rtmp_device extends React.Component {
 		//console.log(this.props)
 		let { rtmp_device ,location,dispatch } = this.props;
 		let { params } = rtmp_device;
-		if(this.hasMount && rtmp_device.posts && rtmp_device.posts.logs){
-			if(rtmp_device.posts.logs[0]){
-				if( !rtmp_device.posts.logs[0].key){
-					data = logData(rtmp_device);
-				}
-			}else{
-				data = [];
-			}
-			
+		this.type = getUrlParams(this.props.location.pathname)[1];
+		if(rtmp_device.posts && rtmp_device.posts.logs && rtmp_device.posts.logs[0]){
+			data = logData(rtmp_device);
 		}
         return (
 			<Monitor location={location} >

@@ -31,17 +31,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
  */
 export function fieldSort(data,fields,columns,callback){
 	var reData = [];
-	for(var key in data){
-		reData[key] = { };
-		callback && callback(key,data);
-		fields.forEach(function(v,k){
-			reData[key][v] = data[key][v];	
-		})	
-		
-		//react组件，key值设定
-		reData[key]['key'] = key;
-		data[key]['key'] = key  + "_";
-		data[key]['_key_'] = key + "_";
+	if(data && data[0] && !data[0]._reData_){
+		data.forEach(function(value,key){
+			reData[key] = { };
+			callback && callback(key,data);
+			fields.forEach(function(v,k){
+				reData[key][v] = data[key][v];	
+			})	
+			//react组件，key值设定
+			reData[key]['key'] = key;
+			data[key]['_key_'] = key;
+		})
+		data[0]._reData_ = reData; 
+	}else if(data && data[0]){
+		reData = data[0]._reData_;
 	}
 	columns && columns.forEach(function(value,key){
 		columns[key]['dataIndex'] = fields[key];
