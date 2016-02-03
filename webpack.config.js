@@ -35,12 +35,6 @@ module.exports = {
 	module: {
         loaders: [
 			{test: /\.(jpg|png)$/, loader: "url?limit=8192"},
-			{
-				test : /\.js[x]?$/,
-				loader: 'react-hot',
-				exclude: /node_modules/
-
-			},
 			{ 
             	test: /\.js[x]?$/, 
             	loader: 'babel',
