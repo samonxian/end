@@ -31,6 +31,9 @@ class RtmpTracker extends Component {
 	 */
 	dataAdapter(){
 		var obj = {
+			/**
+			 *	按用户大小逆序重排数组
+			 */
 			sortByUserDesc(data){
 				data.sort(function(a,b){
 					if(a.ActiveUsers > b.ActiveUsers){
@@ -40,14 +43,15 @@ class RtmpTracker extends Component {
 					}
 				})
 			},
-			sortByProvinceAsc(data){
-				data.sort(function(a,b){
-					if(a.Province > b.Province){
-						return 1;
-					}else{
-						return -1;
-					}
-				})
+			/**
+			 *	使数组index变为省名称
+			 */
+			indexByProvinceName(data){
+				var province = [];
+				data.forEach(function(value,key){
+					province[value.Province] = value;
+				})	
+				return province;
 			}
 		}
 		return obj;
@@ -62,16 +66,13 @@ class RtmpTracker extends Component {
 			this.sortByUserDesc(p_data);
 			var max_users = p_data[0].ActiveUsers;
 			var min_users = p_data[p_data.length-1].ActiveUsers;
-			this.sortByProvinceAsc(p_data);	
+			var province_data = this.indexByProvinceName(p_data);
 			return (
 				<div>
-					<div className="rt_color_line">
-						<span className="fl">{ min_users }</span>
-						<span className="fr">{ max_users }</span>
-					</div>
 					<Antd.Row type="flex" justify="center" align="bottom" className="rt_con">
 						<Antd.Col className="rt_left">
-							<ChinaMap min_users={ min_users } max_users={ max_users } posts={ p_data } posts2={ posts2.data.data } parent={ _this }/>	
+							<ChinaMap min_users={ min_users } max_users={ max_users } posts={ province_data }
+									posts2={ posts2.data.data } parent={ _this }/>	
 						</Antd.Col>
 						<Antd.Col className="rt_right">
 							{

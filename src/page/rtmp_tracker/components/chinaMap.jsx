@@ -17,42 +17,35 @@ class ChinaMap extends Component {
 	dataAdapter(){
 		var _this = this;
 		return {
-			chinaMapGeoAsc(){
-				chinaMapGeo.features.sort(function(a,b){
-					if(a.properties.name > b.properties.name){
-						return 1;
-					}else{
-						return -1;
-					}
-				})
-			},
-			getPostsProvince(posts){
-			    var	prov = [];
-				posts.forEach(function(v,k){
-					prov.push(v.Province);
-				})	
-				return prov;
-			},
-			setProvFillColor(posts,max_users){
+			/**
+			 *	根据用户数取颜色，越多颜色越亮
+			 *@param [float] 百分比 如0.8
+			 */
+			getProFillColor(pecent){
 				var min_rgb = [40,63,98], 
-					max_rgb = [195,215,244], 
+					max_rgb = [156,176,207], 
 					r_d = max_rgb[0]-min_rgb[0],
 					g_d = max_rgb[1]-min_rgb[1],
-					b_d = max_rgb[2]-min_rgb[2],
-					prov = this.getPostsProvince(posts);
-				var i = 0;
-				this.chinaMapGeoAsc();	
+					b_d = max_rgb[2]-min_rgb[2];
+				var rgb = { }
+				rgb.r = parseInt(max_rgb[0] - (r_d - pecent * r_d)); 
+				rgb.g = parseInt(max_rgb[1] - (g_d - pecent * g_d)); 
+				rgb.b = parseInt(max_rgb[2] - (b_d - pecent * b_d)); 
+				return rgb;
+			},
+			/**
+			 *	设置各省颜色
+			 */
+			setProvFillColor(posts,max_users){
 				chinaMapGeo.features.forEach(function(value,key){
 					var province = value.properties.name; 
-					if(prov.indexOf(province) != -1){
-						var r = parseInt(max_rgb[0] - (r_d - posts[i].ActiveUsers / max_users * r_d)); 
-						var g = parseInt(max_rgb[1] - (g_d - posts[i].ActiveUsers / max_users * g_d)); 
-						var b = parseInt(max_rgb[2] - (b_d - posts[i].ActiveUsers / max_users * b_d)); 
-						var rgb = "rgb(".concat(r,',',g,',',b,')')
+					if(posts[province]){
+						var rgb_num = _this.getProFillColor(posts[province].ActiveUsers / max_users);
+						var rgb = "rgb(".concat(rgb_num.r,',',rgb_num.g,',',rgb_num.b,')')
 						_this.fillColor.push(rgb);
 						_this.province_coord.push(value.geometry.coordinates)
-						i++;
 					}else{
+						//无数据省颜色统一
 						_this.fillColor.push("#283F62")
 					}
 				})
@@ -117,7 +110,7 @@ class ChinaMap extends Component {
 	}
 
 	componentDidMount(){
-		let { posts,max_users } = this.props
+		let { posts,posts2,max_users } = this.props
 		this.conDom = ReactDOM.findDOMNode(this).parentNode;	
 		//处理省份颜色
 		this.setProvFillColor(posts,max_users);
@@ -140,12 +133,21 @@ class ChinaMap extends Component {
 							chinaMapGeo.features.map(function(value,key){
 								//console.log(value)
 								var color = _this.fillColor[key];
-								if(_this.state && _this.state.fillColor && _this.state.fillColor[key]){
-									color = _this.state.fillColor[key];
+								var province_name = value.properties.name;
+								var content = '';
+								if(posts[province_name]){
+									content = '用户数：'.concat(posts[province_name].ActiveUsers); 
+									return (
+										<Antd.Popover key={ key } overlay={content} title={province_name} trigger="hover">	
+											<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
+										</Antd.Popover> 
+									)
+								}else{
+									return(
+										<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
+									)
 								}
-								return (
-									<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
-								)
+								
 							})
 						}
 					</g>
