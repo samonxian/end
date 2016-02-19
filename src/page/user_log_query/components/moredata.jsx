@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button,Spin } from 'antd_c'
+import { Button,Spin } from 'antd'
 import * as log_query_action from '../action'
 class MoreData extends React.Component {
 

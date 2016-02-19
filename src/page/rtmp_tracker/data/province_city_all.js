@@ -41,8 +41,7 @@ export let columns = [
 	},
 ];
 
-export function getData(data){
-	//console.debug(data)
+export function dataAdapter(data){
 	var server_count = 0,upSpeed=0,downSpeed=0,cn_count=0,totalUpSpeed=0,totalDownSpeed=0;
 	data.forEach(function(value,key){
 		server_count++; 
@@ -60,6 +59,12 @@ export function getData(data){
 		server_count: server_count,
 		cn_count: cn_count,
 	}; 
+	return t_data;
+}
+
+export function getData(data){
+	//console.debug(data)
+	var t_data = dataAdapter(data);	
 	var d_data = []
 	d_data.push(t_data)
 	//console.debug(d_data)

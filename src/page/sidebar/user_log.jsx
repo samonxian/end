@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
-import { Tabs,Menu, Dropdown, Icon } from 'antd_c'
+import { Tabs,Menu, Dropdown, Icon } from 'antd'
 import { push,replace } from 'react-router-redux'
 import { title_menu } from '../user_log/title.js'
 const TabPane = Tabs.TabPane;

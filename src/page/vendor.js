@@ -8,7 +8,7 @@ module.exports = [
 	'antd/lib/dropdown',
 	// 'antd/lib/progress',
 	// 'antd/lib/popover',
-	'antd/lib/select',
+	// 'antd/lib/select',
 	// 'antd/lib/breadcrumb',
 	// 'antd/lib/popconfirm',
 	'antd/lib/pagination',
@@ -39,6 +39,6 @@ module.exports = [
 	'antd/lib/form',
 	'antd/lib/input',
 	'antd/lib/calendar',
-	'antd/lib/time-picker',
+	'antd/lib/time-picker', 
 	// 'antd/lib/transfer'
 ] 

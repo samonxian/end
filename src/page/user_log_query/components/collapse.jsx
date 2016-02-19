@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { Table,Collapse } from 'antd_c'
+import { Table,Collapse } from 'antd'
 import { title } from '../../user_log/title'
 import * as deal from './index'
 import CollapseItem from 'libs/antd/collapseItemTable'

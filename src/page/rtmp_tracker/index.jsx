@@ -31,7 +31,7 @@ class RtmpTracker extends Component {
 	 */
 	dataAdapter(){
 		var obj = {
-			sortByUserDesc : function(data){
+			sortByUserDesc(data){
 				data.sort(function(a,b){
 					if(a.ActiveUsers > b.ActiveUsers){
 						return -1;
@@ -40,7 +40,7 @@ class RtmpTracker extends Component {
 					}
 				})
 			},
-			sortByProvinceAsc : function(data){
+			sortByProvinceAsc(data){
 				data.sort(function(a,b){
 					if(a.Province > b.Province){
 						return 1;

@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Pagination } from 'antd_c'
+import { Pagination } from 'antd'
 import { getUrlParams } from 'function'
  
-class NPagination extends Pagination {
+class NPagination extends React.Component {
 	constructor(){
 		super(); 
 	}

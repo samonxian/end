@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs,Table,Timeline,Icon,Row,Col,Alert } from 'antd_c'
+import { Tabs,Table,Timeline,Icon,Row,Col,Alert } from 'antd'
 import { title } from '../../user_log/title.js'
 import NCollapse from './collapse'
 import NTable from './table'

@@ -29,7 +29,7 @@ class App extends React.Component {
     }
 }
 function mapStateToProps(state){
-	//console.debug('组件初始props:',state)
+	console.debug('组件初始props:',state)
 	return {
 		current : 'mail',
 		theme : 'dark'

@@ -3,16 +3,14 @@ var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var webpack_config = require('./webpack.config.js');
 var vendor = require('./src/page/vendor.js');
-//vendor.push("react")
 var config = Object.assign({}, webpack_config, {
     devtool: '',
     entry: {
         app: './src/index.jsx',
         vendor: vendor,
-        libs: ['react'],
+        libs: ['react','d3'],
     },
     resolve: Object.assign(webpack_config.resolve, {
-        'antd_c': __dirname + '/src/libs/antd/production.js',
     }),
     plugins: [
         new webpack.NoErrorsPlugin(),

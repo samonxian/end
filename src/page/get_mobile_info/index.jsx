@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { push,replace } from 'react-router-redux'
 import { inputValue ,fetchData,displayTable2 } from './action'
-import {Form, Input, Button, Icon,Table} from 'antd_c'
+import {Form, Input, Button, Icon,Table} from 'antd'
 import Monitor from '../sidebar/monitor'
 const FormItem = Form.Item;
 const columns = [

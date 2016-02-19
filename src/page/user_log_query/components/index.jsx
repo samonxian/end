@@ -1,6 +1,6 @@
 import React from 'react'
 import { title } from '../../user_log/title'
-import { Table } from 'antd_c'
+import { Table } from 'antd'
 import { fieldSort ,toUpperCase } from 'function'
 import * as common from 'common'
 let type = {

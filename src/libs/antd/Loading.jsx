@@ -1,5 +1,5 @@
 import React from 'react'
-import * as Antd from 'antd_c'
+import * as Antd from 'antd'
 class Loading extends React.Component {
 	constructor(){
 		super(); 

@@ -17,7 +17,7 @@ class ChinaMap extends Component {
 	dataAdapter(){
 		var _this = this;
 		return {
-			chinaMapGeoAsc : function(){
+			chinaMapGeoAsc(){
 				chinaMapGeo.features.sort(function(a,b){
 					if(a.properties.name > b.properties.name){
 						return 1;
@@ -26,19 +26,19 @@ class ChinaMap extends Component {
 					}
 				})
 			},
-			getPostsProvince : function(posts){
+			getPostsProvince(posts){
 			    var	prov = [];
 				posts.forEach(function(v,k){
 					prov.push(v.Province);
 				})	
 				return prov;
 			},
-			setProvFillColor : function(posts,max_users){
+			setProvFillColor(posts,max_users){
 				var min_rgb = [40,63,98], 
 					max_rgb = [195,215,244], 
-					r_d = 195-40,
-					g_d = 215-63,
-					b_d = 244-98,
+					r_d = max_rgb[0]-min_rgb[0],
+					g_d = max_rgb[1]-min_rgb[1],
+					b_d = max_rgb[2]-min_rgb[2],
 					prov = this.getPostsProvince(posts);
 				var i = 0;
 				this.chinaMapGeoAsc();	
@@ -57,7 +57,22 @@ class ChinaMap extends Component {
 					}
 				})
 			},
-			setD3ChinaMapPath : function(){
+			/**
+			 *	设置城市点颜色
+			 */
+			setCityIconColor(data){
+				var valueOfP = d3.scale.linear()
+						.domain([0, 0.6, .8, 1])
+						.range([{ r: 0, g: 255, b: 0 }, { r: 255, g: 255, b: 0 }, { r: 255, g: 128, b: 128 }, { r: 255, g: 0, b: 0 }]);
+				var up = data.upSpeed / data.totalUpSpeed;
+				var down = data.downSpeed / data.totalDownSpeed;
+				var c1 = valueOfP(up);
+				var c2 = valueOfP(down);
+				//取上下行最大值为颜色取值
+				var c = up > down ? c1 : c2;
+				return d3.rgb(c.r, c.g, c.b);
+			},
+			setD3ChinaMapPath(){
 				var	width = this.conDom.offsetWidth,
 					height = this.conDom.offsetHeight;
 				var scale = width;
@@ -78,7 +93,7 @@ class ChinaMap extends Component {
 	events(){
 		var _this = this;
 		return {
-			showData : function(key){
+			showData(key){
 				return function(e){
 					e.stopPropagation();	
 					_this.props.parent.setState({
@@ -86,14 +101,14 @@ class ChinaMap extends Component {
 					})
 				}
 			},
-			mouseover : function(key){
+			mouseover(key){
 				var fillColor = { }
 				fillColor[key] = "yellow";
 				this.setState({
 					fillColor : fillColor,
 				})
 			},
-			mouseout : function(key){
+			mouseout(key){
 				this.setState({
 					fillColor : this.fillColor 
 				})
@@ -129,7 +144,7 @@ class ChinaMap extends Component {
 									color = _this.state.fillColor[key];
 								}
 								return (
-									<path key={key} stroke="#000" strokeWidth="1" fill={color} d={ _this.path(value) }/>
+									<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
 								)
 							})
 						}
@@ -137,15 +152,17 @@ class ChinaMap extends Component {
 					<g>
 						{
 							posts2.map(function(value,key){
+								var c_data = city_s_setting.dataAdapter(value.RelayServer);
 								var path = _this.projection(cityPosition[value.City])
 								var content = <Antd.Table size="small" columns={city_s_setting.columns} 
 										dataSource={city_s_setting.getData(value.RelayServer)}
 										pagination={false} bordered/>
-	
+								var fillColor = _this.setCityIconColor(c_data);	
+								//console.debug(fillColor)
 								return (
 									<Antd.Popover key={ key } overlay={content} title={value.City} trigger="hover">	
 										<circle onClick={ _this.showData(key) } title={value.City} key={ key } cx={path[0]} cy={path[1]} 
-												r="8" stroke="#006600i" fill="#00cc00"/>
+												r="5" stroke="#006600i" fill={fillColor}/>
 									</Antd.Popover> 
 								)
 							})	

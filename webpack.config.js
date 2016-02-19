@@ -13,18 +13,11 @@ entry = [
     'webpack-hot-middleware/client',
     './src/index.jsx'
 ]
-var vendor = require('./src/page/vendor.js');
-if(!vendor){
-	vendor = [];
-	console.log('antd_splitting error!')
-}else{
-}
 module.exports = {
 	devtool: 'inline-source-map',
 	entry: {
 		app : entry,
-		vendor : vendor, 
-		libs : ['react'], 
+		libs : ['react','antd'], 
 	}, 
     output: {
 		publicPath: '/js/',
@@ -50,7 +43,6 @@ module.exports = {
 			'page': __dirname + '/src/page/',
 			'libs': __dirname + '/src/libs/',
 			'JSONP': __dirname + '/src/libs/jsonp.js',
-			'antd_c': __dirname + '/src/libs/antd',
 			'function': __dirname + '/src/libs/function.js',
 			'common': __dirname + '/src/libs/temp/user_log.js',
 		}, 

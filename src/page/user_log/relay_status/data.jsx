@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table,Collapse } from 'antd_c'
+import { Table,Collapse } from 'antd'
 import CollapseItem from 'libs/antd/collapseItemTable'
 import { fieldSort ,toUpperCase,createAntdColumns } from 'function'
 const Panel = Collapse.Panel;

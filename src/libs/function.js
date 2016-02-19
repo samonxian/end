@@ -52,7 +52,13 @@ export function fieldSort(data,fields,columns,callback){
 	})
 	return reData;
 }
-
+/**
+ * [toUpperCase description]
+ * @param  {string} string [传进来的字符串]
+ * @param  {Number} start  [开始位置，默认0]
+ * @param  {Number} end    [介绍位置，默认1]
+ * @return {string} 
+ */
 export function toUpperCase(string,start=0,end=1){
 	var str1 = string.substr(start,end).toUpperCase();
 	var str2 = string.substr(end);

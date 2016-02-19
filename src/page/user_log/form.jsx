@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {Form, Input, Button,DatePicker } from 'antd_c'
+import {Form, Input, Button,DatePicker } from 'antd'
 import { getUrlParams } from 'function'
 const FormItem = Form.Item
 const RangePicker = DatePicker.RangePicker;

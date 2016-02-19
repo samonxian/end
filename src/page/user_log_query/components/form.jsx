@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Component from 'libs/react-libs/Component'
-import * as Antd from 'antd_c'
+import * as Antd from 'antd'
 import * as actionCreator from '../action'
 const FormItem = Antd.Form.Item
 const RangePicker = Antd.DatePicker.RangePicker;

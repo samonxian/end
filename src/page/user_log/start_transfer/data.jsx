@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table } from 'antd_c'
+import { Table } from 'antd'
 
 import { fieldSort ,toUpperCase,createAntdColumns } from 'function'
 
