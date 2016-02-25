@@ -43,7 +43,7 @@ class LeftBar extends Component {
 							y = parseInt(height) + parseInt(y) + parseInt(gap);
 							let t_width = 0;
 							let t_x = x;
-							if(!parseInt(v) == 0 && !parseInt(value) == 0){
+							if(!v == 0 && !value == 0){
 								t_width = v / value * 100 + "%"; 
 								t_x = v / value * 93 + "%"
 							}

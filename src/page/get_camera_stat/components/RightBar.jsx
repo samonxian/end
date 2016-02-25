@@ -40,14 +40,16 @@ class RightBar extends Component {
 							let v = value[field];
 							let t_y = y;
 							//console.debug('v',v)
-							//console.debug('value',value)
+							//console.debug('value',value.send_rate_ave)
 							x = parseInt(width) + parseInt(x) + parseInt(gap);
-							let t_height = 1;
-							if(!parseInt(v) == 0 && !parseInt(max_value) == 0){
-								t_height = height * parseInt(v) / max_value; 
+							let t_height = 0;
+							if(field == 'send_rate_ave'){
+								max_value = 1;
 							}
-							t_height = Math.round(t_height);
-							t_y = parseInt(height) - parseInt(t_height) + t_y
+							if(!v == 0 && !max_value == 0){
+								t_height = height * v / max_value; 
+							}
+							t_y = height - t_height + t_y
 							return (
 								<rect key={ key } x={x} y={t_y} width={width} height={t_height}/>
 							)

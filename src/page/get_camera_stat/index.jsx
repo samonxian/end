@@ -4,7 +4,7 @@ import Component from 'libs/react-libs/Component'
 import Pie from 'libs/d3-components/Pie'
 import { connect } from 'react-redux'
 import * as Antd from 'antd'
-import * as action from './action'
+import * as actionCreators from './action'
 import LeftBar from './components/LeftBar'
 import RightBar from './components/RightBar'
 
@@ -13,13 +13,25 @@ class CameraStat extends Component {
 		super(); 
 	}
 
+	shouldComponentUpdate(nextProps,nextState){
+		if(nextProps.get_camera_stat.type == actionCreators.REQUEST_CAMERASTAT){
+			return false;
+		}else{
+			return true;	
+		}
+	}
+
 	componentDidMount(){
 		var _this = this;
-		this.props.dispatch(action.fetchData()) 
+		this.props.dispatch(actionCreators.fetchData()) 
+		this.clearInterval = setInterval(function(){
+			_this.props.dispatch(actionCreators.fetchData());	
+			//console.debug(1)
+		},3000)
 	}
 
 	componentWillUnmount(){
-
+		clearInterval(this.clearInterval)
 	}
 	/**
 	 *	数据处理与适配
@@ -30,7 +42,31 @@ class CameraStat extends Component {
 			getFillColor(){
 				return [ '#6fea3a',	'#f2af29',	'#f75a11'];
 			},
-			
+			bandwidthTransform(t_value){
+				let value = 0;
+				if(t_value > 1024 * 1024 * 1024){
+					value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
+				}else if(t_value > 1024 * 1024){
+					value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'MB';	
+				}else if(t_value > 1024){
+					value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
+				}else if(t_value != 0){
+					value = t_value + '字节';	
+				}else{
+					value = t_value;	
+				}
+				return value;
+			},
+			setSpecialText(){
+				var obj = [
+					"发送比",
+					"人数",
+					"带宽",
+					"播放流量",
+					"推送流量"
+				]
+				return obj;
+			},
 			setSpecialFields(){
 				var obj = [
 					"send_rate_ave",//发送比
@@ -60,6 +96,13 @@ class CameraStat extends Component {
 							}else{
 								v[key] = 0;
 								obj[key].push(v[key]);
+							}
+							switch(key){
+								case 'bandwith':
+								case 'yesterday_publish_traffic':
+								case 'yesterday_play_traffic':
+									let t_value = v[key];
+									v[key+"_temp"] = _this.bandwidthTransform(t_value);
 							}
 						}
 					})
@@ -116,6 +159,13 @@ class CameraStat extends Component {
 						v.total_info.all = v.cameras.length;
 						for(var key in obj){
 							if(key != 'all'){
+								switch(key){
+									case 'bandwidth':
+									case 'yesterday_publish_traffic':
+									case 'yesterday_live_traffic':
+										let t_value = v.total_info[key];
+										v.total_info[key+"_temp"] = _this.bandwidthTransform(t_value);
+								}
 								obj[key].push(v.total_info[key]);
 							}
 						}
@@ -128,13 +178,14 @@ class CameraStat extends Component {
 				//console.debug(data)
 				return value;
 			},
-			sortCamerasByDesc(data){
+			/**
+			 *	先以观看人数为排序条件，如果view_mum有为0的数据则以推送流量为排序条件	
+			 *@param [object] data 需要处理的总数据
+			 */
+			sortCamerasByViewMumAndPTrafficDesc(data){
 				data.sort(function(a,b){
-					var flag_1 =  b.view_mum - a.view_mum
-					var flag_2 =  b.yesterday_publish_traffic - a.yesterday_publish_traffic
-					if(flag_1 && ){
-						
-					}
+					var flag1 =  b.viewer_mum - a.viewer_mum
+					return flag1;
 				})	
 			}
 		}
@@ -149,10 +200,15 @@ class CameraStat extends Component {
 				rightBar_h_gap = rightBar_height + 2,
 				radius = 37,
 				pie = d3.layout.pie(),  
+				summaryFields = this.setSummaryFields(),
+				specialFields = this.setSpecialFields(),
 				max_special = _this.getSpecialMaxValues(posts.data), 
-				max_summary = this.getSummaryMaxValues(posts.data);
+				max_summary = this.getSummaryMaxValues(posts.data),
+				tuijian = [1,2,3,4,5],
+				i = 0;
 			return (
 				<div className="g_c_s_con">
+					<h1>公众直播情况</h1>
 					{
 						posts.data.map(function(v,k){
 							if(!v.app_name || !v.cameras[0]){
@@ -160,6 +216,8 @@ class CameraStat extends Component {
 									<div key={ k }></div>
 								)
 							}
+							i++;
+							//圆饼图数据
 							let dataset = { data : [ ], fill : _this.getFillColor() };
 							dataset.data.push(v.total_info.view_health)
 							dataset.data.push(v.total_info.view_subhealth)
@@ -168,6 +226,9 @@ class CameraStat extends Component {
 							dataset2.data.push(v.total_info.health)
 							dataset2.data.push(v.total_info.subhealth)
 							dataset2.data.push(v.total_info.unhealth)
+							//查找厂商最好前5app
+							_this.sortCamerasByViewMumAndPTrafficDesc(v.cameras);
+							//console.debug(v.cameras)
 							return (
 								<Antd.Row key={ k } type="flex" justify="start">
 									{
@@ -201,9 +262,14 @@ class CameraStat extends Component {
 													lineHeight : rightBar_height + 'px',
 													top : rightBar_h_gap * m_k  ,
 												}
+												let t_v = 0;
+												if(v.total_info[summaryFields[m_k]+'_temp']){
+													t_v = v.total_info[summaryFields[m_k]+'_temp'];
+												}else{
+													t_v = v.total_info[summaryFields[m_k]];
+												}
 												return(
-													<div key={m_k} className="bg_line" style={style}>
-														{ v.total_info[_this.setSummaryFields()[m_k]] }</div>
+													<div key={m_k} className="bg_line" style={style}> {t_v}</div>
 												)
 											})
 										}
@@ -259,10 +325,46 @@ class CameraStat extends Component {
 										</svg>
 									</Antd.Col>
 									<Antd.Col className="g_c_s_col g_c_s_col_4">
+										{
+											i == 1 && <div className="table_info">
+												{
+													_this.setSpecialText().map(function(s_v,s_k){
+														let t_value = 0;
+														switch(specialFields[s_k]){
+															case 'bandwith':
+															case 'yesterday_publish_traffic':
+															case 'yesterday_play_traffic':
+																t_value = _this.bandwidthTransform(max_special[s_k]);
+															break;
+															default:
+																t_value = max_special[s_k]
+														}
+														let text = s_v.concat("：").concat(t_value); 
+														return(
+															<span key={ s_k }>{ text }</span>
+														)
+													})	
+												}
+											</div>
+										}
+										<div className="g_c_s_title"> 
+											{
+												tuijian.map(function(t_v,t_k){
+													let lg = v.cameras.length;
+													if(lg < 5 && t_k > lg-1){
+														return(
+															<div key={ t_k }></div>
+														)
+													}
+													return(
+														<a key={ t_k } href="#" target="_blank">{v.cameras[t_k].cid}</a>
+													)
+												})
+											}
+										</div>	
 										<svg>
 											{
 												max_special.map(function(v2,k2){
-
 													return (
 														<RightBar key={k2} transform={`translate(0,${ rightBar_h_gap * k2 })`} height={rightBar_height} 
 															width={rightBar_width} data={v.cameras} max_value={v2} gap="1" 
@@ -271,6 +373,25 @@ class CameraStat extends Component {
 												})
 											}
 										</svg>
+									</Antd.Col>
+									<Antd.Col className="g_c_s_col g_c_s_col_5">
+										{
+											max_summary.map(function(m_v,m_k){
+												let style = {
+													padding : '0 3 0 3',
+													background : 'none',
+													zIndex : 1000000,
+													textAlign : 'right',
+													height : rightBar_height,
+													lineHeight : rightBar_height + 'px',
+													top : rightBar_h_gap * m_k  ,
+												}
+												return(
+													<div key={m_k} className="bg_line" style={style}>
+														{ _this.setSpecialText()[m_k] }</div>
+												)
+											})
+										}
 									</Antd.Col>
 								</Antd.Row>
 							)

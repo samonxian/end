@@ -58,6 +58,9 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/rtmp_tracker">RTMP地理监控</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/get_camera_stat">公众直播情况</Link>
+							</MenuItem>
 						</Menu>
 							
 					</Col>	
