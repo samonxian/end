@@ -145,4 +145,22 @@ export function exitFullscreen() {
         document.webkitExitFullscreen();
     }
 }
-
+/**
+ *	带宽、存储等为字节的单位转换为KB,MB,GB单位
+ *@param [int] t_value 转换值
+ */
+export function transformToKbMbGb(t_value){
+	let value = 0;
+	if(t_value > 1024 * 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
+	}else if(t_value > 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'MB';	
+	}else if(t_value > 1024){
+		value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
+	}else if(t_value != 0){
+		value = t_value + '字节';	
+	}else{
+		value = t_value;	
+	}
+	return value;
+}
