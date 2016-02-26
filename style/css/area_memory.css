@@ -11,30 +11,23 @@
 	height: 50px;
 	line-height: 60px;
 }
-.area_memory_fristSpan{
-	border-bottom: 1px solid #e9e9e9;
-}
-.area_memory_areaTabel{
-	padding:16px 8px;
-}
 .area_memory_total_num{
 	background: blue;
-	width: 90%;
+	width: 80%;
 	float: left;
 	margin-right: 5px;
 }
 .area_memory .area_memory_height{
 	height: 20px;
 	line-height: 20px;
+	width: 50%;
+	float: left;
+}
+.area_memory_frist_table td:last-child{
+	width: 50%;
 }
 .area_memory_total_num,.area_memory_unhealth_user_num,.area_memory_health_user_num{
 	height: 20px;
-}
-.area_memory .area_memory_frist_table td{
-	padding:0;
-}
-.area_memory .area_memory_frist_table td:first-child{
-	padding:16px 8px;
 }
 .area_memory_disk_total,.area_memory_disk_health,.area_memory_disk_unhealth,.area_memory_disk_nodata{
 	width: 15px;

@@ -107,8 +107,9 @@ class areaMemory extends Component{
 			},
 
 			TraversalDiskDetailData(data){
-				var array = [];
-
+				var array = [],
+				    minSize = 0;
+             
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["groups_detail"];
 					for(var j=0,lenth = temp.length;j<lenth;j++){
@@ -117,6 +118,15 @@ class areaMemory extends Component{
 							tempObj["rowSpan"] = lenth
 						}
 						for(var k=0;k<tempObj["disc_storage"].length;k++){
+							
+							if(minSize === 0){
+								minSize = tempObj["disc_storage"][k]["total"]
+							}
+
+							if(minSize > tempObj["disc_storage"][k]["total"]){
+								minSize = tempObj["disc_storage"][k]["total"]
+							}
+
 							tempObj["disc_storage"][k]["key"] = "disk_detail_storage_key_"+new Date().getTime()+Math.random();
 						}
 						tempObj["area"] = data[i]["area"];
@@ -124,7 +134,11 @@ class areaMemory extends Component{
 						array.push(tempObj);
 					}
 				}
-				
+
+				for(var i=0;i<array.length;i++){
+					array[i]["minSize"] = new Number(minSize/1020/1024/1024).toFixed(2)+"GB"
+				}
+
 				return array;
 			}
 		}
@@ -208,6 +222,10 @@ class areaMemory extends Component{
 			},{
 				title: '不健康用户数',
 			    dataIndex: 'unhealth_user_num',
+			    render: renderContent
+			},{
+				title: '磁盘最小容量',
+			    dataIndex: 'minSize',
 			    render: renderContent
 			},{
 				title: '详情',

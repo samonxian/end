@@ -23,21 +23,15 @@ const renderRowSpan = function(text,record){
 }
 
 const area_service_forword = function(text,record){
-	return <span className="area_memory_span"><span className="area_memory_span area_memory_areaTabel area_memory_fristSpan">{ record["disc_num"] }</span><span className="area_memory_span area_memory_areaTabel">{ record["relay_server_num"] }</span></span>
+	return <span>{ record["disc_num"] }/{ record["relay_server_num"] }</span>
 }
 
 const area_online_offline = function(text,record){
-	return <span className="area_memory_span">
-            <span className="area_memory_span area_memory_areaTabel area_memory_fristSpan">{ record["online_disc_num"] }</span>
-            <span className="area_memory_span area_memory_areaTabel">{ record["offline_disc_num"] }</span>
-       </span>
+	return <span>{ record["online_disc_num"] }/{ record["offline_disc_num"] }</span>
 }
 
 const area_work_empty = function(text,record){
-	return <span className="area_memory_span">
-            <span className="area_memory_span area_memory_areaTabel area_memory_fristSpan">{ record["work_disc_num"] }</span>
-            <span className="area_memory_span area_memory_areaTabel">{ record["empty_disc_num"] }</span>
-       </span>
+	return <span>{ record["work_disc_num"] }/{ record["empty_disc_num"] }</span>
 }
 
 const forword_accept = function(text,record){
@@ -46,7 +40,7 @@ const forword_accept = function(text,record){
 		if(record["max_accept"] === record["in_connections"]){
 			font_style = 'bold'
 		}
-		var forword_width = (80/record["max_accept"])*record["in_connections"];
+		var forword_width = (70/record["max_accept"])*record["in_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["in_connections"]}</span></div>
 	}else{
 		return <div className="area_memory_no_data"></div>
@@ -59,7 +53,7 @@ const forword_send = function(text,record){
 		if(record["max_send"] === record["out_connections"]){
 			font_style = 'bold'
 		}
-		var forword_width = (80/record["max_send"])*record["out_connections"];
+		var forword_width = (70/record["max_send"])*record["out_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_send" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["out_connections"]}</span></div>
 	}else{
 		return <div className="area_memory_no_data"></div>
@@ -72,7 +66,7 @@ const forword_wait = function(text,record){
 		if(record["max_wait"] === record["wait_connections"]){
 			font_style = 'bold'
 		}
-		var forword_width = (80/record["max_wait"])*record["wait_connections"];
+		var forword_width = (70/record["max_wait"])*record["wait_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_wait" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["wait_connections"]}</span></div>
 	}else{
 		return <div className="area_memory_no_data"></div>
@@ -102,39 +96,46 @@ const area_user_num_seven = function(text,record){
 	    showSituation_unhealth_thirty = "",
 	    thirty_width = "",
 	    font_style = '',
+	    total = 0,
 	    thirty_font_style = '',
 	    thirty_background= "#2C94C3",
 	    seven_background = "#2C94C3",
 	    seven_width = 0;
+    
+    if(record["max_seven"] > record["max_thirty"]){
+    	total = record["max_seven"];
+    }else{
+    	total = record["max_thirty"];
+    }
 
     if(record["user_num7"]!==undefined && record["user_num7"]>0){
-    	if(record["user_num7"] === record["max_seven"]){
+    	if(record["user_num7"] === total){
     		font_style = 'bold'
     	}
-    	seven_width = (90/record["max_seven"])*record["user_num7"];
+    	seven_width = (80/total)*record["user_num7"];
     }else{   	
     	seven_background = "#d9d9d9"
     }
 	if(record["subhealth_user_num7"]>0){
-		var seven_health_width = (90/record["max_seven"])*record["subhealth_user_num7"];
+		var seven_health_width = (80/total)*record["subhealth_user_num7"];
 		showSituation = <div className="area_memory_unhealth_user_num" style={{width:seven_health_width+"%"}}>{record["subhealth_user_num7"]}</div>
 	}
     if(record["unhealth_user_num7"]>0){
-    	var seven_unhealth_width = (90/record["max_seven"])*record["unhealth_user_num7"];
+    	var seven_unhealth_width = (80/total)*record["unhealth_user_num7"];
     	showSituationUnhealth = <div className="area_memory_health_user_num" style={{width:seven_unhealth_width+"%"}}>{record["unhealth_user_num7"]}</div>
     }
     if(record["user_num30"]!==undefined && record["user_num30"]>0){
-    	if(record["max_thirty"] === record["user_num30"]){
+    	if(total === record["user_num30"]){
     		thirty_font_style = 'bold'
     	}
-    	thirty_width = (90/record["max_thirty"])*record["user_num30"];
+    	thirty_width = (80/total)*record["user_num30"];
     	if(record["subhealth_user_num30"]!==undefined && record["subhealth_user_num30"]>0){
-            var thirty_health_width = (90/record["max_thirty"])*record["subhealth_user_num30"];
+            var thirty_health_width = (80/total)*record["subhealth_user_num30"];
 	    	showSituation_thirty = <div className="area_memory_unhealth_user_num" style={{width:thirty_health_width+"%"}}>{record["subhealth_user_num30"]}</div>
 	    }
 	    
 	    if(record["unhealth_user_num30"]!==undefined && record["unhealth_user_num30"]>0){
-	    	var thirty_unhealth_width = (90/record["max_thirty"])*record["subhealth_user_num30"];
+	    	var thirty_unhealth_width = (80/total)*record["subhealth_user_num30"];
 	    	showSituation_unhealth_thirty = <div className="area_memory_health_user_num" style={{width:thirty_unhealth_width+"%"}}>{ record["unhealth_user_num30"] }</div>
 	    }
     }else{
@@ -142,7 +143,6 @@ const area_user_num_seven = function(text,record){
     }
   
 	return <span className="area_memory_span">
-            <span className="area_memory_span area_memory_areaTabel area_memory_fristSpan">
                 <div className="area_memory_height">
                     <div className="area_memory_total_num" style={{width:seven_width+'%',background:seven_background}}>
 			            { showSituation }
@@ -150,8 +150,6 @@ const area_user_num_seven = function(text,record){
 			        </div>
 			        <span style={{fontWeight:font_style}}>{record["user_num7"]}</span>
                 </div>
-            </span>
-            <span className="area_memory_span area_memory_areaTabel">
                 <div className="area_memory_height">
                     <div className="area_memory_total_num" style={{width:thirty_width+'%',background:thirty_background}}>
 			           { showSituation_thirty }
@@ -159,7 +157,6 @@ const area_user_num_seven = function(text,record){
 			        </div>
 			        <span style={{fontWeight:thirty_font_style}}>{record["user_num30"]}</span>
                 </div>
-            </span>
        </span>
 }
 
@@ -221,7 +218,8 @@ export const FORWORD_TABLE = [
 		title: '接收宽带',
 	    dataIndex: 'formate_downspeed',
 	    render: renderContent
-	},{
+	},
+	{
 		title: '发送宽带',
 	    dataIndex: 'formate_upspeed',
 	    render: renderContent
@@ -249,7 +247,8 @@ export const AREA_MEMORY_DETAIL = [
 		title: '总容量',
 	    dataIndex: 'total',
 	    render: forword_formate_disksize
-	},{
+	},
+	{
 		title: '已使用空间',
 	    dataIndex: 'used',
 	    render: forword_formate_disksize
