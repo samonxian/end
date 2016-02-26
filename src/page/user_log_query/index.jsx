@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import shallowCompare from 'react-addons-shallow-compare'
 import { connect } from 'react-redux'
 import Component from 'libs/react-libs/Component'
 import * as actionCreators from './action'
