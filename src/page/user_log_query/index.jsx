@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import shallowCompare from 'react-addons-shallow-compare'
 import { connect } from 'react-redux'
 import Component from 'libs/react-libs/Component'
 import * as actionCreators from './action'
@@ -186,7 +187,7 @@ class user_log_query extends Component {
 				<Sidebar location={location}>
 					<Form />	
 					{
-						user_log_query.isFetching && <Spin size="large" />
+						user_log_query.isFetching && <Antd.Spin size="large" />
 					}
 				</Sidebar>
 			)

@@ -2,7 +2,7 @@ import React from 'react'
 import { title } from '../../user_log/title'
 import { Table } from 'antd'
 import { fieldSort ,toUpperCase } from 'function'
-import * as common from 'common'
+import * as common from 'common/user_log'
 let type = {
 	'257':'start_service',
 	'258':'stop_service',
