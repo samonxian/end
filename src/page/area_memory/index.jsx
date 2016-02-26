@@ -60,6 +60,8 @@ class areaMemory extends Component{
 				var array = [],
 				    max_send = 0,
 				    max_accept = 0,
+				    max_accept_broadband = 0,
+				    max_send_broadband = 0,
 				    max_wait = 0;
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["relay_info"];
@@ -77,7 +79,12 @@ class areaMemory extends Component{
 						if(max_wait<tempObj["wait_connections"]){
 							max_wait = tempObj["wait_connections"];
 						}
-
+                        if(max_accept_broadband<tempObj["downspeed"]){
+                        	max_accept_broadband = tempObj["downspeed"]
+                        }
+                        if(max_send_broadband<tempObj["upspeed"]){
+                        	max_send_broadband = tempObj["upspeed"]
+                        }
 						if(Math.floor(tempObj["downspeed"]/1024)<1024){
 							var num = new Number(tempObj["downspeed"]/1024)
 							tempObj["formate_downspeed"] = num.toFixed(2)+"Kbps"
@@ -102,6 +109,8 @@ class areaMemory extends Component{
 					array[i]["max_send"] = max_send
 					array[i]["max_accept"] = max_accept
 					array[i]["max_wait"] = max_wait
+					array[i]["max_accept_broadband"] = max_accept_broadband
+					array[i]["max_send_broadband"] = max_send_broadband
 				}
 				return array;
 			},
@@ -166,8 +175,6 @@ class areaMemory extends Component{
 		let self = this
 		let showDetailData = []
 		let dispatch = this.props.dispatch
-
-		console.log(this.props);
 
 		if(!isEmptyObj(this.props.detailData)){
 			showDetailData = this.props.detailData["data"];

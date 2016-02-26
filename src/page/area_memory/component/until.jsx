@@ -23,15 +23,15 @@ const renderRowSpan = function(text,record){
 }
 
 const area_service_forword = function(text,record){
-	return <span>{ record["disc_num"] }/{ record["relay_server_num"] }</span>
+	return <div><span className="area_memory_area area_memory_fontWeight">{ record["disc_num"] }</span>/<span className="area_memory_area">{ record["relay_server_num"] }</span></div>
 }
 
 const area_online_offline = function(text,record){
-	return <span>{ record["online_disc_num"] }/{ record["offline_disc_num"] }</span>
+	return <div><span className="area_memory_area area_memory_fontWeight">{ record["online_disc_num"] }</span>/<span className="area_memory_area">{ record["offline_disc_num"] }</span></div>
 }
 
 const area_work_empty = function(text,record){
-	return <span>{ record["work_disc_num"] }/{ record["empty_disc_num"] }</span>
+	return <div><span className="area_memory_area area_memory_fontWeight">{ record["work_disc_num"] }</span>/<span className="area_memory_area">{ record["empty_disc_num"] }</span></div>
 }
 
 const forword_accept = function(text,record){
@@ -40,10 +40,36 @@ const forword_accept = function(text,record){
 		if(record["max_accept"] === record["in_connections"]){
 			font_style = 'bold'
 		}
-		var forword_width = (70/record["max_accept"])*record["in_connections"];
+		var forword_width = (65/record["max_accept"])*record["in_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["in_connections"]}</span></div>
 	}else{
-		return <div className="area_memory_no_data"></div>
+		return <div className="area_memory_no_broadband_data"></div>
+	} 
+}
+
+const max_accept_broadband = function(text,record){
+	if(record["downspeed"]>0){
+		var font_style = '';
+		if(record["max_accept_broadband"] === record["downspeed"]){
+			font_style = 'bold'
+		}
+		var forword_width = (65/record["max_accept_broadband"])*record["downspeed"];
+	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
+	}else{
+		return <div className="area_memory_no_broadband_data"></div>
+	} 
+}
+
+const max_send_broadband = function(text,record){
+	if(record["upspeed"]>0){
+		var font_style = '';
+		if(record["max_send_broadband"] === record["upspeed"]){
+			font_style = 'bold'
+		}
+		var forword_width = (65/record["max_send_broadband"])*record["upspeed"];
+	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
+	}else{
+		return <div className="area_memory_no_broadband_data"></div>
 	} 
 }
 
@@ -167,17 +193,17 @@ export const AREA_TABLE = [
 	    render: renderContent
     },
     {
-    	title: '磁盘服务器/转发数据',
+    	title: '磁盘服务器/转发服务器',
 	    dataIndex: 'disc_num',
 	    render: area_service_forword
     },
     {
-    	title: '磁盘上/下线数据',
+    	title: '上线数据/下线数据',
 	    dataIndex: 'online_disc_num',
 	    render: area_online_offline
     },
     {
-    	title: '磁盘工作/空闲数据',
+    	title: '工作磁盘/空闲磁盘',
 	    dataIndex: 'work_disc_num',
 	    render: area_work_empty
     },
@@ -217,12 +243,12 @@ export const FORWORD_TABLE = [
 	},{
 		title: '接收宽带',
 	    dataIndex: 'formate_downspeed',
-	    render: renderContent
+	    render: max_accept_broadband
 	},
 	{
 		title: '发送宽带',
 	    dataIndex: 'formate_upspeed',
-	    render: renderContent
+	    render: max_send_broadband
 	}
 ]
 
