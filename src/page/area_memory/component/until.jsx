@@ -53,8 +53,8 @@ const max_accept_broadband = function(text,record){
 		if(record["max_accept_broadband"] === record["downspeed"]){
 			font_style = 'bold'
 		}
-		var forword_width = (65/record["max_accept_broadband"])*record["downspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
+		var forword_width = (40/record["max_accept_broadband"])*record["downspeed"];
+	    return <div className="area_memory_forword"><span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
 	}else{
 		return <div className="area_memory_no_broadband_data"></div>
 	} 
@@ -66,8 +66,8 @@ const max_send_broadband = function(text,record){
 		if(record["max_send_broadband"] === record["upspeed"]){
 			font_style = 'bold'
 		}
-		var forword_width = (65/record["max_send_broadband"])*record["upspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
+		var forword_width = (40/record["max_send_broadband"])*record["upspeed"];
+	    return <div className="area_memory_forword"><span className="area_memory_max_send_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
 	}else{
 		return <div className="area_memory_no_broadband_data"></div>
 	} 
@@ -198,7 +198,7 @@ export const AREA_TABLE = [
 	    render: area_service_forword
     },
     {
-    	title: '上线数据/下线数据',
+    	title: '上线磁盘/下线磁盘',
 	    dataIndex: 'online_disc_num',
 	    render: area_online_offline
     },
@@ -241,12 +241,12 @@ export const FORWORD_TABLE = [
 	    dataIndex: 'wait_connections',
 	    render: forword_wait
 	},{
-		title: '接收宽带',
+		title: '接收带宽',
 	    dataIndex: 'formate_downspeed',
 	    render: max_accept_broadband
 	},
 	{
-		title: '发送宽带',
+		title: '发送带宽',
 	    dataIndex: 'formate_upspeed',
 	    render: max_send_broadband
 	}
