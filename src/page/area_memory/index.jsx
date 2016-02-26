@@ -253,9 +253,6 @@ class areaMemory extends Component{
 	            <div className="area_memory_refresh" onClick={()=>this.refreshData(dispatch)}><Icon type="reload"/>刷新</div>
 	            <div className="area_memory_clearFloat">
 	                <div className="area_memory_float_right">
-	                   <span className="area_memory_disk_nodata"></span>没有数据
-	                </div>
-	                <div className="area_memory_float_right">
 	                   <span className="area_memory_disk_health"></span>7天/30天亚健康磁盘数
 	                </div>
 	                <div className="area_memory_float_right">

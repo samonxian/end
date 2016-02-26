@@ -43,7 +43,7 @@ const forword_accept = function(text,record){
 		var forword_width = (65/record["max_accept"])*record["in_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["in_connections"]}</span></div>
 	}else{
-		return <div className="area_memory_no_broadband_data"></div>
+		return 0
 	} 
 }
 
@@ -56,7 +56,7 @@ const max_accept_broadband = function(text,record){
 		var forword_width = (40/record["max_accept_broadband"])*record["downspeed"];
 	    return <div className="area_memory_forword"><span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
 	}else{
-		return <div className="area_memory_no_broadband_data"></div>
+		return 0
 	} 
 }
 
@@ -69,7 +69,7 @@ const max_send_broadband = function(text,record){
 		var forword_width = (40/record["max_send_broadband"])*record["upspeed"];
 	    return <div className="area_memory_forword"><span className="area_memory_max_send_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
 	}else{
-		return <div className="area_memory_no_broadband_data"></div>
+		return 0
 	} 
 }
 
@@ -82,7 +82,7 @@ const forword_send = function(text,record){
 		var forword_width = (70/record["max_send"])*record["out_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_send" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["out_connections"]}</span></div>
 	}else{
-		return <div className="area_memory_no_data"></div>
+		return 0
 	}
 }
 
@@ -95,7 +95,7 @@ const forword_wait = function(text,record){
 		var forword_width = (70/record["max_wait"])*record["wait_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_wait" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["wait_connections"]}</span></div>
 	}else{
-		return <div className="area_memory_no_data"></div>
+		return 0
 	}
 }
 
@@ -139,7 +139,8 @@ const area_user_num_seven = function(text,record){
     		font_style = 'bold'
     	}
     	seven_width = (80/total)*record["user_num7"];
-    }else{   	
+    }else{   
+        thirty_width = 0
     	seven_background = "#d9d9d9"
     }
 	if(record["subhealth_user_num7"]>0){
@@ -165,7 +166,9 @@ const area_user_num_seven = function(text,record){
 	    	showSituation_unhealth_thirty = <div className="area_memory_health_user_num" style={{width:thirty_unhealth_width+"%"}}>{ record["unhealth_user_num30"] }</div>
 	    }
     }else{
-    	thirty_background = "#d9d9d9";
+    	thirty_width = 0
+    	thirty_background = "#d9d9d9"
+    	record["user_num30"] = 0
     }
   
 	return <span className="area_memory_span">
@@ -193,7 +196,7 @@ export const AREA_TABLE = [
 	    render: renderContent
     },
     {
-    	title: '磁盘服务器/转发服务器',
+    	title: '磁盘个数/转发服务器',
 	    dataIndex: 'disc_num',
 	    render: area_service_forword
     },
