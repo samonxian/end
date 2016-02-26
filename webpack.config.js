@@ -40,11 +40,12 @@ module.exports = {
 	resolve: {
 		alias: {
 			'.fr': __dirname + '/.fr/',
+			'img': __dirname + '/style/img/',
 			'page': __dirname + '/src/page/',
 			'libs': __dirname + '/src/libs/',
 			'JSONP': __dirname + '/src/libs/jsonp.js',
 			'function': __dirname + '/src/libs/function.js',
-			'common': __dirname + '/src/libs/temp/user_log.js',
+			'common': __dirname + '/src/libs/temp',
 		}, 
 		extensions: ['', '.js', '.jsx']
 	},
