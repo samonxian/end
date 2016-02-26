@@ -3,12 +3,12 @@ import Component from 'libs/react-libs/Component'
 import { connect } from 'react-redux'
 import * as Antd from 'antd'
 import * as action from './action'
-import * as data_setting from './data/province_city_single'
-import ChinaMap from './components/chinaMap'
+import * as data_setting from '../rtmp_tracker/data/province_city_single'
+import ChinaMap from '../rtmp_tracker/components/chinaMap'
 import d3 from 'd3'
 let color = d3.scale.category20();
 
-class RtmpTracker extends Component {
+class UdpTracker extends Component {
 	constructor(){
 		super(); 
 		//console.debug(this)
@@ -59,8 +59,8 @@ class RtmpTracker extends Component {
 
     render() {
 		var _this = this;
-		let { rtmp_tracker } = this.props;
-		let { posts,posts2 } = rtmp_tracker;
+		let { udp_tracker } = this.props;
+		let { posts,posts2 } = udp_tracker;
 		if(posts && posts.data && posts.data.data){
 			var p_data = posts.data.data;
 			this.sortByUserDesc(p_data);
@@ -71,7 +71,7 @@ class RtmpTracker extends Component {
 				<div>
 					<Antd.Row type="flex" justify="center" align="bottom" className="rt_con">
 						<Antd.Col className="rt_left">
-							<ChinaMap camera_type={ 'RtmpActiveCameras' } min_users={ min_users } max_users={ max_users } posts={ province_data }
+							<ChinaMap camera_type="UdpActiveCameras" min_users={ min_users } max_users={ max_users } posts={ province_data }
 									posts2={ posts2.data.data } parent={ _this }/>	
 						</Antd.Col>
 						<Antd.Col className="rt_right">
@@ -98,7 +98,7 @@ class RtmpTracker extends Component {
  */
 function mapStateToProps(state){
 	return {
-	    rtmp_tracker : state.rtmp_tracker
+	    udp_tracker : state.udp_tracker
 	};
 }
-module.exports = connect(mapStateToProps)(RtmpTracker)
+module.exports = connect(mapStateToProps)(UdpTracker)

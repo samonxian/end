@@ -1,18 +1,19 @@
 import fetch from 'isomorphic-fetch'
+import * as common from 'common/common'
 
-export const RECIEVE_RTMPTRACKER = 'RECIEVE_RTMPTRACKER'
-export const REQUEST_RTMPTRACKER = 'REQUEST_RTMPTRACKER'
+export const RECIEVE_UDPTRACKER = 'RECIEVE_UDPTRACKER'
+export const REQUEST_UDPTRACKER = 'REQUEST_UDPTRACKER'
 
 function requestPosts() {
 	return	{
-        type: REQUEST_RTMPTRACKER,
+        type: REQUEST_UDPTRACKER,
 		isFetching : true,
 	};
 }
 
 function receivePosts(json,json2) {
 	return	{
-        type: RECIEVE_RTMPTRACKER,
+        type: RECIEVE_UDPTRACKER,
 		fetched : true,
 		isFetching : false,
         posts: json,
@@ -24,11 +25,11 @@ function receivePosts(json,json2) {
 export function fetchData() {
     return dispatch => {
         dispatch(requestPosts())
-		var url = 'http://120.26.74.53/api/get_diagram_data/device_data';
+		var url = `${common.REQUESTURL}get_diagram_data/device_data`;
 		return fetch(url)
             .then(response => response.json())
             .then(function(json){
-				var url2 = 'http://120.26.74.53/api/get_diagram_data/rtmp/server_data';
+				var url2 = `${common.REQUESTURL}get_diagram_data/udp/server_data`;
 				fetch(url2)
 					.then(response => response.json())
 					.then(function(json2){

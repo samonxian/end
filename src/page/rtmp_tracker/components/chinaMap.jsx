@@ -65,6 +65,9 @@ class ChinaMap extends Component {
 				var c = up > down ? c1 : c2;
 				return d3.rgb(c.r, c.g, c.b);
 			},
+			/**
+			 * 设置省份svg path路径	
+			 */
 			setD3ChinaMapPath(){
 				var	width = this.conDom.offsetWidth,
 					height = this.conDom.offsetHeight;
@@ -122,12 +125,25 @@ class ChinaMap extends Component {
 
     render() {
 		var _this = this;
-		let { posts,posts2,parent } = this.props
+		let { posts,posts2,parent,camera_type } = this.props
 	    if(this.state && this.state.canRender){
 			//处理d3
 			this.setD3ChinaMapPath();
+			let img_num = [1,2,3,4,5,6,7,8,9,10];
 			return (
 				<svg className="svg_china_map">
+					<defs>
+							{
+								img_num.map(function(v,k){
+									let i = k + 1;
+									return(
+										<pattern id={'star_'+i} width="1" height="1" key={ k }>
+											<image xlinkHref={require('img/rtmp_map/'+i+'.png') } x="0" y="0" height="50" width="50" />
+										</pattern>
+									)
+								})
+							}
+					</defs>
 					<g transform="translate(0,0)">
 						{
 							chinaMapGeo.features.map(function(value,key){
@@ -136,10 +152,26 @@ class ChinaMap extends Component {
 								var province_name = value.properties.name;
 								var content = '';
 								if(posts[province_name]){
+									let camera_num = posts[province_name][camera_type];
 									content = '用户数：'.concat(posts[province_name].ActiveUsers); 
+									content += ', 摄像头数：'.concat(camera_num); 
+									let image_num;
+									let base_num = 10;
+									img_num.forEach(function(v,k){
+										let i = k + 1;
+										if(camera_num > base_num * k && camera_num < base_num * i){
+											image_num = i;
+										}
+									})	
 									return (
-										<Antd.Popover key={ key } overlay={content} title={province_name} trigger="hover">	
-											<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
+										<Antd.Popover key={key} overlay={content} title={province_name} trigger="hover">	
+											<g>
+												<path stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
+												{
+													camera_num != 0 && <path stroke="#213859" strokeWidth="1" 
+														fill={"url(#star_"+image_num+")"} d={ _this.path(value) }/>
+												}
+											</g>
 										</Antd.Popover> 
 									)
 								}else{
@@ -147,7 +179,6 @@ class ChinaMap extends Component {
 										<path key={key} stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
 									)
 								}
-								
 							})
 						}
 					</g>
