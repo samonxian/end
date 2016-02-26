@@ -4,6 +4,7 @@ import Component from 'libs/react-libs/Component'
 import Pie from 'libs/d3-components/Pie'
 import { connect } from 'react-redux'
 import * as Antd from 'antd'
+import * as fn from 'function'
 import * as actionCreators from './action'
 import LeftBar from './components/LeftBar'
 import RightBar from './components/RightBar'
@@ -43,19 +44,7 @@ class CameraStat extends Component {
 				return [ '#6fea3a',	'#f2af29',	'#f75a11'];
 			},
 			bandwidthTransform(t_value){
-				let value = 0;
-				if(t_value > 1024 * 1024 * 1024){
-					value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
-				}else if(t_value > 1024 * 1024){
-					value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'MB';	
-				}else if(t_value > 1024){
-					value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
-				}else if(t_value != 0){
-					value = t_value + '字节';	
-				}else{
-					value = t_value;	
-				}
-				return value;
+				return fn.transformToKbMbGb(t_value);
 			},
 			setSpecialText(){
 				var obj = [
@@ -187,6 +176,15 @@ class CameraStat extends Component {
 					var flag1 =  b.viewer_mum - a.viewer_mum
 					return flag1;
 				})	
+			},
+			/**
+			 *	以摄像头数为排序条件	
+			 *@param [object] data 需要处理的总数据
+			 */
+			sortDataByCamerasNumDesc(data){
+				data.sort(function(a,b){
+					return b.cameras.length - a.cameras.length
+				})
 			}
 		}
 	}
@@ -206,6 +204,7 @@ class CameraStat extends Component {
 				max_summary = this.getSummaryMaxValues(posts.data),
 				tuijian = [1,2,3,4,5],
 				i = 0;
+			this.sortDataByCamerasNumDesc(posts.data);
 			return (
 				<div className="g_c_s_con">
 					<h1>公众直播情况</h1>
