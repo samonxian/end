@@ -17,6 +17,13 @@
 	float: left;
 	margin-right: 5px;
 }
+.area_memory_fontWeight{
+	font-weight: bold;
+	font-size: 16px;
+}
+.area_memory_area{
+	padding:0 5px;
+}
 .area_memory .area_memory_height{
 	height: 20px;
 	line-height: 20px;
@@ -78,8 +85,13 @@
 	background: #6FB353;
 	float: left;
 }
+.area_memory_no_broadband_data{
+	width: 65%;
+	height: 20px;
+	background: #d9d9d9;
+}
 .area_memory_no_data{
-	width: 84%;
+	width: 70%;
 	height: 20px;
 	background: #d9d9d9;
 }
