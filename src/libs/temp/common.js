@@ -1,0 +1,1 @@
+export const REQUESTURL = "http://120.26.74.53/api/";
