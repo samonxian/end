@@ -54,7 +54,7 @@ const max_accept_broadband = function(text,record){
 			font_style = 'bold'
 		}
 		var forword_width = (65/record["max_accept_broadband"])*record["downspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
+	    return <div className="area_memory_forword"><span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
 	}else{
 		return <div className="area_memory_no_broadband_data"></div>
 	} 
@@ -67,7 +67,7 @@ const max_send_broadband = function(text,record){
 			font_style = 'bold'
 		}
 		var forword_width = (65/record["max_send_broadband"])*record["upspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
+	    return <div className="area_memory_forword"><span className="area_memory_max_send_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
 	}else{
 		return <div className="area_memory_no_broadband_data"></div>
 	} 
