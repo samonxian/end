@@ -1,0 +1,115 @@
+.area_memory_span{
+	width: 100%;
+	display: block;
+	height: 100%;
+	overflow:hidden;
+}
+.area_memory_title{
+	font-weight: bold;
+	color:#333;
+	font-size: 18px;
+	height: 50px;
+	line-height: 60px;
+}
+.area_memory_total_num{
+	background: blue;
+	width: 80%;
+	float: left;
+	margin-right: 5px;
+}
+.area_memory .area_memory_height{
+	height: 20px;
+	line-height: 20px;
+	width: 50%;
+	float: left;
+}
+.area_memory_frist_table td:last-child{
+	width: 50%;
+}
+.area_memory_total_num,.area_memory_unhealth_user_num,.area_memory_health_user_num{
+	height: 20px;
+}
+.area_memory_disk_total,.area_memory_disk_health,.area_memory_disk_unhealth,.area_memory_disk_nodata{
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	border-radius: 2px;
+	margin-right:5px;
+	float: left;
+}
+.area_memory_disk_nodata{
+	background:#d9d9d9; 
+}
+.area_memory_disk_total{
+	background: #2C94C3;
+}
+.area_memory_disk_health{
+	background: #6FB353;
+}
+.area_memory_disk_unhealth{
+	background: #EC3535;
+}
+.area_memory_forword{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+}
+.area_memory_clearFloat{
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+.area_memory_float_right{
+	margin-left: 20px;
+	float: right;
+	height: 20px;
+	line-height: 16px;
+}
+.area_memory_unhealth_user_num{
+	background: #EC3535;
+	float: left;
+}
+.area_memory_unhealth_user_num,.area_memory_health_user_num{
+	min-width: 15px;
+	text-align: center;
+	color:#fff;
+}
+.area_memory_health_user_num{
+	background: #6FB353;
+	float: left;
+}
+.area_memory_no_data{
+	width: 84%;
+	height: 20px;
+	background: #d9d9d9;
+}
+.area_memory_forword_accept,.area_memory_forword_send,.area_memory_forword_wait{
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	float: left;
+	margin-right: 5px;
+}
+.area_memory_forword_accept{
+	background: #2C94C3;
+}
+.area_memory_forword_send{
+	background: #6FB353;
+}
+.area_memory_forword_wait{
+	background: #2DB7F5;
+}
+.area_memory_detail .ant-modal-footer{
+	display: none;
+}
+.area_memory_refresh{
+	float: left;
+	width: 100px;
+	cursor: pointer;
+}
+.area_memory_refresh .anticon-reload{
+	margin-right: 5px;
+	color:#EC3535;
+	font-weight: bold;
+	font-size: 16px;
+}
