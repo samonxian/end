@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Table, Icon } from 'antd'
+import { Table, Icon, Spin } from 'antd'
 import { FORWORD_TABLE, AREA_TABLE } from './component/until'
 import { Dialog } from './component/dialog'
 import { fetchAreaMemoryData } from './action'
@@ -118,7 +118,7 @@ class areaMemory extends Component{
 							tempObj["rowSpan"] = lenth
 						}
 						for(var k=0;k<tempObj["disc_storage"].length;k++){
-							
+
 							if(minSize === 0){
 								minSize = tempObj["disc_storage"][k]["total"]
 							}
@@ -235,7 +235,7 @@ class areaMemory extends Component{
 		]
 
 		if(isEmptyObj(data)){
-			return <div></div>
+			return <div><Spin /></div>
 		}else{
          
 			let area_data = this.TraversalData(data["data"],dispatch),
