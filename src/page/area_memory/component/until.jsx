@@ -241,12 +241,12 @@ export const FORWORD_TABLE = [
 	    dataIndex: 'wait_connections',
 	    render: forword_wait
 	},{
-		title: '接收宽带',
+		title: '接收带宽',
 	    dataIndex: 'formate_downspeed',
 	    render: max_accept_broadband
 	},
 	{
-		title: '发送宽带',
+		title: '发送带宽',
 	    dataIndex: 'formate_upspeed',
 	    render: max_send_broadband
 	}
