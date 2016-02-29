@@ -29,14 +29,18 @@ Date.prototype.Format = function (fmt) { //author: meizz
  *@param columns [array] 二维json对象,antd column设置
  *@param callback [fn] 参数为data 索引和data本身 
  */
-export function fieldSort(data,fields,columns,callback){
+export function fieldSort(data,fields,columns,callback,info="暂无数据"){
 	var reData = [];
 	if(data && data[0] && !data[0]._reData_){
 		data.forEach(function(value,key){
 			reData[key] = { };
 			callback && callback(key,data);
 			fields.forEach(function(v,k){
-				reData[key][v] = data[key][v];	
+				if(data[key][v] || data[key][v] == 0){
+					reData[key][v] = data[key][v];	
+				}else{
+					reData[key][v] = info;	
+				}
 			})	
 			//react组件，key值设定
 			reData[key]['key'] = key;
@@ -163,4 +167,16 @@ export function transformToKbMbGb(t_value){
 		value = t_value;	
 	}
 	return value;
+}
+/**
+ *	传入数据位空或未定义，返回“暂无数据”
+ *@param text 任意数据
+ *@param [string] 替换字符 
+ *@return 返回处理数据
+ */
+export function dealEU(text,info="暂无数据"){
+	if(!text && text != 0){
+		text = info; 
+	}
+	return text;
 }
