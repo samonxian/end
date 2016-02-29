@@ -12,28 +12,59 @@ require('../../../style/css/new_index.css');
 class Indexdisk extends React.Component {
 
   componentWillMount(){
-		const disk = this.props.new_index_disk
-    const areaList = this.props.get_area_list
-    const dispatch = this.props.dispatch
-		if(isEmptyObj(disk)){
-		    dispatch(fetchDiskData({area : '北京',p : 1}));
-		}
-    // if(isEmptyObj(areaList)){
-    //    dispatch(getAreaListFetch());
-    // }
+      const { dispatch, cityList, backData, currentCity } = this.props
+      if(cityList["data"] === undefined){
+        dispatch(getAreaListFetch());
+      }else{
+        if(isEmptyObj(backData)){
+          let area = cityList["data"]["area_list"][0]
+          if(!isEmptyObj(currentCity)){
+            area = currentCity["data"]["area"]
+          }
+          dispatch(fetchDiskData({area : area,p : 1}));
+        }
+      }
 	}
 
-	render(){ 
+  componentWillReceiveProps(nextProps){
+    const { cityList, backData, dispatch, currentCity } = nextProps;
 
-		const { location, dispatch, backData, storageData, currentCity, cityList } = this.props
+    if(!isEmptyObj(cityList) && cityList["data"]!=undefined && isEmptyObj(backData)){
+       let area = cityList["data"]["area_list"][0]
+       if(!isEmptyObj(currentCity)){
+           area = currentCity["data"]["area"]
+       }
+       dispatch(fetchDiskData({area : area ,p : 1}));
+    }
+
+  }
+
+	render(){ 
+    const { location, dispatch, backData, storageData, cityList } = this.props
+
 		let total
 		let currentPage
 		let list
     let loading = true
     let totalCapacity
+    let currentCity
 		let dialogData ={
        label:"",
        values : []
+    }
+
+    if(isEmptyObj(cityList) || cityList["data"] == undefined){
+       return false;
+    }
+
+    if(isEmptyObj(this.props.currentCity)){
+      currentCity = {
+        data : {
+          area : cityList["data"]["area_list"][0]
+        }
+      }
+    }else{
+      currentCity = this.props.currentCity
     }
 
     if(!isEmptyObj(storageData) && storageData["type"] == DISK_STORAGE_STATUS_REQ){
@@ -67,76 +98,74 @@ class Indexdisk extends React.Component {
     }
 
 		const INDEX_HEAD = [
-           {
-              title: '磁盘ID',
-              dataIndex: 'did',
-              render: renderContent
-            },
-            {
-              title: 'IP地址',
-              dataIndex: 'ip',
-              render: renderContent
-            },
-            {
-              title: '端口号',
-              dataIndex: 'port',
-              render: renderContent
-            },
-            {
-              title: '磁盘空间大小',
-              dataIndex: 'size_data',
-              render: renderContent
-            },
-            {
-              title: '但前偏移',
-              dataIndex: 'pos_data',
-              render: renderContent
-            },
-            {
-              title: '起始时间',
-              dataIndex: 'first',
-              render: renderContent
-            },
-            {
-              title: '终点时间',
-              dataIndex: 'last',
-              render: renderContent
-            },
-            {
-              title: '当前用户数',
-              dataIndex: 'user_count',
-              render: renderContent
-            },
-            {
-              title: '磁盘上行宽带',
-              dataIndex: 'upload_rate',
-              render: renderContent
-            },
-            {
-              title: '磁盘下行宽带',
-              dataIndex: 'download_rate',
-              render: renderContent
-            },
-            {
-              title: '在线状态',
-              dataIndex: 'keepalive_timelast',
-              render: renderContent
-            },
-            {
-              title: '操作',
-              render: function(text, record){
-                 return <Dialog keyId={record.did} dispatch={dispatch} dialogData={dialogData} totalCapacity = {totalCapacity}/>;
-              }
-            }
-        ]
-
+       {
+          title: '磁盘ID',
+          dataIndex: 'did',
+          render: renderContent
+        },
+        {
+          title: 'IP地址',
+          dataIndex: 'ip',
+          render: renderContent
+        },
+        {
+          title: '端口号',
+          dataIndex: 'port',
+          render: renderContent
+        },
+        {
+          title: '磁盘空间大小',
+          dataIndex: 'size_data',
+          render: renderContent
+        },
+        {
+          title: '但前偏移',
+          dataIndex: 'pos_data',
+          render: renderContent
+        },
+        {
+          title: '起始时间',
+          dataIndex: 'first',
+          render: renderContent
+        },
+        {
+          title: '终点时间',
+          dataIndex: 'last',
+          render: renderContent
+        },
+        {
+          title: '当前用户数',
+          dataIndex: 'user_count',
+          render: renderContent
+        },
+        {
+          title: '磁盘上行宽带',
+          dataIndex: 'upload_rate',
+          render: renderContent
+        },
+        {
+          title: '磁盘下行宽带',
+          dataIndex: 'download_rate',
+          render: renderContent
+        },
+        {
+          title: '在线状态',
+          dataIndex: 'keepalive_timelast',
+          render: renderContent
+        },
+        {
+          title: '操作',
+          render: function(text, record){
+             return <Dialog keyId={record.did} dispatch={dispatch} dialogData={dialogData} totalCapacity = {totalCapacity}/>;
+          }
+        }
+    ]
 		return (
 			<div>
-				<Header router = {location} dispatch = { dispatch } backData= { backData } currentCity= { currentCity }/>
+				<Header router = {location} dispatch = { dispatch } cityList = { cityList["data"]["area_list"] } backData= { backData } currentCity= { currentCity }/>
 				<Table columns = {INDEX_HEAD} dataSource={list} pagination={false}  bordered loading={ loading }/>
-				<Page currentCity = { currentCity["data"]["area"] } currentPage = {currentPage} dispatch = {dispatch} total = {total} type= {DISK_DETAIL_STATUS_REQ}/>
-			</div>
-		)
+				<Page currentCity = { currentCity } currentPage = {currentPage} dispatch = {dispatch} total = {total} type= {DISK_DETAIL_STATUS_REQ}/>
+			</div>)
 	}
 }
 
@@ -145,7 +174,7 @@ function mapStateToProps(state){
 	return {
 		storageData : state.getStorageResponse,
 		backData : state.new_index_disk,
-//    cityList : state.get_area_list,
+    cityList : state.get_area_list,
     currentCity : state.cityTab
 	};
 }

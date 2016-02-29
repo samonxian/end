@@ -1,7 +1,6 @@
 import { GET_AREA_LIST } from './action'
 
 const initAreaState = {
-	data : [],
 	type : GET_AREA_LIST
 }
 
