@@ -413,7 +413,16 @@ pre{
 .g_c_s_con .table_info span{
 	margin-right:10px;
 }
-
+/**直播监控页面**/
+.mds_con thead{
+	text-align:center;
+}
+.mds_con .line{
+	margin:2px 0 2px 0;
+	height:0;
+	font-size:0;
+	border-top:1px solid #ccc;
+}
 
 
 
