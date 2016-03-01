@@ -157,12 +157,14 @@ class ChinaMap extends Component {
 									content += ', 摄像头数：'.concat(camera_num); 
 									let image_num;
 									let base_num = 10;
+									if(!camera_num){ camera_num = 0; }
 									img_num.forEach(function(v,k){
 										let i = k + 1;
-										if(camera_num > base_num * k && camera_num < base_num * i){
+										if(camera_num >= base_num * k && camera_num < base_num * i){
 											image_num = i;
 										}
 									})	
+									//console.debug(image_num)
 									return (
 										<Antd.Popover key={key} overlay={content} title={province_name} trigger="hover">	
 											<g>
