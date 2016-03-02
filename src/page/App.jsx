@@ -21,6 +21,7 @@ class App extends React.Component {
         }else{
         	container = <Layout contents={this.props.children || "" } />
         }
+       	container = <Layout contents={this.props.children || "" } />
 		return (
 			<div> 
 				{container}
