@@ -130,7 +130,7 @@ export let columns = [
 			}
 			let data = dataAdapter(text);
 			return (
-				<ViewInfo size="small" columns={columns} dataSource={data}/>
+				<ViewInfo size="small" columns={columns} data={data}/>
 			) 
 		}
 	},
