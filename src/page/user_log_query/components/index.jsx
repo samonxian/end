@@ -102,15 +102,14 @@ export let state_columns = [
 export function stateData(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
-	if(data){
-		re = fieldSort(t_data,state_dataIndexs,state_columns,function(key,data){
-			var temp_data = data[key];
-			temp_data.ip = temp_data.public_ip.concat(':',temp_data.public_port);
-			temp_data.area_t = temp_data.country.concat('/',temp_data.prov,'/',temp_data.city);
-			temp_data.config_type = common.getConfigType(temp_data.config_type);
-		})
-	}
+	re = fieldSort(t_data,state_dataIndexs,state_columns,function(key,data){
+		var temp_data = t_data[key];
+		temp_data.ip = temp_data.public_ip.concat(':',temp_data.public_port);
+		temp_data.area_t = temp_data.country.concat('/',temp_data.prov,'/',temp_data.city);
+		temp_data.config_type = common.getConfigType(temp_data.config_type);
+	})
 	//console.log(re)
 	return re;
 }
@@ -139,6 +138,7 @@ export let time_columns = [
 export function timeData(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
 	if(data){
 		re = fieldSort(t_data,time_dataIndexs,time_columns,function(key,data){
@@ -214,6 +214,7 @@ export let time2_columns = [
 export function time2Data(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
 	if(data){
 		re = fieldSort(t_data,time2_dataIndexs,time2_columns,function(key,data){
