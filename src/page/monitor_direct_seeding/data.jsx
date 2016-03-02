@@ -17,7 +17,6 @@ let column_dataIndexs = [
 	//'rtmp_played',
 	'edge',
 	'viwers_from_node',
-	'source_ip_from_node',
 	'source_time',
 	'send_queue_max',
 	'send_queue',
@@ -43,7 +42,7 @@ export let columns = [
 		render : function(text,record){
 			let config_type = user_log_common.getConfigType(text.config_type); 
 			let state = user_log_common.getCameraState(text.state); 
-				console.debug(state)
+				//console.debug(state)
 			return (
 				<div>
 					{ text.state != 0 && <span>{dealEU(state)}</span> }

@@ -52,7 +52,10 @@ class Monitor_direct_seeding extends Component {
 			sortByCameraState(data){
 				data.sort(function(a,b){
 					var c = a.state,d = b.state;
-					return b.state-a.state; 
+					if(c > 4 || d > 4){ return -1; }
+					if(!c){ c = 0; }
+					if(!d){ d = 0; }
+					return d - c; 
 				})
 			}
 		}
