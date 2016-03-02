@@ -138,7 +138,7 @@ export let columns = [
 		title: '观看人数',
 	},
 	{
-		title: '源转发time值',
+		title: '摄像机帧率',
 	},
 	{
 		title: '最大发送队列数',
