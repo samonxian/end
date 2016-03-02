@@ -32,6 +32,7 @@ class ViewInfo extends Component {
     render() {
 		let _this = this;
 	    let { data,columns } = this.props;
+		console.debug(data)
 		return (
 			<div>
 				<Antd.Button onClick={ _this.showInfo() }>查看</Antd.Button>
