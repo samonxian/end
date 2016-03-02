@@ -34,7 +34,7 @@ class LogData extends React.Component {
 				left_data.push(data[key]);
 			}
 		}
-		//console.log(this.props)
+		//console.debug(this.props.data)
 
 		let active_key = 'other';
         return (
