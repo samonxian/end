@@ -7,13 +7,28 @@ class Component extends React.Component {
 	constructor(){
 		super(); 
 		this.state = { }
+		this.bindFunctions();
+	}
+
+	bindFunctions(){
 		if(this.dataAdapter){
 			Object.assign(this,this.dataAdapter());
-			this.dataAdapter = null;
+			if(!module.hot){
+				this.dataAdapter = null;
+			}
 		}
 		if(this.events){
 			Object.assign(this,this.events());
-			this.events = null;
+			if(!module.hot){
+				this.events = null;
+			}
+		}
+
+	}
+
+	render(){
+		if(module.hot){
+			this.bindFunctions();
 		}
 	}
 
