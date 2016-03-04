@@ -67,6 +67,9 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/area_memory">区域存储情况</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/memory_service_monitor">存储服务监控</Link>
+							</MenuItem>
 						</Menu>
 							
 					</Col>	
