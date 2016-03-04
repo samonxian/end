@@ -5,8 +5,7 @@ import { generateMixed } from 'libs/function'
 export class DiskItem extends Component{
 
     render(){
-        console.log("===================================== diskItem: ");
-        console.log(this.props);
+
         const { itemsData } = this.props;
 
         var rows = [];

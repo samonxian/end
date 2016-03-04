@@ -6,12 +6,13 @@ import { isEmptyObj, generateMixed } from 'libs/function'
 import { fetchMemoryServiceMonitorData } from './action' 
 import { Bar } from './components/Bar'
 import { Detail } from './components/Detail'
+require('../../../style/css/memory_service_monitor.css');
 
 class memoryMonitor extends Component{
 	constructor(){
 		super(); 
 	}
-    
+
 	dataAdapter(){
 		var obj = {
 			separateData(param){
@@ -188,11 +189,13 @@ class memoryMonitor extends Component{
 		return obj;
 	}
 
-    componentWillMount(){
-    	const { memoryServiceData, dispatch } = this.props
-    	if(isEmptyObj(memoryServiceData["data"])){
-    		dispatch(fetchMemoryServiceMonitorData());
-    	}
+	componentDidMount(){
+		const { memoryServiceData, dispatch } = this.props;
+		this.healthData = [];
+		dispatch(fetchMemoryServiceMonitorData());
+		setInterval(function(){
+			dispatch(fetchMemoryServiceMonitorData());
+		},30*1000)
 	}
 
 	render(){
@@ -217,12 +220,11 @@ class memoryMonitor extends Component{
         healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
         	healthData = { health } healthWidth = { healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
 
-        console.log("========================================== disk :");
-        console.log(disk);
-        
         diskArr.push(<Detail key={'memory_service_monitor_disk_key_'+new Date().getTime()+generateMixed(6)}
         	healthData = { disk } healthWidth = { healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
-
+        
+        this.healthData.push(healthArr);
+        console.log(this.healthData);
 		return <div className="">
 			<Row>
 		        <Col span="24">健康存储监控</Col>
@@ -237,8 +239,12 @@ class memoryMonitor extends Component{
 			        <Col span="21"><Bar width = { svgWidth } sevenData = { thrity } height = { sevenHeight }/></Col>
 			    </Col>
 		    </Row>
-		    { healthArr }
-		    { diskArr }
+		    <div className = "memory_service_monitor_margin">
+		         { healthArr }
+		    </div>
+		    <div className = "memory_service_monitor_margin">
+		         { diskArr }
+		    </div>
         </div>
 	}
 }
