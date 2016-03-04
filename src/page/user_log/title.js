@@ -16,6 +16,21 @@ export let title = {
 	'exception_event':'异常事件日志',
 	'camera_time_last':'摄像头时间日志(最后)',
 	'camera_debug_last':'摄像头日志(最后)',
+	'app_web_request':'通用app WEB请求操作日志',
+	'app_request_error':'通用app WEB请求错误日志',
+	'open_service':'云平台打开日志',
+	'RecvMsg':'接收消息日志',
+	'rtmp_open_success':'rtmp打开成功日志',
+	'rtmp_open_failed':'rtmp打开失败日志',
+	'timeslice_request':'时间片请求日志',
+	'timeslice_request_error':'时间片请求失败日志',
+	'request_relay':'请求转发日志',
+	'publish_success':'推送成功日志',
+	'reconnection':'重连日志',
+	'publish_failed':'推送失败日志',
+	'down_video_success':'录像下载成功日志',
+	'disc_down_change':'磁盘下载变更',
+	'down_video_error':'录像下载失败日志',
 }
 
 export let title_menu = {
