@@ -43,9 +43,8 @@ class mobile_debug extends React.Component {
 		let { mobile_debug ,location,dispatch } = this.props;
 		let { params } = mobile_debug;
 		this.type = getUrlParams(this.props.location.pathname)[1];
-		if(mobile_debug.posts && mobile_debug.posts.logs && mobile_debug.posts.logs[0]){
-			data = logData(mobile_debug);
-		}
+		
+		data = logData(mobile_debug);
 		if(this.hasMount && mobile_debug.posts && mobile_debug.posts.logs){
 			if(mobile_debug.posts.logs[0]){
 				if( !mobile_debug.posts.logs[0].key || module.hot){
