@@ -74,14 +74,24 @@ class memoryMonitor extends Component{
 				for(var i=0;i<len;i++){
 					var rectH = (sevenHeight/max)*tempArra[i]["total_user"],
 					    fill = '',
-					    innerRectH = 50 - rectH;
+					    textY =  0,
+					    label = tempArra[i]["group_id"],
+					    innerRectH = 50 - rectH,
+					    textY = innerRectH;
                     
                     if(tempArra[i]["total_user"]>0){
                     	fill = "rgb(49, 181, 246)";
                     }else{
                     	fill = "#fff";
                     }
+                    
+                    if(innerRectH<17){
+                    	textY = 17;
+                    }
 
+                    if(rectH === sevenHeight){
+                    	label = "";
+                    }
 					var obj = {
 						width : width-5,
 						innerRectH : rectH,
@@ -92,8 +102,8 @@ class memoryMonitor extends Component{
 						innerRectX : i*width,
 						innerRectY : 0,
 						textX :  i*width,
-						textY : innerRectH-1,
-						label : tempArra[i]["group_id"],
+						textY : textY-5,
+						label : label,
 						style : "#fff",
 						rectStyle : fill,
 						key : 'memory_servece_monitor_seven_total_key_'+ new Date().getTime()+Math.random()
