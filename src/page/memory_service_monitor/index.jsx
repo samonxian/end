@@ -50,6 +50,20 @@ class memoryMonitor extends Component{
 					},
 				}
 			},
+			getAreatotal(data){
+				var area = data["data"]["area_user_count"],
+				    total = 0,
+				    htlArr = [];
+				for(var name in area){
+					total = total + area[name];
+					htlArr.push(<span className ="memory_service_monitor_city" 
+						key={"memory_service_monitor_city_key_"+new Date().getTime()+generateMixed(6)}>{ name + ":"+ area[name] }</span>);
+				}
+				return {
+					total : total,
+					city : htlArr
+				};
+			},
 			formatData(data,svgWidth,sevenHeight){
 				var max = data["max"],
 				    tempArra = data["data"],
@@ -70,9 +84,9 @@ class memoryMonitor extends Component{
 
 					var obj = {
 						width : width-5,
-						innerRectH : innerRectH,
+						innerRectH : rectH,
 						innerRectW : width-5,
-						outRectH : rectH,
+						outRectH : sevenHeight,
 						rectX : i*width,
 						rectY : innerRectH,
 						innerRectX : i*width,
@@ -80,8 +94,8 @@ class memoryMonitor extends Component{
 						textX :  i*width,
 						textY : innerRectH-1,
 						label : tempArra[i]["group_id"],
-						RectStyle : "#fff",
-						innerRectStyle : fill,
+						style : "#fff",
+						rectStyle : fill,
 						key : 'memory_servece_monitor_seven_total_key_'+ new Date().getTime()+Math.random()
 					}
 
@@ -97,23 +111,25 @@ class memoryMonitor extends Component{
 				    arr = [],
 				    width = (healthWidth - 10*(len-1))/len;
 
+				console.log("==================================== formatHealth function:");
+                console.log(group);
+
 				for(var i=0;i<len;i++){
 					var temp = group[i],
 					    style = '',
 					    label = '',
 					    tempObj = {};
-                    
-                    console.log(temp);
+        
 					if(temp["total_user"] >0){
+						style = "rgb(49, 181, 246)";
 						if(temp["unhealth_user"]>0){
-							style = "red";
+							style = "#BD0808";
 						}
 						if(temp["subhealth_user"]>0){
-							style = "yellow";
+							style = "#068216";
 						}
-						style = "rgb(49, 181, 246)";
 					}else{
-						style = "rgb(49, 181, 246)";
+						style = "rgba(255, 255, 255, 0.0980392)";
 					}
                     
                     label = temp["group_id"];
@@ -173,7 +189,7 @@ class memoryMonitor extends Component{
 				 		    itemX = innerWidth*k,
 				 		    itemY = diskHeight-innerHeight;
 				 		if(itemArr.length){
-				 			fill = "red";
+				 			fill = "#BD0808";
 				 		}else{
 				 			fill = "rgb(47, 213, 238)";
 				 		}
@@ -200,12 +216,6 @@ class memoryMonitor extends Component{
 
 	componentDidMount(){
 		const { memoryServiceData, dispatch } = this.props;
-		this.healthData = [];
-		this.diskData = [];
-
-		var contentWith = window.document.body.offsetWidth - 280;
-		this.svgWidth = (contentWith * 0.5)*0.875;
-		this.healthWidth = contentWith*0.9166666667;
 
 		dispatch(fetchMemoryServiceMonitorData());
 		setInterval(function(){
@@ -224,19 +234,41 @@ class memoryMonitor extends Component{
 	render(){
 		const { memoryServiceData } = this.props;
         
-		if(isEmptyObj(memoryServiceData["data"])){
+		if(isEmptyObj(memoryServiceData["data"])){		
 			return false;
+		}
+
+		if(this.healthData === undefined){
+			this.healthData = [];
+		}
+		if(this.diskData === undefined){
+			this.diskData = [];
+		}
+
+		if(this.svgWidth === undefined){
+			var contentWith = window.document.body.offsetWidth - 280;
+		    this.svgWidth = (contentWith * 0.5)*0.875;
+		}
+
+		if(this.healthWidth === undefined){
+			var contentWith = window.document.body.offsetWidth - 280;
+			this.healthWidth = contentWith*0.9166666667;
 		}
 
 		let obj = this.separateData(memoryServiceData),
 		    sevenHeight = 50,
 		    healthArr = [],
 		    diskArr = [],
+		    totalObj = this.getAreatotal(memoryServiceData),
 		    seven = this.formatData(obj["sevenObj"],this.svgWidth,sevenHeight),
 		    thrity = this.formatData(obj["thrityObj"],this.svgWidth,sevenHeight),
 		    health = this.formatHealth(memoryServiceData,this.healthWidth,20),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24);
+
+        console.log("++++++++++++++++++++++++++++++++++++++++++++++");
+        console.log( this.healthData);
         
+
         this.healthData.unshift(health);
         this.diskData.unshift(disk);
 
@@ -258,11 +290,11 @@ class memoryMonitor extends Component{
 	        	healthData = { this.diskData[j] } style = { "memory_service_monitor_disk" } healthWidth = { this.healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
         }
 
-        console.log(this.healthData);
-		return <div style = {{background:'url('+imgUrl+') no-repeat',margin:'-20px -40px;',height:"1200px"}}>
+		return <div style = {{background:'url('+imgUrl+') repeat',margin:'-20px -40px',height : window.document.body.offsetHeight-50+"px"}}>
 		    <div className = "memony_service_monitor_container">
 				<Row>
-			        <Col span="24" className = "memory_service_monitor_font">健康存储监控</Col>
+			        <Col span="24" className = "memory_service_monitor_fontSize">存储健康状态监控</Col>
+			        <Col span="24" className = "memory_service_monitor_total">总：{ totalObj["total"] }{ totalObj["city"] }</Col>
 			    </Row>
 			    <Row>
 			        <Col span="12">

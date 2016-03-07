@@ -1,0 +1,33 @@
+.memory_service_monitor_margin{
+	margin:50px 0 0;
+}
+.memony_service_monitor_container{
+	padding:20px 40px;
+}
+.memory_service_monitor_health{
+	height: 20px;
+	line-height: 20px;
+	margin-bottom: 5px;
+}
+.memory_service_monitor_disk{
+	height: 24px;
+	line-height: 24px;
+	margin-bottom: 5px;
+}
+.memory_service_monitor_font{
+	font-size: 12px;
+	color:#fff;
+}
+.memory_service_monitor_fontSize{
+	font-size: 36px;
+	color:#fff;
+	margin-bottom: 10px;
+}
+.memory_service_monitor_total{
+	font-size: 24px;
+	color:#fff;
+	margin-bottom: 10px;
+}
+.memory_service_monitor_city{
+	padding:0 10px;
+}

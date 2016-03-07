@@ -26,7 +26,7 @@ export class Detail extends Component{
     	 return <Row className = { style }>
     	            <Col span="2" className = "memory_service_monitor_font"> { healthData["date"].split(" ")[1] }</Col>
 		            <Col span="22">
-                        <svg viewBox = { "0,0,"+healthWidth+","+healthHeight } style={{width:"100%",height:healthHeight}}>{ rows }
+                        <svg viewBox = { "0,0,"+healthWidth+","+healthHeight } preserveAspectRatio = {"none"} style={{width:"100%",height:healthHeight}}>{ rows }
                         </svg>
                     </Col>
 		        </Row>

@@ -14,7 +14,7 @@ export class Bar extends Component{
         }
 
 		return <div style={{width:"100%",height:"50px"}}>
-		            <svg viewBox="0,0,1000,50" style={{width:"100%",height:"50px"}}>{arr}</svg>
+		            <svg viewBox = { "0,0,"+width+","+height } preserveAspectRatio = {"none"} style={{width:"100%",height:"50px"}}>{arr}</svg>
 		       </div>
 	}
 
