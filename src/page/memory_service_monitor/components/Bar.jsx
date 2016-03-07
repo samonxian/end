@@ -1,6 +1,7 @@
 import Component from 'libs/react-libs/Component'
 import React from 'react'
 import { Rect } from './Rect'
+import { isEmptyObj, generateMixed } from 'libs/function'
 
 export class Bar extends Component{
 
@@ -9,14 +10,11 @@ export class Bar extends Component{
         let arr = [];
 
         for(var i=0;i<sevenData.length;i++){
-        	arr.push(<Rect width = { sevenData[i]["width"] } innerRectH = { sevenData[i]["innerRectH"] } innerRectW = { sevenData[i]["innerRectW"] } 
-        		   outRectH = { sevenData[i]["outRectH"] } rectX = { sevenData[i]["rectX"] } rectY= { sevenData[i]["rectY"] } innerRectX= { sevenData[i]["innerRectX"] } 
-        		   innerRectY = { sevenData[i]["innerRectY"] } textX = { sevenData[i]["textX"] } textY = { sevenData[i]["textY"] } label = { sevenData[i]["label"] }
-        		   RectStyle = { sevenData[i]["RectStyle"] } innerRectStyle = { sevenData[i]["innerRectStyle"] } key = { sevenData[i]["key"] }/>);
+        	arr.push(<Rect data = { sevenData[i] } key={"memory_service_monitor_key_"+new Date().getTime()+generateMixed(6)}/>);
         }
 
 		return <div style={{width:"100%",height:"50px"}}>
-		            <svg width = {width} height = { height }>{arr}</svg>
+		            <svg viewBox="0,0,1000,50" style={{width:"100%",height:"50px"}}>{arr}</svg>
 		       </div>
 	}
 

@@ -9,7 +9,7 @@ export class Detail extends Component{
 
     render(){
 
-    	 const { healthData, healthWidth, healthHeight, type } = this.props;
+    	 const { healthData, healthWidth, healthHeight, type, style } = this.props;
     	 var rows = [],
     	     arr = healthData["arr"];
 
@@ -23,9 +23,12 @@ export class Detail extends Component{
              }
          }
 
-    	 return <Row>
-    	          <Col span="2"> { healthData["date"] }</Col>
-		            <Col span="22"><svg width = { healthWidth } height = { healthHeight }>{ rows }</svg></Col>
+    	 return <Row className = { style }>
+    	            <Col span="2" className = "memory_service_monitor_font"> { healthData["date"].split(" ")[1] }</Col>
+		            <Col span="22">
+                        <svg viewBox = { "0,0,"+healthWidth+","+healthHeight } style={{width:"100%",height:healthHeight}}>{ rows }
+                        </svg>
+                    </Col>
 		        </Row>
 	}
 

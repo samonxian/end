@@ -6,7 +6,8 @@ import { isEmptyObj, generateMixed } from 'libs/function'
 import { fetchMemoryServiceMonitorData } from './action' 
 import { Bar } from './components/Bar'
 import { Detail } from './components/Detail'
-require('../../../style/css/memory_service_monitor.css');
+require('../../../style/css/memory_service_monitor.css')
+let imgUrl = require('../../../style/img/background.jpg')
 
 class memoryMonitor extends Component{
 	constructor(){
@@ -58,7 +59,14 @@ class memoryMonitor extends Component{
                 
 				for(var i=0;i<len;i++){
 					var rectH = (sevenHeight/max)*tempArra[i]["total_user"],
+					    fill = '',
 					    innerRectH = 50 - rectH;
+                    
+                    if(tempArra[i]["total_user"]>0){
+                    	fill = "rgb(49, 181, 246)";
+                    }else{
+                    	fill = "#fff";
+                    }
 
 					var obj = {
 						width : width-5,
@@ -72,8 +80,8 @@ class memoryMonitor extends Component{
 						textX :  i*width,
 						textY : innerRectH-1,
 						label : tempArra[i]["group_id"],
-						RectStyle : '',
-						innerRectStyle : '',
+						RectStyle : "#fff",
+						innerRectStyle : fill,
 						key : 'memory_servece_monitor_seven_total_key_'+ new Date().getTime()+Math.random()
 					}
 
@@ -94,15 +102,16 @@ class memoryMonitor extends Component{
 					    style = '',
 					    label = '',
 					    tempObj = {};
-
-					if(group["total_user"] >0){
-						if(group["unhealth_user"]>0){
+                    
+                    console.log(temp);
+					if(temp["total_user"] >0){
+						if(temp["unhealth_user"]>0){
 							style = "red";
-						}else if(group["subhealth_user"]>0){
-							style = "yellow";
-						}else{
-							style = "rgb(49, 181, 246)";
 						}
+						if(temp["subhealth_user"]>0){
+							style = "yellow";
+						}
+						style = "rgb(49, 181, 246)";
 					}else{
 						style = "rgb(49, 181, 246)";
 					}
@@ -192,59 +201,86 @@ class memoryMonitor extends Component{
 	componentDidMount(){
 		const { memoryServiceData, dispatch } = this.props;
 		this.healthData = [];
+		this.diskData = [];
+
+		var contentWith = window.document.body.offsetWidth - 280;
+		this.svgWidth = (contentWith * 0.5)*0.875;
+		this.healthWidth = contentWith*0.9166666667;
+
 		dispatch(fetchMemoryServiceMonitorData());
 		setInterval(function(){
 			dispatch(fetchMemoryServiceMonitorData());
 		},30*1000)
 	}
 
+	shouldComponentUpdate(nextProps,nextState){
+		var memoryMonitorData = nextProps.memoryServiceData;
+		if(memoryMonitorData["data"] === undefined){
+			return false;
+		}
+		return true;
+	}
+
 	render(){
 		const { memoryServiceData } = this.props;
-
+        
 		if(isEmptyObj(memoryServiceData["data"])){
 			return false;
 		}
 
 		let obj = this.separateData(memoryServiceData),
-		    contentWith = window.document.body.offsetWidth - 280,
 		    sevenHeight = 50,
 		    healthArr = [],
 		    diskArr = [],
-		    svgWidth = (contentWith * 0.5)*0.875,
-		    healthWidth = contentWith*0.9166666667,
-		    seven = this.formatData(obj["sevenObj"],svgWidth,sevenHeight),
-		    thrity = this.formatData(obj["thrityObj"],svgWidth,sevenHeight),
-		    health = this.formatHealth(memoryServiceData,healthWidth,20),
-		    disk = this.formatDisk(memoryServiceData,healthWidth,24);
-
-        healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
-        	healthData = { health } healthWidth = { healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
-
-        diskArr.push(<Detail key={'memory_service_monitor_disk_key_'+new Date().getTime()+generateMixed(6)}
-        	healthData = { disk } healthWidth = { healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
+		    seven = this.formatData(obj["sevenObj"],this.svgWidth,sevenHeight),
+		    thrity = this.formatData(obj["thrityObj"],this.svgWidth,sevenHeight),
+		    health = this.formatHealth(memoryServiceData,this.healthWidth,20),
+		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24);
         
-        this.healthData.push(healthArr);
+        this.healthData.unshift(health);
+        this.diskData.unshift(disk);
+
+        if(this.healthData.length>10){
+        	this.healthData.pop();
+        }
+
+        if(this.diskData.length>10){
+        	this.diskData.pop();
+        }
+
+        for(var i=0;i<this.healthData.length;i++){
+	        healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
+	        	healthData = { this.healthData[i] } style = { "memory_service_monitor_health" } healthWidth = { this.healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
+        }
+
+        for(var j=0;j<this.diskData.length;j++){
+	        diskArr.push(<Detail key={'memory_service_monitor_disk_key_'+new Date().getTime()+generateMixed(6)}
+	        	healthData = { this.diskData[j] } style = { "memory_service_monitor_disk" } healthWidth = { this.healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
+        }
+
         console.log(this.healthData);
-		return <div className="">
-			<Row>
-		        <Col span="24">健康存储监控</Col>
-		    </Row>
-		    <Row>
-		        <Col span="12">
-		            <Col span="3">七日存储</Col>
-		            <Col span="21"><Bar width = { svgWidth } sevenData = { seven } height = { sevenHeight }/></Col>
-		        </Col>
-			    <Col span="12">
-			        <Col span="3">三十日存储</Col>
-			        <Col span="21"><Bar width = { svgWidth } sevenData = { thrity } height = { sevenHeight }/></Col>
-			    </Col>
-		    </Row>
-		    <div className = "memory_service_monitor_margin">
-		         { healthArr }
-		    </div>
-		    <div className = "memory_service_monitor_margin">
-		         { diskArr }
-		    </div>
+		return <div style = {{background:'url('+imgUrl+') no-repeat',margin:'-20px -40px;',height:"1200px"}}>
+		    <div className = "memony_service_monitor_container">
+				<Row>
+			        <Col span="24" className = "memory_service_monitor_font">健康存储监控</Col>
+			    </Row>
+			    <Row>
+			        <Col span="12">
+			            <Col span="3" className = "memory_service_monitor_font">七日存储</Col>
+			            <Col span="21"><Bar width = { this.svgWidth } sevenData = { seven } height = { sevenHeight }/></Col>
+			        </Col>
+				    <Col span="12">
+				        <Col span="3" className = "memory_service_monitor_font">三十日存储</Col>
+				        <Col span="21"><Bar width = { this.svgWidth } sevenData = { thrity } height = { sevenHeight }/></Col>
+				    </Col>
+			    </Row>
+			    <div className = "memory_service_monitor_margin">
+			         { healthArr }
+			    </div>
+			    <div className = "memory_service_monitor_margin">
+			         { diskArr }
+			    </div>
+			</div>
         </div>
 	}
 }
