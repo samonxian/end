@@ -26,8 +26,17 @@
 .memory_service_monitor_total{
 	font-size: 24px;
 	color:#fff;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .memory_service_monitor_city{
 	padding:0 10px;
+}
+.memory_service_monitor_seven,.memory_service_monitor_thrity{
+	font-size: 12px;
+	color:#fff;
+	height: 50px;
+	line-height: 50px;
+}
+.memory_service_monitor_thrity{
+	padding-left:10px;
 }

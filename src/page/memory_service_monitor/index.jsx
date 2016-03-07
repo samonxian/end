@@ -257,7 +257,7 @@ class memoryMonitor extends Component{
 
 		if(this.svgWidth === undefined){
 			var contentWith = window.document.body.offsetWidth - 280;
-		    this.svgWidth = (contentWith * 0.5)*0.875;
+		    this.svgWidth = (contentWith * 0.5)*0.8333333333;
 		}
 
 		if(this.healthWidth === undefined){
@@ -274,10 +274,6 @@ class memoryMonitor extends Component{
 		    thrity = this.formatData(obj["thrityObj"],this.svgWidth,sevenHeight),
 		    health = this.formatHealth(memoryServiceData,this.healthWidth,20),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24);
-
-        console.log("++++++++++++++++++++++++++++++++++++++++++++++");
-        console.log( this.healthData);
-        
 
         this.healthData.unshift(health);
         this.diskData.unshift(disk);
@@ -308,12 +304,12 @@ class memoryMonitor extends Component{
 			    </Row>
 			    <Row>
 			        <Col span="12">
-			            <Col span="3" className = "memory_service_monitor_font">七日存储</Col>
-			            <Col span="21"><Bar width = { this.svgWidth } sevenData = { seven } height = { sevenHeight }/></Col>
+			            <Col span="4" className = "memory_service_monitor_seven">七日存储</Col>
+			            <Col span="20"><Bar width = { this.svgWidth } sevenData = { seven } height = { sevenHeight }/></Col>
 			        </Col>
 				    <Col span="12">
-				        <Col span="3" className = "memory_service_monitor_font">三十日存储</Col>
-				        <Col span="21"><Bar width = { this.svgWidth } sevenData = { thrity } height = { sevenHeight }/></Col>
+				        <Col span="4" className = "memory_service_monitor_thrity">三十日存储</Col>
+				        <Col span="20"><Bar width = { this.svgWidth } sevenData = { thrity } height = { sevenHeight }/></Col>
 				    </Col>
 			    </Row>
 			    <div className = "memory_service_monitor_margin">
