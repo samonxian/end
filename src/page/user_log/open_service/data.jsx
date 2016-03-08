@@ -29,26 +29,9 @@ export let columns = [
 	},
 	{
 		title: '返回值',
-		render : function(text,record){
-			//console.log(text)
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	},
 	{
 		title: '耗时（int）',
-		render : function(text,record){
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	},
 ];
 
