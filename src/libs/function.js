@@ -29,9 +29,9 @@ Date.prototype.Format = function (fmt) { //author: meizz
  *@param columns [array] 二维json对象,antd column设置
  *@param callback [fn] 参数为data 索引和data本身 
  */
-export function fieldSort(data,fields,columns,callback,info="暂无数据"){
+export function fieldSort(data,fields,columns,callback){
 	var reData = [];
-	if(data && data[0] && !data[0]._reData_){
+	if(data && typeof data == "object" && data[0] && !data[0]._reData_){
 		data.forEach(function(value,key){
 			reData[key] = { };
 			callback && callback(key,data);
@@ -39,7 +39,6 @@ export function fieldSort(data,fields,columns,callback,info="暂无数据"){
 				if(data[key][v] || data[key][v] == 0){
 					reData[key][v] = data[key][v];	
 				}else{
-					reData[key][v] = info;	
 				}
 			})	
 			//react组件，key值设定
@@ -47,7 +46,7 @@ export function fieldSort(data,fields,columns,callback,info="暂无数据"){
 			data[key]['_key_'] = key;
 		})
 		data[0]._reData_ = reData; 
-	}else if(data && data[0]){
+	}else if(data && data[0] && typeof data == "object"){
 		reData = data[0]._reData_;
 	}
 	columns && columns.forEach(function(value,key){
