@@ -1,6 +1,5 @@
 var webpack = require('webpack')
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 /**
  * 开发环境开react热替换
@@ -33,13 +32,14 @@ module.exports = {
             	loader: 'babel',
 				exclude: /node_modules/,//设置node_modules目录为根目录下的node_modules,根目录以package为参考
             },
-            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
-			
+            { test: /\.css$/, loader: "style!css" },
         ]
     },
 	resolve: {
 		alias: {
 			'.fr': __dirname + '/.fr/',
+			'frontend': __dirname + '/.fr/generator/frontend',
+			'css': __dirname + '/style/css/',
 			'img': __dirname + '/style/img/',
 			'page': __dirname + '/src/page/',
 			'libs': __dirname + '/src/libs/',
@@ -57,7 +57,5 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify(NODE_ENV)  //定义开发和生产环境
 		}),
-		new ExtractTextPlugin('css/styles.css'),
     ]
 };
-console.log(module.exports.output.path)
