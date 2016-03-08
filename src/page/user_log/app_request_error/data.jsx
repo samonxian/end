@@ -30,26 +30,9 @@ export let columns = [
 	},
 	{
 		title: 'web请求类型',
-		render : function(text,record){
-			//console.log(text)
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	},
 	{
 		title: 'requestid',
-		render : function(text,record){
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	},
 	{
 		title: '错误码',

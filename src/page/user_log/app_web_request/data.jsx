@@ -29,26 +29,9 @@ export let columns = [
 	},
 	{
 		title: 'web请求类型',
-		render : function(text,record){
-			//console.log(text)
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	},
 	{
 		title: '请求耗时',
-		render : function(text,record){
-			text && (text = toUpperCase(text.toString()));
-			return (
-				<pre>
-					{text} 	
-				</pre>
-			) 
-		}
 	}
 ];
 
