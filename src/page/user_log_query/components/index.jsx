@@ -19,6 +19,21 @@ let type = {
 	'1025':'mobile_debug',
 	'1026':'rtmp_conn_time',
 	'272':'exception_event',
+	'771':'app_web_request',
+	'772':'pp_request_error',
+	'773':'open_service',
+	'774':'RecvMsg',
+	'775':'rtmp_open_success',
+	'776':'rtmp_open_failed',
+	'778':'timeslice_request',
+	'779':'timeslice_request_error',
+	'780':'request_relay',
+	'781':'publish_success',
+	'782':'reconnection',
+	'783':'publish_failed',
+	'785':'down_video_success',
+	'786':'disc_down_change',
+	'787':'down_video_error',
 }
 export let index = []
 for(var i in type){
