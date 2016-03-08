@@ -2,6 +2,33 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Loading from 'libs/antd/Loading'
 window.removeLoading = false;
+/**
+ *	此类规范化数据处理，事件绑定位置。数据处理类函数需要定义在类方法dataAdapter中，绑定事件需要统一在
+ *	events中,调用dataAdapter，events中的方法直接在使用this就可以访问到。需要注意,当集成此类需要,在新建react组件
+ *	的render方法中调用父类render方法。因为不调用，这些定义的方法无法热替换
+ *@example
+ * class Test exents Component{
+ *		dataAdapter(){
+ *			return {
+ *				deal(){
+ *					
+ *				}
+ *			}
+ *		}
+ *
+ *		events(){
+ *			return{
+ *				switch(){
+ *					
+ *				}
+ *			}
+ *		}
+ *
+ *		render(){
+ *			super.render();
+ *		}
+ * }
+ */
 class Component extends React.Component {
 	
 	constructor(){
