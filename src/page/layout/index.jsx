@@ -7,6 +7,7 @@ import * as fn from 'function'
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const MenuItemGroup = Menu.ItemGroup;
+require('css/main.css')
 
 class Layout extends React.Component {
 	componentDidMount(){
