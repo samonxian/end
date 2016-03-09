@@ -2,32 +2,30 @@ import Component from 'libs/react-libs/Component'
 import React from 'react'
 import { Row, Col } from 'antd'
 import { generateMixed } from 'libs/function'
-import { HealthItems } from './HealthItems'
-import { DiskItem } from './DiskItem'
+import { DetailItem } from './DetailItem'
 
 export class Detail extends Component{
 
     render(){
 
     	 const { healthData, healthWidth, healthHeight, type, style } = this.props;
+         
     	 var rows = [],
-    	     arr = healthData["arr"];
+             bg = 'red',
+    	     len = healthData["returnArr"].length;
 
-         if( type === "memory_service_monitor_health"){
-         	   for(var i=0;i<arr.length;i++){
-  	    	    	rows.push(<HealthItems itemsData = { arr[i] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
-  	    	   }
-         }else{
-             for(var j=0;j<arr.length;j++){
-                rows.push(<DiskItem itemsData = { arr[j] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
-             }
+         for(var i=0;i<len;i++){
+            var bg = 'red';
+            if(i%2 == 0){
+                bg = 'yellow';
+            }
+            rows.push(<DetailItem healthData = { healthData["returnArr"][i] } type = { type } healthWidth = { healthWidth } healthHeight = { healthHeight } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} bg={ bg }/>)
          }
 
     	 return <Row className = { style }>
     	            <Col span="2" className = "memory_service_monitor_font"> { healthData["date"].split(" ")[1] }</Col>
 		            <Col span="22">
-                        <svg viewBox = { "0,0,"+healthWidth+","+healthHeight } preserveAspectRatio = {"none"} style={{width:"100%",height:healthHeight}}>{ rows }
-                        </svg>
+                         { rows }
                     </Col>
 		        </Row>
 	}

@@ -12,7 +12,6 @@
 .memory_service_monitor_disk{
 	height: 24px;
 	line-height: 24px;
-	margin-bottom: 5px;
 }
 .memory_service_monitor_font{
 	font-size: 12px;
@@ -39,4 +38,25 @@
 }
 .memory_service_monitor_thrity{
 	padding-left:10px;
+}
+.memory_service_monitor_city_item{
+	float: left;
+	background: red;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	margin-right: 10px;
+	margin-bottom:20px;
+	color:#fff;
+	font-size:16px;
+}
+.memony_service_monitor_container .memory_service_monitor_city_item:last-child{
+	margin-right:0;
+}
+.memony_service_monitor_container .memory_service_monitor_items{
+	float: left;
+	margin-right: 10px;
+}
+.memony_service_monitor_container .memory_service_monitor_items:last-child{
+	margin-right: 0;
 }
