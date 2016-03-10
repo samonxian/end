@@ -1,13 +1,12 @@
 .memory_service_monitor_margin{
-	margin:50px 0 0;
+/*	padding-top:50px;*/
 }
 .memony_service_monitor_container{
 	padding:20px 40px;
 }
 .memory_service_monitor_health{
-	height: 20px;
+	height: 25px;
 	line-height: 20px;
-	margin-bottom: 5px;
 }
 .memory_service_monitor_disk{
 	height: 24px;
@@ -18,14 +17,14 @@
 	color:#fff;
 }
 .memory_service_monitor_fontSize{
-	font-size: 36px;
+	font-size: 30px;
 	color:#fff;
-	margin-bottom: 10px;
+	margin: 10px 0 20px 0;
 }
 .memory_service_monitor_total{
-	font-size: 24px;
+	font-size: 20px;
 	color:#fff;
-	margin-bottom: 20px;
+	margin-bottom: 40px;
 }
 .memory_service_monitor_city{
 	padding:0 10px;
@@ -41,22 +40,50 @@
 }
 .memory_service_monitor_city_item{
 	float: left;
-	background: red;
-	height: 30px;
+	height: 50px;
 	text-align: center;
 	line-height: 30px;
-	margin-right: 10px;
-	margin-bottom:20px;
 	color:#fff;
 	font-size:16px;
+	padding-bottom: 20px;
 }
 .memony_service_monitor_container .memory_service_monitor_city_item:last-child{
-	margin-right:0;
+	margin-right:0 !important;
 }
-.memony_service_monitor_container .memory_service_monitor_items{
+.memory_service_monitor_items{
 	float: left;
-	margin-right: 10px;
+	padding-bottom:5px;
 }
 .memony_service_monitor_container .memory_service_monitor_items:last-child{
-	margin-right: 0;
+	margin-right: 0 !important;
+}
+.memony_service_monitor_container .memory_service_monitor_area_items{
+	padding-bottom: 45px;
+}
+.memory_service_monitor_textHide{
+	text-indent: -999999;
+}
+.memory_service_monitor_stroage_type{
+	float: right;
+	margin-left: 10px;
+	color:#fff;
+	font-size: 14px;
+}
+.memory_service_monitor_stroage_seven,.memory_service_monitor_stroage_thrity{
+	width: 15px;
+	height: 15px;
+	border-radius: 2px;
+	display:inline-block;
+	margin-right: 5px;
+	float: left;
+	margin-top:2px;
+}
+.memory_service_monitor_stroage_seven{
+	background: rgb(49, 181, 246);
+}
+.memory_service_monitor_stroage_thrity{
+	background: rgb(35, 140, 58);
+}
+.memory_service_monitor_color_desc{
+	padding-right: 10px;
 }

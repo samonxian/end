@@ -9,7 +9,7 @@ export class DetailItem extends Component{
 
     render(){
 
-    	 const { healthData, healthWidth, healthHeight, type, style, bg } = this.props;
+    	 const { healthData, healthWidth, healthHeight, type, style, bg, padding, rate } = this.props;
          
     	 var rows = [],
              itemWith = healthData["width"],
@@ -25,8 +25,8 @@ export class DetailItem extends Component{
              }
          }
          
-    	 return <div className = "memory_service_monitor_items" style = {{width:(itemWith/healthWidth)*100+"%",background:bg}}>
-                    <svg viewBox = { "0,0,"+itemWith+","+healthHeight } preserveAspectRatio = {"none"} style={{width:"100%",height:healthHeight}}>{ rows }
+    	 return <div className = "memory_service_monitor_items" style = {{width:(itemWith/healthWidth)*100+"%",background:bg,padding : padding,marginRight:rate+"%"}}>
+                    <svg viewBox = { "0,0,"+(itemWith-10)+","+healthHeight } preserveAspectRatio = {"none"} style={{width:"100%",height:healthHeight}}>{ rows }
                     </svg>
 		        </div>
 	}
