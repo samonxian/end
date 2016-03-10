@@ -1,6 +1,4 @@
 var fs = require('fs');
-var ignoreFiles = ['.DS_Store'];
-var ignoreFilesWithSffix = ['.swp'];
 
 class ReadModuleDirTpl {
 	constructor(config){
@@ -9,46 +7,85 @@ class ReadModuleDirTpl {
 			ignoreFiles:[],
 			ignoreFilesWithSffix:[]
 		});
-		this.ignoreFiles = ignoreFiles.concat(this.config.ignoreFiles); 
-		this.ignoreFilesWithSffix = ignoreFiles.concat(this.config.ignoreFilesWithSffix); 
-		this.run();
+		this.setIgnoreInfo();	
 	}
 
 	run(){
-		var filesGenerator = this.getDirFilesGenerator();	
-		this.eachAndReadFilesContents(filesGenerator);
+		var filesInfo = this.getDirFilesInfo();	
+		//console.log(filesInfo.index.tagsInfo.tagContents)
 	}
 	/**
-	 *	遍历读取文件内容
-	 *@param [generator] files 文件遍历器
+	 *	文件忽略设置
 	 */
-	eachAndReadFilesContents(files){
-		for (var f of files) {
-			console.log(f);
-		}
+	setIgnoreInfo(){
+		this.ignoreFiles = ['.DS_Store'];
+		this.ignoreFilesWithSffix = ['.swp'];
+		this.ignoreFiles = this.ignoreFiles.concat(this.config.ignoreFiles); 
+		this.ignoreFilesWithSffix = this.ignoreFilesWithSffix.concat(this.config.ignoreFilesWithSffix); 
 	}
 	/**
-	 *	读取文件夹文件
+	 *	获取标签名,标签正则表达式
+	 *@param [string] text 文件内容
+	 *@return [object] 对象{ tagName : [标签名], tagRegex: [标签正则表达式],tagContents:[标签内容] }
 	 */
-	* getDirFilesGenerator (){
+	getTagsInfo(text){
+		var indexTags = text.match(/\<!--(.*)?_begin--\>/g);
+		//存储各个标签名
+		var tagName = [];
+		indexTags.forEach(function(v){
+			tagName.push(v.match(/\<!--(.*)_begin/)[1]);
+		})
+		//存放各个标签正则表达式
+		var tagRegex = {};
+		//存放各个标签内容
+		var tagContents = {};
+		tagName.forEach(function(v){
+			var regex = new RegExp(`\<!--${v}_begin--\>([^^]+)\<!--${v}_end--\>`);
+			tagRegex[v] = regex;
+			//匹配内容
+			tagContents[v] = text.match(regex)[1];	
+		})
+		var tagsInfo = {
+			tagName,
+			tagRegex,
+			tagContents,
+		};	
+		return tagsInfo;
+		//console.log(indexRegex)
+	}
+		
+	/**
+	 *	读取文件夹文件,和文件内容
+	 *@return [object] 返回{文件名:{contents,tagsInfo}},tagsInfo参考getTagsInfo函数说明
+	 */
+	getDirFilesInfo (){
 		var path = this.config.path;
 		var files = fs.readdirSync(path);
+		var filesObj = { }
 		for(var i = 0;i<files.length;i++){
 			var file = files[i];
 			var stat =	fs.lstatSync(path+file);
 			if(!stat.isDirectory()){
 				//过滤忽略文件
-				if(ignoreFiles.indexOf(file) == -1){
+				if(this.ignoreFiles.indexOf(file) == -1){
 					var suffix = file.match(/\..*/)[0];
 					//过滤忽略后缀名
-					if(ignoreFilesWithSffix.indexOf(suffix) != -1){
+					if(this.ignoreFilesWithSffix.indexOf(suffix) != -1){
 						continue;
 					}
-					yield file; 
+					var contents = fs.readFileSync(path + file,{
+						encoding : 'utf-8'
+					})
+					var index = file.replace(/\..*/,'');
+					filesObj[index] = {
+						contents : contents,
+						tagsInfo : this.getTagsInfo(contents),
+					}
 				}
 			}
 		}
 		//console.log(path)
+		return filesObj;
 	}
 }
 module.exports = ReadModuleDirTpl;

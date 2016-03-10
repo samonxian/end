@@ -1,26 +1,27 @@
 <!--action_import_begin-->
-import ${import_var} from '${imort_libs}'
+import ${import_var} from '${import_libs}'
 <!--action_import_end-->
 
-<!--action_const_export_begin-->
+
+<!--action_const_begin-->
 export const ${const} = ${const}
-<!--action_const_export_end-->
+<!--action_const_end-->
 
 let common = {
 	isFetching : false,//正在获取数据
 	fetched : false,//已经获取到数据
 }
 
-<!--action_input_export_begin-->
+<!--action_input_begin-->
 export function input${inputId}(value){
 	return {
-		type : INPUT${inputId}${MODULEID},
-		${inputId} : value 
+		type : ${const},
+		${inputid} : value 
 	};
 }
-<!--action_input_export_end-->
+<!--action_input_end-->
 
-<!--action_fetch_export_bigin-->
+<!--action_fetch_begin-->
 function requestPosts(params={}) {
 	return	Object.assign({},common,{
         type: REQUEST${MODULEID},
@@ -54,4 +55,5 @@ export function fetchData(_params={}) {
 			})
     }
 }
-<!--action_fetch_export_end-->
+<!--action_fetch_end-->
+

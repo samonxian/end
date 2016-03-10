@@ -15,7 +15,7 @@ export function ${moduleId}(state = {}, action) {
 export function ${moduleId}Form(state = {}, action){
 	switch(action.type){
 		<!--reducer_input_begin-->
-		case actionCreator.INPUT${inputId}${MODULEID}:
+		case actionCreator.${const}:
 			return Object.assign({}, state,action);
 		<!--reducer_input_end-->
 		default:
