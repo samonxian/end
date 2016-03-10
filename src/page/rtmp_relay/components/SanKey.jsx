@@ -4,7 +4,6 @@ import Component from 'libs/react-libs/Component'
 import * as Antd from 'antd'
 import d3 from 'd3'
 import d3Sankey from 'libs/d3-plugin/sankey'
-var color = d3.scale.category20();
 
 class SanKey extends Component {
 	constructor(){
@@ -30,6 +29,9 @@ class SanKey extends Component {
 		this.drawLinks();
 		this.drawNodes();
 		this.svg.style.display = "block";
+		this.props.parent.cameraAdapter.makeCameraInfo(this.props.servers,this.sankey);
+		this.props.parent.cameraAdapter.renderCameraInfo(this.props.dispatch);
+		//console.debug(this.sankey.nodes())
 	}
 
 	/**
@@ -37,6 +39,7 @@ class SanKey extends Component {
 	 */
 	dataAdapter(){
 		var _this = this;
+		let props = this.props;
 		var colorOfFrame = d3.scale.threshold().domain([0, 6, 11, 16]).range(['rgba(255,255,255,.6)',
 			'rgba(219,84,64,1)', 'rgba(250,167,1,1)', 'rgba(47,213,238,1)',
 			'rgba(10,137,40,1)'
@@ -45,7 +48,7 @@ class SanKey extends Component {
 			'rgba(10,137,40,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
 		]);
 		var colorOfsend_queue = d3.scale.threshold().domain([0,10, 64, 128]).range(['rgba(255,255,255,.6)',
-			'rgba(10,137,40,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
+			'rgba(9,128,42,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
 		]);
 		var colorOfConns = d3.scale.threshold().domain([0, 10, 50]).range(['rgba(0,0,0,.3)',
 			'rgba(0,0,255,.5)', 'rgba(0,255,0,.5)', 'rgba(255,0,0,.5)'
@@ -58,10 +61,11 @@ class SanKey extends Component {
 				var sankey = d3Sankey()
 						  .nodeWidth(50)
 						  .nodePadding(20)
-						  .size([width, height])
+						  .size([1600, 900])
 						  .nodes(data.nodes)
 						  .links(data.links)
 						  .layout(32);
+				//console.debug(sankey.nodes())
 				return sankey;
 			},
 			/**
@@ -85,7 +89,7 @@ class SanKey extends Component {
 				let data = _this.data;
 				var path = _this.sankey.link();
 
-				var links = d3.select(_this.svg).append("g").selectAll(".link").data(data.links, function(d) {
+				var links = d3.select("#svg_con").selectAll(".link").data(data.links, function(d) {
 					return d.source.ip + " " + d.target.ip;
 				}).sort(function(a, b) {
 					return b.dy - a.dy;
@@ -113,7 +117,7 @@ class SanKey extends Component {
 				var data = _this.data;
 				var cameraInfo = this.cameraInfo;
 				//console.debug(cameraInfo)
-				var nodes = d3.select(_this.svg).append("g").selectAll(".node")
+				var nodes = d3.select("#svg_con").selectAll(".node")
 					.data(data.nodes)
 					.enter()
 					.append("g")
@@ -123,7 +127,12 @@ class SanKey extends Component {
 							return "translate(" + d.x + "," + d.y + ")";
 						}
 					});
-				nodes.append("rect")
+				nodes.append("rect").classed('selectedServerNode', function(d) {
+					//console.debug(0)
+						return _this.props.parent.cameraAdapter.selectedServer == d.ip;
+					}).on("click", function(d) {
+						_this.props.parent.cameraAdapter.handleCameraClick(null, d.ip,_this.props.dispatch);
+					})
 					.attr({
 						height: function(d) {
 							return d.dy;
@@ -196,12 +205,11 @@ class SanKey extends Component {
 		let { data,cameraInfo } = this.props;
 		this.data = data;
 		this.cameraInfo = cameraInfo;
-
 		if(this.state.canRender){
-		//console.debug(this.conDom.offsetHeight)
+			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
-				<svg height={ this.conDom.offsetHeight }> 
-					<g ref="svg_con" transform="translate(0,10)"></g>
+				<svg viewBox="0 0 2240 940" > 
+					<g ref="svg_con" id="svg_con" transform="translate(0,40)"></g>
 				</svg>	
 			)
 		}else{

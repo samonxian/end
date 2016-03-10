@@ -6,9 +6,9 @@ let column_dataIndexs = [
 	'user_all',
 	'user_new',
 	'user_online',
-	//'daily_publish_traffic',
-	//'daily_play_traffic',
-	//'daily_play_count',
+	'daily_publish_traffic',
+	'daily_play_traffic',
+	'daily_play_count',
 ]
 export let columns = [
 	{
@@ -35,11 +35,16 @@ export let columns = [
 ];
 
 
-export function dataAdapter(data){
+export function dataAdapter(data,app_count){
 	let re = [];
 	data[0]._reData_ = null;
 	re = fn.fieldSort(data,column_dataIndexs,columns,function(key){
 		let t_data = data[key];
+		var appid = t_data.app_id;
+		var app_info = app_count[appid]
+		t_data.daily_publish_traffic = app_info.daily_publish_traffic
+		t_data.daily_play_traffic = app_info.daily_play_traffic
+		t_data.daily_play_count = app_info.daily_play_count
 	})
 	return re;
 }
