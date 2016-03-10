@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import * as Antd from 'antd'
 import * as actionCreator from './action'
 <!--index_import_begin-->
-import ${import_var} from '${imort_libs}'
+import ${import_var} from '${import_libs}'
 <!--index_import_end-->
 
 class ${className} extends Component {

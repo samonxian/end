@@ -1,5 +1,6 @@
 'use strict';
 var parse = require('co-body');
+var CreateModule = require('../script/generator/CreateModule')
 
 /**
  * Module dependencies.
@@ -12,6 +13,9 @@ module.exports = function* creator(next) {
 	this.body = page;
 	this.status = 200;
 	if(post.moduleId){
-		console.log(post)
+		new CreateModule({
+			moduleId : post.moduleId
+		});	
+		//console.log(post)
 	}
 };

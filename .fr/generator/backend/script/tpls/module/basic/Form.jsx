@@ -34,7 +34,7 @@ class ${className}Form extends Component {
 					let targetProps = _this.props.targetProps;
 					var params = { 
 						<!--form_params_begin-->
-						${inputId} : targetProps.${inputId},
+						${inputid} : targetProps.${inputid},
 						<!--form_params_end-->
 					}
 					_this.props.dispatch(actionCreator.fetchData(params))
@@ -58,7 +58,7 @@ class ${className}Form extends Component {
 			<Antd.Form onSubmit={this.handleSubmit()}>
 				<!--form_content_begin-->
 				<Antd.Form.Item>
-					<Antd.Input name="module_id" onChange={ this.handle${inputId}Change() }
+					<Antd.Input name="${inputId}" onChange={ this.handle${inputId}Change() }
 						placeholder="请输入模块ID" value={targetProps.${inputId}}/>
 				</Antd.Form.Item>
 				<!--form_content_end-->
