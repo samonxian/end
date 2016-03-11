@@ -87,3 +87,7 @@
 .memory_service_monitor_color_desc{
 	padding-right: 10px;
 }
+.anmation{
+	transition-timing-function: 'linear';
+	transition-duration: "300ms";
+}

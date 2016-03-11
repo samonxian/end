@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { fetchMemoryServiceMonitorData } from './action' 
 import { Bar } from './components/Bar'
+import { Pie } from 'libs/defined-chart/Pie'
 import { Detail } from './components/Detail'
+import { LineChar } from './components/LineChar'
 import { AREA_BG, THRITY_USER_TOTAL_COLOR,SEVEN_USER_TOTAL_COLOR,MENORY_SERVICE_MONITOR_SEVEN_NORMAL,
 	     MENORY_SERVICE_MONITOR_THRITY_NORMAL,MENORY_SERVICE_MONITOR_SEVEN_BG,MENORY_SERVICE_MONITOR_THRITY_BG } from './components/until'
 require('../../../style/css/memory_service_monitor.css')
@@ -318,6 +320,17 @@ class memoryMonitor extends Component{
 		return obj;
 	}
 
+	events(){
+
+		var obj = {
+			showTips(){
+				return "hello";
+			}
+		}
+
+		return obj;
+	}
+
 	componentDidMount(){
 		const { memoryServiceData, dispatch } = this.props;
 
@@ -359,6 +372,10 @@ class memoryMonitor extends Component{
 		    healthArr = [],
 		    diskArr = [],
 		    rate = (10/this.healthWidth)*100,
+		    pieData = {
+	            label: 'somethingA',
+	            values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
+	        },
 		    cityTitle = this.formatCity(memoryServiceData,this.healthWidth,rate),
 		    totalObj = this.getAreatotal(memoryServiceData),
 		    diskTotal = this.formatData(memoryServiceData,max,this.healthWidth,sevenHeight,totalObj["len"]),
@@ -378,10 +395,10 @@ class memoryMonitor extends Component{
         for(var j=0;j<this.diskData.length;j++){
         	var padding = '0 5px 5px 5px';
         	var colorPadding = '0 0 0 0';
-        	if(j == 0){
-        		padding = '50px 5px 5px 5px';
-        		colorPadding = '50px 0 0 0';
-        	}
+        	// if(j == 0){
+        	// 	padding = '50px 5px 5px 5px';
+        	// 	colorPadding = '50px 0 0 0';
+        	// }
 	        diskArr.push(<Detail key={'memory_service_monitor_disk_key_'+new Date().getTime()+generateMixed(6)}
 	        	healthData = { this.diskData[j] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_disk" } healthWidth = { this.healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
         }
@@ -414,15 +431,23 @@ class memoryMonitor extends Component{
 			    </Row>
 			    <Row>
 			        <Col span="2" className = "memory_service_monitor_textHide">12</Col>
+			        <Col span="22">
+			             <Col span="12">
+			                 <Pie width = { 300 } height = { 300 } data = { pieData } tooltipHtml = { this.showTips}/>
+			             </Col>
+			             <Col span="12">
+			                 <LineChar />
+			             </Col>
+			        </Col>
+			    </Row>
+			    <Row>
+			        <Col span="2" className = "memory_service_monitor_textHide">12</Col>
 			        <Col span="22">{ cityTitle }</Col>
 			    </Row>
 			    <Row>
 			        <Col span="2" className = "memory_service_monitor_seven">磁盘存储</Col>
 			        <Col span="22"><Bar width = { this.healthWidth } sevenData = { diskTotal } height = { sevenHeight } rate = { rate }/></Col>
 			    </Row>
-			    <div className = "memory_service_monitor_margin">
-			         { healthArr }
-			    </div> 
 			    <div className = "memory_service_monitor_margin">
 			         { diskArr }
 			    </div>
