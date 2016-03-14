@@ -43,6 +43,7 @@ class Graph extends Component {
 				var line = d3.svg.line()
 				  .x(function(d,k) { 
 					  //return x(new Date(d[0] * 1000)); 
+					  //console.debug(x(k))
 					  return x(k);
 				  })
 				  .y(function(d) { return y(d[1]); })
@@ -58,11 +59,20 @@ class Graph extends Component {
 						return d3.time.format("%H:%M")(new Date(_this.props.data[d][0] * 1000));
 				  });
 			},
-			getYAxis(y){
+			getYAxis(y,format){
 				return d3.svg.axis()
 				  .scale(y)
 				  .orient('left')
-				  .ticks(5);
+				  .ticks(5)
+				  .outerTickSize(0)
+				  .innerTickSize(-(this.conDom.offsetWidth-110))
+				  .tickFormat(function(d){
+					  if(!format){
+						  return d;
+					  }else{
+						  return format(d);
+					  }
+				  });
 			}
 		}
 	}
@@ -88,8 +98,9 @@ class Graph extends Component {
 	}
 
     render() {
+		super.render();
 		var _this = this;
-		let { data,left_text,bottom_text } = this.props;
+		let { data,left_text,bottom_text,formatY } = this.props;
 		//console.debug(this.state)
 	    if(this.state.canRender){
 			let x = this.getXData(data),
@@ -99,7 +110,7 @@ class Graph extends Component {
 				text_transform_bottom = `translate(${this.conDom.offsetWidth-60},${this.conDom.offsetHeight - 33 })`,
 				text_transform_left = `translate(90,10)`,
 				line = this.getLine(x,y);
-			this.yAxis = this.getYAxis(y);
+			this.yAxis = this.getYAxis(y,formatY);
 			this.xAxis = this.getXAxis(x);
 			return (
 				<svg className="graph_con">

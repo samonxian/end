@@ -50,10 +50,19 @@
   "scripts": {
     "build": "export NODE_ENV=production && grunt",
     "start": "export NODE_ENV=development && node server.js",
-    "start2": "http-server -a 0.0.0.0 -p 8080",
+    "startend": "node --harmony ./.fr/generator/backend/app.js",
     "ac": "node ./.fr/autoCreator/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sam",
-  "license": "ISC"
+  "license": "ISC",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xianshannan/end.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xianshannan/end/issues"
+  },
+  "homepage": "https://github.com/xianshannan/end#readme"
 }

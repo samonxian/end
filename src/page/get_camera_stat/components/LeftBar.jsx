@@ -49,7 +49,7 @@ class LeftBar extends Component {
 							}
 							return (
 								<g key={ key }>
-									<rect  x={x} y={y} width={t_width} height={height} fill="#ccc"/>
+									<rect  x={x} y={y} width={t_width} height={height} fill="#A9D8F7"/>
 								</g>
 							)
 						})

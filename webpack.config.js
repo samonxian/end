@@ -22,6 +22,7 @@ module.exports = {
 		publicPath: '/js/',
 		path: __dirname + '/public/js/',
         filename: 'bundle.js',
+		libraryTarget: "umd",
 		chunkFilename: '[name].chunk.js'
     },
 	module: {
@@ -30,7 +31,7 @@ module.exports = {
 			{ 
             	test: /\.js[x]?$/, 
             	loader: 'babel',
-				exclude: /node_modules/,//设置node_modules目录为根目录下的node_modules,根目录以package为参考
+				exclude: /node_modules/,//解析node_modules的es6语法 
             },
             { test: /\.css$/, loader: "style!css" },
         ]
@@ -49,6 +50,10 @@ module.exports = {
 		}, 
 		extensions: ['', '.js', '.jsx']
 	},
+	externals : [
+		{
+		}
+	],
 	plugins: [
 		new webpack.NoErrorsPlugin(),
 		new webpack.HotModuleReplacementPlugin(),

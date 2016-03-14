@@ -22,8 +22,10 @@ class Monitor_direct_seeding extends Component {
 				image.img.nextSibling.style.display = 'none';
 				if(image.isLoaded){
 					image.img.style.display = 'block' ;
+					image.img.nextSibling.nextSibling.style.display = 'none';
 				}else{
-					image.img.nextSibling.nextElementSibling.style.display = 'block';
+					image.img.style.display = 'none' ;
+					image.img.nextSibling.nextSibling.style.display = 'block';
 				}
 				//console.debug('image is ' + result + ' for ' + image.img.src);
 			}
@@ -50,14 +52,27 @@ class Monitor_direct_seeding extends Component {
 	dataAdapter(){
 		return {
 			sortByCameraState(data){
-				data.sort(function(a,b){
-					var c = a.state,d = b.state;
-					if(c > 4 || d > 4){ return -1; }
+				let t_data = [],t_data2 = [];
+				data.forEach(function(v,k){
+					if(v.state == 4){
+						t_data.push(v);
+					}else{
+						t_data2.push(v);
+					}
+				})
+				t_data.sort(function(a,b){
+					var c = a.all_online,d = b.all_online;
 					if(!c){ c = 0; }
 					if(!d){ d = 0; }
-					return d - c; 
+					return d - c;
 				})
-			}
+				return data = t_data.concat(t_data2);  
+			},
+			sortByCid(data){
+				data.sort(function(a,b){
+					return b.cid - a.cid;
+				})
+			},
 		}
 	}
 
@@ -66,7 +81,8 @@ class Monitor_direct_seeding extends Component {
 		let { monitor_direct_seeding ,location,dispatch } = this.props;
 		let posts = monitor_direct_seeding.posts;
 		if(posts){
-			this.sortByCameraState(posts);
+			this.sortByCid(posts);
+			posts = this.sortByCameraState(posts);
 			//console.debug(posts)
 			let data = dataSet.dataAdapter(posts);
 			return (
