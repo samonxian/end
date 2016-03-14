@@ -12,7 +12,7 @@ let column_dataIndexs = [
 	'online',
 	//'http_online',
 	//'rtmp_online',
-	'play',
+	//'play',
 	//'http_played',
 	//'rtmp_played',
 	'edge',
@@ -48,7 +48,7 @@ export let columns = [
 					{ text.state != 0 && <span>{dealEU(state)}</span> }
 					{ text.state == 0 && <span style={{ color:'red' }}>{dealEU(state)}</span> }
 					<div className="line"/>
-					{ dealEU(state) }
+					{ dealEU(config_type) }
 				</div>)
 		}
 	},
@@ -85,21 +85,21 @@ export let columns = [
 	//{
 		//title: 'rtmp在线数',
 	//},
-	{
-		title: <div>播放数<br/>(all/hls/rtmp)</div>,
-		className : 't_c',
-		render : function(text,record){
-			return(
-				<div>
-					{ dealEU(text.all) }
-					<div className="line"/>
-					{ dealEU(text.hls) }
-					<div className="line"/>
-					{ dealEU(text.rtmp) }
-				</div>
-			)
-		}
-	},
+	//{
+		//title: <div>播放数<br/>(all/hls/rtmp)</div>,
+		//className : 't_c',
+		//render : function(text,record){
+			//return(
+				//<div>
+					//{ dealEU(text.all) }
+					//<div className="line"/>
+					//{ dealEU(text.hls) }
+					//<div className="line"/>
+					//{ dealEU(text.rtmp) }
+				//</div>
+			//)
+		//}
+	//},
 	//{
 		//title: 'hls历史播放数',
 	//},
@@ -157,13 +157,15 @@ export function dataAdapter(data){
 		let num = cid[cid.length-1]
 		t_data = dealEU(t_data)
 		t_data.snapshot = `http://rtmp${num}.public.topvdn.cn/snapshot/${cid}.jpg`; 
-		t_data.play = { }
-		t_data.play.all = t_data.all_played;
-		t_data.play.hls = t_data.http_played;
-		t_data.play.rtmp = t_data.rtmp_played;
+		//t_data.play = { }
+		//t_data.play.all = `${t_data.all_played_ip_count} - ${t_data.all_played}`;
+		//t_data.play.hls = `${t_data.http_played_ip_count} - ${t_data.http_played}`;
+		//t_data.play.rtmp = t_data.rtmp_played;
 		t_data.online = { }
-		t_data.online.all = t_data.all_online;
-		t_data.online.hls = t_data.http_online;
+		//t_data.online.all = `${t_data.all_online_ip_count} - ${t_data.all_online}`;
+		//t_data.online.hls = `${t_data.http_online_ip_count} - ${t_data.http_online}`;
+		t_data.online.all = t_data.all_online_ip_count;
+		t_data.online.hls = t_data.http_online_ip_count;
 		t_data.online.rtmp = t_data.rtmp_online;
 		t_data.relay_ip_t = { }
 		t_data.relay_ip_t.relay_ip = t_data.relay_ip; 

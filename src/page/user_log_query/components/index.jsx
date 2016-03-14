@@ -26,11 +26,13 @@ let type = {
 	'775':'rtmp_open_success',
 	'776':'rtmp_open_failed',
 	'778':'timeslice_request',
+	'777':'rtmp_recv',
 	'779':'timeslice_request_error',
 	'780':'request_relay',
 	'781':'publish_success',
 	'782':'reconnection',
 	'783':'publish_failed',
+	'784':'rtmp_publish',
 	'785':'down_video_success',
 	'786':'disc_down_change',
 	'787':'down_video_error',
@@ -160,7 +162,11 @@ export function timeData(data){
 			var temp_data = data[key];
 			temp_data.state = common.getCameraState(temp_data.state);
 			temp_data.t_ip = temp_data.tracker_ip.concat(':',temp_data.tracker_port);
-			temp_data.time_update_at_1 = new Date(temp_data.time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
+			if(temp_data.time_update_at){
+				temp_data.time_update_at_1 = new Date(temp_data.time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
+			}else{
+				temp_data.time_update_at_1 = '暂无数据';
+			}
 		})
 	}
 	//console.log(re)

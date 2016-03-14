@@ -54,10 +54,13 @@ export let columns = [
 		title: '带宽曲线图',
 		render: function(data,record){
 			data.forEach(function(v,k){
-				v[1] = v[1] / 1000;
+				//v[1] = v[1] / 1000;
 			})
+			let format = function(d){
+				return fn.transformToKbMbGb(d);
+			}
 			return(
-				<Graph data={ data } left_text="带宽" bottom_text="时间"/>	
+				<Graph data={ data } left_text="带宽" bottom_text="时间" formatY={format}/>	
 			)
 		}
 	}, 

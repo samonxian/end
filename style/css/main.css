@@ -36,6 +36,12 @@ pre {
 .ant-tabs-nav-scroll {
     width: 100%;
 }
+.relative{
+	position:relative;
+}
+.absolute{
+	position:absolute;
+}
 .fl {
     float: left;
 }
@@ -292,7 +298,7 @@ pre {
     z-index: 10000;
 }
 .uql_title_bar .ant-menu {
-    display: flex;
+    /*display: flex;*/
 }
 .uql_title_bar_fixed .ant-menu {
     margin: 0 40px 0 239px;
@@ -443,22 +449,40 @@ pre {
 /**服务器运行监控**/
 
 .node rect {
+	cursor: pointer;
     fill-opacity: .9;
-    shape-rendering: crispEdges;
 }
 .link {
     fill: none;
     stroke: #024;
-    stroke-opacity: .2;
+    stroke-opacity: .4;
 }
 .link:hover {
-    stroke-opacity: .5;
+    stroke-opacity: .6;
+}
+.rtmp_relay{
+	display:flex;
+	width:100%;
+	flex-flow: column;
 }
 .rtmp_relay .rt_left{
-	flex: 2;
+	width:60%;
+	height:auto;
 }
+
+.rtmp_relay .rt_right{
+	width:40%;
+}
+
 .rtmp_relay svg{
 	height:auto;
+}
+.rtmp_relay .cameraSvg{
+	/*width:50px;*/
+	/*height:50px;*/
+	width: 3%;
+	padding: 2px 2px;
+    transition-duration: 0.8s;
 }
 .rtmp_relay text{
 	pointer-events: none;
@@ -466,19 +490,32 @@ pre {
 	fill: #fff;
 	opacity: .4
 }
+.rtmp_relay path{
+    /*shape-rendering: crispEdges;*/
+}
 .rtmp_relay rect{
 	cursor:pointer;
 }
-.rtmp_relay .svg_con{
-	display:flex;
-	width:100%;
-	flex-flow: column;
-    height: 100%;
-}
 .rtmp_relay .sc_top{
-	overflow:hidden;
+	/*overflow:hidden;*/
 	flex:1;
+}
+.sc_top_flex{
+	height:100%;
 }
 .rtmp_relay .sc_bottom{
 	flex:1;
+}
+.selectedServer {
+	box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
+	stroke-width: 2!important;
+	stroke: rgba(255, 255, 255, 1)!important;
+	/*astroke-dasharray: 5, 5;*/
+}
+
+.selectedServerNode {
+	box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
+	stroke-width: 6!important;
+	stroke: rgba(255, 255, 255, 1)!important;
+	/*astroke-dasharray: 5, 5;*/
 }

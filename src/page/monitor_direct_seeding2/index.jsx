@@ -48,6 +48,7 @@ class Monitor_direct_seeding2 extends Component {
 	}
 
     render() {
+		super.render();
 		//console.log(this.props)
 		let { monitor_direct_seeding2 ,location,dispatch } = this.props;
 		let posts = monitor_direct_seeding2.posts;
