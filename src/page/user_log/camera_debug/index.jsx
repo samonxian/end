@@ -43,10 +43,8 @@ class camera_debug extends React.Component {
 		let { camera_debug ,location,dispatch } = this.props;
 		let { params } = camera_debug;
 		this.type = getUrlParams(this.props.location.pathname)[1];
-		if(camera_debug.posts && camera_debug.posts.logs && camera_debug.posts.logs[0]){
-			data = logData(camera_debug);
-		}
 		
+		data = logData(camera_debug);
         return (
 			<Monitor location={location} >
 				<h2>{title[this.type]}</h2>

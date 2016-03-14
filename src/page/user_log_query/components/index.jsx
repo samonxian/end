@@ -19,6 +19,23 @@ let type = {
 	'1025':'mobile_debug',
 	'1026':'rtmp_conn_time',
 	'272':'exception_event',
+	'771':'app_web_request',
+	'772':'pp_request_error',
+	'773':'open_service',
+	'774':'RecvMsg',
+	'775':'rtmp_open_success',
+	'776':'rtmp_open_failed',
+	'778':'timeslice_request',
+	'777':'rtmp_recv',
+	'779':'timeslice_request_error',
+	'780':'request_relay',
+	'781':'publish_success',
+	'782':'reconnection',
+	'783':'publish_failed',
+	'784':'rtmp_publish',
+	'785':'down_video_success',
+	'786':'disc_down_change',
+	'787':'down_video_error',
 }
 export let index = []
 for(var i in type){
@@ -102,15 +119,14 @@ export let state_columns = [
 export function stateData(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
-	if(data){
-		re = fieldSort(t_data,state_dataIndexs,state_columns,function(key,data){
-			var temp_data = data[key];
-			temp_data.ip = temp_data.public_ip.concat(':',temp_data.public_port);
-			temp_data.area_t = temp_data.country.concat('/',temp_data.prov,'/',temp_data.city);
-			temp_data.config_type = common.getConfigType(temp_data.config_type);
-		})
-	}
+	re = fieldSort(t_data,state_dataIndexs,state_columns,function(key,data){
+		var temp_data = t_data[key];
+		temp_data.ip = temp_data.public_ip.concat(':',temp_data.public_port);
+		temp_data.area_t = temp_data.country.concat('/',temp_data.prov,'/',temp_data.city);
+		temp_data.config_type = common.getConfigType(temp_data.config_type);
+	})
 	//console.log(re)
 	return re;
 }
@@ -139,13 +155,18 @@ export let time_columns = [
 export function timeData(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
 	if(data){
 		re = fieldSort(t_data,time_dataIndexs,time_columns,function(key,data){
 			var temp_data = data[key];
 			temp_data.state = common.getCameraState(temp_data.state);
 			temp_data.t_ip = temp_data.tracker_ip.concat(':',temp_data.tracker_port);
-			temp_data.time_update_at_1 = new Date(temp_data.time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
+			if(temp_data.time_update_at){
+				temp_data.time_update_at_1 = new Date(temp_data.time_update_at*1000).Format("yyyy-MM-dd hh:mm:ss");
+			}else{
+				temp_data.time_update_at_1 = '暂无数据';
+			}
 		})
 	}
 	//console.log(re)
@@ -214,6 +235,7 @@ export let time2_columns = [
 export function time2Data(data){
 	let t_data = [];
 	let re = [];
+	data._reData_ = null;
 	t_data.push(data);
 	if(data){
 		re = fieldSort(t_data,time2_dataIndexs,time2_columns,function(key,data){

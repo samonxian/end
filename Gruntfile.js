@@ -12,6 +12,17 @@ var config = Object.assign({}, webpack_config, {
     },
     resolve: Object.assign(webpack_config.resolve, {
     }),
+	module: {
+        loaders: [
+			{test: /\.(jpg|png)$/, loader: "url?limit=8192"},
+			{ 
+            	test: /\.js[x]?$/, 
+            	loader: 'babel',
+				exclude: /node_modules/,//设置node_modules目录为根目录下的node_modules,根目录以package为参考
+            },
+            { test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader") },
+        ]
+    },
     plugins: [
         new webpack.NoErrorsPlugin(),
         new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.bundle.js", ['app']),

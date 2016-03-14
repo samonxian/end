@@ -31,19 +31,22 @@ Date.prototype.Format = function (fmt) { //author: meizz
  */
 export function fieldSort(data,fields,columns,callback){
 	var reData = [];
-	if(data && data[0] && !data[0]._reData_){
+	if(data && typeof data == "object" && data[0] && !data[0]._reData_){
 		data.forEach(function(value,key){
 			reData[key] = { };
 			callback && callback(key,data);
 			fields.forEach(function(v,k){
-				reData[key][v] = data[key][v];	
+				if(data[key][v] || data[key][v] == 0){
+					reData[key][v] = data[key][v];	
+				}else{
+				}
 			})	
 			//react组件，key值设定
 			reData[key]['key'] = key;
 			data[key]['_key_'] = key;
 		})
 		data[0]._reData_ = reData; 
-	}else if(data && data[0]){
+	}else if(data && data[0] && typeof data == "object"){
 		reData = data[0]._reData_;
 	}
 	columns && columns.forEach(function(value,key){
@@ -163,4 +166,16 @@ export function transformToKbMbGb(t_value){
 		value = t_value;	
 	}
 	return value;
+}
+/**
+ *	传入数据位空或未定义，返回“暂无数据”
+ *@param text 任意数据
+ *@param [string] 替换字符 
+ *@return 返回处理数据
+ */
+export function dealEU(text,info="暂无数据"){
+	if(!text && text != 0){
+		text = info; 
+	}
+	return text;
 }
