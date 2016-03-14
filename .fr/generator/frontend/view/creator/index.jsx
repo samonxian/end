@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as Antd from 'antd'
 import * as actionCreator from './action'
 import GeneratorForm from './components/Form'
+require('../../style/css/prism.css')
 
 class Generator extends Component {
 	constructor(){
@@ -39,7 +40,8 @@ class Generator extends Component {
 		let { generator } = this.props;
 		return (
 			<div className="creator-form">
-				<GeneratorForm />	
+				<GeneratorForm data={generator.posts}/>	
+				
 			</div>
 		)	
     }

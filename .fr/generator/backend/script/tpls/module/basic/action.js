@@ -4,7 +4,7 @@ import ${import_var} from '${import_libs}'
 
 
 <!--action_const_begin-->
-export const ${const} = ${const}
+export const ${const} = '${const}'
 <!--action_const_end-->
 
 let common = {

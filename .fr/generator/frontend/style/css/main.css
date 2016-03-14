@@ -1,10 +1,36 @@
+.vm{
+	vertical-align:middle;
+}
+.ml5{
+	margin-left:5px;
+}
+.mr5{
+	margin-right:5px;
+}
+/**creator**/
 .r2g-creator-con{
 	background:#fff;
-	height:100%;
+	min-height:100%;
 }
 .r2g-creator-con .creator-form{
 	padding:20px 40px;
 }
 .r2g-creator-con .btn-submit{
-	width:100%;	
+	/*width:100%;	*/
+}
+.r2g-creator-con .state_confirm{
+	margin:10px 0 0 0;
+}
+.r2g-creator-con .form_option{
+    padding: 12px 20px 0 0;
+}
+.r2g-creator-con .plus{
+	margin:0 10px 0 10px;
+	color:blue;
+}
+.r2g-creator-con .item_form input{
+	margin-bottom:5px;
+}
+.r2g-creator-con .checkbox_text{
+	margin-right:5px;
 }

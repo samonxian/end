@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path')
 
 class ReadModuleDirTpl {
 	constructor(config){
@@ -59,12 +60,13 @@ class ReadModuleDirTpl {
 	 *@return [object] 返回{文件名:{contents,tagsInfo}},tagsInfo参考getTagsInfo函数说明
 	 */
 	getDirFilesInfo (){
-		var path = this.config.path;
-		var files = fs.readdirSync(path);
+		var c_path = this.config.path;
+		var files = fs.readdirSync(c_path);
 		var filesObj = { }
 		for(var i = 0;i<files.length;i++){
 			var file = files[i];
-			var stat =	fs.lstatSync(path+file);
+			var filePath = path.resolve(c_path,file); 
+			var stat =	fs.lstatSync(filePath);
 			if(!stat.isDirectory()){
 				//过滤忽略文件
 				if(this.ignoreFiles.indexOf(file) == -1){
@@ -73,7 +75,7 @@ class ReadModuleDirTpl {
 					if(this.ignoreFilesWithSffix.indexOf(suffix) != -1){
 						continue;
 					}
-					var contents = fs.readFileSync(path + file,{
+					var contents = fs.readFileSync(filePath,{
 						encoding : 'utf-8'
 					})
 					var index = file.replace(/\..*/,'');
@@ -84,7 +86,6 @@ class ReadModuleDirTpl {
 				}
 			}
 		}
-		//console.log(path)
 		return filesObj;
 	}
 }
