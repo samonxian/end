@@ -22,12 +22,14 @@ export const Chart = React.createClass({
         var viewBox = _props.viewBox;
         var preserveAspectRatio = _props.preserveAspectRatio;
         var children = _props.children;
+        var style = _props.style;
 
         console.log("============================================== Chart render :");
+        console.log("viewBox:"+viewBox);
         
         return React.createElement(
             "svg",
-            { ref: "svg", width: width, height: height, viewBox: viewBox, preserveAspectRatio: preserveAspectRatio },
+            { ref: "svg", width: width, height: height, viewBox: viewBox, preserveAspectRatio: preserveAspectRatio, style: style },
             React.createElement(
                 "g",
                 { transform: "translate(" + margin.left + ", " + margin.top + ")" },

@@ -125,6 +125,9 @@ export const Pie =  React.createClass({
         var values = _props.values;
         var innerWidth = this._innerWidth;
         var innerHeight = this._innerHeight;
+        var viewBox = _props.viewBox;
+        var preserveAspectRatio = _props.preserveAspectRatio;
+        var style = _props.style;
 
         var pie = d3.layout.pie().value(function (e) {
             return y(e);
@@ -160,7 +163,14 @@ export const Pie =  React.createClass({
             null,
             React.createElement( 
                 Chart,
-                { height: height, width: width, margin: margin },
+                {    
+                     height: height, 
+                     width: width, 
+                     margin: margin, 
+                     viewBox: viewBox, 
+                     preserveAspectRatio: preserveAspectRatio,
+                     style : style
+                 },
                 React.createElement(
                     "g",
                     { transform: translation },

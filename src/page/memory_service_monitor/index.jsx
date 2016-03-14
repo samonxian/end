@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Row, Col } from 'antd'
+import { Row, Col, Table } from 'antd'
 import { connect } from 'react-redux'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { fetchMemoryServiceMonitorData } from './action' 
@@ -9,7 +9,8 @@ import { Pie } from 'libs/defined-chart/Pie'
 import { Detail } from './components/Detail'
 import { LineChar } from './components/LineChar'
 import { AREA_BG, THRITY_USER_TOTAL_COLOR,SEVEN_USER_TOTAL_COLOR,MENORY_SERVICE_MONITOR_SEVEN_NORMAL,
-	     MENORY_SERVICE_MONITOR_THRITY_NORMAL,MENORY_SERVICE_MONITOR_SEVEN_BG,MENORY_SERVICE_MONITOR_THRITY_BG } from './components/until'
+	     MENORY_SERVICE_MONITOR_THRITY_NORMAL,MENORY_SERVICE_MONITOR_SEVEN_BG,MENORY_SERVICE_MONITOR_THRITY_BG,
+	     MEMORY_SERVICE_MONITOR_HEADER } from './components/until'
 require('../../../style/css/memory_service_monitor.css')
 let imgUrl = require('../../../style/img/background.jpg')
 
@@ -35,15 +36,21 @@ class memoryMonitor extends Component{
 				var area = data["data"]["area_user_count"],
 				    total = 0,
 				    len = 0,
+				    pieArr = [],
 				    htlArr = [];
 				for(var name in area){
 					len ++;
 					total = total + area[name];
 					htlArr.push(<span className ="memory_service_monitor_city" 
 						key={"memory_service_monitor_city_key_"+new Date().getTime()+generateMixed(6)}>{ name + ":"+ area[name] }</span>);
+					pieArr.push({
+						x : name,
+						y : area[name]
+					});
 				}
 				return {
 					total : total,
+					pieArr : pieArr,
 					len : len,
 					city : htlArr
 				};
@@ -250,6 +257,15 @@ class memoryMonitor extends Component{
 						 		    itemY = diskHeight-innerHeight;
 						 		if(itemArr.length){
 						 			fill = "#BD0808";
+						 			for(var q=0;q<itemArr.length;q++){
+						 				this.errorData.push({
+											area : city,
+											group_id : group[i]["group_id"],
+											cycle : group[i]["cycle"],
+											cid : itemArr[q]
+										});
+						 			}
+					 				
 						 		}else{
 						 			fill = MENORY_SERVICE_MONITOR_SEVEN_NORMAL;
 						 			if(group[i]["cycle"] == 30){
@@ -323,11 +339,14 @@ class memoryMonitor extends Component{
 	events(){
 
 		var obj = {
-			showTips(){
-				return "hello";
+			showTips(data, position){
+				return data+":"+position;
+			},
+			colorScale(){
+				console.log("=================================== colorScale function :");
+				console.log(arguments);
 			}
 		}
-
 		return obj;
 	}
 
@@ -354,9 +373,12 @@ class memoryMonitor extends Component{
 		if(isEmptyObj(memoryServiceData["data"])){		
 			return false;
 		}
+        
+        this.errorData = [];
 
 		if(this.healthData === undefined){
 			this.healthData = [];
+			this.totalCity = [];
 		}
 		if(this.diskData === undefined){
 			this.diskData = [];
@@ -365,6 +387,8 @@ class memoryMonitor extends Component{
 		if(this.healthWidth === undefined){
 			var contentWith = window.document.body.offsetWidth - 280;
 			this.healthWidth = contentWith*0.9166666667;
+			this.pieWidth = contentWith*0.9166666667*0.2083333333;
+			this.lineWidth = contentWith*0.9166666667*0.7916666667;
 		}
 
 		let max = this.getMaxUserTotal(memoryServiceData),
@@ -372,18 +396,41 @@ class memoryMonitor extends Component{
 		    healthArr = [],
 		    diskArr = [],
 		    rate = (10/this.healthWidth)*100,
-		    pieData = {
-	            label: 'somethingA',
-	            values: [{x: 'SomethingA', y: 10}, {x: 'SomethingB', y: 4}, {x: 'SomethingC', y: 3}]
-	        },
 		    cityTitle = this.formatCity(memoryServiceData,this.healthWidth,rate),
 		    totalObj = this.getAreatotal(memoryServiceData),
+		    pieData = {
+	            label: 'area_pie',
+	            values: totalObj["pieArr"]
+	        },
 		    diskTotal = this.formatData(memoryServiceData,max,this.healthWidth,sevenHeight,totalObj["len"]),
 		    health = this.formatHealth(memoryServiceData,this.healthWidth,20,totalObj["len"]),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24,totalObj["len"]);
 
         this.healthData.unshift(health);
         this.diskData.unshift(disk);
+
+        console.log("============================================  render :");
+        console.log(memoryServiceData);
+
+        var area = memoryServiceData["data"]["area_user_count"];
+    	for(var name in area){
+
+    		 if( this.totalCity[name] === undefined){
+    		 	this.totalCity[name] = []
+    		 }
+
+    		if(this.totalCity[name].length>119){
+    			this.totalCity[name].shift();
+	    		for(var i=0;i<this.totalCity[name].length;i++){
+	    			this.totalCity[name][i]["x"]--;
+	    		}
+	        }
+    		
+    		this.totalCity[name].push({
+        		x : this.totalCity[name].length,
+        		y : area[name]
+        	});
+    	}
 
         for(var i=0;i<this.healthData.length;i++){
         	var padding = '0 5px 5px 5px';
@@ -429,14 +476,20 @@ class memoryMonitor extends Component{
 			            </Col>
 			        </Col>
 			    </Row>
-			    <Row>
+			    <Row style={{marginBottom:'40px'}}>
 			        <Col span="2" className = "memory_service_monitor_textHide">12</Col>
 			        <Col span="22">
-			             <Col span="12">
-			                 <Pie width = { 300 } height = { 300 } data = { pieData } tooltipHtml = { this.showTips}/>
+			             <Col span="5">
+			                 <Pie 
+			                     width = { 250 } 
+			                     height = { 250 } 
+			                     data = { pieData } 
+			                     tooltipHtml = { this.showTips } 
+			                     viewBox = { "0,0,250,250" }
+			                     style = {{ width:'250px',height:'250px' }}/>
 			             </Col>
-			             <Col span="12">
-			                 <LineChar />
+			             <Col span="19">
+			                 <LineChar width = { this.lineWidth } data = { this.totalCity }/>
 			             </Col>
 			        </Col>
 			    </Row>
@@ -451,6 +504,12 @@ class memoryMonitor extends Component{
 			    <div className = "memory_service_monitor_margin">
 			         { diskArr }
 			    </div>
+			    <Row>
+			        <Col span="2" className = "memory_service_monitor_seven">错误情况</Col>
+			        <Col span="22">
+			            <Table columns = { MEMORY_SERVICE_MONITOR_HEADER } dataSource={[]} pagination={false}  bordered/>
+			        </Col>
+			    </Row>
 			</div>
         </div>
 	}

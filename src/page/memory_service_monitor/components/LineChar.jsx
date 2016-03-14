@@ -11,23 +11,46 @@ let LineChart = ReactD3.LineChart
 export class LineChar extends Component{
 
     render(){
+
+        const { width, data } = this.props;
+        var lineData = [],
+            initX = [];
+
+        lineData.push({
+            label : 'yAxis',
+            values : [{
+                x : 0,
+                y : 150
+            }],
+        });
+
+        for(var area in data){
+            lineData.push({
+                label : area,
+                values : data[area]
+            })
+        }
         
-        var data = [
-            {
-                 label: 'somethingB',
-                 values: [{x: 0, y: 3}, {x: 1.3, y: 4}, {x: 3, y: 7}, {x: 3.5, y: 8}, {x: 4, y: 7}, {x: 4.5, y: 7}, {x: 5, y: 7.8}, {x: 5.5, y: 9}]
-            },
-            {
-                 label: 'somethingC',
-                 values: [{x: 6.5, y: 9}, {x: 7.5, y: 9}, {x: 8.5, y: 9}, {x: 9.5, y: 9}, {x: 10.5, y: 9}, {x: 11.5, y: 9}, {x: 12.5, y: 9}, {x: 5.5, y: 9}],
-            }
-        ];
+        for(var i=0;i<125;i++){
+            initX.push({
+                x : i,
+                y : 0,
+            })
+        }
+
+        lineData.push({
+            label : 'xAxis',
+            values : initX
+        });
 
         return <LineChart 
-                data={ data }
-                width={ 400 }
-                height={ 400 }
+                data={ lineData }
+                width={ width }
+                height={ 250 }
                 isAnmiation = { true }
+                barPadding = { 1 }
+                xAxis = {{label: "时间"}}
+                yAxis= {{label: "使用数量"}}
                 margin={{top: 10, bottom: 50, left: 50, right: 10}}/>
 	}
 

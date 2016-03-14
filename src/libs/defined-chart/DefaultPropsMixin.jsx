@@ -26,6 +26,8 @@ var DefaultPropsMixin = {
             xScale: null,
             yScale: null,
             isAnmiation: false,
+            preserveAspectRatio: null,
+            viewBox: null,
             colorScale: d3.scale.category20()
         };
     }
