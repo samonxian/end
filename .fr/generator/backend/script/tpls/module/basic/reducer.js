@@ -11,7 +11,7 @@ export function ${moduleId}(state = {}, action) {
 			return state;
     }
 }
-
+<!--reducer_form_begin-->
 export function ${moduleId}Form(state = {}, action){
 	switch(action.type){
 		<!--reducer_input_begin-->
@@ -23,3 +23,4 @@ export function ${moduleId}Form(state = {}, action){
 	}
 	
 }
+<!--reducer_form_end-->
