@@ -260,6 +260,8 @@ class memoryMonitor extends Component{
 						 			for(var q=0;q<itemArr.length;q++){
 						 				this.errorData.push({
 											area : city,
+											key : 'memory_servcie_monitor_error_table_key_'+new Date().getTime()+generateMixed(6),
+											date : data["data"]["timestamp"],
 											group_id : group[i]["group_id"],
 											cycle : group[i]["cycle"],
 											cid : itemArr[q]
@@ -282,7 +284,11 @@ class memoryMonitor extends Component{
 		                        });
 						 	}
 						 	num ++ ;
-						 	obj.push(tempArr);
+						 	obj.push({
+						 		arr : tempArr,
+						 		date : data["data"]["timestamp"],
+						 		groupId : group[i]["group_id"]
+						 	});
 				 	    }
 				 	    
 				 	 }
@@ -369,19 +375,20 @@ class memoryMonitor extends Component{
 
 	render(){
 		const { memoryServiceData } = this.props;
-        
+
 		if(isEmptyObj(memoryServiceData["data"])){		
 			return false;
 		}
-        
-        this.errorData = [];
 
-		if(this.healthData === undefined){
-			this.healthData = [];
-			this.totalCity = [];
-		}
 		if(this.diskData === undefined){
 			this.diskData = [];
+			this.totalCity = [];
+			this.errorData = [];
+			var test = memoryServiceData["data"]["groups"].length;
+	        var testId = 3;
+	        for(var g=0;g<test;g++){
+	        	memoryServiceData["data"]["groups"][g]["disc"][0] = ['groups'+(testId++)]
+	        }
 		}
 
 		if(this.healthWidth === undefined){
@@ -390,6 +397,12 @@ class memoryMonitor extends Component{
 			this.pieWidth = contentWith*0.9166666667*0.2083333333;
 			this.lineWidth = contentWith*0.9166666667*0.7916666667;
 		}
+
+		// if(this.healthData === undefined){
+		// 	this.healthData = [];
+		// 	this.totalCity = [];
+		// }
+
 
 		let max = this.getMaxUserTotal(memoryServiceData),
 		    sevenHeight = 50,
@@ -403,14 +416,11 @@ class memoryMonitor extends Component{
 	            values: totalObj["pieArr"]
 	        },
 		    diskTotal = this.formatData(memoryServiceData,max,this.healthWidth,sevenHeight,totalObj["len"]),
-		    health = this.formatHealth(memoryServiceData,this.healthWidth,20,totalObj["len"]),
+		  //  health = this.formatHealth(memoryServiceData,this.healthWidth,20,totalObj["len"]),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24,totalObj["len"]);
-
-        this.healthData.unshift(health);
+         
+        // this.healthData.unshift(health);
         this.diskData.unshift(disk);
-
-        console.log("============================================  render :");
-        console.log(memoryServiceData);
 
         var area = memoryServiceData["data"]["area_user_count"];
     	for(var name in area){
@@ -432,12 +442,12 @@ class memoryMonitor extends Component{
         	});
     	}
 
-        for(var i=0;i<this.healthData.length;i++){
-        	var padding = '0 5px 5px 5px';
-        	var colorPadding = '';
-	        healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
-	        	healthData = { this.healthData[i] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_health" } healthWidth = { this.healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
-        }
+        // for(var i=0;i<this.healthData.length;i++){
+        // 	var padding = '0 5px 5px 5px';
+        // 	var colorPadding = '';
+	       //  healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
+	       //  	healthData = { this.healthData[i] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_health" } healthWidth = { this.healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
+        // }
 
         for(var j=0;j<this.diskData.length;j++){
         	var padding = '0 5px 5px 5px';
@@ -450,12 +460,42 @@ class memoryMonitor extends Component{
 	        	healthData = { this.diskData[j] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_disk" } healthWidth = { this.healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
         }
 
-        if(this.healthData.length>10){
-        	this.healthData.pop();
-        }
-
-        if(this.diskData.length>10){
+        // if(this.healthData.length>10){
+        // 	this.healthData.pop();
+        // }
+        if(this.diskData.length>2){
+        	var deleteArr = this.diskData[this.diskData.length-1],
+        	    Arr = deleteArr["returnArr"],
+        	    tableArr = [],
+        	    tempError = [];
         	this.diskData.pop();
+        	for(var q = 0;q<Arr.length;q++){
+        		var tempArr = Arr[q]["obj"];
+        		for(var k = 0;k<tempArr.length;k++){
+        			var groupId = tempArr[k]["groupId"];
+        			var tempDate = tempArr[k]["date"];
+        			for(var j=0;j<this.errorData.length;j++){
+        				if(groupId === this.errorData[j]["group_id"] && tempDate === this.errorData[j]["date"]){
+        					tableArr.push(this.errorData[j])
+        				}
+        			}
+        		}
+        	}
+
+        	// for(var i=0;i<tableArr.length;i++){
+        	// 	var deleteG = tempArr[i]["groupId"],
+        	// 	    tempDate = tempArr[i]["date"];
+        	// 	for(var k=0;k<this.errorData.length;k++){
+        	// 		if(this.errorData[k]["groupId"] == this.errorData[k]["date"]){
+        	// 			break;
+        	// 		}else{
+        	// 			tempError.push(this.errorData[k]);
+        	// 		}
+        	// 	}
+        	// }
+        	// this.errorData = ;
+        	// console.log("==================================== errorData");
+        	// console.log(this.errorData);
         }
 
 		return <div style = {{background:'url('+imgUrl+') repeat',margin:'-20px -40px',height : window.document.body.offsetHeight-50+"px"}}>
@@ -507,7 +547,7 @@ class memoryMonitor extends Component{
 			    <Row>
 			        <Col span="2" className = "memory_service_monitor_seven">错误情况</Col>
 			        <Col span="22">
-			            <Table columns = { MEMORY_SERVICE_MONITOR_HEADER } dataSource={[]} pagination={false}  bordered/>
+			            <Table columns = { MEMORY_SERVICE_MONITOR_HEADER } dataSource={ this.errorData } pagination={false}  bordered/>
 			        </Col>
 			    </Row>
 			</div>

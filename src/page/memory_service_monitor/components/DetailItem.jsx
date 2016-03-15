@@ -17,11 +17,11 @@ export class DetailItem extends Component{
 
          if( type === "memory_service_monitor_health"){
      	    for(var i=0;i<arr.length;i++){
-    	    	rows.push(<HealthItems itemsData = { arr[i] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
+    	    	rows.push(<HealthItems itemsData = { arr[i]["arr"] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
     	    }
          }else{
              for(var j=0;j<arr.length;j++){
-                rows.push(<DiskItem itemsData = { arr[j] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
+                rows.push(<DiskItem itemsData = { arr[j]["arr"] } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} />);
              }
          }
          
