@@ -44,8 +44,8 @@
     "webpack-hot-middleware": "^2.6.4"
   },
   "scripts": {
-    "build": "export NODE_ENV=production && grunt",
-    "start": "export NODE_ENV=development && node server.js",
+    "build": "set NODE_ENV=production && grunt",
+    "start": "set NODE_ENV=development && node server.js",
     "start2": "http-server -a 0.0.0.0 -p 8080",
     "ac": "node ./.fr/autoCreator/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -118,6 +118,9 @@ class areaMemory extends Component{
 			TraversalDiskDetailData(data){
 				var array = [],
 				    minSize = 0;
+
+				console.log("================================== data:")
+				console.log(data);
              
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["groups_detail"];
