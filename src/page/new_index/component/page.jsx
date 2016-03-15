@@ -17,8 +17,10 @@ export class Page extends React.Component{
 
 	onShowSizeChange(current){
 		const { dispatch, total, type, currentCity } = this.props
+		console.log("================================= page:");
+		console.log(this.props);
 		if(type === DISK_DETAIL_STATUS_REQ){
-			dispatch(fetchDiskData({area : currentCity,p : current}))
+			dispatch(fetchDiskData({area : currentCity["data"]["area"],p : current}))
 		}
 		if(type === INDEX_MONITOR_STATUS_REQ){
 			dispatch(indexMonitorFetch({area : currentCity,p : current}))

@@ -65,6 +65,9 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/area_memory">区域存储情况</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/rtmp_relay">RTMP转发监控</Link>
+							</MenuItem>
 						</Menu>
 							
 					</Col>	
