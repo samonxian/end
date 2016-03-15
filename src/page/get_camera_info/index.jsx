@@ -245,7 +245,7 @@ class Get_camera_info extends React.Component {
 				{
 					get_camera_info.fetched &&
 					<div>
-						<h2>Tracker来源</h2> 
+						<h2 className="h2_black">Tracker来源</h2> 
 						<Table className="camera_info_table1" columns={columns}
 							dataSource={data} pagination={false} bordered/>
 					</div>
@@ -254,7 +254,7 @@ class Get_camera_info extends React.Component {
 					get_camera_info.fetched && 
 					<div>
 						<div className="clearfix">
-							<h2 className="center-title">Center来源</h2> 
+							<h2 className="center-title h2_black">Center来源</h2> 
 							<Icon onClick={this.showTable2.bind(this)} type={icon} className="center-plus" />
 						</div>
 						{

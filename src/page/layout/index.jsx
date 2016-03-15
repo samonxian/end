@@ -48,9 +48,6 @@ class Layout extends React.Component {
 								<Link to="/get_camera_info">调度信息查询</Link>
 							</MenuItem>
 							<MenuItem>
-								<Link to="/app_manager">APP管理</Link>
-							</MenuItem>
-							<MenuItem>
 								<Link to="/new_index_disk">新版本索引</Link>
 							</MenuItem>
 							<MenuItem>
@@ -67,6 +64,9 @@ class Layout extends React.Component {
 							</MenuItem>
 							<MenuItem>
 								<Link to="/area_memory">区域存储情况</Link>
+							</MenuItem>
+							<MenuItem>
+								<Link to="/rtmp_relay">RTMP转发监控</Link>
 							</MenuItem>
 						</Menu>
 							

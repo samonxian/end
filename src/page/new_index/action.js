@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import { AREA_LIST } from './component/area'
 export const GET_AREA_LIST = 'GET_AREA_LIST'
 export const DISK_STORAGE_STATUS_REQ = 'DISK_STORAGE_STATUS_REQ'
 
@@ -10,16 +9,19 @@ export function getAreaListReq(){
 	}
 }
 
-export function getAreaListRespone(reddit){
+export function getAreaListRespone(reddit,json){
     return {
         type : GET_AREA_LIST,
-        param : AREA_LIST
+        param : json
     }
 }
 
-export function getAreaListFetch(reddit){
+export function getAreaListFetch(reddit,json){
     return dispatch => {
-        dispatch(getAreaListRespone(reddit))
+        dispatch(getAreaListReq())
+        return fetch('http://120.26.74.53/api/disc_monitor/area_list')
+            .then(response => response.json())
+            .then(json => dispatch(getAreaListRespone(reddit, json)))
     }
 }
 

@@ -18,6 +18,17 @@ pre {
     white-space: -o-pre-wrap;
     word-wrap: break-word;
 }
+.contents h2 {
+    font-size: 30px;
+    color: #fff;
+	z-index:10000;
+}
+
+.contents .h2_black {
+    font-size: 30px;
+    color: #000;
+	z-index:10000;
+}
 /**overide ant**/
 
 .ant-tabs-nav .ant-tabs-tab {
@@ -36,11 +47,11 @@ pre {
 .ant-tabs-nav-scroll {
     width: 100%;
 }
-.relative{
-	position:relative;
+.relative {
+    position: relative;
 }
-.absolute{
-	position:absolute;
+.absolute {
+    position: absolute;
 }
 .fl {
     float: left;
@@ -353,10 +364,17 @@ pre {
  *	get_camera_stat
  */
 
-.g_c_s_con {} .g_c_s_con h1 {
+.g_c_s_con h1 {
     margin-bottom: 45px;
     border-bottom: 1px solid #ccc;
 }
+.g_c_s_con h2{
+	font-size:15px;
+	position:relative;
+	top:0;
+	left:0;
+	color:#000;
+} 
 .g_c_s_con .bg_line {
     background-color: rgba(255, 85, 0, 0.12);
     width: 100%;
@@ -449,7 +467,7 @@ pre {
 /**服务器运行监控**/
 
 .node rect {
-	cursor: pointer;
+    cursor: pointer;
     fill-opacity: .9;
 }
 .link {
@@ -460,62 +478,108 @@ pre {
 .link:hover {
     stroke-opacity: .6;
 }
-.rtmp_relay{
-	display:flex;
-	width:100%;
-	flex-flow: column;
+.rtmp_relay {
+    display: flex;
+    width: 100%;
+    flex-flow: column;
 }
-.rtmp_relay .rt_left{
-	width:60%;
-	height:auto;
+.rtmp_relay .rt_left {
+    width: 60%;
+    height: 100%;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    float: left;
+    /* height: 50%; */
+    padding: 8px 8px;
+    border: solid 1px rgba(9, 145, 224, 0.4);
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    /* border: solid 10px rgba(255, 0, 0, 0.54); */
+    overflow: hidden;
 }
-
-.rtmp_relay .rt_right{
-	width:40%;
+.rtmp_relay .rt_right {
+    width: 40%;
+    border: solid 1px rgba(9, 145, 224, 0.45);
+    padding: 8px 8px;
+    border-radius: 8px;
 }
-
-.rtmp_relay svg{
-	height:auto;
+.rtmp_relay table {
+    background: none;
+    border: 0;
+    color: #fff;
 }
-.rtmp_relay .cameraSvg{
-	/*width:50px;*/
-	/*height:50px;*/
-	width: 3%;
-	padding: 2px 2px;
+.rtmp_relay .ant-table-small th {
+    background: none;
+    border: 0;
+    /*#163F64*/
+}
+.rtmp_relay .ant-table-small td {
+    background: none;
+    border: 0;
+}
+.rtmp_relay .ant-table-small tr:hover{
+	background-color:transparent;
+}
+.rtmp_relay tbody > tr:nth-child(odd) > td,
+.rtmp_relay tbody > tr:nth-child(odd) > th {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+.rtmp_relay svg {
+    height: auto;
+}
+.rtmp_relay .cameraSvg {
+    /*width:50px;*/
+    /*height:50px;*/
+    width: 3%;
+    padding: 2px 2px;
     transition-duration: 0.8s;
 }
-.rtmp_relay text{
-	pointer-events: none;
-	text-shadow: 0 1px 0 rgba(128, 128, 128, 0.70);
-	fill: #fff;
-	opacity: .4
+.rtmp_relay text {
+    pointer-events: none;
+    text-shadow: 0 1px 0 rgba(128, 128, 128, 0.70);
+    fill: #fff;
+    opacity: .4
 }
-.rtmp_relay path{
+.rtmp_relay path {
     /*shape-rendering: crispEdges;*/
 }
-.rtmp_relay rect{
-	cursor:pointer;
+.rtmp_relay rect {
+    cursor: pointer;
 }
-.rtmp_relay .sc_top{
-	/*overflow:hidden;*/
-	flex:1;
+.rtmp_relay .sc_top {
+    /*overflow:hidden;*/
+    flex: 1;
 }
-.sc_top_flex{
-	height:100%;
+.sc_top_flex {
+    height: 100%;
 }
-.rtmp_relay .sc_bottom{
-	flex:1;
+.rtmp_relay .sc_bottom {
+    flex: 1;
+	margin-top:10px;
+    border: solid 1px rgba(9, 145, 224, 0.45);
+    padding: 15px 0px 0 14px;
+    border-radius: 8px;
 }
 .selectedServer {
-	box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
-	stroke-width: 2!important;
-	stroke: rgba(255, 255, 255, 1)!important;
-	/*astroke-dasharray: 5, 5;*/
+    box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
+    stroke-width: 2!important;
+    stroke: rgba(255, 255, 255, 1)!important;
+    /*astroke-dasharray: 5, 5;*/
+}
+.selectedServerNode {
+    box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
+    stroke-width: 6!important;
+    stroke: rgba(255, 255, 255, 1)!important;
+    /*astroke-dasharray: 5, 5;*/
+}
+.rtmp_relay .last_table{
+	font-size: 13px;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+    height: 30px;
+    margin: 0 8px 0 8px;
+    padding-left: 9px;
+    line-height: 30px;
 }
 
-.selectedServerNode {
-	box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
-	stroke-width: 6!important;
-	stroke: rgba(255, 255, 255, 1)!important;
-	/*astroke-dasharray: 5, 5;*/
-}

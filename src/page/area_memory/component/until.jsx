@@ -43,7 +43,7 @@ const forword_accept = function(text,record){
 		var forword_width = (65/record["max_accept"])*record["in_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["in_connections"]}</span></div>
 	}else{
-		return 0
+		return (<span></span>)
 	} 
 }
 
@@ -56,7 +56,7 @@ const max_accept_broadband = function(text,record){
 		var forword_width = (40/record["max_accept_broadband"])*record["downspeed"];
 	    return <div className="area_memory_forword"><span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
 	}else{
-		return 0
+		return (<span></span>)
 	} 
 }
 
@@ -69,7 +69,7 @@ const max_send_broadband = function(text,record){
 		var forword_width = (40/record["max_send_broadband"])*record["upspeed"];
 	    return <div className="area_memory_forword"><span className="area_memory_max_send_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
 	}else{
-		return 0
+		return (<span></span>)
 	} 
 }
 
@@ -82,7 +82,7 @@ const forword_send = function(text,record){
 		var forword_width = (70/record["max_send"])*record["out_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_send" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["out_connections"]}</span></div>
 	}else{
-		return 0
+		return (<span></span>)
 	}
 }
 
@@ -95,7 +95,7 @@ const forword_wait = function(text,record){
 		var forword_width = (70/record["max_wait"])*record["wait_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_wait" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["wait_connections"]}</span></div>
 	}else{
-		return 0
+		return (<span></span>)
 	}
 }
 

@@ -112,6 +112,7 @@ class areaMemory extends Component{
 					array[i]["max_accept_broadband"] = max_accept_broadband
 					array[i]["max_send_broadband"] = max_send_broadband
 				}
+				console.debug(array)
 				return array;
 			},
 

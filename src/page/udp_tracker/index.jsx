@@ -69,6 +69,7 @@ class UdpTracker extends Component {
 			var province_data = this.indexByProvinceName(p_data);
 			return (
 				<div>
+					<h2 className="absolute">UDP地理监控</h2>
 					<Antd.Row type="flex" justify="center" align="bottom" className="rt_con">
 						<Antd.Col className="rt_left">
 							<ChinaMap camera_type="UdpActiveCameras" min_users={ min_users } max_users={ max_users } posts={ province_data }

@@ -1,0 +1,108 @@
+.memory_service_monitor_margin{
+/*	padding-top:50px;*/
+}
+.memony_service_monitor_container{
+	padding:20px 40px;
+}
+.memory_service_monitor_health{
+	height: 25px;
+	line-height: 20px;
+}
+.memory_service_monitor_disk{
+	height: 24px;
+	line-height: 24px;
+}
+.memory_service_monitor_font{
+	font-size: 12px;
+	color:#fff;
+}
+.memory_service_monitor_fontSize{
+	font-size: 30px;
+	color:#fff;
+	margin: 10px 0 20px 0;
+}
+.memory_service_monitor_total{
+	font-size: 20px;
+	color:#fff;
+	margin-bottom: 40px;
+}
+.memory_service_monitor_city{
+	padding:0 10px;
+}
+.memory_service_monitor_seven,.memory_service_monitor_thrity{
+	font-size: 12px;
+	color:#fff;
+	height: 50px;
+	line-height: 50px;
+}
+.memory_service_monitor_thrity{
+	padding-left:10px;
+}
+.memory_service_monitor_city_item{
+	float: left;
+	height: 50px;
+	text-align: center;
+	line-height: 30px;
+	color:#fff;
+	font-size:16px;
+	padding-bottom: 20px;
+}
+.memony_service_monitor_container .memory_service_monitor_city_item:last-child{
+	margin-right:0 !important;
+}
+.memory_service_monitor_label_desc_container{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top:0;
+	left: 5px;
+	overflow: hidden;
+}
+.memory_service_monitor_label_desc{
+	float: left;
+	text-align: center;
+	color:#000;
+	font-size: 12px;
+}
+.memory_service_monitor_items{
+	float: left;
+	padding-bottom:5px;
+	position: relative;
+}
+.memony_service_monitor_container .memory_service_monitor_items:last-child{
+	margin-right: 0 !important;
+}
+.memony_service_monitor_container .memory_service_monitor_area_items{
+	padding-bottom: 45px;
+}
+.memory_service_monitor_textHide{
+	text-indent: -999999;
+}
+.memory_service_monitor_stroage_type{
+	float: right;
+	margin-left: 10px;
+	color:#fff;
+	font-size: 14px;
+}
+.memory_service_monitor_stroage_seven,.memory_service_monitor_stroage_thrity{
+	width: 15px;
+	height: 15px;
+	border-radius: 2px;
+	display:inline-block;
+	margin-right: 5px;
+	float: left;
+	margin-top:2px;
+}
+.memory_service_monitor_stroage_seven{
+	background: rgb(49, 181, 246);
+}
+.memory_service_monitor_stroage_thrity{
+	background: rgb(35, 140, 58);
+}
+.memory_service_monitor_color_desc{
+	padding-right: 10px;
+}
+.anmation{
+	transition-timing-function: 'linear';
+	transition-duration: "300ms";
+}
