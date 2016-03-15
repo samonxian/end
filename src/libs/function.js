@@ -149,10 +149,30 @@ export function exitFullscreen() {
     }
 }
 /**
- *	带宽、存储等为字节的单位转换为KB,MB,GB单位
+ *	带宽比特单位转换为Kb,Mb,Gb单位
  *@param [int] t_value 转换值
  */
-export function transformToKbMbGb(t_value){
+export function transformToKbMbGb(t_value,has8){
+	if(!has8){
+		t_value = t_value * 8;
+	}
+	let value = 0;
+	if(t_value > 1024 * 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'Gb';	
+	}else if(t_value > 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'Mb';	
+	}else if(t_value > 1024){
+		value = Math.round(t_value / 1024 * 800) / 100 + 'Kb';	
+	}else if(t_value != 0){
+		value = t_value + '字节';	
+	}
+	return value;
+}
+/**
+ *	流量字节单位转换为KB,MB,GB单位
+ *@param [int] t_value 转换值
+ */
+export function flowTransformToKbMBGB(t_value){
 	let value = 0;
 	if(t_value > 1024 * 1024 * 1024){
 		value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
@@ -162,8 +182,6 @@ export function transformToKbMbGb(t_value){
 		value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
 	}else if(t_value != 0){
 		value = t_value + '字节';	
-	}else{
-		value = t_value;	
 	}
 	return value;
 }
@@ -179,7 +197,6 @@ export function dealEU(text,info="暂无数据"){
 	}
 	return text;
 }
-
 /**
  *	生成随机数
  * @param [int] n 需要生成随机数的位数

@@ -48,7 +48,7 @@ class SanKey extends Component {
 			'rgba(10,137,40,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
 		]);
 		var colorOfsend_queue = d3.scale.threshold().domain([0,10, 64, 128]).range(['rgba(255,255,255,.6)',
-			'rgba(9,128,42,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
+			'rgb(7, 88, 22)', 'rgb(47,213,238)', 'rgb(250,167,1)','rgb(219,84,64)'
 		]);
 		var colorOfConns = d3.scale.threshold().domain([0, 10, 50]).range(['rgba(0,0,0,.3)',
 			'rgba(0,0,255,.5)', 'rgba(0,255,0,.5)', 'rgba(255,0,0,.5)'

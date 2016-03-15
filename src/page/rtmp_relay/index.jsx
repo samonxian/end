@@ -69,9 +69,10 @@ class RtmpRelay extends Component {
 			cameraAdapter.getServers(posts.datas);
 			cameraAdapter.getCameras(posts.datas,posts2.datas);
 			//cameraAdapter.makeCameraInfo(servers,sankeyData);
-			//console.debug(cameraAdapter)
+			//console.debug(cameraAdapter.cameras)
 			return (
 				<Antd.Row className="rt_con  rtmp_relay">
+					<h2>公众摄像机转发服务器运行监控</h2>
 					<Antd.Col className="sc_top relative">
 						<Antd.Row type="flex" justify="start"  className="absolute sc_top_flex">
 							<Antd.Col className="rt_left svg_con" >
@@ -80,10 +81,16 @@ class RtmpRelay extends Component {
 							</Antd.Col>
 							<Antd.Col className="rt_right">
 								<Antd.Table className="" size="small"
-										columns={camera_columns} dataSource={camera_dataSource} pagination={false} bordered/>
+										columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
 								<br/>
 								<Antd.Table className="" size="small"
-										columns={user_columns} dataSource={user_dataSource} pagination={false} bordered/>
+										columns={user_columns} dataSource={user_dataSource} pagination={false} />
+								<br/>
+								<div className="last_table">
+									<span>转发数据--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<span>公共摄像机数：{ cameraAdapter.camerasLength  }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+									<span>私有存储摄像机数：{ posts.camera_count.camera_push_all - cameraAdapter.camerasLength }</span>
+								</div>
 							</Antd.Col>
 						</Antd.Row>
 					</Antd.Col>

@@ -42,9 +42,12 @@ export function dataAdapter(data,app_count){
 		let t_data = data[key];
 		var appid = t_data.app_id;
 		var app_info = app_count[appid]
-		t_data.daily_publish_traffic = app_info.daily_publish_traffic
-		t_data.daily_play_traffic = app_info.daily_play_traffic
-		t_data.daily_play_count = app_info.daily_play_count
+		//console.debug(app_info)
+		if(app_info){
+			t_data.daily_publish_traffic = app_info.daily_publish_traffic
+			t_data.daily_play_traffic = app_info.daily_play_traffic
+			t_data.daily_play_count = app_info.daily_play_count
+		}
 	})
 	return re;
 }

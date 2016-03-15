@@ -238,6 +238,7 @@ cameraInfo.renderCameraInfo = function(dispatch) {
     }).filter(function(d) {
         return d != null;
     });
+	cameraInfo.camerasLength = cameras.length;
     cameras.sort(function(a, b) {
 		var m = +(a.msg.split('-')[1] / a.msg.split('-')[0]);
 		var n = +(b.msg.split('-')[1] / b.msg.split('-')[0]);

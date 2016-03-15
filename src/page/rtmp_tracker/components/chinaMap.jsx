@@ -188,6 +188,10 @@ class ChinaMap extends Component {
 						{
 							posts2.map(function(value,key){
 								var c_data = city_s_setting.dataAdapter(value.RelayServer);
+								//console.debug(cityPosition[value.City])
+								if(!cityPosition[value.City]){
+									return <span key={key}></span>
+								}
 								var path = _this.projection(cityPosition[value.City])
 								var content = <Antd.Table size="small" columns={city_s_setting.columns} 
 										dataSource={city_s_setting.getData(value.RelayServer)}

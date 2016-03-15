@@ -86,12 +86,14 @@ class CameraStat extends Component {
 								v[key] = 0;
 								obj[key].push(v[key]);
 							}
+							let t_value = v[key];
 							switch(key){
 								case 'bandwith':
+									v[key+"_temp"] = _this.bandwidthTransform(t_value);
+									break
 								case 'yesterday_publish_traffic':
 								case 'yesterday_play_traffic':
-									let t_value = v[key];
-									v[key+"_temp"] = _this.bandwidthTransform(t_value);
+									v[key+"_temp"] = fn.flowTransformToKbMBGB(t_value);
 							}
 						}
 					})
@@ -148,12 +150,14 @@ class CameraStat extends Component {
 						v.total_info.all = v.cameras.length;
 						for(var key in obj){
 							if(key != 'all'){
+								let t_value = v.total_info[key];
 								switch(key){
 									case 'bandwidth':
+										v.total_info[key+"_temp"] = _this.bandwidthTransform(t_value);
+										break;
 									case 'yesterday_publish_traffic':
 									case 'yesterday_live_traffic':
-										let t_value = v.total_info[key];
-										v.total_info[key+"_temp"] = _this.bandwidthTransform(t_value);
+										v.total_info[key+"_temp"] = fn.flowTransformToKbMBGB(t_value);
 								}
 								obj[key].push(v.total_info[key]);
 							}
@@ -331,9 +335,11 @@ class CameraStat extends Component {
 														let t_value = 0;
 														switch(specialFields[s_k]){
 															case 'bandwith':
+																t_value = _this.bandwidthTransform(max_special[s_k]);
+																break;
 															case 'yesterday_publish_traffic':
 															case 'yesterday_play_traffic':
-																t_value = _this.bandwidthTransform(max_special[s_k]);
+																t_value = fn.flowTransformToKbMBGB(max_special[s_k]);
 															break;
 															default:
 																t_value = max_special[s_k]
