@@ -84,7 +84,9 @@ class Indexdisk extends React.Component {
             dialogData.values.push({x:"剩余存储",y:(tempData[0][3]-totalNum)})
         }
     }
-
+    
+    // console.log("=======================================================");
+    // console.log(backData);
     if(!isEmptyObj(backData) && backData["type"] == DISK_DETAIL_STATUS_REQ){
     	total = backData["data"]["total_count"]
     	currentPage = backData["data"]["p"]
@@ -161,7 +163,7 @@ class Indexdisk extends React.Component {
         }
     ]
 		return (
-			<div>
+			<div className = "new_index_disk_content_container">
 				<Header router = {location} dispatch = { dispatch } cityList = { cityList["data"]["area_list"] } backData= { backData } currentCity= { currentCity }/>
 				<Table columns = {INDEX_HEAD} dataSource={list} pagination={false}  bordered loading={ loading }/>
 				<Page currentCity = { currentCity } currentPage = {currentPage} dispatch = {dispatch} total = {total} type= {DISK_DETAIL_STATUS_REQ}/>
