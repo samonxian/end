@@ -1,17 +1,33 @@
 var fs = require('fs');
 var Q = require('q')
 var fn = require('../../libs/function');
-var path = './src/page/'
+var path = ['./src/page/','./.fr/generator/frontend/view/']
 var import_tpl = "import { {import_tpl} } from './{dir}/reducer'";
+var import_tpl = [
+					"import { {import_tpl} } from './{dir}/reducer'",
+					"import { {import_tpl} } from '../../.fr/generator/frontend/view/{dir}/reducer'",
+				];
 
 var import_con = '';
-function writeImport(dir,imports){
-	import_con += import_tpl.replace('{dir}',dir)
+/**
+ *	提取并构建reducers	
+ *@param [string] dir 详细的文件夹名 
+ *@param [string] imports 需要替换的import对象值 
+ *@param [int] key 当前正在遍历的路径 
+ */
+function writeImport(dir,imports,key){
+	import_con += import_tpl[key].replace('{dir}',dir)
 			  .replace('{import_tpl}',imports) + '\n';	
 }
 
 var reducers_fn = [];
-function createReducers(temp_con,dir){
+/**
+ *	提取并构建reducers	
+ *@param [string] temp_con 遍历的当前文件内容
+ *@param [string] dir 详细的文件夹名 
+ *@param [int] key 当前正在遍历的路径 
+ */
+function createReducers(temp_con,dir,key){
 	var con = temp_con.match(/export(.*?)function(.*?)\(/g);
 	if(con){
 		var reducers = [];
@@ -26,35 +42,42 @@ function createReducers(temp_con,dir){
 												.replace('[','')
 												.replace(']','');
 		//console.log(imports)
-		writeImport(dir,imports)
+		//console.log(dir)
+		writeImport(dir,imports,key)
 	}
 }
 
 /**
  *	按文件夹提取page中每个模块的reducer
+ *@param [string] path 需要遍历的路径
+ *@param [string] dir 详细的文件夹名 
+ *@param [int] key 当前正在遍历的路径 
  */
-function getReducers(dir){
+function getReducers(path,dir,key){
 	var temppath = path + dir + '/reducer.js';
 	//console.log(temppath)
 	if(fs.existsSync(temppath)){
 		var temp_con = fs.readFileSync(temppath,options = {
 			encoding : 'utf-8'
 		});
-		createReducers(temp_con,dir);	
+		createReducers(temp_con,dir,key);	
 	}
 }
 
-fn.each_file(path,function(dir){
-	if(!fs.existsSync(path + dir +'/index.jsx')){
-		var path2 = path + dir + "/";
-		fn.each_file(path2,function(dir2){
-			getReducers(dir + "/" +dir2);
-		});
-	}else{
-		getReducers(dir);
-	}
+path.forEach(function(v,k){
+	fn.each_file(v,function(dir){
+		if(!fs.existsSync(v + dir +'/index.jsx')){
+			var path2 = v + dir + "/";
+			fn.each_file(path2,function(dir2){
+				if(fs.existsSync(v + dir + "/" + dir2 +'/index.jsx')){
+					getReducers(v,dir + "/" +dir2,k);
+				}
+			});
+		}else{
+			getReducers(v,dir,k);
+		}
+	})
 })
-
 
 function writeRecucers(){
 	var w_file = './src/page/reducers.js';

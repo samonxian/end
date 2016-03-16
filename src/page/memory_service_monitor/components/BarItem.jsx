@@ -34,7 +34,9 @@ export class BarItem extends Component{
                          { arr }
                     </svg>
                     <div className = "memory_service_monitor_label_desc_container">
-                         { label }
+                         <div style = {{ margin:"0 5px",overflow:"hidden"}}>
+                              { label }
+                         </div>
                     </div>
 		       </div> 
 	}

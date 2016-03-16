@@ -42,9 +42,7 @@ class rtmp_device extends React.Component {
 		let { rtmp_device ,location,dispatch } = this.props;
 		let { params } = rtmp_device;
 		this.type = getUrlParams(this.props.location.pathname)[1];
-		if(rtmp_device.posts && rtmp_device.posts.logs && rtmp_device.posts.logs[0]){
-			data = logData(rtmp_device);
-		}
+		data = logData(rtmp_device);
         return (
 			<Monitor location={location} >
 				<h2>{title[this.type]}</h2>

@@ -66,6 +66,12 @@ class NCollapse extends React.Component {
 							if(!d.t_create_at){ d.t_create_at = d.create_at; }
 							var create_at = d.t_create_at.replace(/(.*?)\ /g,'');
 							var type = _this.getType(d.type); 
+							if(!type){
+								return (
+									<span key={ key }>日志类型对照表需更新(msg_cmd:{d.msg_cmd})，请联系开发人员<br/></span>
+								)
+							}
+							//console.debug(d)
 							if(!d.key2){
 								let user_log = { }
 								user_log.posts = { }

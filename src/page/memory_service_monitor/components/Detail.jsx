@@ -9,10 +9,10 @@ export class Detail extends Component{
 
     render(){
 
-    	 const { healthData, healthWidth, healthHeight, type, style, padding, rate, colorPadding } = this.props;
+         const { healthData, healthWidth, healthHeight, type, style, padding, rate, colorPadding } = this.props;
          
-    	 var rows = [],
-    	     len = healthData["returnArr"].length;
+         var rows = [],
+             len = healthData["returnArr"].length;
 
          for(var i=0;i<len;i++){
             var bg = AREA_BG[0];
@@ -23,12 +23,12 @@ export class Detail extends Component{
                 rate = { rate } healthHeight = { healthHeight } key = {'memory_service_monitor_healthItem_key'+new Date().getTime()+generateMixed(6)} bg={ bg }/>)
          }
 
-    	 return <Row className = { style }>
-    	            <Col span="2" className = "memory_service_monitor_font" style = {{padding:colorPadding}}> { healthData["date"].split(" ")[1] }</Col>
-		            <Col span="22">
+         return <Row className = { style }>
+                    <Col span="2" className = "memory_service_monitor_font" style = {{padding:colorPadding}}> { healthData["date"].split(" ")[1] }</Col>
+                    <Col span="22">
                          { rows }
                     </Col>
-		        </Row>
-	}
+                </Row>
+    }
 
 }

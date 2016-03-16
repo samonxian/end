@@ -16,12 +16,12 @@ export class Bar extends Component{
             if(i%2 == 0){
                 bg = AREA_BG[1];
             }
-        	arr.push(<BarItem sevenData = { sevenData[i] } rate = { rate } bg= { bg } width = { width } height = { height } key={"memory_service_monitor_bar_key_"+new Date().getTime()+generateMixed(6)}/>);
+            arr.push(<BarItem sevenData = { sevenData[i] } rate = { rate } bg= { bg } width = { width } height = { height } key={"memory_service_monitor_bar_key_"+new Date().getTime()+generateMixed(6)}/>);
         }
         
-		return <div style={{width:"100%",height:"50px"}}>
-		            { arr }
-		       </div>
-	}
+        return <div style={{width:"100%",height:"50px"}}>
+                    { arr }
+               </div>
+    }
 
 }

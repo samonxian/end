@@ -157,12 +157,14 @@ class ChinaMap extends Component {
 									content += ', 摄像头数：'.concat(camera_num); 
 									let image_num;
 									let base_num = 10;
+									if(!camera_num){ camera_num = 0; }
 									img_num.forEach(function(v,k){
 										let i = k + 1;
-										if(camera_num > base_num * k && camera_num < base_num * i){
+										if(camera_num >= base_num * k && camera_num < base_num * i){
 											image_num = i;
 										}
 									})	
+									//console.debug(image_num)
 									return (
 										<Antd.Popover key={key} overlay={content} title={province_name} trigger="hover">	
 											<g>
@@ -186,6 +188,10 @@ class ChinaMap extends Component {
 						{
 							posts2.map(function(value,key){
 								var c_data = city_s_setting.dataAdapter(value.RelayServer);
+								//console.debug(cityPosition[value.City])
+								if(!cityPosition[value.City]){
+									return <span key={key}></span>
+								}
 								var path = _this.projection(cityPosition[value.City])
 								var content = <Antd.Table size="small" columns={city_s_setting.columns} 
 										dataSource={city_s_setting.getData(value.RelayServer)}

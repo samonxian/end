@@ -89,7 +89,8 @@ var DataSet = React.createClass({
                 })
             );
         });
-
+        
+        console.log("11111111111111111111111111111111111111111");
         return React.createElement(
             "g",
             null,
@@ -127,6 +128,7 @@ export const Pie =  React.createClass({
         var innerHeight = this._innerHeight;
         var viewBox = _props.viewBox;
         var preserveAspectRatio = _props.preserveAspectRatio;
+        var className =  _props.className;
         var style = _props.style;
 
         var pie = d3.layout.pie().value(function (e) {
@@ -169,7 +171,8 @@ export const Pie =  React.createClass({
                      margin: margin, 
                      viewBox: viewBox, 
                      preserveAspectRatio: preserveAspectRatio,
-                     style : style
+                     style : style,
+                     className : className
                  },
                 React.createElement(
                     "g",

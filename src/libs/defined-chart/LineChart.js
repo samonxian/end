@@ -43,8 +43,6 @@ var DataSet = React.createClass({
 
 		var sizeId = width + "x" + height;
 
-        console.log("========================================= dataSet render:");
-
 		var lines = data.map(function (stack, index) {
 			return React.createElement(Path, {
 				key: "" + label(stack) + "." + index,
@@ -90,15 +88,15 @@ var DataSet = React.createClass({
 	}
 });
 
-export const LineChart = React.createClass({
+var LineChart = React.createClass({
 	displayName: "LineChart",
 
 	mixins: [DefaultPropsMixin, HeightWidthMixin, ArrayifyMixin, AccessorMixin, DefaultScalesMixin, TooltipMixin],
 
-	// propTypes: {
-	// 	interpolate: React.PropTypes.string,
-	// 	defined: React.PropTypes.func
-	// },
+	propTypes: {
+		interpolate: React.PropTypes.string,
+		defined: React.PropTypes.func
+	},
 
 	getDefaultProps: function getDefaultProps() {
 		return {
@@ -264,8 +262,8 @@ export const LineChart = React.createClass({
 				}
 			});
 		}
-        
-        return React.createElement(
+
+		return React.createElement(
 			"div",
 			null,
 			React.createElement(
@@ -305,3 +303,5 @@ export const LineChart = React.createClass({
 		);
 	}
 });
+
+module.exports = LineChart;

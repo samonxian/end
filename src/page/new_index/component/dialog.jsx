@@ -2,10 +2,8 @@ import React from 'react'
 import { Modal,Table } from 'antd'
 import { storageFetch } from '../action'
 import { STOREAGE_HEADER } from './util'
+import * as d3 from "d3"
 import { Pie } from 'libs/defined-chart/Pie'
-// import * as d3 from "d3"
-// let ReactD3 = require('react-d3-components')
-// let PieChart = ReactD3.PieChart
 
 export const Dialog = React.createClass({
 
@@ -65,8 +63,8 @@ export const Dialog = React.createClass({
                         height={450}
                         tooltipOffset={{top: 0, left: 500}}
                         tooltipHtml={this.tooltipPie}
-                        tooltipMode={'element'}>
-                       </Pie>
+                        viewBox = { "0,0,550,450" }
+                        style = {{ width:'550px',height:'450px' }} />
     		    </Modal>
     		</div>)
     }

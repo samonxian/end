@@ -1,5 +1,3 @@
-"use strict";
-
 var ArrayifyMixin = {
     componentWillMount: function componentWillMount() {
         this._arrayify(this.props);

@@ -40,9 +40,7 @@ class start_service extends React.Component {
     render() {
 		let { start_service ,location,dispatch } = this.props;
 		this.type = getUrlParams(this.props.location.pathname)[1];
-		if(start_service.posts && start_service.posts.logs && start_service.posts.logs[0]){
-			data = logData(start_service);
-		}
+		data = logData(start_service);
         return (
 			<Monitor location={location} >
 				<h2>{title[this.type]}</h2>

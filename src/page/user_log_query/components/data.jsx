@@ -34,7 +34,7 @@ class LogData extends React.Component {
 				left_data.push(data[key]);
 			}
 		}
-		//console.log(this.props)
+		//console.debug(this.props.data)
 
 		let active_key = 'other';
         return (
@@ -45,8 +45,9 @@ class LogData extends React.Component {
 						<Row className="ulq_left_log" type="flex" align="top">
 						{
 							left_data.map(function(value,key){
-								var type = "info";
+								var type = "bg_success";
 								let message = title[value.typeName] + ":" 
+								//console.debug(value.status)
 								switch(parseInt(value.status,10)){
 									case 0:
 										type = "bg_success";

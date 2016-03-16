@@ -31,19 +31,22 @@ Date.prototype.Format = function (fmt) { //author: meizz
  */
 export function fieldSort(data,fields,columns,callback){
 	var reData = [];
-	if(data && data[0] && !data[0]._reData_){
+	if(data && typeof data == "object" && data[0] && !data[0]._reData_){
 		data.forEach(function(value,key){
 			reData[key] = { };
 			callback && callback(key,data);
 			fields.forEach(function(v,k){
-				reData[key][v] = data[key][v];	
+				if(data[key][v] || data[key][v] == 0){
+					reData[key][v] = data[key][v];	
+				}else{
+				}
 			})	
 			//react组件，key值设定
 			reData[key]['key'] = key;
 			data[key]['_key_'] = key;
 		})
 		data[0]._reData_ = reData; 
-	}else if(data && data[0]){
+	}else if(data && data[0] && typeof data == "object"){
 		reData = data[0]._reData_;
 	}
 	columns && columns.forEach(function(value,key){
@@ -107,6 +110,28 @@ export function getUrlParams(url){
 				.split('/');		
 	return p;
 }
+
+/**
+ *	获取url以"/"的参数
+ */
+export function getQueryParam(){
+	var search = window.location.search , 
+        tmparray = search.substr(1,search.length).split("&"),
+        paramsArray = new Array; 
+
+    if( tmparray[0] != ""){
+        for(var i = 0;i<tmparray.length;i++)
+        {
+            var reg = /[=|^==]/;    // 用=进行拆分，但不包括==
+            var set1 = tmparray[i].replace(reg,'&');
+            var tmpStr2 = set1.split('&');
+            var array = new Array ; 
+            array[tmpStr2[0]] = tmpStr2[1] ; 
+            paramsArray.push(array);
+        }
+    }
+    return paramsArray ; 
+} 
 /**
  *	判断对象是否为空
  */
@@ -146,10 +171,30 @@ export function exitFullscreen() {
     }
 }
 /**
- *	带宽、存储等为字节的单位转换为KB,MB,GB单位
+ *	带宽比特单位转换为Kb,Mb,Gb单位
  *@param [int] t_value 转换值
  */
-export function transformToKbMbGb(t_value){
+export function transformToKbMbGb(t_value,has8){
+	if(!has8){
+		t_value = t_value * 8;
+	}
+	let value = 0;
+	if(t_value > 1024 * 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'Gb';	
+	}else if(t_value > 1024 * 1024){
+		value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'Mb';	
+	}else if(t_value > 1024){
+		value = Math.round(t_value / 1024 * 800) / 100 + 'Kb';	
+	}else if(t_value != 0){
+		value = t_value + '字节';	
+	}
+	return value;
+}
+/**
+ *	流量字节单位转换为KB,MB,GB单位
+ *@param [int] t_value 转换值
+ */
+export function flowTransformToKbMBGB(t_value){
 	let value = 0;
 	if(t_value > 1024 * 1024 * 1024){
 		value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
@@ -159,10 +204,21 @@ export function transformToKbMbGb(t_value){
 		value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
 	}else if(t_value != 0){
 		value = t_value + '字节';	
-	}else{
-		value = t_value;	
 	}
 	return value;
+}
+
+/**
+ *	传入数据位空或未定义，返回“暂无数据”
+ *@param text 任意数据
+ *@param [string] 替换字符 
+ *@return 返回处理数据
+ */
+export function dealEU(text,info="暂无数据"){
+	if(!text && text != 0){
+		text = info; 
+	}
+	return text;
 }
 
 /**
@@ -177,4 +233,21 @@ export function generateMixed(n){
          res += chars[id];
      }
      return res;
+}
+
+/**
+ *	获取地址域名
+ * @param [int] n url 为地址
+ */
+export function getHost (url) { 
+        var host = "null";
+        if(typeof url == "undefined"
+                        || null == url)
+                url = window.location.href;
+        var regex = /.*\:\/\/([^\/]*).*/;
+        var match = url.match(regex);
+        if(typeof match != "undefined"
+                        && null != match)
+                host = match[1];
+        return host;
 }

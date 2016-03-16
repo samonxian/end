@@ -6,6 +6,7 @@
     "antd": "^0.12.0",
     "d3": "^3.5.13",
     "history": "^1.17.0",
+    "imagesloaded": "^4.1.0",
     "isomorphic-fetch": "^2.2.0",
     "react": "^0.14.3",
     "react-d3-components": "^0.6.2",
@@ -23,6 +24,7 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-react": "^6.3.13",
     "babel-preset-react-hmre": "^1.0.1",
+    "co-body": "^4.0.0",
     "css-loader": "^0.23.0",
     "eventsource-polyfill": "^0.9.6",
     "express": "^4.13.4",
@@ -33,6 +35,8 @@
     "grunt-webpack": "^1.0.11",
     "http-server": "^0.8.5",
     "koa": "^1.1.2",
+    "koa-cors": "0.0.16",
+    "koa-middlewares": "^2.1.0",
     "q": "^1.4.1",
     "react-transform-boilerplate": "^1.0.0",
     "redux-logger": "^2.3.1",
@@ -47,9 +51,19 @@
     "build": "set NODE_ENV=production && grunt",
     "start": "set NODE_ENV=development && node server.js",
     "start2": "http-server -a 0.0.0.0 -p 8080",
+    "startend": "node --harmony ./.fr/generator/backend/app.js",
     "ac": "node ./.fr/autoCreator/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "sam",
-  "license": "ISC"
+  "license": "ISC",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xianshannan/end.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xianshannan/end/issues"
+  },
+  "homepage": "https://github.com/xianshannan/end#readme"
 }

@@ -60,9 +60,9 @@ class areaMemory extends Component{
 				var array = [],
 				    max_send = 0,
 				    max_accept = 0,
-				    max_accept_broadband = 0,
-				    max_send_broadband = 0,
+				    max_broadband = 0,
 				    max_wait = 0;
+				    
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["relay_info"];
 					for(var j=0,lenth = temp.length;j<lenth;j++){
@@ -79,11 +79,11 @@ class areaMemory extends Component{
 						if(max_wait<tempObj["wait_connections"]){
 							max_wait = tempObj["wait_connections"];
 						}
-                        if(max_accept_broadband<tempObj["downspeed"]){
-                        	max_accept_broadband = tempObj["downspeed"]
+                        if(max_broadband<tempObj["downspeed"]){
+                        	max_broadband = tempObj["downspeed"]
                         }
-                        if(max_send_broadband<tempObj["upspeed"]){
-                        	max_send_broadband = tempObj["upspeed"]
+                        if(max_broadband<tempObj["upspeed"]){
+                        	max_broadband = tempObj["upspeed"]
                         }
 						if(Math.floor(tempObj["downspeed"]/1024)<1024){
 							var num = new Number(tempObj["downspeed"]/1024)
@@ -109,23 +109,22 @@ class areaMemory extends Component{
 					array[i]["max_send"] = max_send
 					array[i]["max_accept"] = max_accept
 					array[i]["max_wait"] = max_wait
-					array[i]["max_accept_broadband"] = max_accept_broadband
-					array[i]["max_send_broadband"] = max_send_broadband
+					array[i]["max_broadband"] = max_broadband
 				}
 				return array;
 			},
 
 			TraversalDiskDetailData(data){
-				var array = [],
-				    minSize = 0;
+				var array = [];
 
-				console.log("================================== data:")
+				console.log("=================================== TraversalDiskDetailData:");
 				console.log(data);
              
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["groups_detail"];
 					for(var j=0,lenth = temp.length;j<lenth;j++){
-						var tempObj = temp[j];
+						var tempObj = temp[j],
+							minSize = 0;
 						if(j == 0){
 							tempObj["rowSpan"] = lenth
 						}
@@ -142,13 +141,15 @@ class areaMemory extends Component{
 							tempObj["disc_storage"][k]["key"] = "disk_detail_storage_key_"+new Date().getTime()+Math.random();
 						}
 						tempObj["area"] = data[i]["area"];
+						tempObj["minSize"] = minSize;
 						tempObj["key"] = "disk_detail_key_"+new Date().getTime()+Math.random();
 						array.push(tempObj);
 					}
 				}
 
 				for(var i=0;i<array.length;i++){
-					array[i]["minSize"] = new Number(minSize/1020/1024/1024).toFixed(2)+"GB"
+					var min = array[i]["minSize"];
+					array[i]["minSize"] = new Number(min/1024/1024/1024).toFixed(2)+"GB"
 				}
 
 				return array;

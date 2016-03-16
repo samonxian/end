@@ -1,5 +1,6 @@
 .memory_service_monitor_margin{
-/*	padding-top:50px;*/
+	margin-bottom:50px;
+	overflow: hidden;
 }
 .memony_service_monitor_container{
 	padding:20px 40px;
@@ -55,7 +56,7 @@
 	width: 100%;
 	height: 100%;
 	top:0;
-	left: 5px;
+	left:0;
 	overflow: hidden;
 }
 .memory_service_monitor_label_desc{
@@ -97,12 +98,56 @@
 	background: rgb(49, 181, 246);
 }
 .memory_service_monitor_stroage_thrity{
-	background: rgb(35, 140, 58);
+	background: rgb(112, 186, 239);
 }
 .memory_service_monitor_color_desc{
 	padding-right: 10px;
 }
-.anmation{
-	transition-timing-function: 'linear';
-	transition-duration: "300ms";
+#memory_service_monitor_iscroll{
+	height: 100px;
+	overflow: hidden;
+}
+#memory_service_monitor_iscroll table th{
+	background:rgba(255, 255, 255, 0.2980392);
+	color:#000;
+}
+#memory_service_monitor_iscroll .ant-table td,#memory_service_monitor_iscroll table{
+	border:1px solid rgba(255, 255, 255, 0.2980392);
+}
+#memory_service_monitor_iscroll .ant-table.ant-table-bordered th, #memory_service_monitor_iscroll .ant-table.ant-table-bordered td{
+	border-right: 1px solid rgba(255, 255, 255, 0.2980392);
+}
+#memory_service_monitor_iscroll a{
+	color:#fff;
+}
+#memory_service_monitor_iscroll{
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.2980392);
+}
+#memory_service_monitor_iscroll .ant-table td span{
+	color:#fff;
+}
+#memory_service_monitor_iscroll .memory_service_monitor_a{
+	display: inline-block;
+	margin:0 10px;
+}
+#memory_service_monitor_iscroll .ant-table tr:hover{
+	background: rgba(255, 255, 255, 0.2980392);
+}
+#memory_service_monitor_iscroll .ant-table td,#memory_service_monitor_iscroll .ant-table th{
+	padding:5px 4px;
+}
+#memory_service_monitor_iscroll .ant-table-placeholder{
+	top:16px;
+	color:#fff;
+}
+.memory_service_monitor_pie_shadow{
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+}
+#memory_service_monitor_content_container .tooltip{
+	color:#fff;
+}
+.memory_servcie_monitor_linechart_shadow svg{
+	position:relative;
+	-webkit-filter: drop-shadow(2px 2px 2px rgba(10, 10, 10, 0.5));
 }
