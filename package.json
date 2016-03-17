@@ -48,8 +48,8 @@
     "webpack-hot-middleware": "^2.6.4"
   },
   "scripts": {
-    "build": "set NODE_ENV=production && grunt",
-    "start": "set NODE_ENV=development && node server.js",
+    "build": "export NODE_ENV=production && grunt",
+    "start": "export NODE_ENV=development && node server.js",
     "startend": "node --harmony ./.fr/generator/backend/app.js",
     "ac": "node ./.fr/autoCreator/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"

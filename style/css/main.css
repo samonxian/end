@@ -517,6 +517,10 @@ pre {
 .rtmp_relay .ant-table-small td {
     background: none;
     border: 0;
+	padding:2px 8px;
+}
+.rtmp_relay .ant-table-small .first_td{
+	width:70px;
 }
 .rtmp_relay .ant-table-small tr:hover{
 	background-color:transparent;
@@ -577,9 +581,9 @@ pre {
 	font-size: 13px;
     color: #fff;
     background-color: rgba(255, 255, 255, 0.25);
-    height: 30px;
+    height: 22px;
     margin: 0 8px 0 8px;
     padding-left: 9px;
-    line-height: 30px;
+    line-height: 22px;
 }
 
