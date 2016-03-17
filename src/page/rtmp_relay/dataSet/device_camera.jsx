@@ -14,6 +14,7 @@ let column_dataIndexs = [
 export let columns = [
 	{
 		title: '厂商',
+		className:'first_td',
 	}, 
 	{
 		title: '摄像机数',

@@ -70,7 +70,7 @@ export function fetchData(_params={}) {
 	_params = Object.assign(obj,_params);
     return dispatch => {
         dispatch(requestPosts(_params))
-		var url = fn.params('http://'+_URL_+'/query/all_camera_logs',_params);
+		var url = fn.params('http://120.26.74.53/querylog/udp_logs',_params);
 		var url2 = fn.params('http://'+_URL_+'/query/camera_stat',_params);
 		//var url = fn.params('/js/test.json',_params);
 		console.time('user_log_query获取数据时间：')
@@ -117,7 +117,7 @@ export function fetchMoreData(_params={}) {
 	_params = Object.assign(obj,_params);
     return dispatch => {
         dispatch(requestMorePosts(_params))
-		var url = fn.params('http://'+_URL_+'/query/all_camera_logs',_params);
+		var url = fn.params('http://120.26.74.53/querylog/udp_logs',_params);
 		//var url = fn.params('/js/test.json',_params);
 		return fetch(url)
             .then(response => response.json())
