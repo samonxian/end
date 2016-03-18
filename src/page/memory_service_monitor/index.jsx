@@ -3,7 +3,7 @@ import Component from 'libs/react-libs/Component'
 import { Row, Col, Table } from 'antd'
 import { connect } from 'react-redux'
 import { isEmptyObj, generateMixed } from 'libs/function'
-import { fetchMemoryServiceMonitorData } from './action' 
+import { fetchMemoryServiceMonitorData, clearData } from './action' 
 import { Bar } from './components/Bar'
 import { Pie } from 'libs/defined-chart/Pie'
 import { Detail } from './components/Detail'
@@ -393,9 +393,9 @@ class memoryMonitor extends Component{
 		const { memoryServiceData, dispatch } = this.props;
 
 		dispatch(fetchMemoryServiceMonitorData());
-		// setInterval(function(){
-		// 	dispatch(fetchMemoryServiceMonitorData());
-		// },30*1000)
+		setInterval(function(){
+			dispatch(fetchMemoryServiceMonitorData());
+		},30*1000)
 	}
 
     componentWillMount(){
@@ -407,6 +407,7 @@ class memoryMonitor extends Component{
 		this.pieWidth = contentWith*0.9166666667*0.2083333333;
 		this.lineWidth = contentWith*0.9166666667*0.7916666667;
 		this.myScroll = null;
+		//dispatch(fetchMemoryServiceMonitorData());
     }
 
 	shouldComponentUpdate(nextProps,nextState){
@@ -425,6 +426,14 @@ class memoryMonitor extends Component{
     	var windowH = window.document.body.scrollHeight - 50;
     	document.getElementById("memory_service_monitor_content_container").style.height = windowH+"px"
 
+    }
+
+    componentWillUnmount(){
+    	const { memoryServiceData, dispatch } = this.props;
+    	this.diskData = [];
+		this.totalCity = [];
+		this.errorData = [];
+		dispatch(clearData());
     }
 
 	render(){
@@ -448,8 +457,15 @@ class memoryMonitor extends Component{
 		    diskTotal = this.formatData(memoryServiceData,max,this.healthWidth,sevenHeight,totalObj["len"]),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24,totalObj["len"]);
          
-        this.diskData.unshift(disk);
-
+        if(this.diskData.length){
+        	if(new Date(memoryServiceData["data"]["timestamp"]*1000).Format("yyyy-MM-dd hh:mm:ss") === this.diskData[0]["date"]){
+        	}else{
+        		 this.diskData.unshift(disk);
+        	}
+        }else{
+        	this.diskData.unshift(disk);
+        }
+       
         this.initRender();
 
         var area = memoryServiceData["data"]["area_user_count"];
