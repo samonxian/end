@@ -6,16 +6,13 @@ import * as actionCreator from './action'
 <!--index_import_begin-->
 import ${import_var} from '${import_libs}'
 <!--index_import_end-->
-
 class ${className} extends Component {
 	constructor(){
 		super(); 
 	}
-
 	componentDidMount(){
 		var _this = this;
 	}
-
 	componentWillUnmount(){
 	}
 	/**
@@ -24,7 +21,6 @@ class ${className} extends Component {
 	dataAdapter(){
 		var _this = this;
 		return {
-			
 		}
 	}
 	/**
@@ -33,16 +29,14 @@ class ${className} extends Component {
 	events(){
 		var _this = this;
 		return{
-			
 		}
 	}
-
     render() {
 		super.render();
 		var _this = this;
 		let { targetProps } = this.props;
 		return (
-			<div className="creator-form">
+			<div className="${moduleId}-form">
 				${components}
 			</div>
 		)	
@@ -56,4 +50,9 @@ function mapStateToProps(state){
 	    targetProps : state.${moduleId}
 	};
 }
-module.exports = connect(mapStateToProps)(${className})
+${className} = connect(mapStateToProps)(${className})
+${className}.defaultProps = {
+	title: "R2框架-页面标题设置处",
+	layout: false,	
+};
+module.exports = ${className}; 
