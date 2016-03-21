@@ -20,16 +20,17 @@ export const Chart = React.createClass({
         var height = _props.height;
         var margin = _props.margin;
         var viewBox = _props.viewBox;
+        var className = _props.className;
         var preserveAspectRatio = _props.preserveAspectRatio;
         var children = _props.children;
         var style = _props.style;
-
-        // console.log("============================================== Chart render :");
-        // console.log("viewBox:"+viewBox);
         
+        console.log("Chart render =====================================================");
+        console.log(children)
         return React.createElement(
             "svg",
-            { ref: "svg", width: width, height: height, viewBox: viewBox, preserveAspectRatio: preserveAspectRatio, style: style },
+            { ref: "svg", width: width, height: height, viewBox: viewBox, 
+              preserveAspectRatio: preserveAspectRatio, style: style, className: className },
             React.createElement(
                 "g",
                 { transform: "translate(" + margin.left + ", " + margin.top + ")" },

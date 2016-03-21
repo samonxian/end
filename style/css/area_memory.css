@@ -11,6 +11,7 @@
 	height: 50px;
 	line-height: 60px;
 }
+.area_memory_title 
 .area_memory_total_num{
 	background: blue;
 	width: 80%;
@@ -57,10 +58,11 @@
 	background: #EC3535;
 }
 .area_memory_forword{
-	width: 100%;
+	width: 50%;
 	height: 20px;
 	line-height: 20px;
 	overflow: hidden;
+	float: left;
 }
 .area_memory_clearFloat{
 	overflow: hidden;
@@ -104,10 +106,10 @@
 	margin-right: 5px;
 }
 .area_memory_max_send_broadband{
-	background: #E8A827;
+	background: #2C94C3;
 }
 .area_memory_max_accept_broadband{
-	background: #EC3535;
+	background: #6FB353;
 }
 .area_memory_forword_accept{
 	background: #2C94C3;
@@ -116,7 +118,7 @@
 	background: #6FB353;
 }
 .area_memory_forword_wait{
-	background: #2DB7F5;
+	background: #2C94C3;
 }
 .max_accept_broadband{
 	background: red;

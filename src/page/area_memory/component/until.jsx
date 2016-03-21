@@ -43,34 +43,40 @@ const forword_accept = function(text,record){
 		var forword_width = (65/record["max_accept"])*record["in_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_accept" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["in_connections"]}</span></div>
 	}else{
-		return (<span></span>)
+		return "0"
 	} 
 }
 
 const max_accept_broadband = function(text,record){
-	if(record["downspeed"]>0){
-		var font_style = '';
-		if(record["max_accept_broadband"] === record["downspeed"]){
-			font_style = 'bold'
-		}
-		var forword_width = (40/record["max_accept_broadband"])*record["downspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span></div>
-	}else{
-		return (<span></span>)
-	} 
-}
+		var font_style = '',
+		    send_style = '',
+		    send_html = '',
+		    accept_html = '';
 
-const max_send_broadband = function(text,record){
-	if(record["upspeed"]>0){
-		var font_style = '';
-		if(record["max_send_broadband"] === record["upspeed"]){
+		if(record["max_broadband"] === record["downspeed"]){
 			font_style = 'bold'
 		}
-		var forword_width = (40/record["max_send_broadband"])*record["upspeed"];
-	    return <div className="area_memory_forword"><span className="area_memory_max_send_broadband" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["formate_upspeed"]}</span></div>
-	}else{
-		return (<span></span>)
-	} 
+		if(record["max_broadband"] === record["upspeed"]){
+			send_style = 'bold'
+		}
+		var forword_width = (40/record["max_broadband"])*record["downspeed"];
+		var send_width = (40/record["max_broadband"])*record["upspeed"]
+		if(record["downspeed"]>0){
+			accept_html = <span className="area_memory_max_accept_broadband" style={{width:forword_width+"%"}}></span>
+		}
+		if(record["upspeed"]>0){
+			send_html = <span className="area_memory_max_send_broadband" style={{width:send_width+"%"}}></span>
+		}
+	    return <div>
+		            <div className="area_memory_forword">
+		                { accept_html }
+		                <span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span>
+		            </div>
+		            <div className="area_memory_forword">
+		                { send_html }
+		                <span style={{fontWeight:send_style}}>{record["formate_upspeed"]}</span>
+		            </div>
+		        </div>
 }
 
 const forword_send = function(text,record){
@@ -82,7 +88,7 @@ const forword_send = function(text,record){
 		var forword_width = (70/record["max_send"])*record["out_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_send" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["out_connections"]}</span></div>
 	}else{
-		return (<span></span>)
+		return "0"
 	}
 }
 
@@ -95,12 +101,12 @@ const forword_wait = function(text,record){
 		var forword_width = (70/record["max_wait"])*record["wait_connections"];
 	    return <div className="area_memory_forword"><span className="area_memory_forword_wait" style={{width:forword_width+"%"}}></span><span style={{fontWeight:font_style}}>{record["wait_connections"]}</span></div>
 	}else{
-		return (<span></span>)
+		return "0"
 	}
 }
 
 const forword_formate_time = function(value, row, index){
-	var time = new Date(value).Format("yyyy-MM-dd hh:mm:ss")
+	var time = new Date(value*1000).Format("yyyy-MM-dd hh:mm:ss")
 	let obj = {
 	    children: time,
 	}
@@ -108,7 +114,7 @@ const forword_formate_time = function(value, row, index){
 }
 
 const forword_formate_disksize = function(value, row, index){
-	var size = new Number(value/1020/1024/1024).toFixed(2)+"GB"
+	var size = new Number(value/1024/1024/1024).toFixed(2)+"GB"
 	let obj = {
 	    children: size
 	}
@@ -244,14 +250,9 @@ export const FORWORD_TABLE = [
 	    dataIndex: 'wait_connections',
 	    render: forword_wait
 	},{
-		title: '接收带宽',
+		title: '接收/发送带宽(Mbps)',
 	    dataIndex: 'formate_downspeed',
 	    render: max_accept_broadband
-	},
-	{
-		title: '发送带宽',
-	    dataIndex: 'formate_upspeed',
-	    render: max_send_broadband
 	}
 ]
 

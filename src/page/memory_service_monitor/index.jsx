@@ -3,15 +3,16 @@ import Component from 'libs/react-libs/Component'
 import { Row, Col, Table } from 'antd'
 import { connect } from 'react-redux'
 import { isEmptyObj, generateMixed } from 'libs/function'
-import { fetchMemoryServiceMonitorData } from './action' 
+import { fetchMemoryServiceMonitorData, clearData } from './action' 
 import { Bar } from './components/Bar'
 import { Pie } from 'libs/defined-chart/Pie'
 import { Detail } from './components/Detail'
 import { LineChar } from './components/LineChar'
 import { AREA_BG, THRITY_USER_TOTAL_COLOR,SEVEN_USER_TOTAL_COLOR,MENORY_SERVICE_MONITOR_SEVEN_NORMAL,
 	     MENORY_SERVICE_MONITOR_THRITY_NORMAL,MENORY_SERVICE_MONITOR_SEVEN_BG,MENORY_SERVICE_MONITOR_THRITY_BG,
-	     MEMORY_SERVICE_MONITOR_HEADER } from './components/until'
+	     MEMORY_SERVICE_MONITOR_HEADER,areaColor } from './components/until'
 require('../../../style/css/memory_service_monitor.css')
+let IScroll = require('../../libs/iscroll.js')
 let imgUrl = require('../../../style/img/background.jpg')
 
 class memoryMonitor extends Component{
@@ -93,10 +94,6 @@ class memoryMonitor extends Component{
 		                    if(tempArra[i]["cycle"] === 30){
 		                    	bgfill = MENORY_SERVICE_MONITOR_THRITY_BG;
 		                    	fill = THRITY_USER_TOTAL_COLOR;
-		                    }
-
-		                    if(rectH === sevenHeight){
-		                    	label = "";
 		                    }
 
 		                    var obj = {
@@ -221,7 +218,7 @@ class memoryMonitor extends Component{
 				 for(var j=0;j<groupLen;j++){
 				 	 if(group[j]["total_user"]>max){
 				 	 	max = group[j]["total_user"]
-				 	 }
+				 	 } 
 				 }
 				 rate = diskHeight/max;
 
@@ -257,16 +254,14 @@ class memoryMonitor extends Component{
 						 		    itemY = diskHeight-innerHeight;
 						 		if(itemArr.length){
 						 			fill = "#BD0808";
-						 			for(var q=0;q<itemArr.length;q++){
-						 				this.errorData.push({
-											area : city,
-											key : 'memory_servcie_monitor_error_table_key_'+new Date().getTime()+generateMixed(6),
-											date : data["data"]["timestamp"],
-											group_id : group[i]["group_id"],
-											cycle : group[i]["cycle"],
-											cid : itemArr[q]
-										});
-						 			}
+						 			this.errorData.push({
+										area : city,
+										key : 'memory_servcie_monitor_error_table_key_'+new Date().getTime()+generateMixed(6),
+										date : data["data"]["timestamp"],
+										group_id : group[i]["group_id"],
+										cycle : group[i]["cycle"],
+										cid : itemArr.join(",")
+									});
 					 				
 						 		}else{
 						 			fill = MENORY_SERVICE_MONITOR_SEVEN_NORMAL;
@@ -337,6 +332,45 @@ class memoryMonitor extends Component{
                 		style = {{width:(wid/width)*100+"%",background:bg,marginRight:rate+"%"}} className="memory_service_monitor_city_item">{ obj[j]["area"] }</div>)
                 }
                 return returnArr;
+			},
+			initRender(){
+				if(this.diskData.length>10){
+		        	var deleteArr = this.diskData[this.diskData.length-1],
+		        	    Arr = deleteArr["returnArr"],
+		        	    tempError = [],
+		        	    tableArr = [];
+		        	this.diskData.pop();
+
+		        	for(var q = 0;q<Arr.length;q++){
+		        		var tempArr = Arr[q]["obj"];
+		        		for(var k = 0;k<tempArr.length;k++){
+		        			var groupId = tempArr[k]["groupId"];
+		        			var tempDate = tempArr[k]["date"];
+		        			for(var j=0;j<this.errorData.length;j++){
+		        				if(groupId === this.errorData[j]["group_id"] && tempDate === this.errorData[j]["date"]){
+		        					tableArr.push(this.errorData[j])
+		        				}
+		        			}
+		        		}
+		        	}
+
+		        	for(var k=0;k<this.errorData.length;k++){
+		        	    var isAdd = true;
+		        		for(var i=0;i<tableArr.length;i++){
+		        			var deleteG = tableArr[i]["group_id"],
+		        		        tempDate = tableArr[i]["date"];
+		        		    isAdd = true;
+		        		    if(this.errorData[k]["group_id"] == deleteG && this.errorData[k]["date"] == tempDate){
+		        		    	isAdd = false;
+			    				break;
+			    			}
+		        		}
+		        		if(isAdd){
+		        			tempError.push(this.errorData[k]);
+		        		}
+		    		}
+		    		this.errorData = tempError;
+		        }
 			}
 		};
 		return obj;
@@ -349,8 +383,7 @@ class memoryMonitor extends Component{
 				return data+":"+position;
 			},
 			colorScale(){
-				console.log("=================================== colorScale function :");
-				console.log(arguments);
+				return areaColor(arguments[0])
 			}
 		}
 		return obj;
@@ -365,6 +398,18 @@ class memoryMonitor extends Component{
 		},30*1000)
 	}
 
+    componentWillMount(){
+       var contentWith = window.document.body.offsetWidth - 280;
+    	this.diskData = [];
+		this.totalCity = [];
+		this.errorData = [];
+		this.healthWidth = contentWith*0.9166666667;
+		this.pieWidth = contentWith*0.9166666667*0.2083333333;
+		this.lineWidth = contentWith*0.9166666667*0.7916666667;
+		this.myScroll = null;
+		//dispatch(fetchMemoryServiceMonitorData());
+    }
+
 	shouldComponentUpdate(nextProps,nextState){
 		var memoryMonitorData = nextProps.memoryServiceData;
 		if(memoryMonitorData["data"] === undefined){
@@ -372,6 +417,24 @@ class memoryMonitor extends Component{
 		}
 		return true;
 	}
+    
+    componentDidUpdate(){
+    	if(this.myScroll == null){
+    		this.myScroll = new IScroll('#memory_service_monitor_iscroll', { mouseWheel: true });
+    	}
+    	this.myScroll.refresh();
+    	var windowH = window.document.body.scrollHeight - 50;
+    	document.getElementById("memory_service_monitor_content_container").style.height = windowH+"px"
+
+    }
+
+    componentWillUnmount(){
+    	const { memoryServiceData, dispatch } = this.props;
+    	this.diskData = [];
+		this.totalCity = [];
+		this.errorData = [];
+		dispatch(clearData());
+    }
 
 	render(){
 		const { memoryServiceData } = this.props;
@@ -379,30 +442,6 @@ class memoryMonitor extends Component{
 		if(isEmptyObj(memoryServiceData["data"])){		
 			return false;
 		}
-
-		if(this.diskData === undefined){
-			this.diskData = [];
-			this.totalCity = [];
-			this.errorData = [];
-			var test = memoryServiceData["data"]["groups"].length;
-	        var testId = 3;
-	        for(var g=0;g<test;g++){
-	        	memoryServiceData["data"]["groups"][g]["disc"][0] = ['groups'+(testId++)]
-	        }
-		}
-
-		if(this.healthWidth === undefined){
-			var contentWith = window.document.body.offsetWidth - 280;
-			this.healthWidth = contentWith*0.9166666667;
-			this.pieWidth = contentWith*0.9166666667*0.2083333333;
-			this.lineWidth = contentWith*0.9166666667*0.7916666667;
-		}
-
-		// if(this.healthData === undefined){
-		// 	this.healthData = [];
-		// 	this.totalCity = [];
-		// }
-
 
 		let max = this.getMaxUserTotal(memoryServiceData),
 		    sevenHeight = 50,
@@ -416,11 +455,18 @@ class memoryMonitor extends Component{
 	            values: totalObj["pieArr"]
 	        },
 		    diskTotal = this.formatData(memoryServiceData,max,this.healthWidth,sevenHeight,totalObj["len"]),
-		  //  health = this.formatHealth(memoryServiceData,this.healthWidth,20,totalObj["len"]),
 		    disk = this.formatDisk(memoryServiceData,this.healthWidth,24,totalObj["len"]);
          
-        // this.healthData.unshift(health);
-        this.diskData.unshift(disk);
+        if(this.diskData.length){
+        	if(new Date(memoryServiceData["data"]["timestamp"]*1000).Format("yyyy-MM-dd hh:mm:ss") === this.diskData[0]["date"]){
+        	}else{
+        		 this.diskData.unshift(disk);
+        	}
+        }else{
+        	this.diskData.unshift(disk);
+        }
+       
+        this.initRender();
 
         var area = memoryServiceData["data"]["area_user_count"];
     	for(var name in area){
@@ -442,63 +488,14 @@ class memoryMonitor extends Component{
         	});
     	}
 
-        // for(var i=0;i<this.healthData.length;i++){
-        // 	var padding = '0 5px 5px 5px';
-        // 	var colorPadding = '';
-	       //  healthArr.push(<Detail key={'memory_service_monitor_health_key_'+new Date().getTime()+generateMixed(6)} 
-	       //  	healthData = { this.healthData[i] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_health" } healthWidth = { this.healthWidth } healthHeight = { 20 } type = { 'memory_service_monitor_health' }/>);
-        // }
-
         for(var j=0;j<this.diskData.length;j++){
         	var padding = '0 5px 5px 5px';
         	var colorPadding = '0 0 0 0';
-        	// if(j == 0){
-        	// 	padding = '50px 5px 5px 5px';
-        	// 	colorPadding = '50px 0 0 0';
-        	// }
 	        diskArr.push(<Detail key={'memory_service_monitor_disk_key_'+new Date().getTime()+generateMixed(6)}
 	        	healthData = { this.diskData[j] } rate = { rate } colorPadding = { colorPadding } padding = { padding } style = { "memory_service_monitor_disk" } healthWidth = { this.healthWidth } healthHeight = { 24 } type = { 'memory_service_monitor_disk' }/>);
         }
 
-        // if(this.healthData.length>10){
-        // 	this.healthData.pop();
-        // }
-        if(this.diskData.length>2){
-        	var deleteArr = this.diskData[this.diskData.length-1],
-        	    Arr = deleteArr["returnArr"],
-        	    tableArr = [],
-        	    tempError = [];
-        	this.diskData.pop();
-        	for(var q = 0;q<Arr.length;q++){
-        		var tempArr = Arr[q]["obj"];
-        		for(var k = 0;k<tempArr.length;k++){
-        			var groupId = tempArr[k]["groupId"];
-        			var tempDate = tempArr[k]["date"];
-        			for(var j=0;j<this.errorData.length;j++){
-        				if(groupId === this.errorData[j]["group_id"] && tempDate === this.errorData[j]["date"]){
-        					tableArr.push(this.errorData[j])
-        				}
-        			}
-        		}
-        	}
-
-        	// for(var i=0;i<tableArr.length;i++){
-        	// 	var deleteG = tempArr[i]["groupId"],
-        	// 	    tempDate = tempArr[i]["date"];
-        	// 	for(var k=0;k<this.errorData.length;k++){
-        	// 		if(this.errorData[k]["groupId"] == this.errorData[k]["date"]){
-        	// 			break;
-        	// 		}else{
-        	// 			tempError.push(this.errorData[k]);
-        	// 		}
-        	// 	}
-        	// }
-        	// this.errorData = ;
-        	// console.log("==================================== errorData");
-        	// console.log(this.errorData);
-        }
-
-		return <div style = {{background:'url('+imgUrl+') repeat',margin:'-20px -40px',height : window.document.body.offsetHeight-50+"px"}}>
+		return <div style = {{background:'url('+imgUrl+') repeat',margin:'-20px -40px',height : window.document.body.scrollHeight-50+"px"}} id = {"memory_service_monitor_content_container"}>
 		    <div className = "memony_service_monitor_container">
 				<Row>
 			        <Col span="24" className = "memory_service_monitor_fontSize">存储健康状态监控</Col>
@@ -516,20 +513,24 @@ class memoryMonitor extends Component{
 			            </Col>
 			        </Col>
 			    </Row>
-			    <Row style={{marginBottom:'40px'}}>
+			    <Row style = {{marginBottom:"40px",height:"180px"}}>
 			        <Col span="2" className = "memory_service_monitor_textHide">12</Col>
 			        <Col span="22">
 			             <Col span="5">
 			                 <Pie 
-			                     width = { 250 } 
-			                     height = { 250 } 
+			                     width = { 180 } 
+			                     height = { 180 } 
 			                     data = { pieData } 
 			                     tooltipHtml = { this.showTips } 
-			                     viewBox = { "0,0,250,250" }
-			                     style = {{ width:'250px',height:'250px' }}/>
+			                     viewBox = { "0,0,180,180" }
+			                     colorScale = { this.colorScale }
+			                     className = { "memory_service_monitor_pie_shadow" }
+			                     style = {{ width:'180px',height:'180px' }}/>
 			             </Col>
-			             <Col span="19">
-			                 <LineChar width = { this.lineWidth } data = { this.totalCity }/>
+			             <Col span="19" style = {{height:'180px'}}>
+			                 <div style = {{marginTop:"20px"}} className = "memory_servcie_monitor_linechart_shadow">
+			                    <LineChar width = { this.lineWidth } data = { this.totalCity } viewBox = { "0,0,180,180" }/>
+			                 </div>
 			             </Col>
 			        </Col>
 			    </Row>
@@ -547,7 +548,9 @@ class memoryMonitor extends Component{
 			    <Row>
 			        <Col span="2" className = "memory_service_monitor_seven">错误情况</Col>
 			        <Col span="22">
-			            <Table columns = { MEMORY_SERVICE_MONITOR_HEADER } dataSource={ this.errorData } pagination={false}  bordered/>
+			            <div id="memory_service_monitor_iscroll">
+			                 <Table columns = { MEMORY_SERVICE_MONITOR_HEADER } dataSource={ this.errorData } pagination={false}  bordered/>
+			            </div>
 			        </Col>
 			    </Row>
 			</div>

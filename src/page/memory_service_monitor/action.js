@@ -14,10 +14,17 @@ export function memoryServiceMonitorRespone(json){
     }
 }
 
+export function clearData(){
+    return {
+        type : MEMORY_SERVICE_MONITOR,
+        param : {}
+    }
+}
+
 export function fetchMemoryServiceMonitorData() {
     return dispatch => {
         dispatch(memoryServiceMonitor())
-        return fetch('http://120.26.74.53:8077/get_diagram_data/groups_stat')
+        return fetch('http://120.26.74.53/api/get_diagram_data/groups_stat')
             .then(response => response.json())
             .then(json => dispatch(memoryServiceMonitorRespone(json)))
     }

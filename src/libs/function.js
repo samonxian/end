@@ -110,6 +110,28 @@ export function getUrlParams(url){
 				.split('/');		
 	return p;
 }
+
+/**
+ *	获取url以"/"的参数
+ */
+export function getQueryParam(){
+	var search = window.location.search , 
+        tmparray = search.substr(1,search.length).split("&"),
+        paramsArray = new Array; 
+
+    if( tmparray[0] != ""){
+        for(var i = 0;i<tmparray.length;i++)
+        {
+            var reg = /[=|^==]/;    // 用=进行拆分，但不包括==
+            var set1 = tmparray[i].replace(reg,'&');
+            var tmpStr2 = set1.split('&');
+            var array = new Array ; 
+            array[tmpStr2[0]] = tmpStr2[1] ; 
+            paramsArray.push(array);
+        }
+    }
+    return paramsArray ; 
+} 
 /**
  *	判断对象是否为空
  */
@@ -185,6 +207,7 @@ export function flowTransformToKbMBGB(t_value){
 	}
 	return value;
 }
+
 /**
  *	传入数据位空或未定义，返回“暂无数据”
  *@param text 任意数据
@@ -197,6 +220,7 @@ export function dealEU(text,info="暂无数据"){
 	}
 	return text;
 }
+
 /**
  *	生成随机数
  * @param [int] n 需要生成随机数的位数
@@ -209,4 +233,21 @@ export function generateMixed(n){
          res += chars[id];
      }
      return res;
+}
+
+/**
+ *	获取地址域名
+ * @param [int] n url 为地址
+ */
+export function getHost (url) { 
+        var host = "null";
+        if(typeof url == "undefined"
+                        || null == url)
+                url = window.location.href;
+        var regex = /.*\:\/\/([^\/]*).*/;
+        var match = url.match(regex);
+        if(typeof match != "undefined"
+                        && null != match)
+                host = match[1];
+        return host;
 }
