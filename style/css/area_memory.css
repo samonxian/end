@@ -11,12 +11,15 @@
 	height: 50px;
 	line-height: 60px;
 }
-.area_memory_title 
-.area_memory_total_num{
+.area_memory_title .area_memory_total_num{
 	background: blue;
 	width: 80%;
 	float: left;
 	margin-right: 5px;
+	float: left;
+}
+.area_memory_height .area_memory_total_num{
+	float: left;
 }
 .area_memory_fontWeight{
 	font-weight: bold;
@@ -30,6 +33,7 @@
 	line-height: 20px;
 	width: 50%;
 	float: left;
+
 }
 .area_memory_frist_table td:last-child{
 	width: 50%;
