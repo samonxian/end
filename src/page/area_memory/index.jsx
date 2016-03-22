@@ -85,21 +85,10 @@ class areaMemory extends Component{
                         if(max_broadband<tempObj["upspeed"]){
                         	max_broadband = tempObj["upspeed"]
                         }
-						if(Math.floor(tempObj["downspeed"]/1024)<1024){
-							var num = new Number(tempObj["downspeed"]/1024)
-							tempObj["formate_downspeed"] = num.toFixed(0)+"Kbps"
-						}else{
-							var num = new Number(tempObj["downspeed"]/1024/1024)
-							tempObj["formate_downspeed"] = num.toFixed(0)+"Mbps"
-						}
 
-						if(Math.floor(tempObj["upspeed"]/1024)<1024){
-							var num = new Number(tempObj["upspeed"]/1024)
-							tempObj["formate_upspeed"] = num.toFixed(0)+"Kbps"
-						}else{
-							var num = new Number(tempObj["upspeed"]/1024/1024)
-							tempObj["formate_upspeed"] = num.toFixed(0)+"Mbps"
-						}
+						tempObj["formate_downspeed"] = new Number(tempObj["downspeed"]/1024/1024).toFixed(2)
+						tempObj["formate_upspeed"] = new Number(tempObj["upspeed"]/1024/1024).toFixed(2)
+
 						tempObj["area"] = data[i]["area"];
 						tempObj["key"] = "area_forword_key_"+new Date().getTime()+Math.random();
 						array.push(tempObj);

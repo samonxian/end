@@ -250,7 +250,7 @@ export const FORWORD_TABLE = [
 	    dataIndex: 'wait_connections',
 	    render: forword_wait
 	},{
-		title: '接收/发送带宽',
+		title: '接收/发送带宽(Mbps)',
 	    dataIndex: 'formate_downspeed',
 	    render: max_accept_broadband
 	}

@@ -14,6 +14,13 @@ export function memoryServiceMonitorRespone(json){
     }
 }
 
+export function clearData(){
+    return {
+        type : MEMORY_SERVICE_MONITOR,
+        param : {}
+    }
+}
+
 export function fetchMemoryServiceMonitorData() {
     return dispatch => {
         dispatch(memoryServiceMonitor())
