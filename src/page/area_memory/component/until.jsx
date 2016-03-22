@@ -68,11 +68,11 @@ const max_accept_broadband = function(text,record){
 			send_html = <span className="area_memory_max_send_broadband" style={{width:send_width+"%"}}></span>
 		}
 	    return <div>
-		            <div className="area_memory_forword">
+		            <div className="area_memory_send_type">
 		                { accept_html }
 		                <span style={{fontWeight:font_style}}>{record["formate_downspeed"]}</span>
 		            </div>
-		            <div className="area_memory_forword">
+		            <div className="area_memory_send_type">
 		                { send_html }
 		                <span style={{fontWeight:send_style}}>{record["formate_upspeed"]}</span>
 		            </div>
