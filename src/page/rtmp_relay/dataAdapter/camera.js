@@ -222,22 +222,25 @@ cameraInfo.renderCameraInfo = function(dispatch) {
 			}
 		}
 		return a.ip > b.ip;
-    }).size([2 * Math.PI, 65 * 65]).value(function(d) {
-        return 1;
+    }).value(function(d) {
+		return 100;
     });
+	partition.size([2 * Math.PI, 65*65]);
 
-    var cameras = d3.entries(cameraInfo.cameras).map(function(d) {
-        try {
-            if (!d.value.tree) return null;
-            d.value.nodes = partition.nodes(d.value.tree);
-            return d.value;
-        } catch (ex) {
-            console.error("生成摄像机svg信息出错：", ex, d.value);
-            return null
-        }
-    }).filter(function(d) {
-        return d != null;
-    });
+    
+	var cameras = d3.entries(cameraInfo.cameras).map(function(d) {
+		try {
+			if (!d.value.tree) return null;
+			d.value.nodes = partition.nodes(d.value.tree);
+			return d.value;
+		} catch (ex) {
+			console.error("生成摄像机svg信息出错：", ex, d.value);
+			return null
+		}
+	}).filter(function(d) {
+		return d != null;
+	});
+
 	cameraInfo.camerasLength = cameras.length;
     cameras.sort(function(a, b) {
 		var m = +(a.msg.split('-')[1] / a.msg.split('-')[0]);
