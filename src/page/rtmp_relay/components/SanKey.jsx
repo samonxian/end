@@ -58,6 +58,7 @@ class SanKey extends Component {
 				let data = _this.data;
 				let width = _this.conDom.offsetWidth - 250; 
 				let height = _this.conDom.offsetHeight - 10; 
+				console.debug(data)
 				var sankey = d3Sankey()
 						  .nodeWidth(50)
 						  .nodePadding(20)
@@ -65,7 +66,6 @@ class SanKey extends Component {
 						  .nodes(data.nodes)
 						  .links(data.links)
 						  .layout(32);
-				//console.debug(sankey.nodes())
 				return sankey;
 			},
 			/**
