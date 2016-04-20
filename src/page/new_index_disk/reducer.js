@@ -3,6 +3,7 @@ import { DISK_DETAIL_STATUS_REQ, DISK_STORAGE_STATUS_REQ, NEW_INDEX_CITY_TAB } f
 export function new_index_disk(state={},action){
     switch(action.type){
 		case DISK_DETAIL_STATUS_REQ : 
+		     console.log("================== new_index_disk");
 		     return Object.assign({}, state, {
 		        data : action['param'],
 		        type : DISK_DETAIL_STATUS_REQ

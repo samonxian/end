@@ -71,6 +71,12 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/memory_service_monitor">存储服务监控</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/asset_mananger">后台资产管理</Link>
+							</MenuItem>
+							<MenuItem>
+								<Link to="/enterprise_manager_authenticate">企业管理</Link>
+							</MenuItem>
 						</Menu>
 							
 					</Col>	

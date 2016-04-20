@@ -39,9 +39,20 @@ export const STOREAGE_HEADER = [{
 
 export const INDEX_CAMERA = [
     {
-      title: '时间轴',
-      dataIndex: 'timeline',
-      render: renderContent
+         title: '时间轴',
+         dataIndex: 'timeline',
+         render: function(text,recode){
+         	 let obj = {
+			    children: text,
+			    props: {}
+			 };
+			 if (recode["length"] !== "") {
+			    obj.props.rowSpan  = recode["length"];
+			 }else{
+			 	obj.props.rowSpan = 0;
+			 }
+			 return obj;
+         }
     },
     {
       title: '区域',
