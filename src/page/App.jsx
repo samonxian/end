@@ -14,13 +14,13 @@ class App extends React.Component {
     render() {
 		let url = this.props.location.pathname;
 		let container 
-
+        
         if(url.indexOf("user_login")!=-1 || url.length<5){
         	container = <Userlogin/>
         }else{
         	container = <Layout contents={this.props.children || "" } />
         }
-       	container = <Layout contents={this.props.children || "" } />
+       //	container = <Layout contents={this.props.children || "" } />
 		if(module.hot){
 			if(url.indexOf('r2g') != -1){
 				var Layout2 = require('frontend/view/layout/main');

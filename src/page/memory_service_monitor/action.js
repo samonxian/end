@@ -23,7 +23,7 @@ export function clearData(){
 
 export function fetchMemoryServiceMonitorData() {
     return dispatch => {
-        dispatch(memoryServiceMonitor())
+      //  dispatch(memoryServiceMonitor())
         return fetch('http://120.26.74.53/api/get_diagram_data/groups_stat')
             .then(response => response.json())
             .then(json => dispatch(memoryServiceMonitorRespone(json)))

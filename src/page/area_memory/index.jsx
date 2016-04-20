@@ -105,9 +105,6 @@ class areaMemory extends Component{
 
 			TraversalDiskDetailData(data){
 				var array = [];
-
-				console.log("=================================== TraversalDiskDetailData:");
-				console.log(data);
              
 				for(let i=0,len = data.length;i<len;i++){
 					var temp = data[i]["info"]["groups_detail"];
@@ -161,6 +158,9 @@ class areaMemory extends Component{
     componentWillMount(){
     	const { areaTotalData, dispatch } = this.props
     	dispatch(fetchAreaMemoryData());
+    	setInterval(function(){
+			dispatch(fetchAreaMemoryData());
+		},60*1000)
 	}
 
 	render(){

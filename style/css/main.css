@@ -74,6 +74,9 @@ pre {
 .color_blue {
     color: #2DB7F5;
 }
+.color_red {
+    color:red;
+}
 .color_success {
     color: #F3FAF0;
 }

@@ -34,10 +34,19 @@ class Indexcamera extends React.Component {
                 	var start = new Date(detailList[j]["start_time"]*1000).Format("yyyy-MM-dd hh:mm:ss");
                 	var key = "timeline_"+ new Date().getTime()+Math.random();
                 	var end = new Date(detailList[j]["end_time"]*1000).Format("yyyy-MM-dd hh:mm:ss");
-                	list.push({key: key,timeline: timeline,area : temp["area"],group: temp["group"],length: delen,start_time: start,end_time: end,detail: {
-                        desc : detailList[j]["discs"],
-                        filterArra : temp["disc_list"]
-                    }})
+                	list.push({
+                        key: key,
+                        timeline: timeline,
+                        area : temp["area"],
+                        group: temp["group"],
+                        length: j === 0?delen : "",
+                        start_time: start,
+                        end_time: end,
+                        detail: {
+                             desc : detailList[j]["discs"],
+                             filterArra : temp["disc_list"]
+                        }
+                   })
                 }
         	}
         }
