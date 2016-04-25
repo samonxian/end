@@ -33,6 +33,7 @@ var colorOfConns = d3.scale.threshold().domain([0, 10, 50]).range(['rgba(0,0,0,.
 ]);
 cameraInfo.getServers = function(servers) {
     servers.forEach(function(server) {
+		//console.debug(server.timeout)
         cameraInfo.servers[server.ip] = {
             cameraCount: server.camera_stat ? server.camera_stat.length : 0,
             cameras: server.camera_stat,
@@ -54,6 +55,7 @@ cameraInfo.getServers = function(servers) {
 
 cameraInfo.getCameras = function(servers,cameras) {
 	cameras.forEach(function(d) {
+		//console.debug(d.timeout)
         if (!cameraInfo.cameras[d.peer_id]) {
             cameraInfo.cameras[d.peer_id] = {
                 cid: d.peer_id,
@@ -61,7 +63,7 @@ cameraInfo.getCameras = function(servers,cameras) {
                 client_type: d.client_type,
                 ip_city: d.public_ip_city,
                 ip_isp: d.public_ip_isp,
-                timeout: d.timeout,
+                timeout: d.timeout,//后台永远返回false
                 heartbeat: d.create_at,
                 report_at: d.heart_beat_at,
                 msg: ""
@@ -105,6 +107,7 @@ cameraInfo.getCameras = function(servers,cameras) {
                             cameraInfo.cameras[cameraid].servers[serverip] = {}
                         }
                         cameraInfo.cameras[cameraid].servers[serverip].send_queue = camera.send_queue
+						//console.debug(camera.send_queue)
                         cameraInfo.cameras[cameraid].servers[serverip].recive_time = camera.time
                     }
 
@@ -296,16 +299,16 @@ cameraInfo.renderCameraInfo = function(dispatch) {
         .attr("d", arc)
 		//.style("stroke", "rgba(255,255,255,.0)")
 		//.style("stroke-width", "4px")
-        .style("fill", function(d) {
-            try {
+        //.style("fill", function(d) {
+            //try {
                 //frame =  cameraInfo.cameras[d.cid].servers[d.ip].frame_avg
-                return d.color = colorOfsend_queue(d.send_queue)
-                return d.color = colorOfFrame(d.frame);
-            } catch (ex) {
-                return d.color = colorOfsend_queue(-1)
-                return d.color = colorOfFrame(-1);
-            }
-        })
+                //return d.color = colorOfsend_queue(d.send_queue)
+                //return d.color = colorOfFrame(d.frame);
+            //} catch (ex) {
+                //return d.color = colorOfsend_queue(-1)
+                //return d.color = colorOfFrame(-1);
+            //}
+        //})
         .on("dblclick", function(d) {
             if (event) {
                 event.stopPropagation();
@@ -335,11 +338,13 @@ cameraInfo.renderCameraInfo = function(dispatch) {
                     // console.log(d.frame)
                     return d.color = colorOfFrame(d.frame)
                 }
-                // console.log( d)
                 return d.color = colorOfRecivetime(d.recive_time)
             }
             try {
                 //frame =  cameraInfo.cameras[d.cid].servers[d.ip].frame_avg
+				//if(d.send_queue == -1){
+					//console.debug(d)
+				//}
                 return d.color = colorOfsend_queue(d.send_queue)
                 return d.color = colorOfFrame(d.frame);
             } catch (ex) {
