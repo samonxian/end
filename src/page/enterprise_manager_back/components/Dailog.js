@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Button, Modal } from 'antd'
 import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG } from './until'
 import { dailogShowData, enterpriseAddBack } from '../action'
+import { isEmptyObj } from 'libs/function'
 const createForm = Form.create;
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
@@ -17,9 +18,9 @@ let AddBackForm = React.createClass({
 
     checkExpire(rule, value, callback) {
         if (value && value.getTime() <= Date.now()) {
-          callback(new Error('过期时间不能小于当前日期'));
+            callback(new Error('过期时间不能小于当前日期'));
         } else {
-          callback();
+            callback();
         }
     },
 
@@ -32,10 +33,8 @@ let AddBackForm = React.createClass({
                  console.log('Errors in form!!!');
                  return;
              }
-        　　 console.log('Submit!!!');
-             console.log(values);
              dispatch(enterpriseAddBack({
-                 cid : values["cid"],
+                 cid : parseInt(values["cid"]),
                  expire : new Date(values["expire"]).getTime(),
                  description :　values["description"]
              }));
@@ -114,9 +113,15 @@ export const Dailog = React.createClass({
 
     componentWillReceiveProps(nextProps){
     	const { dailog_data } = nextProps;
-    	this.setState({
-		     visible: dailog_data["visible"]
-		});
+        if(!isEmptyObj(dailog_data) &&　!isEmptyObj(dailog_data["json"])){
+            this.setState({
+                 visible: dailog_data["json"]["visible"]
+            });
+        }else{
+            this.setState({
+                 visible: false
+            });
+        }
     },
 
     handleOk(){

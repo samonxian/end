@@ -3,7 +3,6 @@ import { ENTERPRISE_MANAGER_BACK_REQ, ENTERPRISE_MANAGER_BACK_DAILOG } from './a
 export function enterpriseManagerBackList(state={},action){
     switch(action.type){
 		case ENTERPRISE_MANAGER_BACK_REQ : 
-		     console.log("========================== ENTEERPRISE_MANAGER_BACK_REQ")
 		     return Object.assign({},state, {
 		     	data : action['param'],
 		        type : ENTERPRISE_MANAGER_BACK_REQ
@@ -18,11 +17,7 @@ export function enterpriseManagerBackList(state={},action){
 export function enterpriseManagerDailog(state={},action){
 	switch(action.type){
 		case ENTERPRISE_MANAGER_BACK_DAILOG : 
-		     return Object.assign({},state, {
-		     	data : action['param'],
-		     	visible : action['visible'],
-		        type : ENTERPRISE_MANAGER_BACK_DAILOG
-		     });
+		     return Object.assign({},state, action);
 		     break;
 		default :
 		     return state;

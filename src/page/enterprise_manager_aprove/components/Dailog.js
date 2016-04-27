@@ -37,7 +37,7 @@ let AddBackForm = React.createClass({
                  return;
              }
 
-             var app_id = dailog_data["json"]["app_id"],
+             var id = dailog_data["json"]["id"],
                  data = {};
              if(values["alloc_type"] === 1){
                  data["start_str"] = values["start_str"];
@@ -47,7 +47,7 @@ let AddBackForm = React.createClass({
                  data["end"] = values["end"];
              }
              dispatch(enterpriseManagerAprovalAgreeFetch({
-                 app_id : app_id,
+                 id : id,
                  type : values["type"],
                  alloc_type : values["alloc_type"],
                  data : data

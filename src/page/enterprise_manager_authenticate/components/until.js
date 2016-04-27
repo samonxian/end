@@ -33,6 +33,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		title: '执照',
 		dataIndex: 'license_picture',
 		render : function(text ,record){
+			var openImageEvents = record["openImageFun"];
 			return <a href="javascript:void(0);" onClick = { () => openImageEvents(record["license_picture"])}><Icon type="picture" /></a>
 		}
      },
@@ -45,7 +46,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 				return <span className = "color_blue" onClick = { ()=>aprivalFun(record) }>审核</span>
 			}else if(record["status"] === 1){
 				return <span className = "color_green">同意</span>
-			}else if(record["status"] === 3){
+			}else if(record["status"] === 2){
 				return <span className = "color_red">拒绝</span>
 			}
 		}

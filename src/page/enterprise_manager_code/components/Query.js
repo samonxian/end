@@ -28,6 +28,10 @@ export let Query = React.createClass({
             type = getFieldValue("type"),
     	    code = getFieldValue("code");
 
+        console.log("++++++++++++== type",type);
+        console.log("+++++++++++++++ identity",identity);
+        console.log("=============== code",code);
+
         dispatch(getEnterpriseManagerCodeFetch({
             identity : identity,
             code : code,
@@ -63,13 +67,13 @@ export let Query = React.createClass({
 		        <FormItem
 		             label="APP代号：">
 		             <Input 
-		                 { ... getFieldProps('code',{ initialValue: this.state.name }) }
+		                 { ... getFieldProps('code',{ initialValue: this.state.code }) }
 		                 placeholder="请输入APP代号"/>
 		        </FormItem>
                 <FormItem
                      label="企业名称：">
                      <Input 
-                         { ... getFieldProps('identity',{ initialValue: this.state.name }) }
+                         { ... getFieldProps('identity',{ initialValue: this.state.identity }) }
                          placeholder="请输入企业名称"/>
                 </FormItem>
 		        <Button type="primary" htmlType="button" onClick = { this.enterpriseCodeQuery }>查询</Button>

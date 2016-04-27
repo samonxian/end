@@ -33,7 +33,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		dataIndex: 'opt',
 		render : function(text ,record){
 			var backOptFun = record["backOptFun"];
-			if(record["status"] ===1){
+			if(record["status"] ===2){
 				return <span className = "color_blue" onClick = { ()=>backOptFun(record) }>解禁</span>
 			}else{
 				return <span className = "color_red"　onClick = { ()=>backOptFun(record) }>禁用</span>
