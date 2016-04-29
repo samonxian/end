@@ -5,18 +5,22 @@ import { connect } from 'react-redux'
 import { Header } from './components/Header'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
+import { Tips } from 'libs/react-libs/Tips'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
-import { getEnterpriseManagerFetch, aprovalEnterpriseAuthenicateFetch }  from './action'
+import { getEnterpriseManagerFetch, 
+	     authenticateDailog, 
+	     aprovalEnterpriseAuthenicateFetch,
+	     enterpriseManagerAuthenticateAproval }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 require('css/enterprise_manager.css');
-
 const confirm = Modal.confirm;
 
 class enterpriseManagerAuthenticate extends Component{
 	componentDidMount(){
 		const { dispatch } = this.props;
 		dispatch(getEnterpriseManagerFetch({
-			status : 0,
+			authenicate_status : 0,
+			name : '',
 			code : '',
 			page : 1
 		}));
@@ -47,7 +51,7 @@ class enterpriseManagerAuthenticate extends Component{
 				var title = <div>您正在处理{ data["email"] }用户的企业认证申请</div>,
 				    content = <div><p><span>企业名称：</span>{ data["name"] }</p>
 				                   <p><span>企业执照号：</span>{ data["code"] }</p>
-				                   <p><span>申请时间：</span>{ data["created"] }</p></div>;
+				                   <p><span>申请时间：</span>{ new Date(data["created"]).Format('yyyy-MM-dd hh:mm:ss') }</p></div>;
 				confirm({
 				    title: title,
 				    iconClassName: 'arrow',
@@ -89,25 +93,19 @@ class enterpriseManagerAuthenticate extends Component{
 				});
 			},
 			openImageFun(url){
-				const { dispatch } = _this.props;
-				dispatch({
-					url : url
-				});
+				// const { dispatch } = _this.props;
+				// dispatch(authenticateDailog({
+				// 	url : url
+				// }));
 			},
-			enterpriseAproval(){
-				const { dispatch } =  _this.props;
+			turnPage(n){
+				const { dispatch, enterpriseManagerList } = this.props;
 				dispatch(getEnterpriseManagerFetch({
-					status : 0,
-					code : '',
-					page : 1
-				}));
-			},
-			enterpriseAprovaled(){
-				const { dispatch } =  _this.props;
-				dispatch(getEnterpriseManagerFetch({
-					status : 1,
-					code : '',
-					page : 1
+					authenicate_status : enterpriseManagerList["data"]["aproval_status"],
+					name : enterpriseManagerList["data"]["name"],
+					code : enterpriseManagerList["data"]["code"],
+					size : 10,
+					page : n
 				}));
 			}
 		}
@@ -117,43 +115,52 @@ class enterpriseManagerAuthenticate extends Component{
 	render(){
 		var dataList = [],
 		    aprovalCls = '',
+		    tips = {},
 		    aprovaledCls = '';
-		const { enterpriseManagerList, dailogData } = this.props;
+		const { enterpriseManagerList, dailogData, enterpriseManagerAproval, dispatch } = this.props;
         
-		if(isEmptyObj(enterpriseManagerList)){
+		if(enterpriseManagerList["data"] === undefined ||isEmptyObj(enterpriseManagerList)){
 			return false;
 		}
-        console.log("++++++++++++++++++　enterpriseManagerList",enterpriseManagerList);      
-        dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
-        if(enterpriseManagerList["data"]["status"] === 0){
-        	aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin enterprise_manager_type_current';
-        	aprovaledCls = 'enterprise_manager_type_cls';
-        }else{
-        	aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin';
-        	aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_current';
+		console.log("====== enterpriseManagerAproval",enterpriseManagerAproval);
+        if(!isEmptyObj(enterpriseManagerAproval) && !isEmptyObj(enterpriseManagerAproval["data"])){
+        	tips = {
+				visible : true,
+				title : enterpriseManagerAproval["data"]["message"],
+		   	    content : '',
+		   	    status : enterpriseManagerAproval["data"]["status"],
+		   	    callback : function(){
+		   	    	dispatch(getEnterpriseManagerFetch({
+						page : enterpriseManagerList["data"]["page"],
+						size : 10,
+						code : enterpriseManagerList["data"]["code"],
+						name : enterpriseManagerList["data"]["name"],
+						authenicate_status : enterpriseManagerList["data"]["authenicate_status"]
+					}));
+		   	    	dispatch(enterpriseManagerAuthenticateAproval({},{}));
+		   	    }
+			}
         }
 
+        dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
+        console.log("++++++++++++++ enterpriseManagerList",enterpriseManagerList);
 		return (
 			<div>
 			     <Header { ... this.props }/>
 			     <Query { ... this.props }/>
-			     <div className = "enterprise_manager_type_btn">
-			        <Button type="primary"
-			            onClick = { this.enterpriseAproval } 
-			            htmlType="button" 
-			            className = { aprovalCls }>
-			            <Icon type="folder" />待审核</Button>
-			        <Button type="primary" 
-			            onClick = { this.enterpriseAprovaled }
-			            htmlType="button" 
-			            className = { aprovaledCls }>
-			            <Icon type="folder-open" />已审核</Button>
-			     </div>
-			     <Table className = "enterprise_manager_table"
-			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
-			            dataSource={ dataList } 
-			            bordered />
+			     <Table columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
+			          dataSource={ dataList } 
+			          bordered
+			          pagination={false} />
+			     <div className="footer">
+					<Row type="flex" justify="end">
+					     <Pagination onChange={ this.turnPage } 
+					         defaultCurrent={ enterpriseManagerList["data"]["data"]["current"] } 
+					         total={ enterpriseManagerList["data"]["data"]["total"] } />
+					</Row>
+				 </div>
 			     <Dailog { ...this.props }/>
+			     <Tips tips = { tips }/>
 			</div>)
 	}
 }

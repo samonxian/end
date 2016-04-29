@@ -8,8 +8,10 @@ require('css/login.css')
 
 class Userlogin extends Component{
     componentWillReceiveProps(nextProps){
-    	const { userLoginStatus } = this.props;
-    	console.log("++++++++++++++++++++= userLoginStatus",userLoginStatus);
+    	const { userLoginStatus, dispatch } = nextProps;
+    	if(userLoginStatus["param"]["status"] === 200){
+    		dispatch(push('/enterprise_manager_authenticate'));
+    	}
     }
 
 	render(){

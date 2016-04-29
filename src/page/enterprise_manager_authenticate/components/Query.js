@@ -9,7 +9,8 @@ const confirm = Modal.confirm;
 export let Query = React.createClass({
 	getInitialState() {
         return { 
-            email : "",
+            status : 0,
+            name : "",
             code : ""
         }
     },
@@ -24,12 +25,16 @@ export let Query = React.createClass({
     enterpriseAuthenticate(){
     	const { getFieldValue } = this.props.form;
     	const { dispatch, enterpriseManagerList } = this.props;
-    	var code = getFieldValue("code");
+    	var code = getFieldValue("code"),
+            status = getFieldValue("status"),
+            name = getFieldValue("name");
         
         dispatch(getEnterpriseManagerFetch({
             page : 1,
+            size : 10,
             code : code,
-            status : enterpriseManagerList["data"]["status"],
+            name : name,
+            authenicate_status : status,
         }));
     },
 
@@ -38,6 +43,23 @@ export let Query = React.createClass({
 
     	return (
     		<Form inline style={{marginBottom:"20px"}}>
+                <FormItem
+                     label="企业认证状态：">
+                     <Select 
+                        { ... getFieldProps('status',{　initialValue:this.state.status })}
+                        style={{ width: 162 }}>
+                        <Option value="">所有</Option>
+                        <Option value={ 0 }>未审核</Option>
+                        <Option value={ 1 }>已审核</Option>
+                        <Option value={ 2 }>拒绝</Option>
+                    </Select>
+                </FormItem>
+                <FormItem
+                     label="企业名称：">
+                     <Input 
+                         { ... getFieldProps('name',{ initialValue: this.state.name }) }
+                         placeholder="请输入企业名称"/>
+                </FormItem>
 		        <FormItem
 		             label="企业执照号：">
 		             <Input 

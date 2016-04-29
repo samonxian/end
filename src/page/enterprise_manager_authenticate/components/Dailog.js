@@ -7,9 +7,25 @@ export const Dailog = React.createClass({
             visible: false,
         }
     },
-    
 
+    handleOk(){
+
+    },
+
+    handleCancel(){
+    	this.setState({
+    		visible: false
+    	})
+    },
+
+
+    
     render(){
-    	return <div></div>
+    	const { dailogData } = this.props;
+    	console.log("++++++++++++======= dailogData",dailogData);
+    	return <Modal title="第一个 Modal" visible={this.state.visible}
+            onOk={this.handleOk} onCancel={this.handleCancel}>
+	          
+        </Modal>
     }
 })

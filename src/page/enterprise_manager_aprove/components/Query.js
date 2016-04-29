@@ -21,7 +21,7 @@ export let Query = React.createClass({
 
     enterpriseAuthenticate(){
     	const { getFieldValue } = this.props.form;
-    	const { dispatch } = this.props;
+    	const { dispatch , enterpriseManagerAprovalList } = this.props;
     	var identity = getFieldValue("identity"),
             app_id = getFieldValue("app_id"),
     	    code = getFieldValue("code");
@@ -31,7 +31,7 @@ export let Query = React.createClass({
             size : 10,
             app_code : code,
             identity : identity,
-            status : 0
+            aproval_status : enterpriseManagerAprovalList["data"]["aproval_status"]
         }))
     },
 
@@ -58,7 +58,7 @@ export let Query = React.createClass({
                          { ... getFieldProps('code',{ initialValue: this.state.code }) }
                          placeholder="请输入APP代号"/>
                 </FormItem>
-                <Button type="primary" htmlType="button">查询</Button>
+                <Button type="primary" htmlType="button" onClick = { this.enterpriseAuthenticate }>查询</Button>
             </Form>
     	)
     }

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Header } from '../enterprise_manager_authenticate/components/Header'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
+import { Tips } from 'libs/react-libs/Tips'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
 import { getEnterpriseManagerAprovalFetch, enterpriseManagerAprovalDailog }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
@@ -23,7 +24,7 @@ class enterpriseManagerAprove extends Component{
 			app_id : '',
 			app_code : '',
 			identity : '',
-			status : 0
+			aproval_status : 0
 		}));
 	}
 
@@ -50,7 +51,9 @@ class enterpriseManagerAprove extends Component{
 		return {
 			aprovalFun(data){
 				const { dispatch } = _this.props;
-				dispatch(enterpriseManagerAprovalDailog(true,data));
+				dispatch(enterpriseManagerAprovalDailog({
+					hidden : true
+				},data));
 			},
 			enterpriseAproval(){
 				const { dispatch } = _this.props;
@@ -60,7 +63,7 @@ class enterpriseManagerAprove extends Component{
 					app_id : '',
 					app_code : '',
 					identity : '',
-					status : 0
+					aproval_status : 0
 				}));
 			},
 			enterpriseAprovaled(){
@@ -71,7 +74,18 @@ class enterpriseManagerAprove extends Component{
 					app_id : '',
 					app_code : '',
 					identity : '',
-					status : 1
+					aproval_status : 1
+				}));
+			},
+			turnPage(n){
+				const { dispatch, enterpriseManagerAprovalList } = _this.props;
+				dispatch(getEnterpriseManagerAprovalFetch({
+					page : n,
+					size : 10,
+					app_id :  enterpriseManagerAprovalList["data"]["app_id"],
+					app_code : enterpriseManagerAprovalList["data"]["app_code"],
+					identity : enterpriseManagerAprovalList["data"]["identity"],
+					aproval_status :  enterpriseManagerAprovalList["data"]["aproval_status"]
 				}));
 			}
 		}
@@ -81,14 +95,17 @@ class enterpriseManagerAprove extends Component{
 		var dataList = [],
 		    aprovalCls = '',
 		    aprovaledCls = '',
+		    tips = {},
 		    status = 0;
-		const { enterpriseManagerAprovalList } = this.props;
+		const { enterpriseManagerAprovalList, dailog_data, dispatch } = this.props;
 
 		if(isEmptyObj(enterpriseManagerAprovalList)){
 			return false;
 		}
 
-        status = enterpriseManagerAprovalList["data"]["status"];
+		console.log("enterpriseManagerAprovalList",enterpriseManagerAprovalList);
+
+        status = enterpriseManagerAprovalList["data"]["aproval_status"];
         dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
 		
 		if(status === 0){
@@ -98,6 +115,28 @@ class enterpriseManagerAprove extends Component{
 			aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin'
 			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_current'
 		}
+
+		if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && !dailog_data["visible"]["hidden"]){
+        	tips = {
+				visible : true,
+				title : dailog_data["json"]["message"],
+		   	    content : '',
+		   	    status : dailog_data["json"]["status"],
+		   	    callback : function(){
+		   	    	dispatch(enterpriseManagerAprovalDailog({
+		   	    		hidden : false
+		   	    	},{}));
+					dispatch(getEnterpriseManagerAprovalFetch({
+						page : enterpriseManagerAprovalList["data"]["page"],
+						size : 10,
+						app_id : enterpriseManagerAprovalList["data"]["app_id"],
+						app_code : enterpriseManagerAprovalList["data"]["app_code"],
+						aproval_status : enterpriseManagerAprovalList["data"]["aproval_status"],
+						identity : enterpriseManagerAprovalList["data"]["identity"]
+					}));
+		   	    }
+			}
+        }
 
 		return (
 			<div>
@@ -118,8 +157,17 @@ class enterpriseManagerAprove extends Component{
 			     <Table className = "enterprise_manager_table"
 			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
 			            dataSource={ dataList } 
-			            bordered />
+			            bordered
+			            pagination={false} />
+			     <div className="footer">
+					<Row type="flex" justify="end">
+					     <Pagination onChange={ this.turnPage } 
+					         defaultCurrent={ enterpriseManagerAprovalList["data"]["data"]["current"] } 
+					         total={ enterpriseManagerAprovalList["data"]["data"]["total"] } />
+					</Row>
+				 </div>
 			     <Dailog { ...this.props }/>
+			     <Tips tips = { tips }/>
 			</div>)
 	}
 }

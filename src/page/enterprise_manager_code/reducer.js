@@ -5,7 +5,7 @@ export function enterpriseManagerCodeList(state={},action){
 		case ENTERPRISE_MANAGER_CODE_REQ : 
 		     console.log("============================ ENTEERPRISE_MANAGER_AUTHENTICATE_CODE_REQ");
 		     return Object.assign({},state, {
-		     	data : action['param']["data"],
+		     	data : action['param'],
 		        type : ENTERPRISE_MANAGER_CODE_REQ
 		     });
 		     break;

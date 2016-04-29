@@ -589,3 +589,10 @@ pre {
     padding-left: 9px;
     line-height: 22px;
 }
+.ant-message{
+    left:0;
+    top:100px;
+}
+.footer{
+    margin-top: 20px;
+}

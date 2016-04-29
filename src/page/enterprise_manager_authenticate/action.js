@@ -1,17 +1,19 @@
-import fetch from 'isomorphic-fetch'
+import { REQUESTURL } from 'libs/common'
+import Fetch from 'libs/fetch2'
 export const ENTERPRISE_MANAGER_AUTHENTICATE_REQ = 'ENTERPRISE_MANAGER_AUTHENTICATE_REQ'
 export const ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG = 'ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG'
 export const ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL = 'ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL'
 
-function getEnterpriseManagerResponse(json,reddit){
-    Object.assign(json,reddit);
+function getEnterpriseManagerResponse(param={},json){
+    Object.assign(json,param);
     return {
         type : ENTERPRISE_MANAGER_AUTHENTICATE_REQ,
         param : json
     }
 }
 
-function enterpriseManagerAuthenticateAproval(json){
+export function enterpriseManagerAuthenticateAproval(param={},json){
+    Object.assign(json,param);
     return {
         type : ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL,
         param : json
@@ -19,44 +21,49 @@ function enterpriseManagerAuthenticateAproval(json){
 }
 
 export function authenticateDailog(data){
-	return {
-		type : ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG,
-		visible : true,
-		param : data
-	}
+  	return {
+  		  type : ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG,
+  		  visible : true,
+  		  param : data
+  	}
 }
 
 export function clearAuthenicateData(){
-	return {
-		type : ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG,
-		visible : false,
-		param : {}
-	}
+  	return {
+  		  type : ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG,
+  		  visible : false,
+  		  param : {}
+  	}
 }
 
 export function getEnterpriseManagerFetch(reddit){
+    var url = REQUESTURL+'/dev/v1/identities?status='+reddit["authenicate_status"]+
+             "&code="+reddit["code"]+"&name="+reddit["name"]+"&page="+reddit["page"];
     return dispatch => {
-        var url = '/dev/v1/identities?status='+reddit["status"]+"&code="+reddit["code"]+"&page="+reddit["page"];
-        return fetch('http://www.topvdn.com/test/data.js',{
-             method: 'GET'
-        }).then(response => response.json())
-          .then(json => dispatch(getEnterpriseManagerResponse(json,{
-              status : reddit["status"],
-              code : reddit["code"]
-          })))
+      r3fetch({
+          urls:[url],
+          method: 'GET'
+      }).fetch(dispatch,getEnterpriseManagerResponse,{
+            authenicate_status : reddit["authenicate_status"],
+            name : reddit["name"],
+            page : reddit["page"],
+            code : reddit["code"]
+      },null);
     }
 }
 
 export function aprovalEnterpriseAuthenicateFetch(reddit){
     console.log("aprovalEnterpriseAuthenicateFetch reddit",reddit);
+    var url = REQUESTURL+'/dev/v1/identities/'+reddit["id"];
     return dispatch => {
-        var url = '/dev/v1/identities/'+reddit["id"];
-        return fetch('http://120.26.74.53/api/disc_monitor/area_list',{
-             method: 'PATCH',
-             body: JSON.stringify({
-                 status : reddit["status"]
-             })
-        }).then(response => response.json())
-          .then(json => dispatch(enterpriseManagerAuthenticateAprival()))
+       r3fetch({
+          urls:[url],
+          method: 'PATCH',
+          params: {
+              status : reddit["status"]
+          }
+       }).fetch(dispatch,enterpriseManagerAuthenticateAproval,{
+          visible : false
+       },null);
     }
 }

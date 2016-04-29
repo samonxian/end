@@ -1,11 +1,12 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Table, Icon, Form, Select, Modal  } from 'antd'
+import { Table, Icon, Form, Select, Modal, message } from 'antd'
 import { connect } from 'react-redux'
 import { Header } from '../enterprise_manager_authenticate/components/Header'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
+import { Tips } from 'libs/react-libs/Tips'
 import { getEnterpriseManagerBackFetch, dailogShowData, enterpriseBackOptFetch }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 require('css/enterprise_manager.css');
@@ -49,7 +50,7 @@ class enterpriseManagerBack extends Component{
     	return {
     		addBack(){
     			const { dispatch } = _this.props;
-    			dispatch(dailogShowData(true))
+    			dispatch(dailogShowData({visible:true},{}))
     		},
     		backOptFun(data){
     			const { dispatch } = _this.props;
@@ -69,24 +70,58 @@ class enterpriseManagerBack extends Component{
 				    onOk() {
 				         dispatch(enterpriseBackOptFetch({
 				         	id : data["id"],
-				         	status : data["status"]
+				         	status : data["status"] ===0?2:0
 				         }))
 				    },
 				    onCancel() {}
 				 });
+    		},
+    		turnPage(n){
+    			const { dispatch, enterpriseManagerBackList } = _this.props;
+    			dispatch(getEnterpriseManagerBackFetch({
+					page : n,
+					size : 10,
+					app_id : enterpriseManagerBackList["data"]["app_id"],
+					cid : enterpriseManagerBackList["data"]["cid"],
+					app_code : enterpriseManagerBackList["data"]["app_code"],
+					identity : enterpriseManagerBackList["data"]["identity"]
+				}));
     		}
     	}
     }
 
 	render(){
-		var dataList = [];
-		const { enterpriseManagerBackList } = this.props;
-
+		var dataList = [],
+		    tips = {};
+		const { enterpriseManagerBackList, dailog_data, dispatch } = this.props;
+        
+        console.log("enterpriseManagerBackList",enterpriseManagerBackList);
 		if(isEmptyObj(enterpriseManagerBackList)){
 			return false;
 		}
+
         dataList = this.adapterDataList(enterpriseManagerBackList["data"]["data"]["blacklist"],status);
-        
+        console.log("+++++++++++++++= dailog_data",dailog_data);
+        if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && dailog_data["json"]["status"]){
+        	tips = {
+				visible : true,
+				title : dailog_data["json"]["message"],
+		   	    content : '',
+		   	    status : dailog_data["json"]["status"],
+		   	    callback : function(){
+		   	    	dispatch(dailogShowData({},{}));
+					dispatch(getEnterpriseManagerBackFetch({
+						page : enterpriseManagerBackList["data"]["page"],
+						size : 10,
+						app_id : enterpriseManagerBackList["data"]["app_id"],
+						cid : enterpriseManagerBackList["data"]["cid"],
+						app_code : enterpriseManagerBackList["data"]["app_code"],
+						identity : enterpriseManagerBackList["data"]["identity"]
+					}));
+		   	    }
+			}
+        }
+        console.log("+++++++++++++++++ enterpriseManagerBackList",enterpriseManagerBackList);
 		return (
 			<div>
 			     <Header { ... this.props }/>
@@ -101,8 +136,17 @@ class enterpriseManagerBack extends Component{
 			     <Table className = "enterprise_manager_table"
 			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
 			            dataSource={ dataList } 
-			            bordered />
+			            bordered 
+			            pagination={false}/>
+			     <div className="footer">
+					<Row type="flex" justify="end">
+					     <Pagination onChange={ this.turnPage } 
+					         defaultCurrent={ enterpriseManagerBackList["data"]["data"]["current"] } 
+					         total={ enterpriseManagerBackList["data"]["data"]["total"] } />
+					</Row>
+				 </div>
                  <Dailog { ...this.props }/>
+                 <Tips tips = { tips }/>
 			</div>)
 	}
 }

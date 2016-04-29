@@ -21,7 +21,7 @@ export let LoginForm = React.createClass({
 	render(){
     const { getFieldProps } = this.props.form;
 
-    const nameProps = getFieldProps('name', {
+    const nameProps = getFieldProps('email', {
        validate: [
         {
            rules: [
