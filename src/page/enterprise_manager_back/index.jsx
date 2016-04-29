@@ -102,7 +102,7 @@ class enterpriseManagerBack extends Component{
 
         dataList = this.adapterDataList(enterpriseManagerBackList["data"]["data"]["blacklist"],status);
         console.log("+++++++++++++++= dailog_data",dailog_data);
-        if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && !dailog_data["json"]["visible"]){
+        if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && dailog_data["json"]["status"]){
         	tips = {
 				visible : true,
 				title : dailog_data["json"]["message"],

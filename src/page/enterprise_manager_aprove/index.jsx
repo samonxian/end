@@ -51,7 +51,9 @@ class enterpriseManagerAprove extends Component{
 		return {
 			aprovalFun(data){
 				const { dispatch } = _this.props;
-				dispatch(enterpriseManagerAprovalDailog(true,data));
+				dispatch(enterpriseManagerAprovalDailog({
+					hidden : true
+				},data));
 			},
 			enterpriseAproval(){
 				const { dispatch } = _this.props;
@@ -95,7 +97,7 @@ class enterpriseManagerAprove extends Component{
 		    aprovaledCls = '',
 		    tips = {},
 		    status = 0;
-		const { enterpriseManagerAprovalList, dailog_data } = this.props;
+		const { enterpriseManagerAprovalList, dailog_data, dispatch } = this.props;
 
 		if(isEmptyObj(enterpriseManagerAprovalList)){
 			return false;
@@ -114,14 +116,16 @@ class enterpriseManagerAprove extends Component{
 			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_current'
 		}
 
-		if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && !dailog_data["visible"]){
+		if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && !dailog_data["visible"]["hidden"]){
         	tips = {
 				visible : true,
 				title : dailog_data["json"]["message"],
 		   	    content : '',
 		   	    status : dailog_data["json"]["status"],
 		   	    callback : function(){
-		   	    	dispatch(enterpriseManagerAprovalDailog(false,{}));
+		   	    	dispatch(enterpriseManagerAprovalDailog({
+		   	    		hidden : false
+		   	    	},{}));
 					dispatch(getEnterpriseManagerAprovalFetch({
 						page : enterpriseManagerAprovalList["data"]["page"],
 						size : 10,

@@ -18,10 +18,10 @@ function getEnterpriseManagerAprovalQuest(){
 	}
 }
 
-export function enterpriseManagerAprovalDailog(visible,json){
+export function enterpriseManagerAprovalDailog(params,json){
     return {
         type : ENTERPRISE_MANAGER_APROVAL_DAILOG,
-        visible : visible,
+        visible : params,
         json : json
     }
 }
@@ -36,6 +36,7 @@ export function getEnterpriseManagerAprovalFetch(reddit){
              method: 'GET'
         }).fetch(dispatch,getEnterpriseManagerAprovalResponse,{
             app_id : reddit["app_id"],
+            page : reddit["page"],
             app_code : reddit["app_code"],
             identity : reddit["identity"],
             aproval_status : reddit["aproval_status"]
@@ -51,7 +52,7 @@ export function enterpriseManagerAprovalAgreeFetch(reddit){
              method: 'PATCH',
              params: reddit
         }).fetch(dispatch,enterpriseManagerAprovalDailog,{
-            visible : false
+            hidden : false
         },null);
     }
 }

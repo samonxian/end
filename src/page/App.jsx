@@ -14,8 +14,8 @@ class App extends React.Component {
     render() {
 		let url = this.props.location.pathname;
 		let container 
-        
-        if(url.indexOf("user_login")!=-1 || url.length<5){
+        console.log("+++++++++++++ user_login",url);
+        if(url.indexOf("user_login") === 1){
         	container = <Userlogin/>
         }else{
         	container = <Layout contents={this.props.children || "" } />

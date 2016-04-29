@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button, Modal } from 'antd'
 import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG } from './until'
 import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch } from '../action'
-import { generateMixed } from 'libs/function'
+import { generateMixed, isEmptyObj } from 'libs/function'
 const createForm = Form.create;
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
@@ -25,12 +25,63 @@ let AddBackForm = React.createClass({
 
     cancelBtn(){
         const { dispatch } = this.props;
-        dispatch(enterpriseManagerAprovalDailog(false,{}));
+        const { resetFields } = this.props.form;
+        dispatch(enterpriseManagerAprovalDailog({
+            hidden : false 
+        },{}));
+        this.setState({
+            alloc_type : 1
+        });
+        resetFields();
+    },
+    
+    validatorStartStr(rule, value, callback){
+        if(value){
+            var exp=/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/; 
+            console.log("value",value);
+            if(exp.test(value)){
+                callback();
+            }else{
+                callback('请输入正确的IP地址！');
+            }
+        }else{
+            callback("");
+        }
+    },
+
+    validatorStart(rule, value, callback){
+        if(value){
+            if(/^\d+$/.test(value)){
+                callback();
+            }else{
+                callback("起始段字符必须为整数！");
+            }
+        }else{
+            callback("");
+        }
+    },
+
+    validatorEnd(rule, value, callback){
+        const { getFieldValue } = this.props.form;
+        if(value){
+            if (/^\d+$/.test(value)) {
+                if(parseInt(getFieldValue("start"))>parseInt(value)){
+                    callback("结束值必须大于开始值");
+                }else{
+                    callback();
+                }
+            }else{
+                callback("ID段结束值必须为整数！");
+            }
+        }else{
+            callback("");
+        }
     },
 
     handleSubmit(e){
          e.preventDefault();
         const { dispatch, dailog_data } = this.props;
+        const { resetFields } = this.props.form;
         this.props.form.validateFields((errors, values) => {
              if (!!errors) {
                  console.log('Errors in form!!!');
@@ -43,8 +94,8 @@ let AddBackForm = React.createClass({
                  data["start_str"] = values["start_str"];
                  data["mask_str"] = values["mask_str"];
              }else{
-                 data["start"] = values["start"];
-                 data["end"] = values["end"];
+                 data["start"] = parseInt(values["start"]);
+                 data["end"] = parseInt(values["end"]);
              }
              dispatch(enterpriseManagerAprovalAgreeFetch({
                  id : id,
@@ -52,7 +103,10 @@ let AddBackForm = React.createClass({
                  alloc_type : values["alloc_type"],
                  data : data
              }));
-            
+             this.setState({
+                alloc_type : 1
+             });
+             resetFields();
         });
     },
 
@@ -67,10 +121,15 @@ let AddBackForm = React.createClass({
                      hasFeedback
                      label="ID段起始字符：">
                      <Input { ...getFieldProps('start_str',{
-                            rules: [
-                                { required: true, message: '起始字符不能为空' },
-                            ]
-                      }) } placeholder="请输入起始段字符" />
+                        rules: [
+                            { 
+                                 required: true, 
+                                 whitespace: true, 
+                                 message: '起始字符不能为空' 
+                            },{ 
+                                 validator: this.validatorStartStr
+                            }
+                        ]}) } placeholder="请输入起始段字符" />
                 </FormItem>
                 <FormItem
                      {...formItemLayout}
@@ -94,13 +153,14 @@ let AddBackForm = React.createClass({
                      hasFeedback
                      label="ID 段开始值：">
                      <Input { ...getFieldProps('start',{
-                         validate:[
-                             {
-                                rules: [
-                                    { required: true, message: 'ID段开始值不为空' },
-                                ]
-                             }
-                         ]
+                         rules: [
+                            {   
+                                required: true, 
+                                whitespace: true, 
+                                message: 'ID段开始值不为空' 
+                            },
+                            { validator: this.validatorStart }
+                        ]
                      }) } placeholder="请输入起始段字符" />
                 </FormItem>
                 <FormItem
@@ -108,12 +168,13 @@ let AddBackForm = React.createClass({
                      hasFeedback
                      label="ID 段结束值：">
                      <Input { ...getFieldProps('end',{
-                         validate:[
-                             {
-                                rules: [
-                                    { required: true, message: 'ID段结束值不为空' },
-                                 ]
-                             }
+                         rules: [
+                            { 
+                                 required: true,
+                                 whitespace: true,  
+                                 message: 'ID段结束值不为空'
+                            },
+                            { validator: this.validatorEnd }
                          ]
                      }) } placeholder="请输入起始段字符" />
                 </FormItem>
@@ -168,9 +229,12 @@ export const Dailog = React.createClass({
 
     componentWillReceiveProps(nextProps){
     	const { dailog_data } = nextProps;
-    	this.setState({
-		     visible: dailog_data["visible"]
-		});
+        if(!isEmptyObj(dailog_data)){
+            console.log("============= dailog_data",dailog_data);
+            this.setState({
+                 visible: dailog_data["visible"]["hidden"]
+            });
+        }
     },
 
     handleOk(){
