@@ -73,57 +73,61 @@ class Get_camera_info extends React.Component {
 
     render() {
 		let { get_camera_info ,location} = this.props;
-		if(get_camera_info.posts && get_camera_info.posts.result_code == 0){
+		if(get_camera_info.posts){
 			let center_data = get_camera_info.posts.center_data;	
 			let tracker_data = get_camera_info.posts.tracker_data;	
-			var last_relay = '';
-			tracker_data.last_relay.map(function(data){
-				last_relay +=  data.ip + ":" + data.port + "\n"
-			})
-			data = [
-				{
-					key: '1',
-					column1: 'tracker_ip',
-					column2: tracker_data.tracker_ip,
-					column3: '',
-					column4: ''
-				},
-				{
-					key: '2',
-					column1: '摄像头ID',
-					column2: get_camera_info.id,
-					column3: 'ip_tag',
-					column4: tracker_data.info.ip_tag 
-				},
-				{
-					key: '3',
-					column1: '公网ip',
-					column2: tracker_data.info.public_ip.ip+":"+tracker_data.info.public_ip.port,
-					column3: '内网ip',
-					column4: tracker_data.info.local_ip.ip+":"+tracker_data.info.local_ip.port
-				},
-				{
-					key: '4',
-					column1: '最后更新时间',
-					column2: tracker_data.info.last_heartbeat,
-					column3: 'msg_seq',
-					column4: tracker_data.info.msg_seq 
-				},
-				{
-					key: '5',
-					column1: '状态',
-					column2: tracker_data.status ,
-					column3: '上次获取转发时间',
-					column4: tracker_data.last_relay_time 
-				},
-				{
-					key: '6',
-					column1: '上次获取转发列表',
-					column2: last_relay,
-					column3: '',
-					column4: ''
-				}
-			]
+			if(get_camera_info.posts.result_code == 0){
+				var last_relay = '';
+				tracker_data.last_relay.map(function(data){
+					last_relay +=  data.ip + ":" + data.port + "\n"
+				})
+				data = [
+					{
+						key: '1',
+						column1: 'tracker_ip',
+						column2: tracker_data.tracker_ip,
+						column3: '',
+						column4: ''
+					},
+					{
+						key: '2',
+						column1: '摄像头ID',
+						column2: get_camera_info.id,
+						column3: 'ip_tag',
+						column4: tracker_data.info.ip_tag 
+					},
+					{
+						key: '3',
+						column1: '公网ip',
+						column2: tracker_data.info.public_ip.ip+":"+tracker_data.info.public_ip.port,
+						column3: '内网ip',
+						column4: tracker_data.info.local_ip.ip+":"+tracker_data.info.local_ip.port
+					},
+					{
+						key: '4',
+						column1: '最后更新时间',
+						column2: tracker_data.info.last_heartbeat,
+						column3: 'msg_seq',
+						column4: tracker_data.info.msg_seq 
+					},
+					{
+						key: '5',
+						column1: '状态',
+						column2: tracker_data.status ,
+						column3: '上次获取转发时间',
+						column4: tracker_data.last_relay_time 
+					},
+					{
+						key: '6',
+						column1: '上次获取转发列表',
+						column2: last_relay,
+						column3: '',
+						column4: ''
+					}
+				]
+			}else{
+				data = [];
+			}
 			let state,config_type;
 			switch(center_data.state){
 				case 0:

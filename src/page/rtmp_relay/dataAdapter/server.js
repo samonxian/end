@@ -86,7 +86,9 @@ module.exports = {
                         }
                     }
                 }
-                // console.log(send_queue)
+				//if(send_queue == -1){
+					 //console.debug(s.relay_stat)
+				//}
                 data.links.push({
                     source: d.ip,
                     target: r.ip,
