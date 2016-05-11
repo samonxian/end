@@ -20,7 +20,7 @@ let type = {
 	'1026':'rtmp_conn_time',
 	'272':'exception_event',
 	'771':'app_web_request',
-	'772':'pp_request_error',
+	'772':'app_request_error',
 	'773':'open_service',
 	'774':'RecvMsg',
 	'775':'rtmp_open_success',
