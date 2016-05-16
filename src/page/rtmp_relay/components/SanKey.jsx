@@ -22,13 +22,13 @@ class SanKey extends Component {
 	}
 
 	componentDidUpdate(){
-		this.svg = ReactDOM.findDOMNode(this.refs.svg_con);
-		this.svg.style.display = "none";
-		this.svg.innerHTML = "";
-		this.sankey = this.getSankey();
-		this.drawLinks();
-		this.drawNodes();
-		this.svg.style.display = "block";
+		//this.svg = ReactDOM.findDOMNode(this.refs.svg_con);
+		//this.svg.style.display = "none";
+		//this.svg.innerHTML = "";
+		//this.sankey = this.getSankey();
+		//this.drawLinks();
+		//this.drawNodes();
+		//this.svg.style.display = "block";
 		this.props.parent.cameraAdapter.makeCameraInfo(this.props.servers,this.sankey);
 		this.props.parent.cameraAdapter.renderCameraInfo(this.props.dispatch);
 		//console.debug(this.sankey.nodes())
