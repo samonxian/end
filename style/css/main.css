@@ -568,6 +568,7 @@ pre {
 .sc_top_flex {
     height: 100%;
 	width:100%;
+	/*z-index:100000;*/
 }
 .rtmp_relay .sc_bottom {
     flex: 1;

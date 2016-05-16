@@ -1,6 +1,7 @@
 var g_servers;
 var g_nodes;
 module.exports = {
+	errorServer: [],
 	/**
 	 * 获取不同类别的server,又有的链接正常node server，无连接server，链接出错server
 	 */
@@ -8,7 +9,6 @@ module.exports = {
 		var servers = {
 			node: [],
 			noLink: [],
-			error: [],//放置错误的send_relays
 		};
 		//console.debug(jsonDatas)
 		jsonDatas.data.forEach((v,k)=>{
@@ -18,6 +18,7 @@ module.exports = {
 				servers.noLink.push(v);
 			}else{
 				servers.node.push(v);
+				//console.debug(k,v.mode,v.address)
 			}
 		})
 		//console.debug(servers.node.length)
@@ -36,46 +37,65 @@ module.exports = {
 		var servers = g_servers.node;
 		var links = [];
 		var nodes = servers;
-		servers.forEach((v,k)=>{
+		this.errorServer = [];
+		nodes.forEach((v,k)=>{
 			if(v.send_relays && v.send_relays[0]){
-				//if(v.address == "tz-relay7:1935"){
-					//console.debug(v)
-				//}
-				v.send_relays.forEach((v2,k2)=>{
+				//存放错误的send_relays
+				var send_relays_error = {};
+				v.send_relays.forEach(function(v2,k2){
 					//console.debug(Math.max(v.bw_in,v.bw_out))
-					links.push({
-						source: v.address,
-						target: v2.address,
-						is_lan: v2.is_lan,
-						//value: Math.max(v.bw_in,v.bw_out),
+					var target,source;
+					nodes.forEach(n=>{
+						if(n.address == v2.address){
+							target = n;
+						}
+						if(n.address == v.address){
+							source = n;
+						}
 					})
+					//正常的recv_relays
+					var target_value;
+					target.recv_relays.forEach(rv=>{
+						if(rv.address == v.address){
+							target_value = rv;
+						}
+					})
+					
+					//console.debug(value,v.address)
+					if(!target_value){
+						send_relays_error.address = v.address;
+						send_relays_error.mode = v.mode;
+						send_relays_error.send_relays = v2;
+					}
+					if(target_value){
+						links.push({
+							address: v.address,
+							source: source,
+							target: target,
+							is_lan: v2.is_lan,
+							value: target_value.bw_in,
+							bw_in: target_value.bw_in,
+						})
+					}
 				})
+				if(send_relays_error.send_relays){
+					this.errorServer.push(send_relays_error)
+				}
 			}
 		})
-		links.forEach(function(link) {
-            var node,s_1,t_1;
-            node = nodes.filter(function(d,k) {
-                return d.address == link.source;
-            });
-            link.source = node && node.length ? node[0] : null;
-            node = nodes.filter(function(d,k) {
-                return d.address == link.target;
-            });
-			//console.debug(node)
-            link.target = node && node.length ? node[0] : null;
-        });
-		links = links.filter((v,k)=>{
-			return !!v.source && !!v.target; 
-		})
-		links.forEach(m=>{
+		links.forEach((m,i)=>{
 			//console.debug(nodes.indexOf(m.target))
 			m.target.recv_relays.forEach((v,k)=>{
-				m.value = v.bw_in;
-				m.bw_in = v.bw_in;
-				//console.debug(v.bw_in)
+				if(m.address == v.address){
+					//console.debug(i+"dd",m.source.address,m.target)
+					//m.value = v.bw_in;
+					//m.bw_in = v.bw_in;
+				}else{
+					//console.debug(i,m.source.mode,m.source.address,v.address)
+					//m.bw_in = v.bw_in;
+					//m.value = v.bw_in;
+				}
 			})
-			m.source = nodes.indexOf(m.source)
-			m.target = nodes.indexOf(m.target)
 		})
 		links = links.filter((v,k)=>{
 			return v.value; 

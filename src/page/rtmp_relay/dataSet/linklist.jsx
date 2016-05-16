@@ -79,6 +79,7 @@ export function dataAdapter(data){
 		d.naddress = tdata.target.address;
 		d.nip = tdata.target.ip;
 		d.bw_in = r2fn.transformToKbMbGb(tdata.bw_in);
+		//console.debug(tdata.bw_in)
 	})
 	return re;
 }
