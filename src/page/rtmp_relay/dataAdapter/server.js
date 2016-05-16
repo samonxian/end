@@ -18,7 +18,6 @@ module.exports = {
 				servers.noLink.push(v);
 			}else{
 				servers.node.push(v);
-				//console.debug(k,v.mode,v.address)
 			}
 		})
 		//console.debug(servers.node.length)
@@ -83,23 +82,7 @@ module.exports = {
 				}
 			}
 		})
-		links.forEach((m,i)=>{
-			//console.debug(nodes.indexOf(m.target))
-			m.target.recv_relays.forEach((v,k)=>{
-				if(m.address == v.address){
-					//console.debug(i+"dd",m.source.address,m.target)
-					//m.value = v.bw_in;
-					//m.bw_in = v.bw_in;
-				}else{
-					//console.debug(i,m.source.mode,m.source.address,v.address)
-					//m.bw_in = v.bw_in;
-					//m.value = v.bw_in;
-				}
-			})
-		})
-		links = links.filter((v,k)=>{
-			return v.value; 
-		})
+		
 		//console.debug(links)
 		return links;
 	},
