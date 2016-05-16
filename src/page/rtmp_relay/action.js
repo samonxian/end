@@ -18,8 +18,8 @@ function receivePosts(json,json2,json3) {
 		fetched : true,
 		isFetching : false,
         posts: json,
-		posts2: json2,
-		posts3: json3,
+        posts2: json2,
+        posts3: json3,
         receivedAt: Date.now()
 	};
 }
@@ -27,8 +27,8 @@ function receivePosts(json,json2,json3) {
 export function fetchData() {
     return dispatch => {
         dispatch(requestPosts())
-		var url = `${common.REQUESTURL}get_diagram_data/servers_last`;
-		var url2 = `${common.REQUESTURL}get_diagram_data/cameras_last`;
+		var url = `http://223.202.103.147:8077/v1/diagram/rtmp_publish`;
+		var url2 = `${common.REQUESTURL}get_diagram_data/servers_last`;
 		var url3 = `${common.REQUESTURL}get_diagram_data/app_count`;
 		Promise.all([
 			fetch(url).then(response => response.json()),
