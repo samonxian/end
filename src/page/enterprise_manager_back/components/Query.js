@@ -1,10 +1,9 @@
 import React from 'react'
 import { getEnterpriseManagerBackFetch } from '../action'
-import { Form, Select, Button, message } from 'antd'
+import { Form, Select, Button, message, Input } from 'antd'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const confirm = Modal.confirm;
 
 export let Query = React.createClass({
 	getInitialState() {
@@ -17,7 +16,6 @@ export let Query = React.createClass({
     },
 
     componentWillReceiveProps(nextProps){
-        console.log("+++++++++++++++++  nextProps",nextProps);
         const { enterpriseManagerBackList } = nextProps;
         var tempBackData = enterpriseManagerBackList["data"];
         // this.setState({

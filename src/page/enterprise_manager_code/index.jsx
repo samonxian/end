@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Table, Icon, Modal } from 'antd'
+import { Table, Icon, Modal, Row, Pagination } from 'antd'
 import { connect } from 'react-redux'
 import { Header } from '../enterprise_manager_authenticate/components/Header'
 import { Query } from './components/Query'

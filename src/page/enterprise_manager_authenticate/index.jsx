@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Table, Icon, Spin, Modal } from 'antd'
+import { Table, Icon, Spin, Modal, Row, Pagination } from 'antd'
 import { connect } from 'react-redux'
 import { Header } from './components/Header'
 import { Query } from './components/Query'

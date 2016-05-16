@@ -1,7 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { push } from 'react-router-redux'
 import React from 'react'
-import { Modal } from 'antd'
 /**
  * fetch封装 
  */
