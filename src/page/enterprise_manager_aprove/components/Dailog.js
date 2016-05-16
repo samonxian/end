@@ -1,11 +1,12 @@
 import React from 'react'
-import { Form, Button, Modal } from 'antd'
+import { Form, Button, Modal, Select, Input } from 'antd'
 import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG } from './until'
 import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch } from '../action'
 import { generateMixed, isEmptyObj } from 'libs/function'
 const createForm = Form.create;
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
+const Option = Select.Option;
 const formItemLayout = {
      labelCol: { span: 6 },
      wrapperCol: { span: 14 },

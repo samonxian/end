@@ -1,6 +1,6 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
-import { Table, Icon, Form, Select, Modal, message } from 'antd'
+import { Table, Icon, Form, Select, message, Row, Pagination, Button, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { Header } from '../enterprise_manager_authenticate/components/Header'
 import { Query } from './components/Query'

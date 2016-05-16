@@ -1,10 +1,9 @@
 import React from 'react'
-import { Form, Select, Button, message } from 'antd'
+import { Form, Select, Button, message, Input } from 'antd'
 import { getEnterpriseManagerAprovalFetch } from '../action'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const confirm = Modal.confirm;
 
 export let Query = React.createClass({
 	getInitialState() {

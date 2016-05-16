@@ -2,11 +2,10 @@ import React from 'react'
 import { ENTERPRISE_MANAGER_CODE_APP_TYPE } from './until'
 import { generateMixed } from 'libs/function'
 import { getEnterpriseManagerCodeFetch } from '../action'
-import { Form, Select, Button, message } from 'antd'
+import { Form, Select, Button, message, Input } from 'antd'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
-const confirm = Modal.confirm;
 
 export let Query = React.createClass({
 	getInitialState() {
@@ -27,11 +26,7 @@ export let Query = React.createClass({
     	var identity = getFieldValue("identity"),
             type = getFieldValue("type"),
     	    code = getFieldValue("code");
-
-        console.log("++++++++++++== type",type);
-        console.log("+++++++++++++++ identity",identity);
-        console.log("=============== code",code);
-
+            
         dispatch(getEnterpriseManagerCodeFetch({
             identity : identity,
             code : code,
