@@ -22,16 +22,14 @@ class SanKey extends Component {
 	}
 
 	componentDidUpdate(){
-		//this.svg = ReactDOM.findDOMNode(this.refs.svg_con);
+		this.svg = ReactDOM.findDOMNode(this.refs.svg_con);
 		//this.svg.style.display = "none";
 		//this.svg.innerHTML = "";
 		//this.sankey = this.getSankey();
-		//this.drawLinks();
 		//this.drawNodes();
+		//this.drawLinks();
+		//console.debug(this.sankey.links())
 		//this.svg.style.display = "block";
-		this.props.parent.cameraAdapter.makeCameraInfo(this.props.servers,this.sankey);
-		this.props.parent.cameraAdapter.renderCameraInfo(this.props.dispatch);
-		//console.debug(this.sankey.nodes())
 	}
 
 	/**
@@ -54,11 +52,12 @@ class SanKey extends Component {
 			'rgba(0,0,255,.5)', 'rgba(0,255,0,.5)', 'rgba(255,0,0,.5)'
 		]);
 		return {
+			nodelist: require('../dataSet/nodelist'),
+			linklist: require('../dataSet/linklist'),
 			getSankey(){
-				let data = _this.data;
+				let data = this.props.data;
 				let width = _this.conDom.offsetWidth - 250; 
 				let height = _this.conDom.offsetHeight - 10; 
-				//console.debug(data)
 				var sankey = d3Sankey()
 						  .nodeWidth(50)
 						  .nodePadding(20)
@@ -72,7 +71,7 @@ class SanKey extends Component {
 			 *	根据连接数获取连接线颜色
 			 */
 			getLinksColorByconns(conns){
-				let data = _this.data;
+				let data = this.props.data;
 				var min = d3.min(data.links, function(d) {
 						return d.conns;
 					}),
@@ -86,115 +85,34 @@ class SanKey extends Component {
 				return compute(conns);
 			},
 			drawLinks(){
-				let data = _this.data;
-				var path = _this.sankey.link();
-
-				var links = d3.select("#svg_con").selectAll(".link").data(data.links, function(d) {
-					return d.source.ip + " " + d.target.ip;
-				}).sort(function(a, b) {
-					return b.dy - a.dy;
-				});
-				var linksEnter = links.data(data.links).enter().append("path").attr({
-					"class": "link",
-					d: path
-				}).style("stroke-width", function (d) {
-					return Math.max(5, d.dy);
-				}).style("stroke", function(d) {
-					 //console.log(d.send_queue)
-					d.color = colorOfsend_queue(d.send_queue)
-					//d.color = colorOfConns(d.conns);
-					//d.color = _this.getLinksColorByconns(d.conns);
-					//console.debug(d.color)
-					return d.color;
-				});
-				linksEnter.append("title").text(function (d) {
-					return (d.source.ip_city + " → " + d.target.ip_city + "\n带宽:" + (d.value *
-											80 / 1024).toFixed(1).toString() + "Mb  连接数:" + d.conns
-									.toString() +" 队列数:"+ d.send_queue.toFixed(1).toString());
-				});
+				let data = this.props.data;
+				var path = this.sankey.link();
+				var links = d3.select("#svg_con").selectAll('.link')
+					.data(data.links)
+					.enter().append('path')
+					.attr('class', 'link')
+					.attr('d', path)
+					.style("stroke-width", function (d) { return Math.max(1, d.dy); })
 			},
 			drawNodes(){
-				var data = _this.data;
-				var cameraInfo = this.cameraInfo;
-				//console.debug(cameraInfo)
-				var nodes = d3.select("#svg_con").selectAll(".node")
+				var data = this.props.data;
+				var nodes = d3.select("#svg_con").selectAll('.node')
 					.data(data.nodes)
-					.enter()
-					.append("g")
+					.enter().append('rect')
 					.attr({
-						"class": "node",
-						transform: function(d) {
-							return "translate(" + d.x + "," + d.y + ")";
-						}
-					});
-				nodes.append("rect").classed('selectedServerNode', function(d) {
-					//console.debug(0)
-						return _this.props.parent.cameraAdapter.selectedServer == d.ip;
-					}).on("click", function(d) {
-						_this.props.parent.cameraAdapter.handleCameraClick(null, d.ip,_this.props.dispatch);
-					})
-					.attr({
-						height: function(d) {
-							return d.dy;
-						},
-						width: _this.sankey.nodeWidth()
-					})
-					.style({
+						'class': 'node',
+						x: function (d) { return d.x },
+						y: function (d) { return d.y },
+						height: function (d) { return d.dy; },
+						width: this.sankey.nodeWidth()
+					}).style({
 						fill: function(d) {
-							//server_color
-							var xx, frame = -1,
-								send_queue_ave = -1
-							if (cameraInfo.servers[d.ip]) {
-								console.log()
-								// now = Date.now()
-								// span = now - (new Date(cameraInfo.servers[d.ip].heart_beat_at).valueOf());
-								if(!cameraInfo.servers[d.ip].timeout){
-									frame = cameraInfo.servers[d.ip].frame;
-									send_queue_ave = cameraInfo.servers[d.ip].send_queue_ave;
-									xx = frame;
-								}
-								//不显示超时设置
-								frame = cameraInfo.servers[d.ip].frame;
-								send_queue_ave = cameraInfo.servers[d.ip].send_queue_ave;
-								send_queue_ave = cameraInfo.servers[d.ip].send_queue_ave;
-							} else {
-								return d.color = colorOfsend_queue(send_queue_ave)
-								// return d.color = colorOfFrame(frame);
-							}
-							return d.color = colorOfsend_queue(send_queue_ave);
-							// return d.color = colorOfFrame(frame);
+							return d.color = colorOfsend_queue(1)
 						},
 						stroke: function(d) {
 							return ;
 						}
 					})
-					.append("title")
-					.text(function(d) {
-						return (d.ip_city + " " + d.ip + "\n传入带宽：" + (d.download_bandwidth *
-											80 / 1024).toFixed(1).toString() + "Mb" + "\n传出带宽：" +
-										(d.bandwidth * 80 / 1024).toFixed(1).toString() + "Mb");
-					});
-				nodes.append("text")
-					.attr({
-						x: _this.sankey.nodeWidth() + 5 ,
-						y: function(d) {
-							return d.dy / 2;
-						},
-						dy: ".35em",
-						//"text-anchor": "middle",
-						transform: null
-					})
-					.text(function(d) {
-						var str = d.ip  + " " +  d.ip_city + " " + (d.download_bandwidth *
-							80 / 1024).toFixed(1).toString() + "M ";
-						if (cameraInfo.servers && cameraInfo.servers[d.ip]) {
-							// str = str + cameraInfo.servers[d.ip].frame + "fps";
-							// str = str + "q:" + (+cameraInfo.servers[d.ip].send_queue_ave).toString();
-							str = str + " q:" + (+cameraInfo.servers[d.ip].send_queue_max).toString();
-							str = str + " n:" + (+cameraInfo.servers[d.ip].publish_num).toString()
-						}
-						return str;
-					});
 			}
 		}
 	}
@@ -202,14 +120,61 @@ class SanKey extends Component {
     render() {
 		super.render();
 		var _this = this;
-		let { data,cameraInfo } = this.props;
-		this.data = data;
-		this.cameraInfo = cameraInfo;
+		let { data } = this.props;
 		if(this.state.canRender){
+			this.sankey = this.getSankey();
 			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
-				<svg viewBox="0 0 2240 940" > 
-					<g ref="svg_con" id="svg_con" transform="translate(0,40)"></g>
+				<svg viewBox="0 0 2040 940" > 
+					<g transform="translate(40,40)">
+						{
+							this.sankey.links().map((d,k)=>{
+								//console.debug(d)
+								var path = this.sankey.link();
+								var strokeWidth = Math.max(1, d.dy); 
+								var content = <Antd.Table size="small" columns={this.linklist.columns} 
+									dataSource={this.linklist.dataAdapter([d])} pagination={ false }/>
+								return (
+									<Antd.Popover key={ k } overlay={content} title={'连接信息'} trigger="hover">	
+										<g>
+											{
+												!d.is_lan &&
+												<path  className="inner-link link" d={ path(d) } strokeWidth={ strokeWidth }/>
+											}
+											{
+												d.is_lan &&
+												<path  className="outer-link link" d={ path(d) } strokeWidth={ strokeWidth }/>
+											}
+										</g>
+									</Antd.Popover>
+								)
+							})
+						}
+					</g>
+					<g transform="translate(40,40)">
+						{
+							this.sankey.nodes().map((d,k)=>{
+								//console.debug(d)
+								var width = this.sankey.nodeWidth()
+								var content = <Antd.Table size="small" columns={this.nodelist.columns} 
+									dataSource={this.nodelist.dataAdapter([d])} pagination={ false }/>
+								return (
+									<Antd.Popover overlayClassName="sankey-popover" key={ k } overlay={content} title={'节点信息'} trigger="hover">	
+										<g>
+											{
+												false &&
+												<text x={ d.x+d.dx } y={ d.y+d.dy/2+2 } dy="0.35em" style={ { fontSize: "15", } }>
+													{ d.address + d.mode }
+												</text>
+											}
+											<rect className="node" fill={ "blue" } height={ d.dy} width={ width }
+												x={ d.x } y={ d.y } key={ d.address }/>
+										</g>
+									</Antd.Popover>
+								)
+							})
+						}
+					</g>
 				</svg>	
 			)
 		}else{

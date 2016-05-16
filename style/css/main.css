@@ -1,8 +1,7 @@
 .b {
     /*border:1px solid red;*/
 }
-body {
-    background: #404040;
+body { background: #404040;
 }
 svg {
     width: 100%;
@@ -473,10 +472,15 @@ pre {
     cursor: pointer;
     fill-opacity: .9;
 }
-.link {
+.inner-link {
     fill: none;
-    stroke: #024;
-    stroke-opacity: .4;
+    stroke: #000;
+    stroke-opacity: .2;
+}
+.outer-link {
+    fill: none;
+    stroke: #fff;
+    stroke-opacity: .1;
 }
 .link:hover {
     stroke-opacity: .6;
@@ -506,6 +510,9 @@ pre {
     border: solid 1px rgba(9, 145, 224, 0.45);
     padding: 8px 8px;
     border-radius: 8px;
+}
+.sankey-popover{
+	z-index:10000000;
 }
 .rtmp_relay table {
     background: none;
@@ -560,13 +567,14 @@ pre {
 }
 .sc_top_flex {
     height: 100%;
+	width:100%;
 }
 .rtmp_relay .sc_bottom {
     flex: 1;
     margin-top:10px;
-    border: solid 1px rgba(9, 145, 224, 0.45);
-    padding: 15px 0px 0 14px;
     border-radius: 8px;
+    border: solid 1px rgba(9, 145, 224, 0.45);
+    /*padding: 15px 0px 0 14px;*/
 }
 .selectedServer {
     box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
