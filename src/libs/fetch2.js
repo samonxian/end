@@ -98,8 +98,7 @@ class Fetch1 {
 					//callback && callback(jsonArray);
 				}
 			}).catch(function(e){
-				console.error(e)
-				let msg = { };
+				dispatch(push('/user_login'));
 				// if(!_this.option.errorMessage){
 				// 	msg = {
 				// 		title: '错误提示',
