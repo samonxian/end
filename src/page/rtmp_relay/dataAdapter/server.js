@@ -54,12 +54,13 @@ module.exports = {
 					})
 					//正常的recv_relays
 					var target_value;
-					target.recv_relays.forEach(rv=>{
-						if(rv.address == v.address){
-							target_value = rv;
-						}
-					})
-					
+					if(target.recv_relays){
+						target.recv_relays.forEach(rv=>{
+							if(rv.address == v.address){
+								target_value = rv;
+							}
+						})
+					}
 					//console.debug(value,v.address)
 					if(!target_value){
 						send_relays_error.address = v.address;
@@ -67,13 +68,23 @@ module.exports = {
 						send_relays_error.send_relays = v2;
 					}
 					if(target_value){
+						//正常连线
 						links.push({
-							address: v.address,
 							source: source,
 							target: target,
 							is_lan: v2.is_lan,
 							value: target_value.bw_in,
 							bw_in: target_value.bw_in,
+							isError:false,
+						})
+					}else{
+						//错误连线
+						links.push({
+							source: source,
+							target: target,
+							value: 10000000,
+							bw_in: 0,
+							isError:true,
 						})
 					}
 				})
