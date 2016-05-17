@@ -12,11 +12,19 @@ const formItemLayout = {
 let AddBackForm = React.createClass({
     cancelBtn(){
         const { dispatch } = this.props;
-        const { resetFields } = this.props.form;
         dispatch(dailogShowData({
             visible : false
         },{}));
-        resetFields();
+    },
+
+    componentWillReceiveProps(nextProps){
+        const { resetFields } = this.props.form;
+        const { dailog_data } = nextProps;
+        if(!isEmptyObj(dailog_data) &&　!isEmptyObj(dailog_data["json"])){
+            if(!dailog_data["json"]["visible"]){
+                resetFields();
+            }
+        }
     },
 
     checkExpire(rule, value, callback) {
@@ -30,7 +38,6 @@ let AddBackForm = React.createClass({
     handleSubmit(e){
          e.preventDefault();
         const { dispatch } = this.props;
-        const { resetFields } = this.props.form;
         this.props.form.validateFields((errors, values) => {
              console.log(errors);
              if (!!errors) {
@@ -42,7 +49,6 @@ let AddBackForm = React.createClass({
                  expire : new Date(values["expire"]).getTime(),
                  description :　values["description"]
              }));
-             resetFields();
         });
     },
 
@@ -138,6 +144,10 @@ export const Dailog = React.createClass({
     	this.setState({
 		     visible: false
 		});
+        const { dispatch } = this.props;
+        dispatch(dailogShowData({
+            visible : false
+        },{}));
     }, 
 
     render(){

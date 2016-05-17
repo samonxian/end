@@ -18,6 +18,16 @@ let AddBackForm = React.createClass({
         }
     },
 
+    componentWillReceiveProps(nextProps){
+        const { resetFields } = this.props.form;
+        const { dailog_data } = nextProps;
+        if(!isEmptyObj(dailog_data)){
+            if(!dailog_data["visible"]["hidden"]){
+                 resetFields();
+            }
+        }
+    },
+
     handleChanageId(e){
         this.setState({
             alloc_type : e
@@ -26,14 +36,12 @@ let AddBackForm = React.createClass({
 
     cancelBtn(){
         const { dispatch } = this.props;
-        const { resetFields } = this.props.form;
         dispatch(enterpriseManagerAprovalDailog({
             hidden : false 
         },{}));
         this.setState({
             alloc_type : 1
         });
-        resetFields();
     },
     
     validatorStartStr(rule, value, callback){
@@ -82,7 +90,6 @@ let AddBackForm = React.createClass({
     handleSubmit(e){
          e.preventDefault();
         const { dispatch, dailog_data } = this.props;
-        const { resetFields } = this.props.form;
         this.props.form.validateFields((errors, values) => {
              if (!!errors) {
                  console.log('Errors in form!!!');
@@ -107,7 +114,6 @@ let AddBackForm = React.createClass({
              this.setState({
                 alloc_type : 1
              });
-             resetFields();
         });
     },
 
@@ -231,7 +237,6 @@ export const Dailog = React.createClass({
     componentWillReceiveProps(nextProps){
     	const { dailog_data } = nextProps;
         if(!isEmptyObj(dailog_data)){
-            console.log("============= dailog_data",dailog_data);
             this.setState({
                  visible: dailog_data["visible"]["hidden"]
             });
@@ -245,9 +250,13 @@ export const Dailog = React.createClass({
     },
 
     handleCancel(){
+        const { dispatch } = this.props;
     	this.setState({
 		     visible: false
 		});
+        dispatch(enterpriseManagerAprovalDailog({
+            hidden : false 
+        },{}));
     }, 
 
     render(){

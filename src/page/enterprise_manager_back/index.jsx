@@ -57,7 +57,7 @@ class enterpriseManagerBack extends Component{
     			var  title = '',
     			     content = '',
     			     status = data["status"];
-    			if(status === 1){
+    			if(status === 0){
     				title = '你确定要解禁该APP ID么？';
     				content = '';
     			}else{
@@ -92,16 +92,17 @@ class enterpriseManagerBack extends Component{
 
 	render(){
 		var dataList = [],
+		    defaultCurrent = 0,
+		    total = 0,
 		    tips = {};
 		const { enterpriseManagerBackList, dailog_data, dispatch } = this.props;
         
-        console.log("enterpriseManagerBackList",enterpriseManagerBackList);
-		if(isEmptyObj(enterpriseManagerBackList)){
-			return false;
+		if(!isEmptyObj(enterpriseManagerBackList)){
+			defaultCurrent = enterpriseManagerBackList["data"]["data"]["current"];
+			total = enterpriseManagerBackList["data"]["data"]["total"] ;
+			dataList = this.adapterDataList(enterpriseManagerBackList["data"]["data"]["blacklist"]);
 		}
 
-        dataList = this.adapterDataList(enterpriseManagerBackList["data"]["data"]["blacklist"],status);
-        console.log("+++++++++++++++= dailog_data",dailog_data);
         if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && dailog_data["json"]["status"]){
         	tips = {
 				visible : true,
@@ -121,7 +122,7 @@ class enterpriseManagerBack extends Component{
 		   	    }
 			}
         }
-        console.log("+++++++++++++++++ enterpriseManagerBackList",enterpriseManagerBackList);
+
 		return (
 			<div>
 			     <Header { ... this.props }/>
@@ -141,8 +142,8 @@ class enterpriseManagerBack extends Component{
 			     <div className="footer">
 					<Row type="flex" justify="end">
 					     <Pagination onChange={ this.turnPage } 
-					         defaultCurrent={ enterpriseManagerBackList["data"]["data"]["current"] } 
-					         total={ enterpriseManagerBackList["data"]["data"]["total"] } />
+					         current ={ defaultCurrent } 
+					         total={ total } />
 					</Row>
 				 </div>
                  <Dailog { ...this.props }/>

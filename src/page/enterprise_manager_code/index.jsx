@@ -59,15 +59,17 @@ class enterpriseManagerCode extends Component{
 	}
 
 	render(){
-		var dataList = [];
+		var dataList = [],
+		    defaultCurrent = 0,
+		    total = 0;
 		const { enterpriseManagerCodeList } = this.props;
 
-		if(isEmptyObj(enterpriseManagerCodeList)){
-			return false;
+		if(!isEmptyObj(enterpriseManagerCodeList)){
+			defaultCurrent = enterpriseManagerCodeList["data"]["data"]["current"];
+			total = enterpriseManagerCodeList["data"]["data"]["total"];
+			dataList = this.adapterDataList(enterpriseManagerCodeList["data"]["data"]["apps"]);
 		}
-		console.log("enterpriseManagerCodeList",enterpriseManagerCodeList);
 
-        dataList = this.adapterDataList(enterpriseManagerCodeList["data"]["data"]["apps"]);
 		return (
 			<div>
 			     <Header { ... this.props }/>
@@ -80,8 +82,9 @@ class enterpriseManagerCode extends Component{
 			     <div className="footer">
 					<Row type="flex" justify="end">
 					     <Pagination onChange={ this.turnPage } 
-					         defaultCurrent={ enterpriseManagerCodeList["data"]["data"]["current"] } 
-					         total={ enterpriseManagerCodeList["data"]["data"]["total"] } />
+					         defaultCurrent={ defaultCurrent } 
+					         current = { defaultCurrent }
+					         total={ total } />
 					</Row>
 				 </div>
 			</div>)
@@ -89,7 +92,6 @@ class enterpriseManagerCode extends Component{
 }
 
 function mapStateToProps(state){
-	console.log("init",state);
 	return {
 	    enterpriseManagerCodeList : state.enterpriseManagerCodeList
 	};
