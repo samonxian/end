@@ -145,6 +145,10 @@ class SanKey extends Component {
 												d.is_lan &&
 												<path  className="outer-link link" d={ path(d) } strokeWidth={ strokeWidth }/>
 											}
+											{
+												d.isError &&
+												<path  className="error-link link" d={ path(d) } strokeWidth={ strokeWidth }/>
+											}
 										</g>
 									</Antd.Popover>
 								)
