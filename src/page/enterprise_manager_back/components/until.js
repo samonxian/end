@@ -21,7 +21,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		title: '本次禁用过期时间',
 		dataIndex: 'expire',
 		render : function(text,record){
-			return <span>{ new Date(text).Format('yyyy-MM-dd hh:mm:ss') }</span>
+			return <span>{ new Date(text*1000).Format('yyyy-MM-dd hh:mm:ss') }</span>
 		}
      },
      {

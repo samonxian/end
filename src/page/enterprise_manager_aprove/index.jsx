@@ -96,17 +96,17 @@ class enterpriseManagerAprove extends Component{
 		    aprovalCls = '',
 		    aprovaledCls = '',
 		    tips = {},
+		    defaultCurrent = 0,
+		    total = 0,
 		    status = 0;
 		const { enterpriseManagerAprovalList, dailog_data, dispatch } = this.props;
 
-		if(isEmptyObj(enterpriseManagerAprovalList)){
-			return false;
+		if(!isEmptyObj(enterpriseManagerAprovalList)){
+			defaultCurrent = enterpriseManagerAprovalList["data"]["data"]["current"];
+			total = enterpriseManagerAprovalList["data"]["data"]["total"];
+			status = enterpriseManagerAprovalList["data"]["aproval_status"];
+            dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
 		}
-
-		console.log("enterpriseManagerAprovalList",enterpriseManagerAprovalList);
-
-        status = enterpriseManagerAprovalList["data"]["aproval_status"];
-        dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
 		
 		if(status === 0){
 			aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin enterprise_manager_type_current'
@@ -162,8 +162,9 @@ class enterpriseManagerAprove extends Component{
 			     <div className="footer">
 					<Row type="flex" justify="end">
 					     <Pagination onChange={ this.turnPage } 
-					         defaultCurrent={ enterpriseManagerAprovalList["data"]["data"]["current"] } 
-					         total={ enterpriseManagerAprovalList["data"]["data"]["total"] } />
+					         defaultCurrent={ defaultCurrent } 
+					         current = { defaultCurrent }
+					         total={ total } />
 					</Row>
 				 </div>
 			     <Dailog { ...this.props }/>

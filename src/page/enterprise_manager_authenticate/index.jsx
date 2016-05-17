@@ -115,14 +115,18 @@ class enterpriseManagerAuthenticate extends Component{
 	render(){
 		var dataList = [],
 		    aprovalCls = '',
+		    defaultCurrent = 0,
 		    tips = {},
+		    total = 0,
 		    aprovaledCls = '';
 		const { enterpriseManagerList, dailogData, enterpriseManagerAproval, dispatch } = this.props;
         
-		if(enterpriseManagerList["data"] === undefined ||isEmptyObj(enterpriseManagerList)){
-			return false;
+		if(!isEmptyObj(enterpriseManagerList) && enterpriseManagerList["data"] !== undefined){
+			defaultCurrent = enterpriseManagerList["data"]["data"]["current"];
+			total = enterpriseManagerList["data"]["data"]["total"];
+			dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
 		}
-		console.log("====== enterpriseManagerAproval",enterpriseManagerAproval);
+		
         if(!isEmptyObj(enterpriseManagerAproval) && !isEmptyObj(enterpriseManagerAproval["data"])){
         	tips = {
 				visible : true,
@@ -142,8 +146,6 @@ class enterpriseManagerAuthenticate extends Component{
 			}
         }
 
-        dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
-        console.log("++++++++++++++ enterpriseManagerList",enterpriseManagerList);
 		return (
 			<div>
 			     <Header { ... this.props }/>
@@ -155,8 +157,9 @@ class enterpriseManagerAuthenticate extends Component{
 			     <div className="footer">
 					<Row type="flex" justify="end">
 					     <Pagination onChange={ this.turnPage } 
-					         defaultCurrent={ enterpriseManagerList["data"]["data"]["current"] } 
-					         total={ enterpriseManagerList["data"]["data"]["total"] } />
+					         defaultCurrent={ defaultCurrent } 
+					         current = { defaultCurrent }
+					         total={ total } />
 					</Row>
 				 </div>
 			     <Dailog { ...this.props }/>
