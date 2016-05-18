@@ -126,7 +126,7 @@ class SanKey extends Component {
 			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
 				<svg viewBox="0 0 2040 940" > 
-					<g transform="translate(40,40)">
+					<g transform="translate(120,20)">
 						{
 							this.sankey.links().map((d,k)=>{
 								//console.debug(d)
@@ -135,7 +135,7 @@ class SanKey extends Component {
 								var content = <Antd.Table size="small" columns={this.linklist.columns} 
 									dataSource={this.linklist.dataAdapter([d])} pagination={ false }/>
 								return (
-									<Antd.Popover key={ k } overlay={content} title={'连接信息'} trigger="hover">	
+									<Antd.Popover key={ k } overlay={content} title={'连接信息'} trigger="click">	
 										<g>
 											{
 												!d.is_lan &&
@@ -155,7 +155,7 @@ class SanKey extends Component {
 							})
 						}
 					</g>
-					<g transform="translate(40,40)">
+					<g transform="translate(120,20)">
 						{
 							this.sankey.nodes().map((d,k)=>{
 								//console.debug(d)
@@ -163,7 +163,7 @@ class SanKey extends Component {
 								var content = <Antd.Table size="small" columns={this.nodelist.columns} 
 									dataSource={this.nodelist.dataAdapter([d])} pagination={ false }/>
 								return (
-									<Antd.Popover overlayClassName="sankey-popover" key={ k } overlay={content} title={'节点信息'} trigger="hover">	
+									<Antd.Popover overlayClassName="sankey-popover" key={ k } overlay={content} title={'节点信息'} trigger="click">	
 										<g>
 											{
 												false &&
@@ -171,7 +171,7 @@ class SanKey extends Component {
 													{ d.address + d.mode }
 												</text>
 											}
-											<rect className="node" fill={ "blue" } height={ d.dy} width={ width }
+											<rect className="node" fill={ "rgba(45, 183, 245, 0.40)" } height={ d.dy} width={ width }
 												x={ d.x } y={ d.y } key={ d.address }/>
 										</g>
 									</Antd.Popover>
