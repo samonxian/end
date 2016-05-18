@@ -36,7 +36,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 			if(record["status"] ===2){
 				return <span className = "color_blue" onClick = { ()=>backOptFun(record) }>解禁</span>
 			}else{
-				return <span className = "color_red"　onClick = { ()=>backOptFun(record) }>禁用</span>
+				return <span className = "color_red" onClick = { ()=>backOptFun(record) }>禁用</span>
 			}
 			
 		}

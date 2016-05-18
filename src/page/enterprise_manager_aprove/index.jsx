@@ -95,6 +95,7 @@ class enterpriseManagerAprove extends Component{
 		var dataList = [],
 		    aprovalCls = '',
 		    aprovaledCls = '',
+		    loading = true,
 		    tips = {},
 		    defaultCurrent = 0,
 		    total = 0,
@@ -106,6 +107,7 @@ class enterpriseManagerAprove extends Component{
 			total = enterpriseManagerAprovalList["data"]["data"]["total"];
 			status = enterpriseManagerAprovalList["data"]["aproval_status"];
             dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
+            loading = false;
 		}
 		
 		if(status === 0){
@@ -158,6 +160,7 @@ class enterpriseManagerAprove extends Component{
 			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
 			            dataSource={ dataList } 
 			            bordered
+			            loading = { loading }
 			            pagination={false} />
 			     <div className="footer">
 					<Row type="flex" justify="end">

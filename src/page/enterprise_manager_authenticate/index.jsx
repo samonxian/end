@@ -118,6 +118,7 @@ class enterpriseManagerAuthenticate extends Component{
 		    defaultCurrent = 0,
 		    tips = {},
 		    total = 0,
+		    loading = true,
 		    aprovaledCls = '';
 		const { enterpriseManagerList, dailogData, enterpriseManagerAproval, dispatch } = this.props;
         
@@ -125,6 +126,7 @@ class enterpriseManagerAuthenticate extends Component{
 			defaultCurrent = enterpriseManagerList["data"]["data"]["current"];
 			total = enterpriseManagerList["data"]["data"]["total"];
 			dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
+			loading = false;
 		}
 		
         if(!isEmptyObj(enterpriseManagerAproval) && !isEmptyObj(enterpriseManagerAproval["data"])){
@@ -153,6 +155,7 @@ class enterpriseManagerAuthenticate extends Component{
 			     <Table columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
 			          dataSource={ dataList } 
 			          bordered
+			          loading = { loading }
 			          pagination={false} />
 			     <div className="footer">
 					<Row type="flex" justify="end">

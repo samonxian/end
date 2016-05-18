@@ -98,7 +98,7 @@ class Fetch1 {
 					//callback && callback(jsonArray);
 				}
 			}).catch(function(e){
-				dispatch(push('/user_login'));
+				//dispatch(push('/user_login'));
 				// if(!_this.option.errorMessage){
 				// 	msg = {
 				// 		title: '错误提示',
