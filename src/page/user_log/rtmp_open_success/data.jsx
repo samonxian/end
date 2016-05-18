@@ -63,19 +63,19 @@ export let columns = [
 		}
 	},
 	{
-		title: '连接０号转发服务器时间',
+		title: 'tcp连接时间',
 	},
 	{
-		title: '连接１号转发服务器时间',
+		title: 'rtmp 握手时间',
 	},
 	{
-		title: '连接２号转发服务器时间',
+		title: 'rtmp协议链接时间',
 	},
 	{
-		title: '第一次收到包时间',
+		title: '第一个包时间',
 	},
 	{
-		title: '第一次开流时间',
+		title: '第一帧时间',
 	},
 ];
 
