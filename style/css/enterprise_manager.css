@@ -76,3 +76,16 @@
 .enterprise_manager_table td .color_blue{
 	cursor: pointer;
 }
+.enterprise_manager_code_table_padding.color_blue,.enterprise_manager_code_table_padding.color_red{
+	cursor: pointer;
+}
+.enterprise_manager_code_dailog{
+	margin: 0 10px;
+}
+.enterprise_manager_code_dailog span.dailog_span{
+	display: inline-block;
+	font-weight: bold;
+	color:red;
+	margin: 0 5px;
+	font-size: 14px;
+}

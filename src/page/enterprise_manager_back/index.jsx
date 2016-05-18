@@ -94,6 +94,7 @@ class enterpriseManagerBack extends Component{
 		var dataList = [],
 		    defaultCurrent = 0,
 		    total = 0,
+		    loading = true,
 		    tips = {};
 		const { enterpriseManagerBackList, dailog_data, dispatch } = this.props;
         
@@ -101,6 +102,7 @@ class enterpriseManagerBack extends Component{
 			defaultCurrent = enterpriseManagerBackList["data"]["data"]["current"];
 			total = enterpriseManagerBackList["data"]["data"]["total"] ;
 			dataList = this.adapterDataList(enterpriseManagerBackList["data"]["data"]["blacklist"]);
+			loading = false;
 		}
 
         if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && dailog_data["json"]["status"]){
@@ -138,6 +140,7 @@ class enterpriseManagerBack extends Component{
 			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
 			            dataSource={ dataList } 
 			            bordered 
+			            loading = { loading }
 			            pagination={false}/>
 			     <div className="footer">
 					<Row type="flex" justify="end">

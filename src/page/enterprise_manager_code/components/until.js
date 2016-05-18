@@ -43,5 +43,17 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 			            <div className = "enterprise_manager_code_table_colpse">{ record["state_webhook"] }</div>
 			       </div>
 		}
+     },
+     {
+		title: '操作',
+		dataIndex: 'status',
+		render : function(text ,record){
+			var optFun = record["optStatus"];
+			if(text === 0){
+				return <span href="#" className = "enterprise_manager_code_table_padding color_blue" onClick = { ()=>optFun(record)}>启用</span>;
+			}else if(text === 1){
+				return <span href="#" className = "enterprise_manager_code_table_padding color_red" onClick = { ()=>optFun(record)}>禁用</span>;
+			}
+		}
      }
 ]
