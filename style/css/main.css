@@ -501,6 +501,7 @@ pre {
 .rtmp_relay {
     display: flex;
     width: 100%;
+    flex-flow: column;
 }
 .rtmp_relay .rt_left {
     width: 60%;
@@ -580,11 +581,10 @@ pre {
 .sc_top_flex {
     height: 100%;
 	width:100%;
-    flex-flow: column;
 	/*z-index:100000;*/
 }
 .rtmp_relay .sc_bottom {
-    flex: 1;
+    flex: .5;
     margin-top:10px;
     /*border-radius: 8px;*/
     /*border: solid 1px rgba(9, 145, 224, 0.45);*/

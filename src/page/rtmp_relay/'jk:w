@@ -53,9 +53,6 @@ class SanKey extends Component {
 		]);
 		return {
 			nodelist: require('../dataSet/nodelist'),
-			nodelist2: require('../dataSet/nodelist2'),
-			nodelist3: require('../dataSet/nodelist3'),
-			nodelist4: require('../dataSet/nodelist4'),
 			linklist: require('../dataSet/linklist'),
 			getSankey(){
 				let data = this.props.data;
@@ -129,11 +126,6 @@ class SanKey extends Component {
 			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
 				<svg width={ this.conDom.offsetWidth } height={ this.conDom.offsetHeight } > 
-					<radialGradient id="isp">
-						<stop stopColor="rgba(45, 183, 245, 0.40)" offset="0"/>
-						<stop stopColor="rgba(135, 208, 104, 0.38)" offset="1"/>
-						<animate attributeName="fy" dur="700ms" from="90%" to="0%" repeatCount="indefinite" />
-					</radialGradient>
 					<g transform="translate(0,0)" >
 						{
 							this.sankey.links().map((d,k)=>{
@@ -168,74 +160,39 @@ class SanKey extends Component {
 							this.sankey.nodes().map((d,k)=>{
 								//console.debug(d)
 								var width = this.sankey.nodeWidth()
-								var style = {
-									margin: "10px 0",
-								}
-								var content = (
-									<div>
-										<Antd.Table size="small" columns={this.nodelist.columns} 
-											dataSource={this.nodelist.dataAdapter([d])} pagination={ false }/>
-										<h3 style={ style }> </h3>
-										<Antd.Table size="small" columns={this.nodelist2.columns} 
-											dataSource={this.nodelist2.dataAdapter([d])} pagination={ false }/>
-										{
-											d.other_recv && d.other_recv.bytes_in &&
-											<div>
-												<h3 style={ style }>从外部服务接收数据的信息</h3>
-												<Antd.Table size="small" columns={this.nodelist3.columns} 
-													dataSource={this.nodelist3.dataAdapter([d.other_recv])} pagination={ false }/>
-											</div>
-										}
-										{
-											d.other_send && d.other_send.down_conn &&
-											<div>
-												<h3 style={ style }>发送到外部服务的信息</h3>
-												<Antd.Table size="small" columns={this.nodelist4.columns} 
-													dataSource={this.nodelist4.dataAdapter([d.other_send])} pagination={ false }/>
-											</div>
-										}
-									</div>
-								) 
+								var content = <Antd.Table size="small" columns={this.nodelist.columns} 
+									dataSource={this.nodelist.dataAdapter([d])} pagination={ false }/>
 								var node_bg = "rgba(45, 183, 245, 0.40)";
 								switch(d.isp){
 									case "电信":
-										//蓝色
 										node_bg = "rgba(45, 183, 245, 0.40)";
 										break;
 									case "联通":
-										//绿色
 										node_bg = "rgba(135, 208, 104, 0.38)";
 										break;
 									case "电信联通":
-										node_bg = "url(#isp)";
+										node_bg = "";
 										break;
 								}
 								return (
-									<g key={ k }>
-										<Antd.Popover overlayClassName="sankey-popover"  
-												overlay={content} title={'节点信息'} trigger="click">	
+									<Antd.Popover overlayClassName="sankey-popover" key={ k } overlay={content} title={'节点信息'} trigger="click">	
+										<g>
 											<rect className="node" fill={node_bg} height={ d.dy } width={ width }
 												x={ d.x } y={ d.y } key={ d.address }/>
-										</Antd.Popover>
-										{
-											true &&
-											<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" style={ { fontSize: "15", } }>
-												{ d.address }
-											</text>
-										}
-										{
-											true &&
-											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: "15", } }>
-												{ r2fn.transformToKbMbGb(d.bw_in) }
-											</text>
-										}
-										{
-											true &&
-											<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: "15", } }>
-												{ d.queues_ave + " / "+ d.queues_95peak +" / " + d.queues_peak}
-											</text>
-										}
-									</g>
+											{
+												true &&
+												<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" style={ { fontSize: "15", } }>
+													{ d.address }
+												</text>
+											}
+											{
+												true &&
+												<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: "15", } }>
+													{ r2fn.transformToKbMbGb(d.bw_in) }
+												</text>
+											}
+										</g>
+									</Antd.Popover>
 								)
 							})
 						}

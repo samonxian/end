@@ -34,7 +34,7 @@ export let columns = [
 		}
 	},
 	{
-		title: 'mode',
+		title: '服务器角色',
 		dataIndex: 'mode',
 	},
 	{

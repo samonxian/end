@@ -79,7 +79,7 @@ class RtmpRelay extends Component {
 				<div>
 					<h2>公众摄像机转发服务器运行监控</h2>
 					<Antd.Row className="rt_con  rtmp_relay">
-						<Antd.Col className="rt_left relative">
+						<Antd.Col className="sc_top">
 							{
 								posts && posts.data[0] &&
 								<SanKey dispatch={ this.props.dispatch } data={ sankeyData } parent={ _this }/>
@@ -89,23 +89,12 @@ class RtmpRelay extends Component {
 								<Antd.Alert message="暂无数据" type="info" showIcon closable/>
 							}
 						</Antd.Col>
-						<Antd.Col className="rt_right">
-							<Antd.Row type="" justify="start"  className="">
-								<Antd.Col className="sc_top relative" >
-									<Antd.Table className="" size="small"
-											columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
-									<br/>
-									<Antd.Table className="" size="small"
-											columns={user_columns} dataSource={user_dataSource} pagination={false} />
-								</Antd.Col>
-								<Antd.Col className="sc_bottom">
-									{
-										serverAdapter.errorServer[0] &&
-										<Antd.Table className="" size="small"
-												columns={error_columns} dataSource={error_dataSource} defaultPageSize={5} pageSize={5} />
-									}
-								</Antd.Col>
-							</Antd.Row>
+						<Antd.Col className="sc_bottom">
+							<Antd.Table className="" size="small"
+									columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
+							<br/>
+							<Antd.Table className="" size="small"
+									columns={user_columns} dataSource={user_dataSource} pagination={false} />
 						</Antd.Col>
 						
 					</Antd.Row>
