@@ -126,7 +126,7 @@ class user_log_query extends Component {
 			return (
 				<Sidebar location={location} >
 					<Form />	
-						<div>
+					<div style={ { marginTop: "15px", } }>
 							{
 								posts2._id &&
 								<div>

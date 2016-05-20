@@ -76,38 +76,29 @@ class RtmpRelay extends Component {
 						error_dataSource = errorServerDataSet.dataAdapter(serverAdapter.errorServer);
 				}
 			return (
-				<Antd.Row className="rt_con  rtmp_relay">
+				<div>
 					<h2>公众摄像机转发服务器运行监控</h2>
-					<Antd.Col className="sc_top relative">
-						<Antd.Row type="flex" justify="start"  className="absolute sc_top_flex">
-							<Antd.Col className="rt_left relative svg_con" >
-								{
-									posts && posts.data[0] &&
-									<SanKey dispatch={ this.props.dispatch } data={ sankeyData } parent={ _this }/>
-								}
-								{
-									posts && posts.data && !posts.data[0] &&
-									<Antd.Alert message="暂无数据" type="info" showIcon closable/>
-								}
-							</Antd.Col>
-							<Antd.Col className="rt_right">
-								<Antd.Table className="" size="small"
-										columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
-								<br/>
-								<Antd.Table className="" size="small"
-										columns={user_columns} dataSource={user_dataSource} pagination={false} />
-							</Antd.Col>
-						</Antd.Row>
-					</Antd.Col>
-					<Antd.Col className="sc_bottom">
-						{
-							serverAdapter.errorServer[0] &&
+					<Antd.Row className="rt_con  rtmp_relay">
+						<Antd.Col className="sc_top">
+							{
+								posts && posts.data[0] &&
+								<SanKey dispatch={ this.props.dispatch } data={ sankeyData } parent={ _this }/>
+							}
+							{
+								posts && posts.data && !posts.data[0] &&
+								<Antd.Alert message="暂无数据" type="info" showIcon closable/>
+							}
+						</Antd.Col>
+						<Antd.Col className="sc_bottom">
 							<Antd.Table className="" size="small"
-									columns={error_columns} dataSource={error_dataSource} defaultPageSize={5} pageSize={5} />
-						}
-					</Antd.Col>
-					
-				</Antd.Row>
+									columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
+							<br/>
+							<Antd.Table className="" size="small"
+									columns={user_columns} dataSource={user_dataSource} pagination={false} />
+						</Antd.Col>
+						
+					</Antd.Row>
+				</div>
 			)
 		}
 		return (

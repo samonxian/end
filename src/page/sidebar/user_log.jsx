@@ -59,7 +59,7 @@ class user_log_sidebar extends React.Component {
 			active = this.active;
 		}
 		return (
-			<div>
+			<div className="user-log">
 				<Tabs defaultActiveKey={active.toString() } 
 						onChange={this.callback.bind(this)} type="card">
 					<TabPane tab="日志查询" key="other">

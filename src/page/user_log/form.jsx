@@ -35,7 +35,8 @@ class form extends React.Component {
 		let { form } = this.props;
 		let params = form;
         return (
-			<Form inline onSubmit={this.handleSubmit.bind(this)}>
+			<Form style={ { marginBottom:"15px", }
+			}inline onSubmit={this.handleSubmit.bind(this)}>
 
 				<FormItem>
 					<Input name="log_uid"  placeholder="请输入UID" onChange={this.setUidValue.bind(this)}

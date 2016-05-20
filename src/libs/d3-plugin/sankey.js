@@ -104,6 +104,7 @@ module.exports = function() {
         nodes.forEach(function(node) {
             node.value = Math.max(
                 d3.sum(node.sourceLinks, value),
+				73000000*2,
                 d3.sum(node.targetLinks, value)
             );
         });
