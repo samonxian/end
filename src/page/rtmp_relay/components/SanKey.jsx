@@ -22,14 +22,6 @@ class SanKey extends Component {
 	}
 
 	componentDidUpdate(){
-		this.svg = ReactDOM.findDOMNode(this.refs.svg_con);
-		//this.svg.style.display = "none";
-		//this.svg.innerHTML = "";
-		//this.sankey = this.getSankey();
-		//this.drawNodes();
-		//this.drawLinks();
-		//console.debug(this.sankey.links())
-		//this.svg.style.display = "block";
 	}
 
 	/**

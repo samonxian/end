@@ -69,7 +69,6 @@ module.exports = {
 					}
 					if(target_value){
 						//正常连线
-						//console.debug(target_value.bw_in)
 						links.push({
 							source: source,
 							target: target,
