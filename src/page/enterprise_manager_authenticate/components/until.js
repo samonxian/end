@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from 'antd'
 
-export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
+export const ENTERPRISE_MANAGER_AUTHENTICATE_TABLE = [
      {
 		title: '邮箱',
 		dataIndex: 'manager_email'
@@ -26,6 +26,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		title: '申请时间',
 		dataIndex: 'created',
 		render: function(text ,record){
+			console.log("========================= text",text);
 			return <span>{ new Date(text).Format('yyyy-MM-dd hh:mm:ss') }</span>
 		}
      },
@@ -46,7 +47,7 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 				return <span className = "color_blue" onClick = { ()=>aprivalFun(record) }>审核</span>
 			}else if(record["status"] === 1){
 				return <span className = "color_green">同意</span>
-			}else if(record["status"] === 2){
+			}else if(idrecord["status"] === 2){
 				return <span className = "color_red">拒绝</span>
 			}
 		}

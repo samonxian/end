@@ -15,7 +15,7 @@ export let Query = React.createClass({
     },
 
     componentWillReceiveProps(nextProps){
-        const { enterpriseManagerList } = this.props;
+        const { enterpriseManagerList } = nextProps;
         this.setState({
             code : enterpriseManagerList["data"]["code"]
         })
