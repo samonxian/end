@@ -346,7 +346,8 @@ pre {
     height: 100%;
     top: 0;
     left: 0;
-    background: url('../img/background.jpg') 0 0;
+    background: url('../img/background.jpg') no-repeat 0 0;
+	background-size:cover;
     width: 100%;
 }
 .rt_con table {
