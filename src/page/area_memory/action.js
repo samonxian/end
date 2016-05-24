@@ -30,7 +30,6 @@ export function fetchAreaMemoryDetailData(json){
 
 export function fetchAreaMemoryData() {
     return dispatch => {
-        dispatch(areaMemoryReq())
         return fetch('http://120.26.74.53/api/disc_monitor/area_stat?return_type=json')
             .then(response => response.json())
             .then(json => dispatch(areaMemoryRespone(json)))

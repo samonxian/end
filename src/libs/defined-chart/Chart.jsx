@@ -25,9 +25,7 @@ export const Chart = React.createClass({
         var preserveAspectRatio = _props.preserveAspectRatio;
         var children = _props.children;
         var style = _props.style;
-        
-        console.log("Chart render =====================================================");
-        console.log(children)
+
         return React.createElement(
             "svg",
             { ref: "svg", width: width, height: height, viewBox: viewBox, 

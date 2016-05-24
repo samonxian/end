@@ -45,11 +45,13 @@ export const Dialog = React.createClass({
 
     render(){
         const { keyId , dispatch, dialogData, totalCapacity} = this.props
-        let showUsed = ''
+        let showUsed = '',
+            sort = null;
+
         if(dialogData["values"].length){
             showUsed = <div className="used_time"><span className="used_start_time">开始使用时间：{dialogData["values"][0]["x"]}</span><span>最后使用使时间：{dialogData["values"][dialogData["values"].length-2]["x"]}</span></div>
         }
-        
+
     	return (<div>
     		    <a href="#" onClick={(keyId,dispatch)=>this.showStorestatus(keyId,dispatch)}>存储状态</a>
     		    <Modal title="磁盘存储状态" okText="确认" className="new_index_disk_model" cancelText="取消" width={582} onOk={this.handleOk} onCancel={this.handleCancel} visible={this.state.visible}>
@@ -63,7 +65,9 @@ export const Dialog = React.createClass({
                         height={450}
                         tooltipOffset={{top: 0, left: 500}}
                         tooltipHtml={this.tooltipPie}
+                        tooltipMode = { "element" }
                         viewBox = { "0,0,550,450" }
+                        sort={ sort }
                         style = {{ width:'550px',height:'450px' }} />
     		    </Modal>
     		</div>)

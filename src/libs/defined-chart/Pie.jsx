@@ -90,7 +90,6 @@ var DataSet = React.createClass({
             );
         });
         
-        console.log("11111111111111111111111111111111111111111");
         return React.createElement(
             "g",
             null,

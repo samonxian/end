@@ -39,8 +39,6 @@ var Tooltip = React.createClass({
             pointerEvents: "none"
         };
         
-        console.log("================================ tooltip render :");
-        
         return React.createElement(
             "div",
             { className: "tooltip", style: style },
