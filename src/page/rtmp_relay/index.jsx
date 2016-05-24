@@ -7,6 +7,7 @@ import * as actionCreator from './action'
 import SanKey from './components/SanKey'
 import * as deviceCameraDataSet from './dataSet/device_camera'
 import * as deviceUserDataSet from './dataSet/device_user'
+import * as errorServerDataSet from './dataSet/errorlist'
 
 class RtmpRelay extends Component {
 	constructor(){
@@ -45,10 +46,9 @@ class RtmpRelay extends Component {
 	dataAdapter(){
 		var _this = this;
 		var serverAdapter = require('./dataAdapter/server')
-		var cameraAdapter = require('./dataAdapter/camera')
 		return {
 			serverAdapter,
-			cameraAdapter,
+			//nodelist,
 		}; 
 	}
 
@@ -58,33 +58,47 @@ class RtmpRelay extends Component {
 		let { rtmp_relay } = this.props;
 		let { posts,posts2,posts3 } = rtmp_relay;
 		if(posts){
-			let serverAdapter = this.serverAdapter,
-				cameraAdapter = this.cameraAdapter,
-				servers = serverAdapter.transJsonToServers(posts.datas),
-				sankeyData = serverAdapter.makeSankeyData(servers),
+			let serverAdapter = this.serverAdapter;
+			var server = serverAdapter.getSortServers(posts),
+				sankeyNode = serverAdapter.getNodeData(),
+				sankeyLink = serverAdapter.getLinkData(),
+				sankeyData = { 
+					nodes: sankeyNode, 
+					links: sankeyLink, 
+				},
 				camera_columns = deviceCameraDataSet.columns,
-				camera_dataSource = deviceCameraDataSet.dataAdapter(posts.device_count),
+				camera_dataSource = deviceCameraDataSet.dataAdapter(posts2.device_count),
 				user_columns = deviceUserDataSet.columns,
-				user_dataSource = deviceUserDataSet.dataAdapter(posts.device_count,posts3);
-			cameraAdapter.getServers(posts.datas);
-			cameraAdapter.getCameras(posts.datas,posts2.datas);
-			//cameraAdapter.makeCameraInfo(servers,sankeyData);
-			//console.debug(cameraAdapter.cameras)
+				user_dataSource = deviceUserDataSet.dataAdapter(posts2.device_count,posts3);
+				if(serverAdapter.errorServer){
+					//console.debug(serverAdapter.errorServer)
+					var error_columns = errorServerDataSet.columns,
+						error_dataSource = errorServerDataSet.dataAdapter(serverAdapter.errorServer);
+				}
 			return (
-				<Antd.Row className="rt_con  rtmp_relay">
+				<div>
 					<h2>公众摄像机转发服务器运行监控</h2>
-					<Antd.Col className="sc_top relative">
-						<Antd.Row type="flex" justify="start"  className="absolute sc_top_flex">
-							<Antd.Col className="rt_right">
-								<Antd.Table className="" size="small"
-										columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
-								<br/>
-								<Antd.Table className="" size="small"
-										columns={user_columns} dataSource={user_dataSource} pagination={false} />
-							</Antd.Col>
-						</Antd.Row>
-					</Antd.Col>
-				</Antd.Row>
+					<Antd.Row className="rt_con  rtmp_relay">
+						<Antd.Col className="sc_top">
+							{
+								posts && posts.data[0] &&
+								<SanKey dispatch={ this.props.dispatch } data={ sankeyData } parent={ _this }/>
+							}
+							{
+								posts && posts.data && !posts.data[0] &&
+								<Antd.Alert message="暂无数据" type="info" showIcon closable/>
+							}
+						</Antd.Col>
+						<Antd.Col className="sc_bottom">
+							<Antd.Table className="" size="small"
+									columns={camera_columns} dataSource={camera_dataSource} pagination={false} />
+							<br/>
+							<Antd.Table className="" size="small"
+									columns={user_columns} dataSource={user_dataSource} pagination={false} />
+						</Antd.Col>
+						
+					</Antd.Row>
+				</div>
 			)
 		}
 		return (

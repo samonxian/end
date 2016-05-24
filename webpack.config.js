@@ -1,4 +1,5 @@
 var webpack = require('webpack')
+var path = require('path')
 var uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 /**
@@ -39,6 +40,7 @@ module.exports = {
 	resolve: {
 		alias: {
 			'.fr': __dirname + '/.fr/',
+			'r2': path.resolve(__dirname,'src/libs/r2'),
 			'frontend': __dirname + '/.fr/generator/frontend',
 			'css': __dirname + '/style/css/',
 			'img': __dirname + '/style/img/',

@@ -1,8 +1,7 @@
 .b {
     /*border:1px solid red;*/
 }
-body {
-    background: #404040;
+body { background: #404040;
 }
 svg {
     width: 100%;
@@ -30,7 +29,12 @@ pre {
     z-index:10000;
 }
 /**overide ant**/
-
+.ant-popover{
+	z-index:1000000;
+}
+.ant-form-inline .ant-input {
+    width: 100%;
+}
 .ant-tabs-nav .ant-tabs-tab {
     height: auto;
 }
@@ -202,7 +206,9 @@ pre {
 /**
  *user_log
  */
-
+.user-log h2{
+	color:#000;
+}
 .icon_down {
     font-size: 11px;
     margin-right: 0;
@@ -352,6 +358,7 @@ pre {
 }
 .rt_right {
     flex: 1;
+	margin-left:5px;
 }
 .rt_color_line {
     position: relative;
@@ -473,10 +480,20 @@ pre {
     cursor: pointer;
     fill-opacity: .9;
 }
-.link {
+.error-link {
     fill: none;
-    stroke: #024;
-    stroke-opacity: .4;
+    stroke: red;
+	/*stroke-opacity: .3;*/
+}
+.inner-link {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: 0.09;
+}
+.outer-link {
+    fill: none;
+    stroke: #fff;
+    stroke-opacity: 0.09;
 }
 .link:hover {
     stroke-opacity: .6;
@@ -506,6 +523,9 @@ pre {
     border: solid 1px rgba(9, 145, 224, 0.45);
     padding: 8px 8px;
     border-radius: 8px;
+}
+.sankey-popover{
+	z-index:10000000;
 }
 .rtmp_relay table {
     background: none;
@@ -560,13 +580,16 @@ pre {
 }
 .sc_top_flex {
     height: 100%;
+	width:100%;
+    flex-flow: column;
+	/*z-index:100000;*/
 }
 .rtmp_relay .sc_bottom {
-    flex: 1;
+    flex: .5;
     margin-top:10px;
-    border: solid 1px rgba(9, 145, 224, 0.45);
-    padding: 15px 0px 0 14px;
-    border-radius: 8px;
+    /*border-radius: 8px;*/
+    /*border: solid 1px rgba(9, 145, 224, 0.45);*/
+    /*padding: 15px 0px 0 14px;*/
 }
 .selectedServer {
     box-shadow: inset -2px 0 5px green, 0 -2px 5px blue, 0 2px 5px red, 2px 0 5px yellow;
