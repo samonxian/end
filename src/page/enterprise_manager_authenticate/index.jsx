@@ -6,7 +6,7 @@ import { Header } from './components/Header'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { Tips } from 'libs/react-libs/Tips'
-import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
+import { ENTERPRISE_MANAGER_AUTHENTICATE_TABLE } from './components/until'
 import { getEnterpriseManagerFetch, 
 	     authenticateDailog, 
 	     aprovalEnterpriseAuthenicateFetch,
@@ -113,7 +113,7 @@ class enterpriseManagerAuthenticate extends Component{
 	}
 
 	render(){
-		var dataList = [],
+		var authenticateList = [],
 		    aprovalCls = '',
 		    defaultCurrent = 0,
 		    tips = {},
@@ -125,11 +125,14 @@ class enterpriseManagerAuthenticate extends Component{
 		if(!isEmptyObj(enterpriseManagerList) && enterpriseManagerList["data"] !== undefined){
 			defaultCurrent = enterpriseManagerList["data"]["data"]["current"];
 			total = enterpriseManagerList["data"]["data"]["total"];
-			dataList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
+			authenticateList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
 			loading = false;
 		}
+
+		console.log("================================== enterpriseManagerAproval",enterpriseManagerAproval);
 		
         if(!isEmptyObj(enterpriseManagerAproval) && !isEmptyObj(enterpriseManagerAproval["data"])){
+        	console.log(234);
         	tips = {
 				visible : true,
 				title : enterpriseManagerAproval["data"]["message"],
@@ -152,8 +155,8 @@ class enterpriseManagerAuthenticate extends Component{
 			<div>
 			     <Header { ... this.props }/>
 			     <Query { ... this.props }/>
-			     <Table columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 
-			          dataSource={ dataList } 
+			     <Table columns={ ENTERPRISE_MANAGER_AUTHENTICATE_TABLE } 
+			          dataSource={ authenticateList } 
 			          bordered
 			          loading = { loading }
 			          pagination={false} />
