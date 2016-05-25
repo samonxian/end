@@ -128,11 +128,8 @@ class enterpriseManagerAuthenticate extends Component{
 			authenticateList = this.adapterDataList(enterpriseManagerList["data"]["data"]["identities"]);
 			loading = false;
 		}
-
-		console.log("================================== enterpriseManagerAproval",enterpriseManagerAproval);
 		
         if(!isEmptyObj(enterpriseManagerAproval) && !isEmptyObj(enterpriseManagerAproval["data"])){
-        	console.log(234);
         	tips = {
 				visible : true,
 				title : enterpriseManagerAproval["data"]["message"],

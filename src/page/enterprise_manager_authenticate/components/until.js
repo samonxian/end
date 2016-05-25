@@ -47,7 +47,7 @@ export const ENTERPRISE_MANAGER_AUTHENTICATE_TABLE = [
 				return <span className = "color_blue" onClick = { ()=>aprivalFun(record) }>审核</span>
 			}else if(record["status"] === 1){
 				return <span className = "color_green">同意</span>
-			}else if(idrecord["status"] === 2){
+			}else if(record["status"] === 2){
 				return <span className = "color_red">拒绝</span>
 			}
 		}
