@@ -190,7 +190,8 @@ class ChinaMap extends Component {
 								var c_data = city_s_setting.dataAdapter(value.RelayServer);
 								//console.debug(cityPosition[value.City])
 								if(!cityPosition[value.City]){
-									return <span key={key}></span>
+									console.debug(value.City+"这个城市还没有坐标数据")
+									return <g key={key}></g>
 								}
 								var path = _this.projection(cityPosition[value.City])
 								var content = <Antd.Table size="small" columns={city_s_setting.columns} 
