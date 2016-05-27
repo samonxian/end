@@ -29,20 +29,6 @@ class SanKey extends Component {
 	 */
 	dataAdapter(){
 		var _this = this;
-		let props = this.props;
-		var colorOfFrame = d3.scale.threshold().domain([0, 6, 11, 16]).range(['rgba(255,255,255,.6)',
-			'rgba(219,84,64,1)', 'rgba(250,167,1,1)', 'rgba(47,213,238,1)',
-			'rgba(10,137,40,1)'
-		]);
-		var colorOfRecivetime = d3.scale.threshold().domain([0, 1000, 2000, 3000]).range(['rgba(255,255,255,.6)',
-			'rgba(10,137,40,1)', 'rgba(47,213,238,1)', 'rgba(250,167,1,1)','rgba(219,84,64,1)'
-		]);
-		var colorOfsend_queue = d3.scale.threshold().domain([0,10, 64, 128]).range(['rgba(255,255,255,.6)',
-			'rgb(7, 88, 22)', 'rgb(47,213,238)', 'rgb(250,167,1)','rgb(219,84,64)'
-		]);
-		var colorOfConns = d3.scale.threshold().domain([0, 10, 50]).range(['rgba(0,0,0,.3)',
-			'rgba(0,0,255,.5)', 'rgba(0,255,0,.5)', 'rgba(255,0,0,.5)'
-		]);
 		return {
 			nodelist: require('../dataSet/nodelist'),
 			nodelist2: require('../dataSet/nodelist2'),
@@ -62,53 +48,6 @@ class SanKey extends Component {
 						  .layout(32);
 				return sankey;
 			},
-			/**
-			 *	根据连接数获取连接线颜色
-			 */
-			getLinksColorByconns(conns){
-				let data = this.props.data;
-				var min = d3.min(data.links, function(d) {
-						return d.conns;
-					}),
-					max = d3.max(data.links, function(d) {
-						return d.conns;
-					});
-				var colorop = d3.scale.linear().domain([min, max]).range([0.25, .75]);
-				var a = d3.rgb(255, 0, 0); //红色
-				var b = d3.rgb(0, 255, 0); //绿色
-				var compute = d3.interpolate(a, b);
-				return compute(conns);
-			},
-			drawLinks(){
-				let data = this.props.data;
-				var path = this.sankey.link();
-				var links = d3.select("#svg_con").selectAll('.link')
-					.data(data.links)
-					.enter().append('path')
-					.attr('class', 'link')
-					.attr('d', path)
-					.style("stroke-width", function (d) { return Math.max(1, d.dy); })
-			},
-			drawNodes(){
-				var data = this.props.data;
-				var nodes = d3.select("#svg_con").selectAll('.node')
-					.data(data.nodes)
-					.enter().append('rect')
-					.attr({
-						'class': 'node',
-						x: function (d) { return d.x },
-						y: function (d) { return d.y },
-						height: function (d) { return d.dy; },
-						width: this.sankey.nodeWidth()
-					}).style({
-						fill: function(d) {
-							return d.color = colorOfsend_queue(1)
-						},
-						stroke: function(d) {
-							return ;
-						}
-					})
-			}
 		}
 	}
 
@@ -121,11 +60,10 @@ class SanKey extends Component {
 			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
 				<svg width={ this.conDom.offsetWidth } height={ this.conDom.offsetHeight } > 
-					<radialGradient id="isp">
+					<linearGradient id="isp">
 						<stop stopColor="rgba(45, 183, 245, 0.40)" offset="0"/>
 						<stop stopColor="rgba(135, 208, 104, 0.38)" offset="1"/>
-						<animate attributeName="fy" dur="700ms" from="90%" to="0%" repeatCount="indefinite" />
-					</radialGradient>
+					</linearGradient>
 					<g transform="translate(0,0)" >
 						{
 							this.sankey.links().map((d,k)=>{
@@ -201,6 +139,9 @@ class SanKey extends Component {
 									case "电信联通":
 										node_bg = "url(#isp)";
 										break;
+								}
+								if(d.timeout){
+									node_bg ="rgba(0, 0, 0, 0.2)";
 								}
 								return (
 									<g key={ k }>
