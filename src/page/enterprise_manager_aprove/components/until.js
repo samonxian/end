@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ENTERPRISE_MANAGER_APROVAL_TYPE = ["","摄像头","用户","A类","B类","C类"]
+const ENTERPRISE_MANAGER_APROVAL_TYPE = ["","观看用户","推流用户"]
 
 export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
      {
@@ -28,15 +28,15 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		dataIndex: 'total'
      },
      {
-		title: '已经使用的ID数量',
-		dataIndex: 'used'
-     },
-     {
-		title: 'ID段类型',
-		dataIndex: 'type',
-		render : function(text,record){
+		title: '新ID段用途',
+		dataIndex: 'usage_type',
+		render: function(text,record){
 			return <span>{ ENTERPRISE_MANAGER_APROVAL_TYPE[text]}</span>
 		}
+     },
+     {
+		title: '新ID段类型',
+		dataIndex: 'num_type'
      },
      {
 		title: '创建时间',

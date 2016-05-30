@@ -14,16 +14,71 @@ const formItemLayout = {
 let AddBackForm = React.createClass({
     getInitialState(){
         return {
-            alloc_type : 1
+            alloc_type : 1,
+            num_type : 1,
+            mask_str: "255.0.0.0"
+        }
+    },
+
+    componentWillMount(){
+        const { dailog_data } = this.props;
+        var type = "",
+            type_value = "";
+        if(!isEmptyObj(dailog_data)){
+            type = dailog_data["json"]["num_type"];
+            if(type === "A"){
+                type_value = "255.0.0.0"
+            }
+
+            if(type === "B"){
+                type_value = "255.255.0.0"
+            }
+
+            if(type === "C"){
+                type_value = "255.255.255.0"
+            }
+
+            this.setState({
+                num_type : dailog_data["json"]["usage_type"],
+                mask_str: type_value
+            })
         }
     },
 
     componentWillReceiveProps(nextProps){
         const { resetFields } = this.props.form;
         const { dailog_data } = nextProps;
+
+        console.log("==================== dailog_data",dailog_data);
+
         if(!isEmptyObj(dailog_data)){
             if(!dailog_data["visible"]["hidden"]){
                  resetFields();
+                 this.setState({
+                    alloc_type : 1,
+                    num_type : 1,
+                    mask_str: "255.0.0.0"
+                 })
+            }
+            if(this.state.num_type === 1 && this.state.mask_str === "255.0.0.0" && dailog_data["visible"]["hidden"]){
+                var type = dailog_data["json"]["num_type"],
+                    type_value = "";
+                if(type === "A"){
+                    type_value = "255.0.0.0"
+                }
+
+                if(type === "B"){
+                    type_value = "255.255.0.0"
+                }
+
+                if(type === "C"){
+                    type_value = "255.255.255.0"
+                }
+
+                this.setState({
+                    num_type : dailog_data["json"]["usage_type"],
+                    mask_str: type_value
+                })
             }
         }
     },
@@ -31,6 +86,18 @@ let AddBackForm = React.createClass({
     handleChanageId(e){
         this.setState({
             alloc_type : e
+        })
+    },
+
+    handleChangeMaskStr(e){
+        this.setState({
+            mask_str : e
+        })
+    },
+
+    handleChangeType(e){
+        this.setState({
+            num_type : e
         })
     },
 
@@ -98,17 +165,18 @@ let AddBackForm = React.createClass({
 
              var id = dailog_data["json"]["id"],
                  data = {};
-             if(values["alloc_type"] === 1){
+             if(this.state.alloc_type === 1){
                  data["start_str"] = values["start_str"];
-                 data["mask_str"] = values["mask_str"];
+                 data["mask_str"] = this.state.mask_str;
              }else{
                  data["start"] = parseInt(values["start"]);
                  data["end"] = parseInt(values["end"]);
              }
+             
              dispatch(enterpriseManagerAprovalAgreeFetch({
                  id : id,
-                 type : values["type"],
-                 alloc_type : values["alloc_type"],
+                 usage_type : this.state.num_type,
+                 alloc_type : this.state.alloc_type,
                  data : data
              }));
              this.setState({
@@ -142,10 +210,9 @@ let AddBackForm = React.createClass({
                      {...formItemLayout}
                      label="ID段的分配掩码：">
                      <Select 
-                         { ...getFieldProps('mask_str',{
-                                 initialValue : "255.0.0.0"
-                             })
-                         }
+                         { ...getFieldProps('mask_str',{}) }
+                         value = { this.state.mask_str }
+                         onChange = { this.handleChangeMaskStr }
                          style={{ width: "284px" }}>
                          <Option value= "255.0.0.0">A类</Option>
                          <Option value= "255.255.0.0">B类</Option>
@@ -194,13 +261,11 @@ let AddBackForm = React.createClass({
                      {...formItemLayout}
                      label="ID段类型：">
                      <Select 
-                         { ...getFieldProps('type',{
-                                initialValue : 1
-                            }) 
-                         }
+                         value = { this.state.num_type }
+                         onChange = { this.handleChangeType }
                          style={{ width: "284px" }}>
-                         <Option value={ 1 }>摄像头</Option>
-                         <Option value={ 2 }>用户</Option>
+                         <Option value={ 1 }>观看用户</Option>
+                         <Option value={ 2 }>推流用户</Option>
                      </Select>
                 </FormItem>
                 <FormItem
@@ -261,7 +326,7 @@ export const Dailog = React.createClass({
 
     render(){
     	return (
-            <Modal title="新增黑名单" 
+            <Modal title="CID段审核" 
                  className = "enterprise_manager_back_dailog"
                  visible={this.state.visible}
 	             onOk={this.handleOk} 
