@@ -283,7 +283,7 @@ class CameraStat extends Component {
 									</Antd.Col>
 									<Antd.Col className="g_c_s_col g_c_s_col_2">
 										<div className="g_c_s_title"> 
-											<span>收看</span>
+											<span>推流状况</span>
 										</div>	
 										<svg >
 											<g transform="translate(2,10)">
@@ -291,15 +291,15 @@ class CameraStat extends Component {
 														outerRadius={ radius } />
 												<rect x={0} y={rightBar_h_gap * 3 - 4} width={20} height={20} fill={ dataset.fill[0] }/>
 												<text x="23" y={rightBar_h_gap * 3 + 10} >
-													{ v.total_info.view_health + '人' }
+													{ v.total_info.view_health + '' }
 												</text>
 												<rect x={0} y={rightBar_h_gap * 4 - 4} width={20} height={20} fill={ dataset.fill[1] }/>
 												<text x="23" y={rightBar_h_gap * 4 + 10} >
-													{ v.total_info.view_subhealth + '人' }
+													{ v.total_info.view_subhealth + '' }
 												</text>
 												<rect x={0} y={rightBar_h_gap * 5 - 4} width={20} height={20} fill={ dataset.fill[2] }/>
 												<text x="23" y={rightBar_h_gap * 5 + 10} >
-													{ v.total_info.view_unhealth + '人' }
+													{ v.total_info.view_unhealth + '' }
 												</text>
 											</g>
 										</svg>
