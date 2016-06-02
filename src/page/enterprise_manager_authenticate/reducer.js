@@ -30,7 +30,7 @@ export function enterpriseManagerAuthenticateAproval(state={},action){
 	}
 }
 
-export function enterpriseAuthenticateDailog(state={visible: false},action){
+export function enterpriseAuthenticateDailog(state={param : {visible: false}},action){
 	switch(action.type){
 		case ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG : 
 		     return Object.assign({},state, action);

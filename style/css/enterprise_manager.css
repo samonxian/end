@@ -89,3 +89,6 @@
 	margin: 0 5px;
 	font-size: 14px;
 }
+.enterprise_manager_authenticate_daliog .ant-modal-footer{
+	display: none;
+}

@@ -52,6 +52,8 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 			if(record["status"] === 0){
 				var aprovalFun = record["aprovalFun"];
 				return <span className = "color_blue" onClick = { ()=> aprovalFun(record) }>审核</span>
+			}else if(record["status"] === 3){
+				return <span className = "color_red">拒绝</span>
 			}else{
 				return <span className = "color_green">使用中</span>
 			}
