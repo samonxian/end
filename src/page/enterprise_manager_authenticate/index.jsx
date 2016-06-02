@@ -93,10 +93,11 @@ class enterpriseManagerAuthenticate extends Component{
 				});
 			},
 			openImageFun(url){
-				// const { dispatch } = _this.props;
-				// dispatch(authenticateDailog({
-				// 	url : url
-				// }));
+				const { dispatch } = _this.props;
+				dispatch(authenticateDailog({
+					url : url,
+					visible : true
+				}));
 			},
 			turnPage(n){
 				const { dispatch, enterpriseManagerList } = this.props;

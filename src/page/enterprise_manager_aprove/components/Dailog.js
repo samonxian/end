@@ -49,8 +49,6 @@ let AddBackForm = React.createClass({
         const { resetFields } = this.props.form;
         const { dailog_data } = nextProps;
 
-        console.log("==================== dailog_data",dailog_data);
-
         if(!isEmptyObj(dailog_data)){
             if(!dailog_data["visible"]["hidden"]){
                  resetFields();

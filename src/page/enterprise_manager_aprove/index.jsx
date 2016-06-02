@@ -7,7 +7,7 @@ import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { Tips } from 'libs/react-libs/Tips'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
-import { getEnterpriseManagerAprovalFetch, enterpriseManagerAprovalDailog }  from './action'
+import { getEnterpriseManagerAprovalFetch, enterpriseManagerAprovalDailog, enterpriseManagerAprovallCancelFetch }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 
 const FormItem = Form.Item;
@@ -51,9 +51,36 @@ class enterpriseManagerAprove extends Component{
 		return {
 			aprovalFun(data){
 				const { dispatch } = _this.props;
-				dispatch(enterpriseManagerAprovalDailog({
-					hidden : true
-				},data));
+				var title = <span>您正在处理以下用户的CID段申请</span>,
+				    content = <div><p><span>企业名称：</span>{ data["identity"] }</p>
+				                   <p><span>企业代号：</span>{ data["code"] }</p>
+				                   <p><span>APP ID：</span>{ data["app_id"] }</p></div>;
+				confirm({
+				     title: title,
+				     content: content,
+				     okText : "同意",
+				     cancelText : "拒绝",
+				     onOk() {
+				        dispatch(enterpriseManagerAprovalDailog({
+							hidden : true
+						},data));
+				     },
+				     onCancel() {
+				     	var refuse = <span>您确定要<span className="color_red">拒绝</span>该用户的CID段申请么？</span>
+				    	confirm({
+						    title: refuse,
+						    cancelText: '取消',
+						    okText: '确定',
+						    onOk() {
+						        dispatch(enterpriseManagerAprovallCancelFetch({
+						       	   id : data["id"]
+						        }))
+						    },
+						    onCancel() {}
+						});
+				     },
+				});
+				
 			},
 			enterpriseAproval(){
 				const { dispatch } = _this.props;
@@ -77,6 +104,17 @@ class enterpriseManagerAprove extends Component{
 					aproval_status : 1
 				}));
 			},
+			enterpriseAprovaledDis(){
+				const { dispatch } = _this.props;
+				dispatch(getEnterpriseManagerAprovalFetch({
+					page : 1,
+					size : 10,
+					app_id : '',
+					app_code : '',
+					identity : '',
+					aproval_status : 3
+				}));
+			},
 			turnPage(n){
 				const { dispatch, enterpriseManagerAprovalList } = _this.props;
 				dispatch(getEnterpriseManagerAprovalFetch({
@@ -95,6 +133,7 @@ class enterpriseManagerAprove extends Component{
 		var dataList = [],
 		    aprovalCls = '',
 		    aprovaledCls = '',
+		    aprovalDisCls = '',
 		    loading = true,
 		    tips = {},
 		    defaultCurrent = 0,
@@ -112,10 +151,16 @@ class enterpriseManagerAprove extends Component{
 		
 		if(status === 0){
 			aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin enterprise_manager_type_current'
-			aprovaledCls = 'enterprise_manager_type_cls'
+			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin'
+			aprovalDisCls = 'enterprise_manager_type_cls'
+		}else if(status === 3){
+			aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin'
+			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin'
+			aprovalDisCls = 'enterprise_manager_type_cls enterprise_manager_type_current'
 		}else{
 			aprovalCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin'
-			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_current'
+			aprovaledCls = 'enterprise_manager_type_cls enterprise_manager_type_btn_margin enterprise_manager_type_current'
+			aprovalDisCls = 'enterprise_manager_type_cls'
 		}
 
 		if(!isEmptyObj(dailog_data) && !isEmptyObj(dailog_data["json"]) && !dailog_data["visible"]["hidden"]){
@@ -155,6 +200,11 @@ class enterpriseManagerAprove extends Component{
 			            htmlType="button" 
 			            className = { aprovaledCls }>
 			            <Icon type="folder-open" />已审核</Button>
+			        <Button type="primary" 
+			            onClick = { this.enterpriseAprovaledDis }
+			            htmlType="button" 
+			            className = { aprovalDisCls }>
+			            <Icon type="folder-open" />未通过</Button>
 			     </div>
 			     <Table className = "enterprise_manager_table"
 			            columns={ ENTERPRISE_MANAGER_TABLE_ENTERPRISE } 

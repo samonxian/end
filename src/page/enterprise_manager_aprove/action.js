@@ -56,3 +56,15 @@ export function enterpriseManagerAprovalAgreeFetch(reddit){
         },null);
     }
 }
+
+export function enterpriseManagerAprovallCancelFetch(reddit){
+    var url = REQUESTURL+'/dev/v1/partitions/'+reddit["id"]
+    return dispatch => {
+        r3fetch({
+             urls:[url],
+             method: 'DELETE'
+        }).fetch(dispatch,enterpriseManagerAprovalDailog,{
+            hidden : false
+        },null);
+    }
+}
