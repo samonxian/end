@@ -7,7 +7,10 @@ import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { Tips } from 'libs/react-libs/Tips'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
-import { getEnterpriseManagerAprovalFetch, enterpriseManagerAprovalDailog, enterpriseManagerAprovallCancelFetch }  from './action'
+import { getEnterpriseManagerAprovalFetch, 
+	     enterpriseManagerAprovalDailog, 
+	     enterpriseManagerAprovalAvalibale,
+	     enterpriseManagerAprovallCancelFetch }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 
 const FormItem = Form.Item;
@@ -61,6 +64,9 @@ class enterpriseManagerAprove extends Component{
 				     okText : "同意",
 				     cancelText : "拒绝",
 				     onOk() {
+				     	dispatch(enterpriseManagerAprovalAvalibale({
+				     		type : data["num_type"]
+				     	}));
 				        dispatch(enterpriseManagerAprovalDailog({
 							hidden : true
 						},data));
@@ -145,6 +151,51 @@ class enterpriseManagerAprove extends Component{
 			defaultCurrent = enterpriseManagerAprovalList["data"]["data"]["current"];
 			total = enterpriseManagerAprovalList["data"]["data"]["total"];
 			status = enterpriseManagerAprovalList["data"]["aproval_status"];
+			// if(!enterpriseManagerAprovalList["data"]["data"]["partitions"].length){
+			// 	enterpriseManagerAprovalList["data"]["data"]["partitions"] = [{
+			// 		 id : 1000,
+	  //                status : 1,
+	  //                app_id : "Test",
+	  //                code : "demoapp",
+	  //                identity : "深圳羚羊极速科技有限公司",
+	  //                start : 536936448,
+	  //                end : 537001983,
+	  //                total : 65535,
+	  //                used : 35,
+	  //                usage_type : 1,
+	  //                num_type : "A",
+	  //                approve_time : "2016-03-14T11:19:36Z",
+	  //                created : "2016-04-11T12:30:30Z"
+			// 	},{
+			// 		 id : 10001,
+	  //                status : 1,
+	  //                app_id : "Test",
+	  //                code : "demoapp",
+	  //                identity : "深圳羚羊极速科技有限公司",
+	  //                start : 536936448,
+	  //                end : 537001983,
+	  //                total : 65535,
+	  //                used : 35,
+	  //                usage_type : 1,
+	  //                num_type : "B",
+	  //                approve_time : "2016-03-14T11:19:36Z",
+	  //                created : "2016-04-11T12:30:30Z"
+			// 	},{
+			// 		 id : 10003,
+	  //                status : 1,
+	  //                app_id : "Test",
+	  //                code : "demoapp",
+	  //                identity : "深圳羚羊极速科技有限公司",
+	  //                start : 536936448,
+	  //                end : 537001983,
+	  //                total : 65535,
+	  //                used : 35,
+	  //                usage_type : 1,
+	  //                num_type : "B",
+	  //                approve_time : "2016-03-14T11:19:36Z",
+	  //                created : "2016-04-11T12:30:30Z"
+			// 	}]
+			// }
             dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
             loading = false;
 		}
@@ -229,6 +280,7 @@ class enterpriseManagerAprove extends Component{
 function mapStateToProps(state){
 	return {
 	    enterpriseManagerAprovalList : state.enterpriseManagerAprovalList,
+	    enterpriseManagerAprovalAvalible : state.enterpriseManagerAprovalAvaliable,
         dailog_data : state.enterpriseManagerAprovalDailog,
 	};
 }
