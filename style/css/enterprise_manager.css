@@ -92,3 +92,27 @@
 .enterprise_manager_authenticate_daliog .ant-modal-footer{
 	display: none;
 }
+.enterprise_manager_authenticate_daliog .ant-modal-header{
+	display: none;
+}
+#img_view_layout_container{
+	background-color: rgba(55, 55, 55, 0.6);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+#img_view_loading_content{
+	background: #fff;
+	position: absolute;
+	width: 80px;
+	height: 30px;
+	top:50%;
+	left: 50%;
+	margin-top: -15px;
+	margin-left: -40px;
+	padding:10px;
+	text-align: center;
+	border-radius: 5px;
+}

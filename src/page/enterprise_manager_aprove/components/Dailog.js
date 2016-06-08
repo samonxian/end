@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Button, Modal, Select, Input, Row } from 'antd'
 import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG } from './until'
-import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch } from '../action'
+import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch, enterpriseManagerAprovalAvalibale } from '../action'
 import { generateMixed, isEmptyObj } from 'libs/function'
 const createForm = Form.create;
 const FormItem = Form.Item;
@@ -16,6 +16,9 @@ let AddBackForm = React.createClass({
         return {
             alloc_type : 1,
             num_type : 1,
+            start_str : "",
+            isInit : true,
+            start_str_status : "validating",
             mask_str: "255.0.0.0"
         }
     },
@@ -47,20 +50,26 @@ let AddBackForm = React.createClass({
 
     componentWillReceiveProps(nextProps){
         const { resetFields } = this.props.form;
-        const { dailog_data } = nextProps;
+        const { dailog_data, enterpriseManagerAprovalAvalible } = nextProps;
+        let aprovalAvalible = this.props.enterpriseManagerAprovalAvalible;
+
+        console.log("=================================== aprovalAvalible",aprovalAvalible);
+        console.log("============================== enterpriseManagerAprovalAvalible",enterpriseManagerAprovalAvalible);
 
         if(!isEmptyObj(dailog_data)){
             if(!dailog_data["visible"]["hidden"]){
                  resetFields();
                  this.setState({
                     alloc_type : 1,
-                    num_type : 1,
+                    num_type : 1, 
+                    isInit : true,
                     mask_str: "255.0.0.0"
                  })
-            }
-            if(this.state.num_type === 1 && this.state.mask_str === "255.0.0.0" && dailog_data["visible"]["hidden"]){
+            } 
+            if(this.state.isInit && this.state.num_type === 1 && this.state.mask_str === "255.0.0.0" && dailog_data["visible"]["hidden"]){
                 var type = dailog_data["json"]["num_type"],
                     type_value = "";
+
                 if(type === "A"){
                     type_value = "255.0.0.0"
                 }
@@ -75,8 +84,23 @@ let AddBackForm = React.createClass({
 
                 this.setState({
                     num_type : dailog_data["json"]["usage_type"],
-                    mask_str: type_value
+                    mask_str: type_value,
+                    isInit : false
                 })
+            }
+        }
+
+        if(!isEmptyObj(enterpriseManagerAprovalAvalible)){
+            if(isEmptyObj(aprovalAvalible)){
+                this.setState({
+                    start_str_status :　"success",
+                    start_str: enterpriseManagerAprovalAvalible["data"]["data"]["start_str"]
+                });
+            }else if(aprovalAvalible["data"]["data"]["start_str"] != enterpriseManagerAprovalAvalible["data"]["data"]["start_str"]){
+                this.setState({
+                    start_str_status :　"success",
+                    start_str: enterpriseManagerAprovalAvalible["data"]["data"]["start_str"]
+                });
             }
         }
     },
@@ -88,9 +112,24 @@ let AddBackForm = React.createClass({
     },
 
     handleChangeMaskStr(e){
+        const { dispatch } = this.props;
         this.setState({
-            mask_str : e
-        })
+            mask_str : e,
+            start_str_status :　"validating" 
+        });
+        var type = "";
+        if(e === "255.0.0.0"){
+            type = "A";
+        }
+        if(e === "255.255.0.0"){
+            type = "B";
+        }
+        if(e === "255.255.255.0"){
+            type = "C";
+        }
+        dispatch(enterpriseManagerAprovalAvalibale({
+            type : type
+        }));
     },
 
     handleChangeType(e){
@@ -115,10 +154,22 @@ let AddBackForm = React.createClass({
             console.log("value",value);
             if(exp.test(value)){
                 callback();
+                this.setState({
+                    start_str : value,
+                    start_str_status : "success"
+                });
             }else{
+                this.setState({
+                    start_str : value,
+                    start_str_status : "error"
+                });
                 callback('请输入正确的IP地址！');
             }
         }else{
+            this.setState({
+                start_str : value,
+                start_str_status : "error"
+            });
             callback("");
         }
     },
@@ -185,6 +236,8 @@ let AddBackForm = React.createClass({
 
     render(){
         const { getFieldProps } = this.props.form;
+        const { enterpriseManagerAprovalAvalible } = this.props;
+
         var htlArr = [];
 
         if(this.state.alloc_type === 1){
@@ -192,8 +245,10 @@ let AddBackForm = React.createClass({
                 <FormItem
                      {...formItemLayout}
                      hasFeedback
+                     validateStatus = { this.state.start_str_status }
                      label="ID段起始字符：">
                      <Input { ...getFieldProps('start_str',{
+                        initialValue : this.state.start_str,
                         rules: [
                             { 
                                  required: true, 
@@ -202,7 +257,9 @@ let AddBackForm = React.createClass({
                             },{ 
                                  validator: this.validatorStartStr
                             }
-                        ]}) } placeholder="请输入起始段字符" />
+                        ]}) } 
+                        value = { this.state.start_str }
+                        placeholder="请输入起始段字符" />
                 </FormItem>
                 <FormItem
                      {...formItemLayout}
