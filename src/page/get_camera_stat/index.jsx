@@ -233,7 +233,7 @@ class CameraStat extends Component {
 							_this.sortCamerasByViewMumAndPTrafficDesc(v.cameras);
 							//console.debug(v.cameras)
 							return (
-								<Antd.Row key={ k } type="flex" justify="start">
+								<Antd.Row key={ k } type="flex" justify="start" className="relative">
 									{
 										max_summary.map(function(m_v,m_k){
 											let style = {

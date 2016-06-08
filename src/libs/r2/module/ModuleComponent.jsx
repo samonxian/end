@@ -1,5 +1,7 @@
 import React from 'react'
 import BasicComponent from './BasicComponent'
+
+var commonAction = r2ActionCreator;
 /**
  *	页面模块都应该继承这个类，该类继承越本框架最基层的BasicComponent。该封装了框架模块常用方法，路由参数（有改动），设置表单值
  * @var {r2Params} 解析react-router参数id所带的参数，参考本类中的方法getParamsOfId
@@ -73,6 +75,7 @@ class ModuleComponent extends BasicComponent {
 				}
 			},
 			value: _this.props.formInput[inputid], 
+			defaultChecked: !!_this.props.formInput[inputid], 
 		}
 	}
 
