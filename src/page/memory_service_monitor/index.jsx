@@ -393,7 +393,7 @@ class memoryMonitor extends Component{
 		const { memoryServiceData, dispatch } = this.props;
 
 		dispatch(fetchMemoryServiceMonitorData());
-		setInterval(function(){
+		this.clearInt = setInterval(function(){
 			dispatch(fetchMemoryServiceMonitorData());
 		},30*1000)
 	}
@@ -407,6 +407,7 @@ class memoryMonitor extends Component{
 		this.pieWidth = contentWith*0.9166666667*0.2083333333;
 		this.lineWidth = contentWith*0.9166666667*0.7916666667;
 		this.myScroll = null;
+		clearInterval(this.clearInt);
 		//dispatch(fetchMemoryServiceMonitorData());
     }
 
