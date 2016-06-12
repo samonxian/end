@@ -91,11 +91,26 @@ export const Dailog = React.createClass({
     },
 
     componentWillReceiveProps(nextProps){
+        var _this = this;
         const { dailogData } = nextProps;
         if(!isEmptyObj(dailogData)){
             this.setState({
                 visible: dailogData["param"]["visible"]
-            })
+            });
+            if(dailogData["param"]["url"] != undefined && !this.state.isFinished){
+                var img = new Image();
+                img.src = dailogData["param"]["url"];
+                img.onload = function(){
+                    _this.onload = true;
+                    _this.setState({
+                        width : img.width,
+                        height : img.height,
+                        isFinished : true
+                    })
+                }
+
+            }
+            console.log("==================== this",this);
         }
     },
 
@@ -140,6 +155,8 @@ export const Dailog = React.createClass({
         // }
         return <Modal title="查看执照" className = "enterprise_manager_authenticate_daliog" 
             visible={ _this.state.visible }
+            width = { _this.state.width + 60 }
+            height = { _this.state.height + 32 }
             onOk={ _this.handleOk } 
             onCancel={ _this.handleCancel }>
             <img src={ dailogData["param"]["url"] }/>
