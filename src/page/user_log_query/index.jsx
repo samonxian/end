@@ -13,6 +13,7 @@ import MoreData from './components/moredata'
 import Content_Nav from './components/contentNav'
 import * as base from './components/index'
 import LogData from './components/data'
+
 class user_log_query extends Component {
 	constructor(){
 		super(); 
