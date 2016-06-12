@@ -19,7 +19,7 @@ export let title = {
 	'app_web_request':'通用app WEB请求操作日志',
 	'app_request_error':'通用app WEB请求错误日志',
 	'open_service':'云平台打开日志',
-	'RecvMsg':'接收消息日志',
+	'recv_msg':'接收消息日志',
 	'rtmp_open_success':'rtmp打开成功日志',
 	'rtmp_open_failed':'rtmp打开失败日志',
 	'timeslice_request':'时间片请求日志',
@@ -33,6 +33,18 @@ export let title = {
 	'down_video_success':'录像下载成功日志',
 	'disc_down_change':'磁盘下载变更',
 	'down_video_error':'录像下载失败日志',
+	'selectUdpRelay':'获取udp转发',
+	'createNewPeer':'新建peer',
+	'processCameraRequestRelay':'摄像头获取转发',
+	'processPeerHeartbeat':'上报心跳',
+	'CNotifyCenter::handleMsg':'处理消息',
+	'processLogout':'退出登陆',
+	'CNotifyCenter::addMessage':'添加消息',
+	'updateRelayInfo':'转发状态更新',
+	'threadReportPeerStatus':'peer状态上百',
+	'selectRtmpRelay':'获取RTMP转发',
+	'@relayInfo':'获取转发详情',
+	'processDetectTracker':'探测tracker',
 }
 
 export let title_menu = {
