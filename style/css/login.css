@@ -50,11 +50,6 @@
 	color:#fff;
 	width: 230px;
 	font-size: 14px;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	-webkit-appearance:none;
-    -webkit-user-select: none;
-    -moz-user-focus: none;
-    -moz-user-select: none;
 }
 .login_form .ant-form-horizontal .ant-form-item input::-webkit-input-placeholder{
 　　color: #FFF;
@@ -115,4 +110,8 @@
 }
 .login_logo_container img{
 	width: 130px;
+}
+.login_form .ant-form-item-control .ant-input-wrapper{
+	height: 42px;
+	display: block;
 }
