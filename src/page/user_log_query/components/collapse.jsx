@@ -67,7 +67,7 @@ class NCollapse extends React.Component {
 							var create_at = d.t_create_at.replace(/(.*?)\ /g,'');
 							var type = _this.getType(d.type); 
 							if(!type){
-								t_title = `日志类型对照表需更新(msg_cmd:${d.msg_cmd})，请联系开发人员`; 
+								t_title = `日志类型对照表需更新(msg_cmd:${d.log_type})，请联系开发人员`; 
 								return (
 									<CollapseItem data={ [] } columns={[]} title={t_title} key={key}/>
 								)
@@ -82,7 +82,7 @@ class NCollapse extends React.Component {
 									t_data[key] = deal_table[type].logData(user_log)
 								}else{
 									//console.debug(deal_table[type])
-									t_title = `日志类型对照表需更新(msg_cmd:${d.msg_cmd})，请联系开发人员`; 
+									t_title = `日志类型对照表需更新(msg_cmd:${d.log_type})，请联系开发人员`; 
 									return (
 										<CollapseItem data={ [] } columns={[]} title={t_title} key={key}/>
 									)

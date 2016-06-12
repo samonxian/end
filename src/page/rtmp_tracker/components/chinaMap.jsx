@@ -185,7 +185,7 @@ class ChinaMap extends Component {
 									})	
 									//console.debug(image_num)
 									return (
-										<Antd.Popover key={key} overlay={content} title={province_name} trigger="hover">	
+										<Antd.Popover key={key} content={content} title={province_name} trigger="hover">	
 											<g>
 												<path stroke="#213859" strokeWidth="1" fill={color} d={ _this.path(value) }/>
 												{
@@ -219,7 +219,7 @@ class ChinaMap extends Component {
 								var fillColor = _this.setCityIconColor(c_data);	
 								//console.debug(fillColor)
 								return (
-									<Antd.Popover key={ key } overlay={content} title={value.City} trigger="hover">	
+									<Antd.Popover key={ key } content={content} title={value.City} trigger="hover">	
 										<circle onClick={ _this.showData(key) } title={value.City} key={ key } cx={path[0]} cy={path[1]} 
 												r="5" stroke="#006600i" fill={fillColor}/>
 									</Antd.Popover> 
