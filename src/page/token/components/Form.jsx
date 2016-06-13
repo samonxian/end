@@ -23,6 +23,7 @@ class Form extends Component {
 		clipboard.on('error', function(e) {
 			console.error('Action:', e.action);
 			console.error('Trigger:', e.trigger);
+			Antd.message.info("请使用⌘-C完成复制！")
 		});
 	}
 
@@ -70,7 +71,7 @@ class Form extends Component {
 							app_key: values.app_key,
 							cid: parseInt(values.cid,10),
 							control: controlNum,
-							expire: parseInt(values.expire,10),
+							expire: parseInt(+new Date(inputs.expire) / 1000,10),
 						}
 						//console.debug(params)
 						this.props.dispatch(actionCreator.getToken(params,(json,dispatch)=>{
@@ -127,9 +128,8 @@ class Form extends Component {
 						{ ...this.handleInputProps("cid") }/>
 				</Antd.Form.Item>
 
-				<Antd.Form.Item label="生效时长："  {...formItemLayout}>
-					<Antd.Input  name="expire" placeholder="请输入生效时长" {...emptyProps('expire','请输入生效时长')}
-						{ ...this.handleInputProps("expire") }/>
+				<Antd.Form.Item label="生效时间："  {...formItemLayout}>
+					<Antd.DatePicker placeholder="请输入生效时间" { ...this.handleInputProps("expire") } format="yyyy-MM-dd HH:mm:ss"/>
 				</Antd.Form.Item>
 
 				<Antd.Form.Item label="验证及推送控制："  {...formItemLayout}>
@@ -172,8 +172,15 @@ class Form extends Component {
 
 				<Antd.Modal title="Token信息" visible={this.state.visible} onCancel={this.handleCancel()} footer={ false }> 
 					<p>
-						<span id="token-content">{ this.state.token }</span>
-						<a className="j-copy" data-clipboard-target="#token-content">复制</a>
+						<div className="ant-search-input-wrapper">
+							<Antd.Input.Group className="ant-search-input" >
+								<Antd.Input id="token-content" value={ this.state.token }/>
+								<div className="ant-input-group-wrap">
+									<Antd.Button className="ant-search-btn j-copy" icon="copy" size="large" 
+										data-clipboard-target="#token-content"/>
+								</div>
+							</Antd.Input.Group>
+						</div>
 					</p>
 				</Antd.Modal>
 			</Antd.Form>
