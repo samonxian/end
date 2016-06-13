@@ -26,7 +26,7 @@ export function dataAdapter(data){
 	re = r2fn.antdTabelFieldBind(data,columns,function(d,key){
 		var tdata = data[key];
 		d.paddress = tdata.address; 
-		console.debug(tdata.send_relays)
+		//console.debug(tdata.send_relays)
 		d.naddress = tdata.send_relays.address; 
 	})
 	return re;
