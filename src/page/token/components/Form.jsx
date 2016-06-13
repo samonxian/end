@@ -58,6 +58,9 @@ class Form extends Component {
 						for(var i=0;i<8;i++){
 							control.push(Number(!!inputs["type_3_"+i]));
 						}
+						for(var i=0;i<8;i++){
+							control.push(Number(!!inputs["type_4_"+i]));
+						}
 						var controlNum = parseInt(control.join(""),2)
 						if (!!errors) {
 							console.log('Errors in form!!!');
