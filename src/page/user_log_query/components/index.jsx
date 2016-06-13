@@ -48,7 +48,7 @@ export function deal(data){
 	data.forEach(function(value,key){
 		data[key].key = key;
 		data[key].t_create_at = value.create_at.replace(/(.*?)\ /g,'');
-		data[key].type = type[value.msg_cmd];
+		data[key].type = data[key].log_type;
 	})
 	//console.log(re)
 	return data;	

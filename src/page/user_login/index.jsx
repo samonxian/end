@@ -3,7 +3,7 @@ import Component from 'libs/react-libs/Component'
 import { connect } from 'react-redux'
 import { push,replace } from 'react-router-redux'
 import { LoginForm } from './components/loginForm'
-require('antd/lib/index.css')
+//require('antd/lib/index.css')
 require('css/login.css')
 
 class Userlogin extends Component{

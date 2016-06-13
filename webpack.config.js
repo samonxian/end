@@ -44,10 +44,12 @@ module.exports = {
 			'frontend': __dirname + '/.fr/generator/frontend',
 			'css': __dirname + '/style/css/',
 			'img': __dirname + '/style/img/',
+			'src': __dirname + '/src/',
 			'page': __dirname + '/src/page/',
 			'libs': __dirname + '/src/libs/',
 			'JSONP': __dirname + '/src/libs/jsonp.js',
 			'function': __dirname + '/src/libs/function.js',
+			'validate': path.resolve(__dirname,'src/libs/antd-form-validate'),
 			'common': __dirname + '/src/libs/temp',
 		}, 
 		extensions: ['', '.js', '.jsx']
