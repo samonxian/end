@@ -2,83 +2,51 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { authenticateDailog } from '../action'
-import { Modal, Button } from 'antd'
+import { Modal, Button, Spin } from 'antd'
 
-// let ViewImg = React.createClass({
-//     getInitialState(){
-//         return {
-//             isLoading : true,
-//             imgWidth : 50,
-//             imgHeight : 50
-//         }
-//     },
+let ViewImg = React.createClass({
+    getInitialState(){
+        return {
+            visible : false
+        }
+    },
 
-//     createDailogContainer(){
-//         const { dailogData } = this.props;
-//         if (!this.dailogContainer && !isEmptyObj(dailogData) && dailogData["param"]["visible"]) {
-//             this.dailogContainer = document.createElement('div');
-//             this.dailogLoading = document.createElement('div');
-//             this.dailogContent = document.createElement('div');
-//             this.dailogLoading.setAttribute("id","img_view_loading_content");
-//             this.dailogContainer.setAttribute("id","img_view_layout_container");
-//             this.dailogContainer.appendChild(this.dailogLoading);
-//             this.dailogContainer.appendChild(this.dailogContent);
-//             document.body.appendChild(this.dailogContainer);
-//         }
-//         this.dailogContainer;
-//     },
+    createDailogContainer(){
+        const { dailogData } = this.props;
+        if (!this.dailogContainer && !isEmptyObj(dailogData) && dailogData["param"]["visible"]) {
+            this.dailogContainer = document.createElement('div');
+            this.dailogContainer.setAttribute("id","img_view_layout");
+            this.dailogLoading = document.createElement('div');
+            this.dailogLoading.setAttribute("id","img_view_loading_content");
+            this.dailogContainer.appendChild(this.dailogLoading);
+            document.body.appendChild(this.dailogContainer);
+        }
+        this.dailogContainer;
+    },
     
-//     componentWillReceiveProps(nextProps){
-//         const { dailogData } = nextProps;
-//         console.log("====================== nextProps",nextProps);
-//     },
+    componentWillReceiveProps(nextProps){
+        const { visible } = nextProps;
 
-//     shouldComponentUpdate(){
-//         console.log("====================== shouldComponentUpdate");
-//         console.log(this.state);
-//         return true;
-//     },
+    },
 
-//     componentDidUpdate(){
-//         const { dailogData } = this.props;
-//         var _this = this;
+    componentDidUpdate(){
+        const { dailogData } = this.props;
+        var _this = this;
 
-//         if(!this.dailogContainer){
-//             this.createDailogContainer();
-//         }
+        if(!this.dailogContainer){
+            this.createDailogContainer();
+        }
 
-//         if(this.dailogContainer &&　this.state.isLoading){
-//             ReactDOM.render(<Spin />,document.getElementById("img_view_loading_content"));
-//             var img = new Image();
-//             img.src = dailogData["param"]["url"];
-//             console.log("======================= img url ",dailogData["param"]["url"]);
-            
+        if(this.dailogContainer && this.state.visible ){
+            ReactDOM.render(<Spin />,document.getElementById("img_view_loading_content"));
+        }
+    },
 
-//             console.log("====================== _this",_this);
-            
-//             img.onload = function(){
-//                 console.log("====================== img onload");
-//                 console.log(img.width);
-//                 console.log(img.height);
-//                 _this.setState({
-//                     isLoading : false,
-//                     imgWidth : img.width,
-//                     imgHeight : img.height
-//                 })
-//             }
-//         }
-        
-//         console.log("============================ componentDidUpdate",this.state);
-//         if(this.dialogContainer && !this.state.isLoading ){
-//             console.log("==========================");
-//         }
-//     },
-
-//     render(){
-//         const { dailogData } = this.props;
-//         return null
-//     }
-// })
+    render(){
+        const { dailogData } = this.props;
+        return null
+    }
+})
 
 export const Dailog = React.createClass({
 	getInitialState() {
@@ -101,16 +69,13 @@ export const Dailog = React.createClass({
                 var img = new Image();
                 img.src = dailogData["param"]["url"];
                 img.onload = function(){
-                    _this.onload = true;
-                    _this.setState({
+                    this.setState({
+                        isFinished : true,
                         width : img.width,
-                        height : img.height,
-                        isFinished : true
-                    })
-                }
-
+                        height : img.height
+                    });
+                }.bind(this);
             }
-            console.log("==================== this",this);
         }
     },
 
@@ -132,42 +97,22 @@ export const Dailog = React.createClass({
         if(!isEmptyObj(dailogData) && !isEmptyObj(dailogData["param"]["visible"])){
             return false;
         }
-       // return <ViewImg { ... this.props }/>
-        // }else{
-        //     ReactDOM.render(<ViewImg { ... this.props }/>,document.body);
-        // }
-        
-        // else{
-        //     var img = new Image();
-        //     img.src = dailogData["param"]["url"];
-        //     img.onload = function(){
-        //         _this.setState({
-        //             isFinished : true,
-        //             width : img.width,
-        //             height :　img.height
-        //         })
-        //     }
-        //     if(!this.state.isFinished){
-        //         content = <Spin />
-        //     }else{
-        //         content = <img src={ dailogData["param"]["url"] }/>
-        //     }
-        // }
-        return <Modal title="查看执照" className = "enterprise_manager_authenticate_daliog" 
-            visible={ _this.state.visible }
-            width = { _this.state.width + 60 }
-            height = { _this.state.height + 32 }
-            onOk={ _this.handleOk } 
-            onCancel={ _this.handleCancel }>
-            <img src={ dailogData["param"]["url"] }/>
-        </Modal>
-        // if(this.state.visible){
-        //     return <div className = "img_view_container"> 1111</div>
-        //     // return React.createElement("DIV",{},)
-        //    // React.render(<div className = "img_view">{content}</div>,document.body)
-        // }else{
-        //     return <div className = "img_view_container"></div>
-        // }
+
+        if(this.state.visible && !this.state.isFinished){
+            return false;
+           // return <ViewImg { ...this.props } visible = { this.state.isFinished }/>
+        }else if(this.state.visible && this.state.isFinished){
+            return <Modal title="查看执照" className = "enterprise_manager_authenticate_daliog" 
+                visible={ _this.state.visible }
+                width = { _this.state.width + 60 }
+                height = { _this.state.height + 32 }
+                onOk={ _this.handleOk } 
+                onCancel={ _this.handleCancel }>
+                <img src={ dailogData["param"]["url"] }/>
+            </Modal>
+        }else{
+            return false;
+        }
         
     }
 })
