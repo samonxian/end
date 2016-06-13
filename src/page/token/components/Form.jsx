@@ -23,6 +23,7 @@ class Form extends Component {
 		clipboard.on('error', function(e) {
 			console.error('Action:', e.action);
 			console.error('Trigger:', e.trigger);
+			Antd.message.info("请使用⌘-C完成复制！")
 		});
 	}
 
@@ -172,8 +173,15 @@ class Form extends Component {
 
 				<Antd.Modal title="Token信息" visible={this.state.visible} onCancel={this.handleCancel()} footer={ false }> 
 					<p>
-						<span id="token-content">{ this.state.token }</span>
-						<a className="j-copy" data-clipboard-target="#token-content">复制</a>
+						<div className="ant-search-input-wrapper">
+							<Antd.Input.Group className="ant-search-input" >
+								<Antd.Input id="token-content" value={ this.state.token }/>
+								<div className="ant-input-group-wrap">
+									<Antd.Button className="ant-search-btn j-copy" icon="copy" size="large" 
+										data-clipboard-target="#token-content"/>
+								</div>
+							</Antd.Input.Group>
+						</div>
 					</p>
 				</Antd.Modal>
 			</Antd.Form>
