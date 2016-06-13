@@ -75,7 +75,6 @@ class RtmpRelay extends Component {
 					var error_columns = errorServerDataSet.columns,
 						error_dataSource = errorServerDataSet.dataAdapter(serverAdapter.errorServer);
 				}
-				console.debug(sankeyData)
 			return (
 				<div>
 					<h2>公众摄像机转发服务器运行监控</h2>

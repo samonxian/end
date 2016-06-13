@@ -73,7 +73,7 @@ class SanKey extends Component {
 								var content = <Antd.Table size="small" columns={this.linklist.columns} 
 									dataSource={this.linklist.dataAdapter([d])} pagination={ false }/>
 								return (
-									<Antd.Popover key={ k } content={content} title={'连接信息'} trigger="click">	
+									<Antd.Popover key={ k } overlay={content} title={'连接信息'} trigger="click">	
 										<g>
 											{
 												!d.is_lan &&
@@ -143,31 +143,28 @@ class SanKey extends Component {
 								if(d.timeout){
 									node_bg ="rgba(0, 0, 0, 0.2)";
 								}
-								if(d.isFalse){
-									node_bg ="rgba(255, 85, 0,0.8)";
-								}
 								return (
 									<g key={ k }>
 										<Antd.Popover overlayClassName="sankey-popover"  
-												content={content} title={'节点信息'} trigger="click">	
+												overlay={content} title={'节点信息'} trigger="click">	
 											<rect className="node" fill={node_bg} height={ d.dy } width={ width }
 												x={ d.x } y={ d.y } key={ d.address }/>
 										</Antd.Popover>
 										{
 											true &&
-											<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" style={ { fontSize: 15, } }>
+											<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" style={ { fontSize: "15", } }>
 												{ d.address }
 											</text>
 										}
 										{
-											!d.isFalse &&
-											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: 15, } }>
+											true &&
+											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: "15", } }>
 												{ r2fn.transformToKbMbGb(d.bw_in) }
 											</text>
 										}
 										{
-											!d.isFalse &&
-											<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: 15, } }>
+											true &&
+											<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: "15", } }>
 												{ d.queues_ave + " / "+ d.queues_95peak +" / " + d.queues_peak}
 											</text>
 										}

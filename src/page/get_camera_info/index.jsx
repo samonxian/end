@@ -73,7 +73,7 @@ class Get_camera_info extends React.Component {
 
     render() {
 		let { get_camera_info ,location} = this.props;
-		if(get_camera_info.posts && get_camera_info.posts.center_data){
+		if(get_camera_info.posts){
 			let center_data = get_camera_info.posts.center_data;	
 			let tracker_data = get_camera_info.posts.tracker_data;	
 			if(get_camera_info.posts.result_code == 0){
