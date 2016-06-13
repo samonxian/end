@@ -621,3 +621,22 @@ div.ant-tabs-nav-scroll {
 .footer{
     margin-top: 20px;
 }
+
+
+
+
+/**ant input with button**/
+.ant-search-input .ant-search-btn {
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+
+
+
+
+
+
+
+
+
