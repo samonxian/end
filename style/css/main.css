@@ -48,7 +48,7 @@ pre {
     padding: 0 10px;
     min-width: auto;
 }
-.ant-tabs-nav-scroll {
+div.ant-tabs-nav-scroll {
     width: 100%;
 }
 .relative {
@@ -152,6 +152,7 @@ pre {
 }
 .contents {
     padding: 20px 40px;
+	overflow:hidden;
     flex: 1;
     background: #fff;
     position: relative;
@@ -620,3 +621,22 @@ pre {
 .footer{
     margin-top: 20px;
 }
+
+
+
+
+/**ant input with button**/
+.ant-search-input .ant-search-btn {
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+
+
+
+
+
+
+
+
+
+

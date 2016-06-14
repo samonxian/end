@@ -41,20 +41,18 @@ class Form extends Component {
 				</FormItem>
 
 				<FormItem>
-					<Antd.DatePicker Format="yyyy-MM-dd HH:mm:ss" showTime value={params && params.end_time } 
+					<Antd.DatePicker format="yyyy-MM-dd HH:mm:ss" showTime value={params && params.end_time } 
 						onChange={this.onChange()} />
 				</FormItem>
 				
 				<FormItem>
 					<Antd.Button type="primary" htmlType="submit" size="default">提交</Antd.Button>
 				</FormItem>
-				<FormItem >
-					<div className="info_define">
-						<div className="info_define_item bg_success">优</div>
-						<div className="info_define_item bg_info">良</div>
-						<div className="info_define_item bg_warn">中</div>
-						<div className="info_define_item bg_error">差</div>
-					</div>
+				<FormItem className="info_define">
+					<div className="info_define_item bg_success">优</div>
+					<div className="info_define_item bg_info">良</div>
+					<div className="info_define_item bg_warn">中</div>
+					<div className="info_define_item bg_error">差</div>
 				</FormItem>
 			</Antd.Form>
         )
