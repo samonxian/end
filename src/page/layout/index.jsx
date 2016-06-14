@@ -78,7 +78,7 @@ class Layout extends React.Component {
 								<Link to="/enterprise_manager_authenticate">企业管理</Link>
 							</MenuItem>
 							<MenuItem>
-								<Link to="/stroage_monitor_view">存储监控视图</Link>
+								<Link to="/token">生成Token</Link>
 							</MenuItem>
 						</Menu>
 							

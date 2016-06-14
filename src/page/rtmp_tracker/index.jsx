@@ -22,7 +22,13 @@ class RtmpTracker extends Component {
 			//console.debug(1)
 		},2000)
 	}
-
+	
+	shouldComponentUpdate(nextProps,nextState){
+		if(this.props.rtmp_tracker.isFetching) {
+			return false;
+		}
+		return true;
+	}
 	componentWillUnmount(){
 		clearInterval(this.clearInterval)
 	}
@@ -88,7 +94,7 @@ class RtmpTracker extends Component {
 			)
 		}else{
 			return (
-				<div></div>
+				<Antd.Spin size="large"/>
 			)
 		}
 		
