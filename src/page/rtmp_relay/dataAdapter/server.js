@@ -23,21 +23,20 @@ module.exports = {
 		//console.debug(servers.node.length)
 		//console.debug(JSON.stringify(servers.noLink,null,2))
 		g_servers = servers;
-		return g_servers
+		return servers
 	},
 	getNodeData(){
-		//g_nodes = [];
-		//g_servers.node.forEach(function(v,k){
-			//g_nodes.push(v)
-		//})
-		return g_servers.node;	
+		g_nodes = [];
+		g_servers.node.forEach(function(v,k){
+			g_nodes.push(v)
+		})
+		return g_nodes;	
 	},
 	getLinkData(){
 		var servers = g_servers.node;
 		var links = [];
 		var nodes = servers;
 		this.errorServer = [];
-		//console.debug(nodes)
 		nodes.forEach((v,k)=>{
 			if(v.send_relays && v.send_relays[0]){
 				//存放错误的send_relays
@@ -53,16 +52,9 @@ module.exports = {
 							source = n;
 						}
 					})
-					if(!target){
-						var target = {
-							address: v2.address,
-							isFalse: true,
-						}
-						nodes.push(target)
-					}
 					//正常的recv_relays
 					var target_value;
-					if(target && target.recv_relays){
+					if(target.recv_relays){
 						target.recv_relays.forEach(rv=>{
 							if(rv.address == v.address){
 								target_value = rv;
@@ -86,16 +78,14 @@ module.exports = {
 							isError:false,
 						})
 					}else{
-						if(target){
-							//错误连线
-							links.push({
-								source: source,
-								target: target,
-								value: 10000000,
-								bw_in: 0,
-								isError:true,
-							})
-						}
+						//错误连线
+						links.push({
+							source: source,
+							target: target,
+							value: 10000000,
+							bw_in: 0,
+							isError:true,
+						})
 					}
 				})
 				if(send_relays_error.send_relays){

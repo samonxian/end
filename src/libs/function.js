@@ -1,3 +1,4 @@
+import deprecate from 'core-decorators/lib/deprecate';
 /**
 * 对Date的扩展，将 Date 转化为指定格式的String
 * 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
@@ -52,8 +53,8 @@ var fn = {
 	 * @param  {Objct}     columns  二维json对象,antd column设置
 	 * @param  {Function}  callback 参数为data遍历的值和data索引 
 	 * @return {Object}             Antd Table 需要的Json对象
-	 * @deprecate
 	 */
+	@deprecate
 	fieldSort(data,fields,columns,callback){
 		var reData = [];
 		if(data && typeof data == "object" && data[0] && !data[0]._reData_){
