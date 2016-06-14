@@ -111,6 +111,7 @@ class assetMananger extends Component{
 		if(isEmptyObj(assetData)){
 			return <div><Spin /></div>
 		}else{
+			console.log("================================== assetData",assetData);
 	        var dataList = this.adapterDataList(assetData["data"]);
 	        return <div className="asset_mananger_container">
 	            <Header { ...this.props }/>
