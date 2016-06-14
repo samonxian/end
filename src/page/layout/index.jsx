@@ -79,12 +79,9 @@ class Layout extends React.Component {
 							</MenuItem>
 							<MenuItem>
 								<Link to="/token">生成Token</Link>
-<<<<<<< HEAD
 							</MenuItem>
 							<MenuItem>
 								<Link to="/stroage_monitor_view">存储监控视图</Link>
-=======
->>>>>>> remotes/end/master
 							</MenuItem>
 						</Menu>
 							
