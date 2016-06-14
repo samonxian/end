@@ -2,6 +2,7 @@ import React from 'react'
 import { Form, Input, Row, Button, Col, Icon, Checkbox } from 'antd'
 import { userLoginFetch } from '../action'
 const FormItem = Form.Item
+require('css/login.css')
 let imgData = require('img/login_icon.png')
 
 export let LoginForm = React.createClass({
