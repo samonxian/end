@@ -247,7 +247,9 @@ var fn = {
 	 */
 	secondTranformToMH(t_value){
 		let value = 0;
-		if(t_value > 60 * 60){
+		if(t_value > 60 * 60 * 24){
+			value = Math.round(t_value / 60 / 60 /24 * 100 ) / 100  + '天';	
+		}else if(t_value > 60 * 60){
 			value = Math.round(t_value / 60 / 60 * 100 ) / 100  + '小时';	
 		}else if(t_value > 60){
 			value = Math.round(t_value / 60 * 100) / 100  + '分';	

@@ -29,6 +29,11 @@ pre {
     z-index:10000;
 }
 /**overide ant**/
+/**ant input with button**/
+.ant-search-input .ant-search-btn {
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
 .ant-popover{
 	z-index:1000000;
 }
@@ -50,6 +55,52 @@ pre {
 }
 div.ant-tabs-nav-scroll {
     width: 100%;
+}
+/**base**/
+.mt10{
+	margin-top:10px;
+}
+.mt15{
+	margin-top:15px;
+}
+.mb10{
+	margin-bottom:10px;
+}
+.mb5{
+	margin-bottom:5px;
+}
+.ml5{
+	margin-left:5px;
+}
+.ml10{
+	margin-left:10px;
+}
+.ml15{
+	margin-left:15px;
+}
+.ml20{
+	margin-left:20px;
+}
+.mr10{
+	margin-right:10px;
+}
+.pl5{
+	padding-left:5px;
+}
+.pl10{
+	padding-left:10px;
+}
+.pl15{
+	padding-left:15px;
+}
+.pt5{
+	padding-top:5px;
+}
+.pt10{
+	padding-top:10px;
+}
+.pt15{
+	padding-top:15px;
 }
 .relative {
     position: relative;
@@ -624,12 +675,6 @@ div.ant-tabs-nav-scroll {
 
 
 
-
-/**ant input with button**/
-.ant-search-input .ant-search-btn {
-    padding-bottom: 6px;
-    padding-top: 6px;
-}
 
 
 

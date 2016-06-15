@@ -60,7 +60,7 @@ class Layout extends React.Component {
 								<Link to="/udp_tracker">UDP地理监控</Link>
 							</MenuItem>
 							<MenuItem>
-								<Link to="/get_camera_stat">公众直播情况</Link>
+								<Link to="/public_monitor">公众监控</Link>
 							</MenuItem>
 							<MenuItem>
 								<Link to="/area_memory">区域存储情况</Link>
