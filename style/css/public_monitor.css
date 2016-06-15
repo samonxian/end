@@ -1,0 +1,13 @@
+.public_monitor h2{
+	color:#666;
+}
+.public_monitor h3{
+	font-size:16px;
+}
+.public_monitor .p-m-bar{
+	height:30px;
+	/*background-color:rgba(255,85,0,.12)*/
+}
+.public_monitor .summary .app{
+	display:none;
+}
