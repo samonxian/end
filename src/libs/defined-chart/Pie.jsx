@@ -1,12 +1,13 @@
 import React from 'react'
 import { isEmptyObj, generateMixed } from 'libs/function'
-import { Chart } from './Chart'
+
 import * as d3 from "d3"
 var DefaultPropsMixin = require("./DefaultPropsMixin");
 var HeightWidthMixin = require("./HeightWidthMixin");
 var AccessorMixin = require("./AccessorMixin");
 var TooltipMixin = require("./TooltipMixin");
 var Tooltip = require("./Tooltip");
+var Chart = require("./Chart");
 
 var Wedge = React.createClass({
     propTypes: {
