@@ -68,3 +68,6 @@
 .stroage_monitor_view_area_message .ant-table tr,.stroage_monitor_view_area_detail_message .ant-table tr{
 	background: #fff;
 }
+.stroage_monitor_view_disk_message_items .disk_process_num {
+	min-width: 10px;
+}

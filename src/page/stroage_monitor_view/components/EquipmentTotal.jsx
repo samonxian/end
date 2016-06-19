@@ -25,6 +25,9 @@ export class EquipmentTotal extends Component{
 			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
+			},
+			strokeFun(){
+				return "rgba(111, 179, 83, 0.3)"
 			}
     	}
     }
@@ -67,6 +70,7 @@ export class EquipmentTotal extends Component{
 		                 yMax = { yMax }
 		                 yAxis = {{
 				        	 label : "单位：个" }}
+				         colorScale = { this.strokeFun }
 				         tooltipOffset = {{top : -60,left : 0}}
 				         xAxis={{
 				        	 tickFormat: this.formateDate,

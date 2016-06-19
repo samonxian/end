@@ -26,6 +26,9 @@ export class VideoResponse extends Component{
 			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
+			},
+			strokeFun(){
+				return "rgba(111, 179, 83, 0.3)"
 			}
     	}
     }
@@ -72,6 +75,7 @@ export class VideoResponse extends Component{
 				         xAxis={{
 				        	 tickFormat: this.formateDate,
 				             label : "时间"}}
+				         colorScale = { this.strokeFun }
 		                 margin={{ top: 20, bottom: 20, left: 50, right: 60 }}
 		                 style = {{ width:'100%',height:'180px' }}/>
 		        </div>

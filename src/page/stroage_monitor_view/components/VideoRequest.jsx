@@ -26,6 +26,9 @@ export class VideoRequest extends Component{
 			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
+			},
+			strokeFun(){
+				return "rgba(111, 179, 83, 0.3)"
 			}
     	}
     }
@@ -69,6 +72,7 @@ export class VideoRequest extends Component{
 		                 yAxis = {{
 				        	 label : "单位：个" }}
 				         tooltipOffset = {{top : -60,left : 0}}
+				         colorScale = { this.strokeFun }
 				         xAxis={{
 				        	 tickFormat: this.formateDate,
 				             label : "时间"}}

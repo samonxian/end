@@ -102,7 +102,7 @@ var DataSet = React.createClass({
 export const Pie =  React.createClass({
     mixins: [DefaultPropsMixin, HeightWidthMixin, AccessorMixin, TooltipMixin],
 
-    _tooltipHtml: function _tooltipHtml(d, position) {
+    _tooltipHtml: function _tooltipHtml(e, d, position) {
         var html = this.props.tooltipHtml(this.props.x(d), this.props.y(d));
 
         return [html, 0, 0];
