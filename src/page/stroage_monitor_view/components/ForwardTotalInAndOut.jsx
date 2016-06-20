@@ -65,7 +65,9 @@ export class ForwardTotalInAndOut extends Component{
 		var content_width = (document.body.clientWidth - 280)*0.4583333333;
 		var relayIn = stroageCharProps["param"]["relay_in_bandwidth"],
 		    relayOut = stroageCharProps["param"]["relay_out_bandwidth"],
-		    yMax = d3.max(this.adapterYmax(relayIn)),
+		    yMax = d3.max(relayIn.map(function(data){
+		    	return data[1];
+		    })),
 		    inObj = this.adapterFormateData(relayIn,"in"),
 		    outObj = this.adapterFormateData(relayOut,"out"),
 		    inBandWidth = formate_yAxis_bandWidth(inObj["values"]),

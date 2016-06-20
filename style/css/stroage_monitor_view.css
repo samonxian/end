@@ -71,3 +71,6 @@
 .stroage_monitor_view_disk_message_items .disk_process_num {
 	min-width: 10px;
 }
+.stroage_monitor_char_items .stroage_monitor_view_tooltips{
+	width: 180px;
+}

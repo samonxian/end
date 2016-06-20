@@ -28,9 +28,6 @@ export class DiskTotalInAndOut extends Component{
     				values : value
     			}
     		},
-    		adapterYmax(arr){
-				return arr[1];
-			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
 			}
@@ -62,7 +59,9 @@ export class DiskTotalInAndOut extends Component{
 		var content_width = (document.body.clientWidth - 280)*0.4583333333;
 		var diskTotalIn = stroageCharProps["param"]["disc_in_bandwidth"],
 		    diskTotalOut = stroageCharProps["param"]["disc_out_bandwidth"],
-		    yMax = d3.max(this.adapterYmax(diskTotalIn)),
+		    yMax = d3.max(diskTotalIn.map(function(data){
+		    	return data[1];
+		    })),
 		    inObj = this.adapterFormateData(diskTotalIn,"in"),
 		    outObj = this.adapterFormateData(diskTotalOut,"out"),
 		    inDisk = formate_yAxis_bandWidth(inObj["values"]),
