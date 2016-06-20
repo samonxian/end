@@ -57,16 +57,18 @@ export let Queryfrom = React.createClass({
 		        </FormItem>
 		        <FormItem id="startTime">
 	                <DatePicker 
-	                    { ... getFieldProps('start_time') } 
-	                    defaultValue = { this.state.start_time }
+	                    { ... getFieldProps('start_time',{
+	                    	initialValue: this.state.start_time
+	                    }) } 
 	                    placeholder="起始时间"
 	                    showTime 
 	                    format="yyyy-MM-dd HH:mm:ss"/>
 	            </FormItem>
 	            <FormItem id="endTime">
 				    <DatePicker  
-				         { ... getFieldProps('end_time') }
-				         defaultValue = { this.state.end_time }
+				         { ... getFieldProps('end_time',{
+				         	 initialValue: this.state.end_time
+				         }) }
 				         placeholder="结束时间"
 				         showTime 
 				         format="yyyy-MM-dd HH:mm:ss"/>

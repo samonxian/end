@@ -6,23 +6,23 @@ var d3 = require("d3");
 var Axis = React.createClass({
     displayName: "Axis",
 
-    // propTypes: {
-    //     tickArguments: React.PropTypes.array,
-    //     tickValues: React.PropTypes.array,
-    //     tickFormat: React.PropTypes.func,
-    //     innerTickSize: React.PropTypes.number,
-    //     tickPadding: React.PropTypes.number,
-    //     outerTickSize: React.PropTypes.number,
-    //     scale: React.PropTypes.func.isRequired,
-    //     className: React.PropTypes.string,
-    //     zero: React.PropTypes.number,
-    //     orientation: React.PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
-    //     label: React.PropTypes.string
-    // },
+    propTypes: {
+        tickArguments: React.PropTypes.array,
+        tickValues: React.PropTypes.array,
+        tickFormat: React.PropTypes.func,
+        innerTickSize: React.PropTypes.number,
+        tickPadding: React.PropTypes.number,
+        outerTickSize: React.PropTypes.number,
+        scale: React.PropTypes.func.isRequired,
+        className: React.PropTypes.string,
+        zero: React.PropTypes.number,
+        orientation: React.PropTypes.oneOf(["top", "bottom", "left", "right"]).isRequired,
+        label: React.PropTypes.string
+    },
 
     getDefaultProps: function getDefaultProps() {
         return {
-            tickArguments: [10],
+            tickArguments: [6],
             tickValues: null,
             tickFormat: null,
             innerTickSize: 6,
@@ -75,7 +75,7 @@ var Axis = React.createClass({
         if (!tickFormat) {
             if (scale.tickFormat) {
                 tickFormat = scale.tickFormat.apply(scale, tickArguments);
-            } else {
+            }else {
                 tickFormat = function (x) {
                     return x;
                 };
@@ -120,7 +120,7 @@ var Axis = React.createClass({
 
             labelElement = React.createElement(
                 "text",
-                { className: "" + className + " label", textAnchor: "end", x: width, y: -6 },
+                { className: "" + className + " label", textAnchor: "end", x: width+40, y: 5 },
                 label
             );
         } else {
@@ -135,11 +135,11 @@ var Axis = React.createClass({
 
             labelElement = React.createElement(
                 "text",
-                { className: "" + className + " label", textAnchor: "end", y: 6, dy: ".75em", transform: "rotate(-90)" },
+                { className: "" + className + " label", textAnchor: "end", y: -18, dy: ".75em", transform: "rotate(0)" },
                 label
             );
         }
-
+        
         var tickElements = ticks.map(function (tick, index) {
             var position = activeScale(tick);
             var translate = transform.replace("{}", position);
@@ -158,9 +158,7 @@ var Axis = React.createClass({
         var pathElement = React.createElement("path", { className: "domain", d: d, fill: "none", stroke: "#aaa" });
 
         var axisBackground = React.createElement("rect", { className: "axis-background", fill: "none" });
-        
-        console.log("===================================== axis render :");
-        
+
         return React.createElement(
             "g",
             { ref: "axis", className: className, transform: this._getTranslateString(), style: { shapeRendering: "crispEdges" } },

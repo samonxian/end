@@ -7,17 +7,23 @@ var ReactDOM = require("react-dom");
 var d3 = require("d3");
 
 var TooltipMixin = {
-    // propTypes: {
-    //     tooltipHtml: React.PropTypes.func,
-    //     tooltipMode: React.PropTypes.oneOf(["mouse", "element", "fixed"]),
-    //     tooltipContained: React.PropTypes.bool,
-    //     tooltipOffset: React.PropTypes.objectOf(React.PropTypes.number)
-    // },
+    propTypes: {
+        tooltipHtml: React.PropTypes.func,
+        tooltipMode: React.PropTypes.oneOf(["mouse", "element", "fixed"]),
+        tooltipContained: React.PropTypes.bool,
+        tooltipOffset: React.PropTypes.objectOf(React.PropTypes.number)
+    },
 
     getInitialState: function getInitialState() {
         return {
             tooltip: {
                 hidden: true
+            },
+            coordinateLine: {
+                hidden: true,
+                coordinateData : [{
+                    values : []
+                }],
             }
         };
     },
@@ -50,6 +56,7 @@ var TooltipMixin = {
 
         var svg = this._svg_node;
         var position = undefined;
+
         if (svg.createSVGPoint) {
             var point = svg.createSVGPoint();
             point.x = e.clientX, point.y = e.clientY;
@@ -60,16 +67,16 @@ var TooltipMixin = {
             position = [e.clientX - rect.left - svg.clientLeft - margin.left, e.clientY - rect.top - svg.clientTop - margin.top];
         }
 
-        var _tooltipHtml = this._tooltipHtml(data, position);
+        var _tooltipHtml = this._tooltipHtml(e,data, position);
 
         var _tooltipHtml2 = _slicedToArray(_tooltipHtml, 3);
-
+        
         var html = _tooltipHtml2[0];
         var xPos = _tooltipHtml2[1];
         var yPos = _tooltipHtml2[2];
 
-        var svgTop = svg.getBoundingClientRect().top + margin.top;
-        var svgLeft = svg.getBoundingClientRect().left + margin.left;
+        var svgTop = svg.getBoundingClientRect().top + margin.top + window.document.body.scrollTop;
+        var svgLeft = svg.getBoundingClientRect().left + margin.left +  window.document.body.scrollLeft;
 
         var top = 0;
         var left = 0;
@@ -118,6 +125,12 @@ var TooltipMixin = {
         this.setState({
             tooltip: {
                 hidden: true
+            },
+            coordinateLine: {
+                hidden: true,
+                coordinateData : [{
+                    values : []
+                }]
             }
         });
     }

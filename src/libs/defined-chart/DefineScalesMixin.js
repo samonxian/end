@@ -1,13 +1,28 @@
 "use strict";
 
-var _slicedToArray = function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { var _arr = []; for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done;) { _arr.push(_step.value); if (i && _arr.length === i) break; } return _arr; } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } };
+var _slicedToArray = function (arr, i) { 
+    if (Array.isArray(arr)) { 
+        return arr; 
+    } else if (Symbol.iterator in Object(arr)) { 
+         var _arr = []; 
+         for (var _iterator = arr[Symbol.iterator](), _step; !(_step = _iterator.next()).done;) { 
+             _arr.push(_step.value); 
+             if (i && _arr.length === i) break;
+        } 
+        return _arr; 
+    } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } };
 
 var React = require("react");
 var d3 = require("d3");
 
-var DefaultScalesMixin = {
-    propTypes: {
-        barPadding: React.PropTypes.number
+var DefineScalesMixin = {
+    // propTypes: {
+    //     barPadding: React.PropTypes.number
+    // },
+    getInitialState(){
+        return {
+            separate : true
+        }
     },
 
     getDefaultProps: function getDefaultProps() {
@@ -28,6 +43,7 @@ var DefaultScalesMixin = {
         var xScale = props.xScale;
         var xIntercept = props.xIntercept;
         var yScale = props.yScale;
+        var separate = props.separate;
         var yIntercept = props.yIntercept;
 
         if (!xScale) {
@@ -47,12 +63,24 @@ var DefaultScalesMixin = {
         }
 
         if (!yScale) {
-            var _ref4 = this._makeYScale(props);
+            if(!separate){
+                var _ref4 = this._makeYScale(props);
 
-            var _ref42 = _slicedToArray(_ref4, 2);
+                var _ref42 = _slicedToArray(_ref4, 2);
 
-            this._yScale = _ref42[0];
-            this._yIntercept = _ref42[1];
+                this._yScale = _ref42[0];
+                this._yIntercept = _ref42[1];
+            }else{
+                var _ref4 = this._makeYScale(props);
+
+                var _ref42 = _slicedToArray(_ref4, 4);
+
+                this._yScale = _ref42[0];
+                this._yIntercept = _ref42[1];
+                this._yScale1 = _ref42[2];
+                this._yIntercept1 = _ref42[3];
+            }
+            
         } else {
             var _ref5 = [yScale, yIntercept];
 
@@ -89,8 +117,9 @@ var DefaultScalesMixin = {
                 return x(e);
             });
         })));
-           
+
         var scale = d3.scale.linear().domain(extents).range([0, innerWidth]);
+
         var zero = d3.max([0, scale.domain()[0]]);
         var xIntercept = scale(zero);
 
@@ -123,6 +152,7 @@ var DefaultScalesMixin = {
         var maxDate = d3.max(values(data[0]), x);
 
         var scale = d3.time.scale().domain([minDate, maxDate]).range([0, innerWidth]);
+
         return [scale, 0];
     },
 
@@ -145,25 +175,51 @@ var DefaultScalesMixin = {
         var values = props.values;
         var groupedBars = props.groupedBars;
         var data = this._data;
+        var separate = this.state.separate;
         var innerHeight = this._innerHeight;
 
-        var extents = d3.extent(Array.prototype.concat.apply([], data.map(function (stack) {
-            return values(stack).map(function (e) {
-                if (groupedBars) {
-                    return y(e);
-                } else {
-                    return y0(e) + y(e);
-                }
-            });
-        })));
+        if(!separate){
+            var extents = d3.extent(Array.prototype.concat.apply([], data.map(function (stack) {
+                return values(stack).map(function (e) {
+                    if (groupedBars) {
+                        return y(e);
+                    } else {
+                        return y0(e) + y(e);
+                    }
+                });
+            })));
+            extents = [d3.min([0, extents[0]]), extents[1]];
 
-        extents = [d3.min([0, extents[0]]), extents[1]];
+            var scale = d3.scale.linear().domain(extents).range([innerHeight, 0]);
 
-        var scale = d3.scale.linear().domain(extents).range([innerHeight, 0]);
-        var zero = d3.max([0, scale.domain()[0]]);
-        var yIntercept = scale(zero);
+            var zero = d3.max([0, scale.domain()[0]]);
+            var yIntercept = scale(zero);
 
-        return [scale, yIntercept];
+            return [scale, yIntercept];
+        }else{
+          
+            var extent1 = d3.extent(Array.prototype.concat.apply([],data[0]["values"].map(function(arr){
+                return y(arr);
+            })));
+
+            extent1 = [d3.min([0, extent1[0]]), extent1[1]];
+            var scale = d3.scale.linear().domain(extent1).range([innerHeight, 0]);
+
+            var zero = d3.max([0, scale.domain()[0]]);
+            var yIntercept = scale(zero);
+
+            var extent2 = d3.extent(Array.prototype.concat.apply([],data[1]["values"].map(function(arr){
+                return y(arr);
+            })));
+
+            extent2 = [d3.min([0, extent2[0]]), extent2[1]];
+            
+            var scale1 = d3.scale.linear().domain(extent2).range([innerHeight, 0]);
+             
+            var zero1 = d3.max([0, scale1.domain()[0]]);
+            var yIntercept1 = scale1(zero1);
+            return [scale, yIntercept, scale1, yIntercept1];
+        }
     },
 
     _makeOrdinalYScale: function _makeOrdinalYScale() {
@@ -178,4 +234,4 @@ var DefaultScalesMixin = {
     }
 };
 
-module.exports = DefaultScalesMixin;
+module.exports = DefineScalesMixin;

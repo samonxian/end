@@ -108,7 +108,7 @@ export const Dailog = React.createClass({
                 height = { _this.state.height + 32 }
                 onOk={ _this.handleOk } 
                 onCancel={ _this.handleCancel }>
-                <img src={ dailogData["param"]["url"] }/>
+                <img src={ dailogData["param"]["url"]+"?random="+new Date().getTime()+generateMixed(6) }/>
             </Modal>
         }else{
             return false;

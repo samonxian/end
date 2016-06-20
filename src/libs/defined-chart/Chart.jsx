@@ -1,7 +1,7 @@
 
 import React from 'react'
 
-export const Chart = React.createClass({
+var Chart = React.createClass({
     // displayName: "Chart",
 
     // propTypes: {
@@ -38,3 +38,5 @@ export const Chart = React.createClass({
         );
     }
 });
+
+module.exports = Chart;

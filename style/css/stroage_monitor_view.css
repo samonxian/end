@@ -1,0 +1,73 @@
+.stroage_monitor_view_page_contianer{
+	padding: 20px 40px;
+}
+.stroage_monitor_view_disk_message{
+	color:#fff;
+}
+.stroage_monitor_view_disk_message h1{
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+.stroage_monitor_view_disk_message_items{
+	margin-bottom: 5px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+}
+.stroage_monitor_view_disk_message_items .disk_process_num{
+	height:20px;
+	float: left;
+}
+.stroage_monitor_view_disk_message_items .disk_process_useing{
+	background: #6FB353;
+}
+.stroage_monitor_view_disk_message_items .disk_process_wait{
+	background: blue;
+}
+.stroage_monitor_view_disk_message_items .disk_process_error{
+	background: #EC3535;
+}
+.stroage_monitor_view_disk_message_items .disk_process_total{
+	background: #2C94C3;
+}
+.stroage_monitor_view_disk_message_items .disk_num{
+	padding-left: 10px;
+	font-weight: bold;
+}
+.stroage_monitor_view_area_detail_message h3,.stroage_monitor_view_area_message h3{
+	color:#fff;
+	font-size: 18px;
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+.stroage_monitor_char_items_left{
+	float: left;
+}
+.stroage_monitor_char_items_right{
+	float: right;
+}
+.stroage_monitor_view_tooltips{
+	background: #FFF;
+	padding:10px;
+	border-radius: 5px;
+}
+.stroage_monitor_char svg text{
+	fill: #fff;
+}
+.stroage_monitor_char{
+	margin-top: 20px;
+}
+.stroage_monitor_char .stroage_monitor_char_items h1{
+	font-size: 14px;
+	color:#fff;
+	margin-bottom: 5px;
+}
+.stroage_monitor_char .stroage_monitor_char_items{
+	margin-bottom: 10px;
+}
+.stroage_monitor_view_area_message .ant-table tr,.stroage_monitor_view_area_detail_message .ant-table tr{
+	background: #fff;
+}
+.stroage_monitor_view_disk_message_items .disk_process_num {
+	min-width: 10px;
+}

@@ -1,12 +1,13 @@
 import React from 'react'
 import { isEmptyObj, generateMixed } from 'libs/function'
-import { Chart } from './Chart'
+
 import * as d3 from "d3"
 var DefaultPropsMixin = require("./DefaultPropsMixin");
 var HeightWidthMixin = require("./HeightWidthMixin");
 var AccessorMixin = require("./AccessorMixin");
 var TooltipMixin = require("./TooltipMixin");
 var Tooltip = require("./Tooltip");
+var Chart = require("./Chart");
 
 var Wedge = React.createClass({
     propTypes: {
@@ -101,7 +102,7 @@ var DataSet = React.createClass({
 export const Pie =  React.createClass({
     mixins: [DefaultPropsMixin, HeightWidthMixin, AccessorMixin, TooltipMixin],
 
-    _tooltipHtml: function _tooltipHtml(d, position) {
+    _tooltipHtml: function _tooltipHtml(e, d, position) {
         var html = this.props.tooltipHtml(this.props.x(d), this.props.y(d));
 
         return [html, 0, 0];
