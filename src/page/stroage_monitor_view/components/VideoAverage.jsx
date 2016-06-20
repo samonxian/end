@@ -63,7 +63,9 @@ export class VideoAverage extends Component{
 
 		var content_width = (document.body.clientWidth - 280)*0.3333333333;
 		var data = stroageCharProps["param"]["view_time"],
-		    yMax = d3.max(this.adapterYmax(data)),
+		    yMax = d3.max(data.map(function(arr){
+		    	return arr[1];
+		    })),
 		    equipment_total = this.adapterFormateData(data),
 		    formateObj = formate_date(equipment_total["values"]);
 

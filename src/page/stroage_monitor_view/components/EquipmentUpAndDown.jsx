@@ -33,9 +33,6 @@ export class EquipmentUpAndDown extends Component{
     				values : value
     			}
     		},
-    		adapterYmax(arr){
-				return arr[1];
-			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
 			}
@@ -64,7 +61,9 @@ export class EquipmentUpAndDown extends Component{
 		var content_width = (document.body.clientWidth - 280)*0.4583333333;
 		var equipmentUp = stroageCharProps["param"]["on_line_num"],
 		    equipmentDown = stroageCharProps["param"]["off_line_num"],
-		    yMax = d3.max(this.adapterYmax(equipmentUp)),
+		    yMax = d3.max(equipmentUp.map(function(data){
+		    	return data[1]
+		    })),
 		    equipmentUpObj = this.adapterFormateData(equipmentUp),
 		    equipmentDownObj = this.adapterFormateDown(equipmentDown),
 		    totalArr = [];

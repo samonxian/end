@@ -75,8 +75,8 @@ var TooltipMixin = {
         var xPos = _tooltipHtml2[1];
         var yPos = _tooltipHtml2[2];
 
-        var svgTop = svg.getBoundingClientRect().top + margin.top + window.document.body.scrollTop;
-        var svgLeft = svg.getBoundingClientRect().left + margin.left +  window.document.body.scrollLeft;
+        var svgTop = svg.getBoundingClientRect().top + margin.top;
+        var svgLeft = svg.getBoundingClientRect().left + margin.left;
 
         var top = 0;
         var left = 0;

@@ -70,13 +70,18 @@ export const AreaChart = React.createClass({
 		stroke: React.PropTypes.func
 	},
 
+	getInitialState: function getInitialState(){
+		return {
+			yMax : 0
+		}
+	},
+
 	getDefaultProps: function getDefaultProps() {
 		return {
 			interpolate: "linear",
 			defined: function () {
 				return true;
 			},
-			yMax : 0,
 			stroke: d3.scale.category20()
 		};
 	},
@@ -111,15 +116,11 @@ export const AreaChart = React.createClass({
 		var yPos1 = yScale1(yValue1);
 		var tooltipPos = yPos;
 
-		// if(yPos1<yPos){
-		// 	tooltipPos = yPos1;
-		// }
-
 		this.setState({
         	coordinateLine : {
         		hidden : false,
         		coordinateData : [{
-        			values : [{x:xValue,y:0},{x:xValue,y:_props.yMax===0?yValue:_props.yMax}]
+        			values : [{x:xValue,y:0},{x:xValue,y:_props.yMax}]
         		}]
         	}
         });
@@ -148,7 +149,6 @@ export const AreaChart = React.createClass({
 		var y = _props.y;
 		var y0 = _props.y0;
 		var xAxis = _props.xAxis;
-	    var maxY = _props.maxY;
 		var yAxis = _props.yAxis;
 		var data = this._data;
 		var innerWidth = this._innerWidth;
