@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //公共方法
 window.r2fn = require('function');;
 //公共Redux actionCreator
