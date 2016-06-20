@@ -1,6 +1,6 @@
 import React from 'react'
 import * as d3 from "d3"
-import { flowTransformToKbMBGB, transformToKbMbGb } from 'libs/function'
+import { flowTransformToKbMBGB, transformToKbMbGb, generateMixed } from 'libs/function'
 
 export const STROAGE_MONITOR_VIEW_DISK_MESSAGE = [
     {
@@ -45,7 +45,16 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     title: '组内did',
 	     dataIndex: 'disc_list',
 	     render : function(text){
-	     	 return <span>{ text.join(",") }</span>
+	     	 var arr = [];
+	     	 for(var i=0;i<text.length;i++){
+	     	 	if(i === text.length - 1){
+	     	 		arr.push(<span key = { "stroage_monitor_disc_list_key_"+ new Date().getTime()+ generateMixed(6) }><span>{ text[i] }</span></span>)
+	     	 	}else{
+	     	 		arr.push(<span key = { "stroage_monitor_disc_list_key_"+ new Date().getTime()+ generateMixed(6) }><span>{ text[i] }</span><span className = "vertical_split_line">|</span></span>)
+	     	 	}
+	     	 	
+	     	 }
+	     	 return <div>{ arr }</div>
 	     }
 	}, 
 	{
@@ -67,25 +76,12 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     title: '实时健康度',
 	     dataIndex: 'health_stat',
 	}, {
-	     title: '带宽进',
+	     title: '带宽进/出',
 	     dataIndex: 'bandwidth_in',
 	     render : function(text, record){
-	     	return <span>{ transformToKbMbGb(text)}/{transformToKbMbGb(record["bandwidth_out"])}</span>
+	     	return <span>{ transformToKbMbGb(text)}<span className = "split_line">/</span>{transformToKbMbGb(record["bandwidth_out"])}</span>
 	    }
 	}
-	// }, {
-	//      title: '带宽出',
-	//      dataIndex: 'bandwidth_out',
-	// }
-	// , {
-	//      title: '操作',
-	//      dataIndex: 'relay',
-	//      render : function(text){
-	//      	 return <a href="#" className="ant-dropdown-link">
-	// 	         转发详情<Icon type="down" />
-	// 	     </a>
-	//      }
-	// }
 ]
 
 export const STROAGE_MONITOR_VIEW_DISK_FORWORAD_DETAIL = [
@@ -111,7 +107,7 @@ export const STROAGE_MONITOR_VIEW_DISK_FORWORAD_DETAIL = [
 	     title: '带宽进/出',
 	     dataIndex: 'bandwidth_in',
 	     render : function(text, record){
-	     	return <span>{ transformToKbMbGb(text)}/{transformToKbMbGb(record["bandwidth_out"])}</span>
+	     	return <span>{ transformToKbMbGb(text)}<span className = "split_line">/</span>{transformToKbMbGb(record["bandwidth_out"])}</span>
 	     }
 	}, {
 	     title: '转发能力值',
@@ -189,6 +185,7 @@ export let formate_date = function(data){
     }
      
 }
+
 export let formate_yAxis_bandWidth = function(data){
 	var data = data,
 	    unitValue;

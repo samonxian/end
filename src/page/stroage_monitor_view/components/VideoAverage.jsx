@@ -29,7 +29,7 @@ export class VideoAverage extends Component{
 				return new Date(value).Format("hh:mm");
 			},
 			strokeFun(){
-				return "rgba(111, 179, 83, 0.3)"
+				return "rgba(31, 119, 180, 0.5)"
 			}
     	}
     }
