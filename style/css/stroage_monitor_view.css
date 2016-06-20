@@ -74,3 +74,9 @@
 .stroage_monitor_char_items .stroage_monitor_view_tooltips{
 	width: 180px;
 }
+.stroage_monitor_view_area_detail_message .split_line,.stroage_monitor_view_area_detail_message .vertical_split_line{
+	font-weight: bold;
+	font-size: 16px;
+	padding:0 5px;
+	color:#000;
+}
