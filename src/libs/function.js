@@ -214,13 +214,13 @@ var fn = {
 		}
 		let value = 0;
 		if(t_value > 1024 * 1024 * 1024){
-			value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'Gbps';	
+			value = (Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100).toFixed(2)  + 'Gbps';	
 		}else if(t_value > 1024 * 1024){
-			value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'Mbps';	
+			value = (Math.round(t_value / 1024 / 1024 * 100) / 100).toFixed(2)  + 'Mbps';	
 		}else if(t_value > 1024){
-			value = Math.round(t_value / 1024 * 100) / 100 + 'Kbps';	
+			value = (Math.round(t_value / 1024 * 100) / 100).toFixed(2) + 'Kbps';	
 		}else if(t_value != 0){
-			value = t_value + 'bps';	
+			value = t_value.toFixed(2) + 'bps';	
 		}
 		return value;
 	},
@@ -231,13 +231,13 @@ var fn = {
 	flowTransformToKbMBGB(t_value){
 		let value = 0;
 		if(t_value > 1024 * 1024 * 1024){
-			value = Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100  + 'GB';	
+			value = (Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100).toFixed(2)  + 'GB';	
 		}else if(t_value > 1024 * 1024){
-			value = Math.round(t_value / 1024 / 1024 * 100) / 100  + 'MB';	
+			value = (Math.round(t_value / 1024 / 1024 * 100) / 100).toFixed(2)  + 'MB';	
 		}else if(t_value > 1024){
-			value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
+			value = (Math.round(t_value / 1024 * 100) / 100).toFixed(2) + 'KB';	
 		}else if(t_value != 0){
-			value = t_value + 'B';	
+			value = t_value.toFixed(2) + 'B';	
 		}
 		return value;
 	},
@@ -248,13 +248,13 @@ var fn = {
 	secondTranformToMH(t_value){
 		let value = 0;
 		if(t_value > 60 * 60 * 24){
-			value = Math.round(t_value / 60 / 60 /24 * 100 ) / 100  + '天';	
+			value = (Math.round(t_value / 60 / 60 /24 * 100 ) / 100).toFixed(2)  + '天';	
 		}else if(t_value > 60 * 60){
-			value = Math.round(t_value / 60 / 60 * 100 ) / 100  + '小时';	
+			value = (Math.round(t_value / 60 / 60 * 100 ) / 100).toFixed(2)  + '小时';	
 		}else if(t_value > 60){
-			value = Math.round(t_value / 60 * 100) / 100  + '分';	
+			value = (Math.round(t_value / 60 * 100) / 100).toFixed(2)  + '分';	
 		}else if(t_value != 0){
-			value = t_value + '秒';	
+			value = t_value.toFixed(2) + '秒';	
 		}
 		return value;
 	},

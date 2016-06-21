@@ -12,3 +12,11 @@
 .public_monitor .summary .app{
 	display:none;
 }
+.public_monitor .p-m-pie{
+    position: absolute;
+    top: -50px;
+    right: 10px;
+    height: 58px;
+    width: 58px;
+}
+

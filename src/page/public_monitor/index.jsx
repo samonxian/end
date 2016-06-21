@@ -3,7 +3,9 @@ import Component from 'libs/react-libs/Component'
 import { connect } from 'react-redux'
 import * as Antd from 'antd'
 import * as actionCreator from './action'
+import d3 from 'd3'
 import Bar from "./components/Bar"
+import Pie from 'libs/d3-components/Pie'
 require("css/public_monitor.css")
 
 class View extends Component {
@@ -42,6 +44,9 @@ class View extends Component {
 				})
 				return arr;
 			},
+			getFillColor(){
+				return [ 'blue','yellow','red'];
+			},
 			fill_fn(v){
 				var fill = "blue";
 				if(v < 0.5){
@@ -53,20 +58,44 @@ class View extends Component {
 				}
 				return fill;	
 			},
+			//获取发送比饼图数据
+			getSendRatePieData(data){
+				var one = 0,two = 0,three = 0;
+				data.forEach(value=>{
+					var v = value[1];
+					if(v < 0.5){
+						one++;
+					}else if(v >= 0.5 && v < 0.8){
+						two++;
+					}else if(v >= 0.8){
+						three++;
+					}else{
+						console.debug("源数据发送比大于1,说明数据有问题")
+					}
+				})
+				let dataset = { data : [one,two,three], fill : this.getFillColor() };
+				//console.debug(dataset)
+				return dataset;
+			},
 			getTableExtendContent(key,data){
 				var bar_transform = "";
 				var bar_height = 30;
+				var pie = d3.layout.pie();  
 				var v = data[key];
 				//console.debug(key,data,v)
 				return (
 					<div>
 						{
 							v.send_rate_detail &&
-							<span>
+							<span className="relative">
 								<h4 className="mt10">发送比</h4>
 								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
 									<Bar height={bar_height} width={2} data={v.send_rate_detail} 
 										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
+								</svg>
+								<svg className="p-m-pie">
+									<Pie data={ this.getSendRatePieData(v.send_rate_detail) } stroke="#06600i" fill="#ccc" pie={ pie }
+														outerRadius={ 29 } />
 								</svg>
 							</span>
 						}
@@ -128,6 +157,7 @@ class View extends Component {
 			var bar_height = 30;
 			var app_data = this.list.dataAdapter(targetData.result.apps)//针对不同数据要改动
 			this.viewBox = "0,0,2000,30"; 
+			var pie = d3.layout.pie();  
 		}
 		return (
 			<div className="public_monitor">
@@ -143,11 +173,15 @@ class View extends Component {
 								size="middle" bordered pagination={ false }/>	
 						{
 							send_rate_detail &&
-							<span>
+							<span className="relative">
 								<h4 className="mt10">发送比</h4>
 								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
 									<Bar height={bar_height} width={2} data={send_rate_detail} 
 										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
+								</svg>
+								<svg className="p-m-pie">
+									<Pie data={ this.getSendRatePieData(send_rate_detail) } stroke="#06600i" fill="#ccc" pie={ pie }
+														outerRadius={ 29 } />
 								</svg>
 							</span>
 						}
