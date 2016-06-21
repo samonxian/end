@@ -110,7 +110,7 @@ export class DiskMessage extends React.Component{
 					         <Col span="3"><span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_total"]) }</span></Col>
 					    </Row>
 					    <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">当前磁盘空间</Col>
+					         <Col span="4">当前磁盘已使用空间</Col>
 					         { diskSpaceHtl }
 					    </Row>
 			        </Col>

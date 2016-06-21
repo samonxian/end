@@ -199,7 +199,7 @@ export const AreaChart = React.createClass({
 					data: [data[0]],
 					area: area,
 					colorScale: function(){
-						return "rgba(31, 119, 180, 0.5)"
+						return "rgba(31, 119, 180, 0.6)"
 					},
 					stroke: stroke,
 					label: label,
@@ -211,7 +211,7 @@ export const AreaChart = React.createClass({
 					data: [data[1]],
 					area: area1,
 					colorScale: function(){
-						return "rgba(82, 165, 222, 0.2)"
+						return "rgba(111, 179, 83, 0.3)"
 					},
 					stroke: stroke,
 					label: label,
