@@ -7,6 +7,7 @@
 .public_monitor .p-m-bar{
 	height:30px;
 	/*background-color:rgba(255,85,0,.12)*/
+	border-bottom:1px solid #ccc;
 }
 .public_monitor .summary .app{
 	display:none;

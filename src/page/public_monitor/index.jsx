@@ -10,10 +10,23 @@ class View extends Component {
 	constructor(props){
 		super(props); 
 	}
+
 	componentDidMount(){
 		this.props.dispatch(actionCreator.fetchGetData())
+		this.clearInterval = setInterval(()=>{
+			this.props.dispatch(actionCreator.fetchGetData())
+		},3000)
 	}
+
+	shouldComponentUpdate(nextProps,nextState){
+		if(nextProps.targetProps && nextProps.targetProps.main.isFetching){
+			return false;
+		}
+		return true;	
+	}
+
 	componentWillUnmount(){
+		clearInterval(this.clearInterval)
 	}
 	/**
 	 *	数据处理与适配
@@ -47,23 +60,44 @@ class View extends Component {
 				//console.debug(key,data,v)
 				return (
 					<div>
-						<h4 className="mt10">发送比</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={v.send_rate_detail} 
-								max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
-						</svg>
-						<h4 className="mt10">观看人数</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={v.viwers_detail}
-								max_value={Math.max.apply(null,this.getValueArray(v.viwers_detail))} 
-								gap={1} field={1} transform={bar_transform}/>
-						</svg>
-						<h4 className="mt10">推送带宽</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={v.publish_bandwidth_detail} 
-								max_value={Math.max.apply(null,this.getValueArray(v.publish_bandwidth_detail))} 
-								gap={1} field={1} transform={bar_transform}/>
-						</svg>
+						{
+							v.send_rate_detail &&
+							<span>
+								<h4 className="mt10">发送比</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={v.send_rate_detail} 
+										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
+								</svg>
+							</span>
+						}
+						{
+							v.viwers_detail &&
+							<span>
+								<h4 className="mt10">观看人数（最大值：{ Math.max.apply(null,this.getValueArray(v.viwers_detail)) }）</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={v.viwers_detail}
+										max_value={Math.max.apply(null,this.getValueArray(v.viwers_detail))} 
+										gap={1} field={1} transform={bar_transform}/>
+								</svg>
+							</span>
+						}
+						{
+							v.publish_bandwidth_detail &&
+							<span>
+								<h4 className="mt10">
+									推送带宽（最大值：
+										{
+											r2fn.transformToKbMbGb(Math.max.apply(null,this.getValueArray(v.publish_bandwidth_detail)))
+										}
+									）
+								</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={v.publish_bandwidth_detail} 
+										max_value={Math.max.apply(null,this.getValueArray(v.publish_bandwidth_detail))} 
+										gap={1} field={1} transform={bar_transform}/>
+								</svg>
+							</span>
+						}
 					</div>
 				)	
 			}
@@ -93,6 +127,7 @@ class View extends Component {
 			var bar_transform = "translate(0,0)"
 			var bar_height = 30;
 			var app_data = this.list.dataAdapter(targetData.result.apps)//针对不同数据要改动
+			this.viewBox = "0,0,2000,30"; 
 		}
 		return (
 			<div className="public_monitor">
@@ -106,23 +141,44 @@ class View extends Component {
 						<h2>汇总信息</h2>	
 						<Antd.Table className="mt10 summary" columns={this.list.columns} dataSource={listData} 
 								size="middle" bordered pagination={ false }/>	
-						<h4 className="mt10">发送比</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={send_rate_detail} 
-								max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
-						</svg>
-						<h4 className="mt10">观看人数</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={viwers_detail}
-								max_value={Math.max.apply(null,this.getValueArray(viwers_detail))} 
-								gap={1} field={1} transform={bar_transform}/>
-						</svg>
-						<h4 className="mt10">推送带宽</h4>
-						<svg className="p-m-bar mt10">
-							<Bar height={bar_height} width={2} data={publish_bandwidth_detail} 
-								max_value={Math.max.apply(null,this.getValueArray(publish_bandwidth_detail))} 
-								gap={1} field={1} transform={bar_transform}/>
-						</svg>
+						{
+							send_rate_detail &&
+							<span>
+								<h4 className="mt10">发送比</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={send_rate_detail} 
+										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
+								</svg>
+							</span>
+						}
+						{
+							viwers_detail &&
+							<span>
+								<h4 className="mt10">观看人数（最大值：{ Math.max.apply(null,this.getValueArray(viwers_detail)) }）</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={viwers_detail}
+										max_value={Math.max.apply(null,this.getValueArray(viwers_detail))} 
+										gap={1} field={1} transform={bar_transform}/>
+								</svg>
+							</span>
+						}
+						{
+							publish_bandwidth_detail && 
+							<span>
+								<h4 className="mt10">
+									推送带宽（最大值：
+										{
+											r2fn.transformToKbMbGb(Math.max.apply(null,this.getValueArray(publish_bandwidth_detail)))
+										}
+									）
+								</h4>
+								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
+									<Bar height={bar_height} width={2} data={publish_bandwidth_detail} 
+										max_value={Math.max.apply(null,this.getValueArray(publish_bandwidth_detail))} 
+										gap={1} field={1} transform={bar_transform}/>
+								</svg>
+							</span>
+						}
 						<h2>App信息</h2>	
 						<Antd.Table className="mt10" columns={this.list.columns} dataSource={app_data} 
 							size="middle" pagination={ false }
