@@ -220,7 +220,7 @@ var fn = {
 		}else if(t_value > 1024){
 			value = Math.round(t_value / 1024 * 100) / 100 + 'Kbps';	
 		}else if(t_value != 0){
-			value = t_value + '比特';	
+			value = t_value + 'bps';	
 		}
 		return value;
 	},
@@ -237,7 +237,7 @@ var fn = {
 		}else if(t_value > 1024){
 			value = Math.round(t_value / 1024 * 100) / 100 + 'KB';	
 		}else if(t_value != 0){
-			value = t_value + '字节';	
+			value = t_value + 'B';	
 		}
 		return value;
 	},
