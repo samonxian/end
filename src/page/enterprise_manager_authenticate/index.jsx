@@ -100,9 +100,9 @@ class enterpriseManagerAuthenticate extends Component{
 				}));
 			},
 			turnPage(n){
-				const { dispatch, enterpriseManagerList } = this.props;
+				const { dispatch, enterpriseManagerList } = _this.props;
 				dispatch(getEnterpriseManagerFetch({
-					authenicate_status : enterpriseManagerList["data"]["aproval_status"],
+					authenicate_status : enterpriseManagerList["data"]["authenicate_status"],
 					name : enterpriseManagerList["data"]["name"],
 					code : enterpriseManagerList["data"]["code"],
 					size : 10,

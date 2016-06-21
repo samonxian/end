@@ -26,7 +26,6 @@ export const ENTERPRISE_MANAGER_AUTHENTICATE_TABLE = [
 		title: '申请时间',
 		dataIndex: 'created',
 		render: function(text ,record){
-			console.log("========================= text",text);
 			return <span>{ new Date(text).Format('yyyy-MM-dd hh:mm:ss') }</span>
 		}
      },
