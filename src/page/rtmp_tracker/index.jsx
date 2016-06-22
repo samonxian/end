@@ -83,7 +83,7 @@ class RtmpTracker extends Component {
 						</Antd.Col>
 						<Antd.Col className="rt_right">
 							{
-								this.state && this.state.show_table &&
+								this.state && this.state.show_table != "undefined" &&
 										<Antd.Table size="middle" columns={data_setting.columns} 
 											dataSource={data_setting.getData(posts2.data.data[_this.state.show_table].RelayServer)}
 											pagination={false} bordered/>
