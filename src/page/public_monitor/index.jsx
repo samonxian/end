@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import * as Antd from 'antd'
 import * as actionCreator from './action'
 import d3 from 'd3'
+//import d3c from 'react-d3-components'
 import Bar from "./components/Bar"
 import Pie from 'libs/d3-components/Pie'
 require("css/public_monitor.css")
@@ -45,16 +46,16 @@ class View extends Component {
 				return arr;
 			},
 			getFillColor(){
-				return [ 'blue','yellow','red'];
+				return [ '#2fd5ee','#faa700','#db543f'];
 			},
 			fill_fn(v){
-				var fill = "blue";
+				var fill = "#2fd5ee";
 				if(v < 0.5){
-					fill = "blue";
+					fill = "#2fd5ee";
 				}else if(v >= 0.5 && v < 0.8){
-					fill = "rgba(241, 238, 48, 0.88)";
+					fill = "#faa700";
 				}else if(v >= 0.8){
-					fill = "red";
+					fill = "#db543f";
 				}
 				return fill;	
 			},
@@ -88,7 +89,12 @@ class View extends Component {
 						{
 							v.send_rate_detail &&
 							<span className="relative">
-								<h4 className="mt10">发送比</h4>
+								<div className="mt10 clearfix">
+									<h4 className="fl "> 发送比</h4>
+									<div className="fl ml10 bg05 send_rate_for">小于0.5</div>
+									<div className="fl ml10 bg08 send_rate_for">大于等于0.5小于0.8</div>
+									<div className="fl ml10 bg10 send_rate_for">大于等于0.8</div>
+								</div>
 								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
 									<Bar height={bar_height} width={2} data={v.send_rate_detail} 
 										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
@@ -174,7 +180,12 @@ class View extends Component {
 						{
 							send_rate_detail &&
 							<span className="relative">
-								<h4 className="mt10">发送比</h4>
+								<div className="mt10 clearfix">
+									<h4 className="fl "> 发送比</h4>
+									<div className="fl ml10 bg05 send_rate_for">小于0.5</div>
+									<div className="fl ml10 bg08 send_rate_for">大于等于0.5小于0.8</div>
+									<div className="fl ml10 bg10 send_rate_for">大于等于0.8</div>
+								</div>
 								<svg className="p-m-bar mt10" viewBox={this.viewBox} preserveAspectRatio="none">
 									<Bar height={bar_height} width={2} data={send_rate_detail} 
 										max_value={1} gap={1} field={1} transform={bar_transform} fill={this.fill_fn}/>
