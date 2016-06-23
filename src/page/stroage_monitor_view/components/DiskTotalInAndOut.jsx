@@ -56,7 +56,7 @@ export class DiskTotalInAndOut extends Component{
 			return false;
 		}
         
-		var content_width = (document.body.clientWidth - 280)*0.4583333333;
+		var content_width = (document.body.clientWidth - 280)*0.3333333333;
 		var diskTotalIn = stroageCharProps["param"]["disc_in_bandwidth"],
 		    diskTotalOut = stroageCharProps["param"]["disc_out_bandwidth"],
 		    yMax = d3.max(diskTotalIn.map(function(data){

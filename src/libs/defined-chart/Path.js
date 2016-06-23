@@ -6,16 +6,16 @@ var d3 = require("d3");
 var Path = React.createClass({
     displayName: "Path",
 
-    // propTypes: {
-    //     className: React.PropTypes.string,
-    //     stroke: React.PropTypes.string.isRequired,
-    //     strokeLinecap: React.PropTypes.string,
-    //     strokeWidth: React.PropTypes.string,
-    //     strokeDasharray: React.PropTypes.string,
-    //     fill: React.PropTypes.string,
-    //     d: React.PropTypes.string.isRequired,
-    //     data: React.PropTypes.array.isRequired
-    // },
+    propTypes: {
+        className: React.PropTypes.string,
+        stroke: React.PropTypes.string.isRequired,
+        strokeLinecap: React.PropTypes.string,
+        strokeWidth: React.PropTypes.string,
+        strokeDasharray: React.PropTypes.string,
+        fill: React.PropTypes.string,
+        d: React.PropTypes.string.isRequired,
+        data: React.PropTypes.array.isRequired
+    },
 
     getDefaultProps: function getDefaultProps() {
         return {

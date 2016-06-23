@@ -62,7 +62,7 @@ export class ForwardTotalInAndOut extends Component{
 			return false;
 		}
 
-		var content_width = (document.body.clientWidth - 280)*0.4583333333;
+		var content_width = (document.body.clientWidth - 280)*0.3333333333;
 		var relayIn = stroageCharProps["param"]["relay_in_bandwidth"],
 		    relayOut = stroageCharProps["param"]["relay_out_bandwidth"],
 		    yMax = d3.max(relayIn.map(function(data){

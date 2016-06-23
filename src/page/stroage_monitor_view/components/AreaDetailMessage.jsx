@@ -13,6 +13,7 @@ export class AreaDetailMessage extends Component{
             createKeyDiskDetail(data){
                 for(var i = 0; i < data.length; i++){
                     data[i]["key"] = "stroage_monitor_view_disk_detail_key_"+ i;
+                    data[i]["forwardNum"] = data[i]["relay"].length;
                 }
                 return data;
             },

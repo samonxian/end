@@ -1,15 +1,66 @@
 .stroage_monitor_view_page_contianer{
 	padding: 20px 40px;
 }
+.stroage_monitor_view_page_contianer .clear{
+	overflow: hidden;
+}
+.stroage_monitor_view_page_contianer .stroage_monitor_view_health{
+	margin-bottom: 20px;
+}
 .stroage_monitor_view_disk_message{
 	color:#fff;
 }
-.stroage_monitor_view_disk_message h1{
+.stroage_monitor_view_disk_message .stroage_minitor_disk{
+	overflow: hidden;
+}
+.stroage_monitor_view_disk_message h1,.stroage_monitor_view_char_health h1,.stroage_monitor_view_char_equipment h1{
 	font-size: 18px;
 	margin-bottom: 10px;
+	float: left;
+}
+.stroage_monitor_view_char_health h1,.stroage_monitor_view_char_equipment h1{
+	color:#fff;
+}
+.stroage_monitor_view_disk_message .stroage_monitor_tooltips_contianer{
+	float: right;
+	line-height: 20px;
+	height: 20px;
+}
+.stroage_monitor_view_disk_title{
+	overflow: hidden;
+}
+.stroage_monitor_view_tooltips_items{
+	float: left;
+	margin-left: 10px;
+}
+.stroage_monitor_view_tooltips_items span{
+	float: left;
+}
+.stroage_monitor_view_tooltips_items span.total,
+.stroage_monitor_view_tooltips_items span.used,
+.stroage_monitor_view_tooltips_items span.wait,
+.stroage_monitor_view_tooltips_items span.error{
+	width: 15px;
+	height: 15px;
+	border-radius: 5px;
+	display: inline-block;
+	margin-left: 5px;
+	margin-top: 2px;
+}
+.stroage_monitor_view_tooltips_items span.total{
+	background: #2C94C3;
+}
+.stroage_monitor_view_tooltips_items span.used{
+	background: #6FB353
+}
+.stroage_monitor_view_tooltips_items span.wait{
+	background: blue;
+}
+.stroage_monitor_view_tooltips_items span.error{
+	background: #EC3535;
 }
 .stroage_monitor_view_disk_message_items{
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 	height: 20px;
 	line-height: 20px;
 	font-size: 14px;
@@ -51,7 +102,7 @@
 	padding:10px;
 	border-radius: 5px;
 }
-.stroage_monitor_char svg text{
+.stroage_monitor_char svg text,.stroage_monitor_view_health svg text{
 	fill: #fff;
 }
 .stroage_monitor_char{
@@ -68,9 +119,6 @@
 .stroage_monitor_view_area_message .ant-table tr,.stroage_monitor_view_area_detail_message .ant-table tr{
 	background: #fff;
 }
-.stroage_monitor_view_disk_message_items .disk_process_num {
-	min-width: 10px;
-}
 .stroage_monitor_char_items .stroage_monitor_view_tooltips{
 	width: 180px;
 }
@@ -79,4 +127,42 @@
 	font-size: 16px;
 	padding:0 5px;
 	color:#000;
+}
+.stroage_minitor_view_disc_list_items{
+	font-size: 22px;
+}
+.stroage_minitor_view_disc_list_items.health{
+	color: rgb(47, 213, 238);
+}
+.stroage_minitor_view_disc_list_items.unhealth{
+	color: rgb(236, 53, 53);
+}
+.stroage_monitor_view_7day_user{
+	height: 20px;
+	background: rgb(44, 148, 195);
+}
+.stroage_monitor_view_health_area_items span{
+	color: #fff;
+	font-size: 14px;
+}
+.stroage_monitor_health_detail_char{
+	color:#fff;
+	font-size: 14px;
+}
+.stroage_monitor_health_detail_char p{
+	overflow: hidden;
+}
+.stroage_monitor_health_detail_char span.desc{
+	float: left;
+	margin-right: 5px;
+}
+.stroage_monitor_health_detail_char span.stroage_monitor_view_area_icon_items{
+	float: left;
+	margin-top: 3px;
+}
+.stroage_monitor_view_area_icon_items{
+	width: 15px;
+	height: 15px;
+	display: inline-block;
+	border-radius: 5px;
 }
