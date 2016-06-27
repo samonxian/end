@@ -67,6 +67,7 @@ var DataSet = React.createClass({
 
         var wedges = pie.map(function (e, index) {
             var yValue = y(e["data"]);
+
             var d = arc(e);
 
             var outPie = d3.layout
@@ -79,18 +80,26 @@ var DataSet = React.createClass({
 
             var outPieData = outPie(yValue["children"]);
 
-            var outd = outPieData.map(function(e,index){
-                var out = outerArc(e);
+            var outd = outPieData.map(function(stack,index){
+                var out = outerArc(stack);
 
                 return React.createElement(Path, {
-                    key: "."+x(e.data)+"."+y(e.data)+"."+index,
-                    data: [e.data],
-                    fill: outArcColorScale(x(e.data),index),
+                    key: "."+x(stack.data)+"."+y(stack.data)+"."+index,
+                    data: [stack.data],
+                    fill: outArcColorScale(x(stack.data),index),
                     stroke: "none",
                     strokeWidth: "0",
                     d: out,
-                    onMouseEnter: onMouseEnter,
-                    onMouseLeave: onMouseLeave
+                    onMouseEnter: function(evt){
+                        var obj = stack.data;
+                            obj.type = "status";
+                            obj.areaName = x(e["data"]);
+
+                        onMouseEnter(evt, obj);
+                    },
+                    onMouseLeave: function(evt){
+                        onMouseLeave(evt);
+                    }
                 })
             })
 
@@ -120,8 +129,8 @@ export const StroagePie =  React.createClass({
     mixins: [DefaultPropsMixin, HeightWidthMixin, AccessorMixin, TooltipMixin],
 
     _tooltipHtml: function _tooltipHtml(e, d, position) {
-        var html = this.props.tooltipHtml(this.props.x(d), this.props.y(d));
 
+        var html = this.props.tooltipHtml(d);
         return [html, 0, 0];
     },
 

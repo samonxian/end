@@ -24,10 +24,10 @@ export class DiskMessage extends React.Component{
 			     </div>
 			</div>
 			<div>
-			     <Row>
-			        <Col span="12">
+			     <Row className = "clear">
+			        <Col span="11" className = "stroage_monitor_char_items_left">
 			            <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">磁盘总数</Col>
+					         <Col span="7">磁盘总数 <span className = "disk_num">{ diskMessage["disc_total"] }</span></Col>
 					         <Col span="17">
 					             <div style={{ width:"100%"}} className = "disk_process_num disk_process_total">
 					                 <div style = {{width : diskUseing+"%"}} className = "disk_process_num disk_process_useing">{ diskMessage["disc_used"] === 0?"": diskMessage["disc_used"] }</div>
@@ -35,18 +35,17 @@ export class DiskMessage extends React.Component{
 					                 <div style = {{width : diskError+"%"}} className = "disk_process_num disk_process_error">{ diskMessage["disc_error"] ===0?"": diskMessage["disc_error"] }</div>
 					             </div>
 					         </Col>
-					         <Col span="3"><span className = "disk_num">{ diskMessage["disc_total"] }</span></Col>
 					    </Row>
 			        </Col>
-			        <Col span="12">
+			        <Col span="11" className = "stroage_monitor_char_items_right">
 			            <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">总磁盘空间</Col>
+					         <Col span="7">总磁盘空间 <span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_total"]) }</span></Col>
 					         <Col span="17">
 					             <div style={{ width:"100%"}}
 					                  className = "disk_process_num disk_process_total">
 					                 <div style = {{width : diskSpace+"%"}} className = "disk_process_num disk_process_wait">{ flowTransformToKbMBGB(diskMessage["space_used"]) }</div>
-					             </div></Col>
-					         <Col span="3"><span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_total"]) }</span></Col>
+					             </div>
+					         </Col>
 					    </Row>
 			        </Col>
 			     </Row>

@@ -32,29 +32,27 @@ var DataSet = React.createClass({
 	render: function render() {
 		var _props = this.props;
 		var data = _props.data;
+		var equipmentCityData = _props.equipmentCityData;
 		var area = _props.area;
 		var line = _props.line;
 		var colorScale = _props.colorScale;
+		var lineStrokeFun = _props.lineStrokeFun;
 		var stroke = _props.stroke;
 		var values = _props.values;
 		var label = _props.label;
 		var onMouseEnter = _props.onMouseEnter;
 		var onMouseLeave = _props.onMouseLeave;
-        
-        var lines = data.map(function(stack, index){
-        	if(index != 0){
-         //   	console.log("++++++++++++++++++++++++++++++++++ d",line(values(stack)));
-    //     		return React.createElement(Path, {
-				// 	key: "" + label(stack) + "." + index,
-				// 	className: "area",
-				// 	stroke: "none",
-				// 	fill: colorScale(label(stack)),
-				// 	d: values(stack)&& values(stack).length?area(values(stack)):"",
-				// 	onMouseEnter: onMouseEnter,
-				// 	onMouseLeave: onMouseLeave,
-				// 	data: data
-				// });
-        	}
+
+        var lines = equipmentCityData.map(function(stack, index){
+        	return React.createElement(Path, {
+				key: "" + label(stack) + "." + index,
+				className: "line",
+				stroke: lineStrokeFun(index,label(stack)),
+				d: values(stack)&& values(stack).length?line(values(stack)):"",
+				onMouseEnter: onMouseEnter,
+				onMouseLeave: onMouseLeave,
+				data: data
+			});
         })
         
 
@@ -69,7 +67,8 @@ var DataSet = React.createClass({
 				onMouseEnter: onMouseEnter,
 				onMouseLeave: onMouseLeave,
 				data: [data[0]]
-			})
+			}),
+			lines
 		);
 	}
 });
@@ -97,9 +96,10 @@ export const EquipmentChart = React.createClass({
 
 	_tooltipHtml: function _tooltipHtml(e,d, position) {
 		var _props = this.props;
+		var data = _props.data;
 		var x = _props.x;
-		var y0 = _props.y0;
 		var y = _props.y;
+		var cityEquipmentData = _props.cityEquipmentData;
 		var values = _props.values;
 		var label = _props.label;
 		var xScale = this._xScale;
@@ -110,52 +110,47 @@ export const EquipmentChart = React.createClass({
 		var xBisector = d3.bisector(function (e) {
 			return x(e);
 		}).right;
+
 		var xIndex = xBisector(values(d[0]), xScale.invert(position[0]));
-		xIndex = xIndex == values(d[0]).length ? xIndex - 1 : xIndex;
+		var xData =  values(data[0]).map(function(stack,index){
+			return x(stack);
+		});
+		var xValue = xData[xIndex - 1];
+		var yData = values(data[0]).map(function(stack,index){
+			return y(stack);
+		});
+		var yValue = yData[xIndex - 1];
 
-		var xIndexRight = xIndex == values(d[0]).length ? xIndex - 1 : xIndex;
-		var xValueRight = x(values(d[0])[xIndexRight]);
-
-		var xIndexLeft = xIndex == 0 ? xIndex : xIndex - 1;
-		var xValueLeft = x(values(d[0])[xIndexLeft]);
-
-		if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) {
-			xIndex = xIndexRight;
-		} else {
-			xIndex = xIndexLeft;
-		}
-
-		var yValueCursor = yScale.invert(position[1]);
-
-		var yBisector = d3.bisector(function (e) {
-			return y0(values(e)[xIndex]) + y(values(e)[xIndex]);
-		}).left;
-		var yIndex = yBisector(d, yValueCursor);
-		yIndex = yIndex == d.length ? yIndex - 1 : yIndex;
-
-		var yValue = y(values(d[yIndex])[xIndex]);
-		var yValueCumulative = y0(values(d[d.length - 1])[xIndex]) + y(values(d[d.length - 1])[xIndex]);
-
-		var xValue = x(values(d[yIndex])[xIndex]);
+		var equipmentData = cityEquipmentData.map(function(stack, index){
+			var areaName = stack.label;
+			var currentArr = values(stack).map(function(value,key){
+				return y(value);
+			});
+			return {
+				areaName : areaName,
+				yValue : currentArr[xIndex - 1]
+			}
+		});
 
 		var xPos = xScale(xValue);
-		var yPos = yScale(y0(values(d[yIndex])[xIndex]) + yValue);
+		var yPos = yScale(yValue);
 
 		this.setState({
         	coordinateLine : {
         		hidden : false,
         		coordinateData : [{
-        			values : [{x:xValue,y:0},{x:xValue,y:this.props.yMax===0?yValue:this.props.yMax}]
+        			values : [{x:xValue,y:0},{x:xValue,y:_props.yMax===0?yValue:_props.yMax}]
         		}]
         	}
         });
 
-		return [this.props.tooltipHtml(yValue, yValueCumulative, xValue), xPos, yPos];
+		return [this.props.tooltipHtml(yValue, equipmentData, xValue), xPos, yPos];
 	},
 
 	render: function render() {
 		var _props = this.props;
 		var height = _props.height;
+		var equipmentCityData = _props.cityEquipmentData;
 		var interpolate = _props.interpolate;
 		var defined = _props.defined;
 		var width = _props.width;
@@ -182,6 +177,7 @@ export const EquipmentChart = React.createClass({
 		var yScale = this._yScale;
 		var xIntercept = this._xIntercept;
 		var yIntercept = this._yIntercept;
+		var lineStrokeFun = _props.lineStrokeFun;
 
 		var line = d3.svg.line().x(function (e) {
 			return xScale(x(e));
@@ -211,7 +207,9 @@ export const EquipmentChart = React.createClass({
 				React.createElement(DataSet, {
 					data: data,
 					area: area,
+					equipmentCityData: equipmentCityData,
 					colorScale: colorScale,
+					lineStrokeFun: lineStrokeFun,
 					line: line,
 					stroke: stroke,
 					label: label,

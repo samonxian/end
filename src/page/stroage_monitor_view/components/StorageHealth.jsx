@@ -41,17 +41,6 @@ export class StorageHealth extends Component{
     				values : values
     			}
     		},
-            adapterAreaHtl(data){
-                var arr = [];
-                for(var i = 0; i<data.length; i++){
-                    arr.push(<div 
-                            className = "stroage_monitor_view_health_area_items"
-                            key = { "stroage_monitor_view_health_area_key_" + i }>
-                        <span>{ data[i]["area"] }:</span>
-                        <span>{ data[i]["user_total"] }</span></div>)
-                }
-                return arr;
-            },
             adapterAreaIconHtl(data){
                 var tempArr = [];
                 for(var i = 0; i<data.length; i++){
@@ -59,7 +48,8 @@ export class StorageHealth extends Component{
                         <span className = "desc">{ data[i]["area"] }</span>
                         <span 
                              style = {{ background : STROAGE_MONITOR_USER_TOTAL_AREA_COLOR[i] }}
-                             className = "stroage_monitor_view_area_icon_items"></span></p>)
+                             className = "stroage_monitor_view_area_icon_items"></span>
+                        <span className = "stroage_monitor_view_area_desc_items">{ data[i]["user_total"] }</span></p>)
                 }
                 return tempArr;
             },
@@ -82,6 +72,26 @@ export class StorageHealth extends Component{
     	}
     }
 
+    events(){
+        return {
+            tooltipHtml(data){
+                var x = "",
+                    y = "";
+                if(data["type"] === "status"){
+                    x = data["x"];
+                    y = data["y"];
+                }else{
+                    x = data["x"];
+                    y = data["y"]["total"];
+                }
+                return (<div className = "stroage_monitor_health_status_tooltips">
+                        <div>详情</div>
+                        <div>{ x }:{ y }</div>
+                    </div>)
+            }
+        }
+    }
+
 	render(){
         var sort = null,
             areaHtl = [];
@@ -91,12 +101,9 @@ export class StorageHealth extends Component{
         if(isEmptyObj(stroageMonitorViewProps)){
         	return false;
         }
-        
-        console.log("=============================stroageMonitorViewProps",stroageMonitorViewProps);
 
         var tempData = stroageMonitorViewProps["param"]["area_info"];
         var healthData = this.adapterFormateData(tempData),
-            areaHtl = this.adapterAreaHtl(tempData),
             areaIconHtl = this.adapterAreaIconHtl(tempData);
 		        
 		return (
@@ -105,31 +112,32 @@ export class StorageHealth extends Component{
 			         <h1>存储健康状态</h1>
                  </div>
 			     <Row>
-                     <Col span = "6">
-                         { areaHtl }
-                     </Col>
-                     <Col span = "18" className = "stroage_monitor_health_detail_char">
+                     <Col span = "10">
                          <Row>
-                             <Col span = "8">
+                             <Col span = "24" className = "stroage_monitor_health_detail_char">
                                  { areaIconHtl }
-                                 <p><span className = "desc">状况好用户数</span>
+                                 <p><span className = "desc">发送状况好用户数</span>
                                     <span 
                                       className = "stroage_monitor_view_area_icon_items"
                                       style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0] }}></span></p>
-                                 <p><span className = "desc">亚健康用户数</span>
+                                 <p><span className = "desc">发送亚健康用户数</span>
                                     <span 
                                       className = "stroage_monitor_view_area_icon_items"
                                       style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span></p>
-                                 <p><span className = "desc">不健康用户数</span>
+                                 <p><span className = "desc">发送不健康用户数</span>
                                     <span 
                                       className = "stroage_monitor_view_area_icon_items"
                                       style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span></p>
-                                 <p><span className = "desc">未知用户数</span>
+                                 <p><span className = "desc">发送未知用户数</span>
                                     <span 
                                       className = "stroage_monitor_view_area_icon_items"
                                       style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span></p>
                              </Col>
-                             <Col span = "16">
+                         </Row>
+                     </Col>
+                     <Col span = "14" className = "stroage_monitor_health_detail_char">
+                         <Row>
+                             <Col span = "24">
                                  <StroagePie
                                      data = { healthData }
                                      width = { 200 }
@@ -137,8 +145,10 @@ export class StorageHealth extends Component{
                                      viewBox = { "0,0,200,200" }
                                      outerRadius = { 0 }
                                      colorScale = { this.colorScale }
+                                     tooltipOffset = {{top: -80, left: 0}}
                                      outArcColorScale = { this.outArcColorScale }
                                      style = {{ width:'200px',height:'200px' }}
+                                     tooltipHtml = { this.tooltipHtml }
                                      sort = { sort }/>
                              </Col>
                          </Row>

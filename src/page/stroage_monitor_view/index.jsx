@@ -26,7 +26,7 @@ class StroageMonitorView extends Component{
         },30*1000)
     }
 
-    componentWillMount(){
+    componentWillUnmount(){
         clearInterval(this.clearInt);
     }
 
