@@ -35,6 +35,7 @@ export let columns = [
 
 export function getData(data){
 	let re = [];
+	//console.debug(data)
 	re = fn.fieldSort(data,column_dataIndexs,columns,function(key,data2){
 		var t_data = data2[key]
 		if(!t_data.CurrentUpSpeed_1){
