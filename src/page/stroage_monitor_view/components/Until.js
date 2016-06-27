@@ -3,10 +3,10 @@ import * as d3 from "d3"
 import { flowTransformToKbMBGB, transformToKbMbGb, generateMixed } from 'libs/function'
 
 export const STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR = [
-     "#0000FF",
-     "rgba(111, 179, 83, 1)",
-     "rgba(236, 53, 53, 1)",
-     "#CCC"
+     "rgba(0, 0, 255, 0.3)",
+     "rgba(111, 179, 83, 0.5)",
+     "rgba(236, 53, 53, 0.8)",
+     "rgba(204, 204, 204, 0.5)"
 ]
 export const STROAGE_MONITOR_USER_TOTAL_AREA_COLOR = [
      "rgb(255, 127, 14)",

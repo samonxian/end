@@ -43,7 +43,7 @@ var DataSet = React.createClass({
         
         var lines = data.map(function(stack, index){
         	if(index != 0){
-        //		console.log("++++++++++++++++++++++++++++++++++ d",line(values(stack)));
+            	// console.log("++++++++++++++++++++++++++++++++++ d",line(values(stack)));
     //     		return React.createElement(Path, {
 				// 	key: "" + label(stack) + "." + index,
 				// 	className: "area",
