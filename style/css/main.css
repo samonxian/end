@@ -166,6 +166,7 @@ div.ant-tabs-nav-scroll {
 /**nav**/
 
 .flex_nav {
+	position:relative;
     z-index: 10000;
 }
 .flex_nav .ant-menu {

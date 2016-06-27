@@ -6,7 +6,7 @@ export const RECIEVE = 'RECIEVEAPUBLIC_MONITOR'
 
 //actionCreators
 export function fetchGetData(_params={},success) {
-	var url = 'http://120.26.74.53/v1/diagram/publiccamera';
+	var url = `http://120.26.74.53/v1/diagram/publiccamera`;
 	//url参数拼接
 	url = r2fn.params(url,_params);
 	return r2fetch({

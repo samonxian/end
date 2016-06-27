@@ -7,7 +7,31 @@
 .public_monitor .p-m-bar{
 	height:30px;
 	/*background-color:rgba(255,85,0,.12)*/
+	border-bottom:1px solid #ccc;
 }
 .public_monitor .summary .app{
 	display:none;
 }
+.public_monitor .p-m-pie{
+    position: absolute;
+    top: -50px;
+    right: 10px;
+    height: 58px;
+    width: 58px;
+}
+.public_monitor .send_rate_for{
+	height:13px;
+	text-indent:4px;
+	margin-top:3px;
+	line-height:15px;
+}
+.public_monitor .bg05{
+	border-left:13px solid #2fd5ee;
+}
+.public_monitor .bg08{
+	border-left:13px solid #faa702;
+}
+.public_monitor .bg10{
+	border-left:13px solid #db5540;
+}
+
