@@ -128,8 +128,8 @@ class Form extends Component {
 						{ ...this.handleInputProps("cid") }/>
 				</Antd.Form.Item>
 
-				<Antd.Form.Item label="生效时间："  {...formItemLayout}>
-					<Antd.DatePicker placeholder="请输入生效时间" { ...this.handleInputProps("expire") } format="yyyy-MM-dd HH:mm:ss"/>
+				<Antd.Form.Item label="过期时间："  {...formItemLayout}>
+					<Antd.DatePicker placeholder="请输入过期时间" { ...this.handleInputProps("expire") } format="yyyy-MM-dd HH:mm:ss"/>
 				</Antd.Form.Item>
 
 				<Antd.Form.Item label="验证及推送控制："  {...formItemLayout}>
