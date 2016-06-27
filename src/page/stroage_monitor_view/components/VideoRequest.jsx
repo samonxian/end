@@ -51,7 +51,8 @@ export class VideoRequest extends Component{
 			return false;
 		}
 
-		var content_width = (document.body.clientWidth - 280)*0.3333333333;
+		// var content_width = (document.body.clientWidth - 280)*0.3333333333;
+		var content_width = (document.body.clientWidth - 280)*0.4583333333;
 		var data = stroageCharProps["param"]["video_request"],
 		    yMax = d3.max(data.map(function(arr){
 		    	return arr[1];

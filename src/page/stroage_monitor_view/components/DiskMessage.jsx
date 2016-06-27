@@ -10,95 +10,32 @@ export class DiskMessage extends React.Component{
 		    diskUseing = diskMessage["disc_used"]*100/diskMessage["disc_total"],
 		    diskWait = diskMessage["disc_wait"]*100/diskMessage["disc_total"],
 		    diskError = diskMessage["disc_error"]*100/diskMessage["disc_total"],
-		    diskSpace = diskMessage["space_used"]*100/diskMessage["space_total"],
-		    diskSpaceHtl = '',
-		    diskErrorHtl = '',
-		    diskWaitHtl = '',
-		    diskUseingHtl = '';
-         
-         diskSpaceHtl = <Col span="20">
-             <div style = {{width : diskSpace+"%"}}
-                 className = "disk_process_num disk_process_wait"></div>
-             <span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_used"]) }</span>
-         </Col>;
+		    diskSpace = diskMessage["space_used"]*100/diskMessage["space_total"];
 
-         diskWaitHtl = <Col span="20">
-             <div style = {{width : diskWait+"%"}}
-                 className = "disk_process_num disk_process_wait"></div>
-             <span className = "disk_num">{ diskMessage["disc_wait"] }</span>
-        </Col>;
-
-        diskErrorHtl = <Col span="20">
-             <div style = {{width : diskError+"%"}}
-                 className = "disk_process_num disk_process_error"></div>
-             <span className = "disk_num">{ diskMessage["disc_error"] }</span>
-        </Col>
-
-        diskUseingHtl = <Col span="20">
-             <div style = {{width : diskUseing+"%"}}
-                 className = "disk_process_num disk_process_useing"></div>
-             <span className = "disk_num">{ diskMessage["disc_used"] }</span>
-        </Col>
-
-		if(diskSpace === 100){
-			diskSpaceHtl = <div>
-			 <Col span="17">
-	             <div style={{ width:"100%"}}
-	                  className = "disk_process_num disk_process_wait"></div>
-	         </Col>
-	         <Col span="3"><span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_used"]) }</span></Col></div>
-		}
-
-		if(diskUseing === 100){
-			 diskUseingHtl = <div>
-			     <Col span="17">
-		             <div style={{ width:"100%"}}
-		                  className = "disk_process_num disk_process_useing"></div></Col>
-		         <Col span="3"><span className = "disk_num">{ diskMessage["disc_used"] }</span></Col>
-			 </div>
-		}
-
-		if(diskWait === 100){
-			diskWaitHtl = <div>
-			     <Col span="17">
-		             <div style={{ width:"100%"}}
-		                  className = "disk_process_num disk_process_wait"></div></Col>
-		         <Col span="3"><span className = "disk_num">{ diskMessage["disc_wait"] }</span></Col>
-			 </div>
-		}
-
-		if(diskError === 100){
-			diskErrorHtl = <div>
-			     <Col span="17">
-		             <div style={{ width:"100%"}}
-		                  className = "disk_process_num disk_process_error"></div></Col>
-		         <Col span="3"><span className = "disk_num">{ diskMessage["disc_error"] }</span></Col>
-			 </div>
-		}
 
 		return (<div className = "stroage_monitor_view_disk_message">
-			<h1>磁盘信息</h1>
+			<div className = "stroage_monitor_view_disk_title">
+			     <h1>磁盘信息</h1>
+			     <div className = "stroage_monitor_tooltips_contianer">
+			         <div className = "stroage_monitor_view_tooltips_items"><span>磁盘总数/总磁盘空间</span><span className = "total"></span></div>
+			         <div className = "stroage_monitor_view_tooltips_items"><span>使用中磁盘数/当前磁盘已使用空间</span><span className = "used"></span></div>
+			         <div className = "stroage_monitor_view_tooltips_items"><span>待命磁盘数</span><span className = "wait"></span></div>
+			         <div className = "stroage_monitor_view_tooltips_items"><span>异常磁盘数</span><span className = "error"></span></div>
+			     </div>
+			</div>
 			<div>
 			     <Row>
 			        <Col span="12">
 			            <Row className = "stroage_monitor_view_disk_message_items">
 					         <Col span="4">磁盘总数</Col>
 					         <Col span="17">
-					             <div style={{ width:"100%"}}
-					                  className = "disk_process_num disk_process_total"></div></Col>
+					             <div style={{ width:"100%"}} className = "disk_process_num disk_process_total">
+					                 <div style = {{width : diskUseing+"%"}} className = "disk_process_num disk_process_useing">{ diskMessage["disc_used"] === 0?"": diskMessage["disc_used"] }</div>
+					                 <div style = {{width : diskWait+"%"}} className = "disk_process_num disk_process_wait">{ diskMessage["disc_wait"] === 0?"": diskMessage["disc_wait"] }</div>
+					                 <div style = {{width : diskError+"%"}} className = "disk_process_num disk_process_error">{ diskMessage["disc_error"] ===0?"": diskMessage["disc_error"] }</div>
+					             </div>
+					         </Col>
 					         <Col span="3"><span className = "disk_num">{ diskMessage["disc_total"] }</span></Col>
-					    </Row>
-					    <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">使用中磁盘数</Col>
-					         { diskUseingHtl }
-					    </Row>
-					    <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">待命磁盘数</Col>
-					         { diskWaitHtl }
-					    </Row>
-					    <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">异常磁盘数</Col>
-					         { diskErrorHtl }
 					    </Row>
 			        </Col>
 			        <Col span="12">
@@ -106,12 +43,10 @@ export class DiskMessage extends React.Component{
 					         <Col span="4">总磁盘空间</Col>
 					         <Col span="17">
 					             <div style={{ width:"100%"}}
-					                  className = "disk_process_num disk_process_total"></div></Col>
+					                  className = "disk_process_num disk_process_total">
+					                 <div style = {{width : diskSpace+"%"}} className = "disk_process_num disk_process_wait">{ flowTransformToKbMBGB(diskMessage["space_used"]) }</div>
+					             </div></Col>
 					         <Col span="3"><span className = "disk_num">{ flowTransformToKbMBGB(diskMessage["space_total"]) }</span></Col>
-					    </Row>
-					    <Row className = "stroage_monitor_view_disk_message_items">
-					         <Col span="4">当前磁盘空间</Col>
-					         { diskSpaceHtl }
 					    </Row>
 			        </Col>
 			     </Row>

@@ -232,7 +232,9 @@ var fn = {
 	flowTransformToKbMBGB(t_value){
 		if(!t_value) return;
 		let value = 0;
-		if(t_value > 1024 * 1024 * 1024){
+		if(t_value > 1024 * 1024 * 1024 * 1024){
+			value = (Math.round(t_value / 1024 / 1024 / 1024 / 1024 * 100 ) / 100).toFixed(2)  + 'TB';	
+		}else if(t_value > 1024 * 1024 * 1024){
 			value = (Math.round(t_value / 1024 / 1024 / 1024 * 100 ) / 100).toFixed(2)  + 'GB';	
 		}else if(t_value > 1024 * 1024){
 			value = (Math.round(t_value / 1024 / 1024 * 100) / 100).toFixed(2)  + 'MB';	

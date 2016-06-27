@@ -2,6 +2,19 @@ import React from 'react'
 import * as d3 from "d3"
 import { flowTransformToKbMBGB, transformToKbMbGb, generateMixed } from 'libs/function'
 
+export const STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR = [
+     "rgba(0, 0, 255, 0.3)",
+     "rgba(111, 179, 83, 0.5)",
+     "rgba(236, 53, 53, 0.8)",
+     "rgba(204, 204, 204, 0.5)"
+]
+export const STROAGE_MONITOR_USER_TOTAL_AREA_COLOR = [
+     "rgb(255, 127, 14)",
+     "rgb(255, 187, 120)",
+     "rgb(23, 190, 207)",
+     "rgb(44, 160, 44)",
+     "rgb(152, 223, 138)"
+]
 export const STROAGE_MONITOR_VIEW_DISK_MESSAGE = [
     {
 	     title: '区域名',
@@ -27,6 +40,14 @@ export const STROAGE_MONITOR_VIEW_DISK_MESSAGE = [
 	}, {
 	     title: '7天存储用户数',
 	     dataIndex: '7day_user',
+	     render : function(text, record){
+	     	 var max = record["max"],
+	     	     width = text*100/max;
+	     	 return (<Row style = {{ width : "100%"}}>
+ 	 		    <Col span = "18"><div className = "stroage_monitor_view_7day_user" style = {{ width: width+"%" }}></div></Col>
+ 	 		    <Col span = "6">{ text }</Col>
+ 	 		</Row>);
+	     }
 	}, {
 	     title: '30天存储用户数',
 	     dataIndex: '30day_user',
@@ -45,16 +66,22 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     title: '组内did',
 	     dataIndex: 'disc_list',
 	     render : function(text){
-	     	 var arr = [];
-	     	 for(var i=0;i<text.length;i++){
-	     	 	if(i === text.length - 1){
-	     	 		arr.push(<span key = { "stroage_monitor_disc_list_key_"+ new Date().getTime()+ generateMixed(6) }><span>{ text[i] }</span></span>)
-	     	 	}else{
-	     	 		arr.push(<span key = { "stroage_monitor_disc_list_key_"+ new Date().getTime()+ generateMixed(6) }><span>{ text[i] }</span><span className = "vertical_split_line">|</span></span>)
-	     	 	}
-	     	 	
+	     	 var htlArr = [];
+
+	     	 for(var j=0;j<text.length;j++){
+	     	 	 var tempArr = text[j];
+	     	 	 if(tempArr[1] > 0){
+	     	 	 	 htlArr.push(<span 
+	     	 	 	 	 key = { "stroage_minitor_disc_list_item_key_" + j }
+	     	 	 	 	 className = "stroage_minitor_view_disc_list_items unhealth">■</span>)
+	     	 	 }else{
+	     	 	 	 htlArr.push(<span 
+	     	 	 	 	key = { "stroage_minitor_disc_list_item_key_" + j }
+	     	 	 	 	className = "stroage_minitor_view_disc_list_items health">■</span>)
+	     	 	 }
 	     	 }
-	     	 return <div>{ arr }</div>
+
+	     	 return <div>{ htlArr }</div>
 	     }
 	}, 
 	{
@@ -81,6 +108,9 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     render : function(text, record){
 	     	return <span>{ transformToKbMbGb(text)}<span className = "split_line">/</span>{transformToKbMbGb(record["bandwidth_out"])}</span>
 	    }
+	}, {
+	     title: '转发连接数',
+	     dataIndex: 'forwardNum'
 	}
 ]
 

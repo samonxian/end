@@ -58,7 +58,7 @@ export class EquipmentUpAndDown extends Component{
 			return false;
 		}
 
-		var content_width = (document.body.clientWidth - 280)*0.4583333333;
+		var content_width = (document.body.clientWidth - 280)*0.3333333333;
 		var equipmentUp = stroageCharProps["param"]["on_line_num"],
 		    equipmentDown = stroageCharProps["param"]["off_line_num"],
 		    yMax = d3.max(equipmentUp.map(function(data){

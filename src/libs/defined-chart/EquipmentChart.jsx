@@ -13,8 +13,8 @@ var DefaultPropsMixin = require("./DefaultPropsMixin");
 var HeightWidthMixin = require("./HeightWidthMixin");
 var ArrayifyMixin = require("./ArrayifyMixin");
 var StackAccessorMixin = require("./StackAccessorMixin");
-var StackDataMixin = require("./defineStackDataMixin");
-var DefineScalesMixin = require("./DefineScalesMixin");
+var StackDataMixin = require("./StackDataMixin");
+var DefaultScalesMixin = require("./DefaultScalesMixin");
 var TooltipMixin = require("./TooltipMixin");
 var CoordinateLine = require("./CoordinateLine");
 
@@ -24,6 +24,7 @@ var DataSet = React.createClass({
 	propTypes: {
 		data: React.PropTypes.array.isRequired,
 		area: React.PropTypes.func.isRequired,
+		line: React.PropTypes.func.isRequired,
 		colorScale: React.PropTypes.func.isRequired,
 		stroke: React.PropTypes.func.isRequired
 	},
@@ -32,48 +33,55 @@ var DataSet = React.createClass({
 		var _props = this.props;
 		var data = _props.data;
 		var area = _props.area;
+		var line = _props.line;
 		var colorScale = _props.colorScale;
 		var stroke = _props.stroke;
 		var values = _props.values;
 		var label = _props.label;
 		var onMouseEnter = _props.onMouseEnter;
 		var onMouseLeave = _props.onMouseLeave;
-
-		var areas = data.map(function (stack, index) {
-			return React.createElement(Path, {
-				key: "" + label(stack) + "." + index,
-				className: "area",
-				stroke: "none",
-				fill: colorScale(label(stack)),
-				d: values(stack)&& values(stack).length?area(values(stack)):"",
-				onMouseEnter: onMouseEnter,
-				onMouseLeave: onMouseLeave,
-				data: data
-			});
-		});
+        
+        var lines = data.map(function(stack, index){
+        	if(index != 0){
+            	// console.log("++++++++++++++++++++++++++++++++++ d",line(values(stack)));
+    //     		return React.createElement(Path, {
+				// 	key: "" + label(stack) + "." + index,
+				// 	className: "area",
+				// 	stroke: "none",
+				// 	fill: colorScale(label(stack)),
+				// 	d: values(stack)&& values(stack).length?area(values(stack)):"",
+				// 	onMouseEnter: onMouseEnter,
+				// 	onMouseLeave: onMouseLeave,
+				// 	data: data
+				// });
+        	}
+        })
+        
 
 		return React.createElement(
 			"g",
 			null,
-			areas
+			React.createElement(Path, {
+				className: "area",
+				stroke: "none",
+				fill: colorScale(label(data[0])),
+				d: values(data[0]) && values(data[0]).length ? area(values(data[0])):"",
+				onMouseEnter: onMouseEnter,
+				onMouseLeave: onMouseLeave,
+				data: [data[0]]
+			})
 		);
 	}
 });
 
-export const AreaChart = React.createClass({
-	displayName: "AreaChart",
+export const EquipmentChart = React.createClass({
+	displayName: "EquipmentChart",
 
-	mixins: [DefaultPropsMixin, HeightWidthMixin, ArrayifyMixin, StackAccessorMixin, StackDataMixin, DefineScalesMixin, TooltipMixin],
+	mixins: [DefaultPropsMixin, HeightWidthMixin, ArrayifyMixin, StackAccessorMixin, StackDataMixin, DefaultScalesMixin, TooltipMixin],
 
 	propTypes: {
 		interpolate: React.PropTypes.string,
 		stroke: React.PropTypes.func
-	},
-
-	getInitialState: function getInitialState(){
-		return {
-			yMax : 0
-		}
 	},
 
 	getDefaultProps: function getDefaultProps() {
@@ -82,6 +90,7 @@ export const AreaChart = React.createClass({
 			defined: function () {
 				return true;
 			},
+			yMax : 0,
 			stroke: d3.scale.category20()
 		};
 	},
@@ -91,41 +100,57 @@ export const AreaChart = React.createClass({
 		var x = _props.x;
 		var y0 = _props.y0;
 		var y = _props.y;
-		var data = this._data;
 		var values = _props.values;
 		var label = _props.label;
 		var xScale = this._xScale;
 		var yScale = this._yScale;
-		var yScale1 = this._yScale1;
-       
+
 		var xValueCursor = xScale.invert(position[0]);
 
 		var xBisector = d3.bisector(function (e) {
 			return x(e);
 		}).right;
-
 		var xIndex = xBisector(values(d[0]), xScale.invert(position[0]));
-		var arr = values(data[0]);
-		var arr1 = values(data[1]);
-		var xValue = x(arr[xIndex - 1]);
-		var yValue = y(arr[xIndex - 1]);
-		var yValue1 = y(arr1[xIndex - 1]);
+		xIndex = xIndex == values(d[0]).length ? xIndex - 1 : xIndex;
+
+		var xIndexRight = xIndex == values(d[0]).length ? xIndex - 1 : xIndex;
+		var xValueRight = x(values(d[0])[xIndexRight]);
+
+		var xIndexLeft = xIndex == 0 ? xIndex : xIndex - 1;
+		var xValueLeft = x(values(d[0])[xIndexLeft]);
+
+		if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) {
+			xIndex = xIndexRight;
+		} else {
+			xIndex = xIndexLeft;
+		}
+
+		var yValueCursor = yScale.invert(position[1]);
+
+		var yBisector = d3.bisector(function (e) {
+			return y0(values(e)[xIndex]) + y(values(e)[xIndex]);
+		}).left;
+		var yIndex = yBisector(d, yValueCursor);
+		yIndex = yIndex == d.length ? yIndex - 1 : yIndex;
+
+		var yValue = y(values(d[yIndex])[xIndex]);
+		var yValueCumulative = y0(values(d[d.length - 1])[xIndex]) + y(values(d[d.length - 1])[xIndex]);
+
+		var xValue = x(values(d[yIndex])[xIndex]);
 
 		var xPos = xScale(xValue);
-		var yPos = yScale(yValue);
-		var yPos1 = yScale1(yValue1);
-		var tooltipPos = yPos;
+		var yPos = yScale(y0(values(d[yIndex])[xIndex]) + yValue);
 
 		this.setState({
         	coordinateLine : {
         		hidden : false,
         		coordinateData : [{
-        			values : [{x:xValue,y:0},{x:xValue,y:_props.yMax}]
+        			values : [{x:xValue,y:0},{x:xValue,y:this.props.yMax===0?yValue:this.props.yMax}]
         		}]
         	}
         });
 
-		return [this.props.tooltipHtml([yValue,yValue1], xValue), xPos, tooltipPos];
+		return [this.props.tooltipHtml(yValue, yValueCumulative, xValue), xPos, yPos];
 	},
 
 	render: function render() {
@@ -137,7 +162,6 @@ export const AreaChart = React.createClass({
 		var margin = _props.margin;
 		var colorScale = _props.colorScale;
 		var interpolate = _props.interpolate;
-		var yAxisL = _props.yAxisL;
 		var stroke = _props.stroke;
 		var offset = _props.offset;
 		var values = _props.values;
@@ -149,18 +173,15 @@ export const AreaChart = React.createClass({
 		var y = _props.y;
 		var y0 = _props.y0;
 		var xAxis = _props.xAxis;
+	    var maxY = _props.maxY;
 		var yAxis = _props.yAxis;
 		var data = this._data;
 		var innerWidth = this._innerWidth;
 		var innerHeight = this._innerHeight;
 		var xScale = this._xScale;
 		var yScale = this._yScale;
-		var yScale1 = this._yScale1;
-		
-		var separate = _props.separate;
-
-		var stack = d3.layout.stack().offset("zero").order("default").x(x).y(y).values(values);
-		var data1 = stack([data[1]]);
+		var xIntercept = this._xIntercept;
+		var yIntercept = this._yIntercept;
 
 		var line = d3.svg.line().x(function (e) {
 			return xScale(x(e));
@@ -169,20 +190,12 @@ export const AreaChart = React.createClass({
 		}).interpolate(interpolate).defined(defined);
 
 		var area = d3.svg.area().x(function (e) {
-				return xScale(x(e));
-			}).y0(function (e) {
-				return yScale(yScale.domain()[0] + y0(e));
-			}).y1(function (e) {
-				return yScale(y0(e) + y(e));
-			}).interpolate(interpolate);
-
-		var area1 = d3.svg.area().x(function (e) {
-				return xScale(x(e));
-			}).y0(function (e) {
-				return yScale1(yScale1.domain()[0] + y0(e));
-			}).y1(function (e) {
-				return yScale1(y0(e) + y(e));
-			}).interpolate(interpolate);
+			return xScale(x(e));
+		}).y0(function (e) {
+			return yScale(yScale.domain()[0] + y0(e));
+		}).y1(function (e) {
+			return yScale(y0(e) + y(e));
+		}).interpolate(interpolate);
 
 		return React.createElement(
 			"div",
@@ -196,23 +209,10 @@ export const AreaChart = React.createClass({
 				  preserveAspectRatio : preserveAspectRatio,
 				  style : style },
 				React.createElement(DataSet, {
-					data: [data[0]],
+					data: data,
 					area: area,
-					colorScale: function(){
-						return "rgba(31, 119, 180, 1)"
-					},
-					stroke: stroke,
-					label: label,
-					values: values,
-					onMouseEnter: this.onMouseEnter,
-					onMouseLeave: this.onMouseLeave
-				}),
-				React.createElement(DataSet, {
-					data: [data[1]],
-					area: area1,
-					colorScale: function(){
-						return "rgba(111, 179, 83, 0.5)"
-					},
+					colorScale: colorScale,
+					line: line,
 					stroke: stroke,
 					label: label,
 					values: values,
@@ -228,7 +228,7 @@ export const AreaChart = React.createClass({
 					yScale: yScale,
 					label: label,
 					values: values
-				},this.state.coordinateLine)),
+				}, this.state.coordinateLine)),
 				React.createElement(Axis, _extends({
 					className: "x axis",
 					orientation: "bottom",
@@ -243,13 +243,6 @@ export const AreaChart = React.createClass({
 					height: innerHeight,
 					width: innerWidth
 				}, yAxis)),
-				React.createElement(Axis, _extends({
-					className: "y axis",
-					orientation: "right",
-					scale: yScale1,
-					height: innerHeight,
-					width: innerWidth
-				}, yAxisL)),
 				this.props.children
 			),
 			React.createElement(Tooltip, this.state.tooltip)
