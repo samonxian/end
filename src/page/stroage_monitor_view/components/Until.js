@@ -1,4 +1,5 @@
 import React from 'react'
+import { Row, Col } from 'antd'
 import * as d3 from "d3"
 import { flowTransformToKbMBGB, transformToKbMbGb, generateMixed } from 'libs/function'
 
