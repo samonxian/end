@@ -13,7 +13,9 @@
 .stroage_monitor_view_disk_message .stroage_minitor_disk{
 	overflow: hidden;
 }
-.stroage_monitor_view_disk_message h1,.stroage_monitor_view_char_health h1,.stroage_monitor_view_char_equipment h1{
+.stroage_monitor_view_disk_message h1,
+.stroage_monitor_view_char_health h1,
+.stroage_monitor_view_char_equipment h1{
 	font-size: 18px;
 	margin-bottom: 10px;
 	float: left;
@@ -119,8 +121,11 @@
 .stroage_monitor_view_area_message .ant-table tr,.stroage_monitor_view_area_detail_message .ant-table tr{
 	background: #fff;
 }
-.stroage_monitor_char_items .stroage_monitor_view_tooltips{
+.stroage_monitor_char_items .stroage_monitor_view_tooltips,.stroage_monitor_view_char_equipment .stroage_monitor_view_tooltips{
 	width: 180px;
+}
+.stroage_monitor_view_char_equipment .tooltip{
+	z-index: 999999;
 }
 .stroage_monitor_view_area_detail_message .split_line,.stroage_monitor_view_area_detail_message .vertical_split_line{
 	font-weight: bold;
@@ -165,4 +170,17 @@
 	height: 15px;
 	display: inline-block;
 	border-radius: 5px;
+}
+.stroage_monitor_view_area_desc_items{
+	width: 100px;
+	display: inline-block;
+	margin-left: 10px;
+	float: left;
+}
+.stroage_monitor_health_status_tooltips{
+	background: #FFF;
+	padding:10px;
+	border-radius: 5px;
+	color:#000;
+	width: 200px;
 }
