@@ -227,7 +227,9 @@ class Get_relay_info extends React.Component {
 				break;
 				case 4:
 					config_type = "公众录像"; 
-
+				break;
+				case 5:
+					config_type = "不存储，不分发"; 
 				break;
 			}
 			
