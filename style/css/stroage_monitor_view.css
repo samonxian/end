@@ -107,6 +107,9 @@
 .stroage_monitor_char svg text,.stroage_monitor_view_health svg text{
 	fill: #fff;
 }
+.stroage_monitor_char svg,.stroage_monitor_view_health svg{
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+}
 .stroage_monitor_char{
 	margin-top: 20px;
 }
@@ -164,6 +167,7 @@
 .stroage_monitor_health_detail_char span.stroage_monitor_view_area_icon_items{
 	float: left;
 	margin-top: 3px;
+	margin-right: 10px;
 }
 .stroage_monitor_view_area_icon_items{
 	width: 15px;
