@@ -45,10 +45,10 @@ export class StorageHealth extends Component{
                 var tempArr = [];
                 for(var i = 0; i<data.length; i++){
                     tempArr.push(<p key = { "stroage_monitor_view_area_icon_items_key_" + i }>
-                        <span className = "desc">{ data[i]["area"] }</span>
                         <span 
                              style = {{ background : STROAGE_MONITOR_USER_TOTAL_AREA_COLOR[i] }}
                              className = "stroage_monitor_view_area_icon_items"></span>
+                        <span className = "desc">{ data[i]["area"] }</span>
                         <span className = "stroage_monitor_view_area_desc_items">{ data[i]["user_total"] }</span></p>)
                 }
                 return tempArr;
@@ -116,22 +116,30 @@ export class StorageHealth extends Component{
                          <Row>
                              <Col span = "24" className = "stroage_monitor_health_detail_char">
                                  { areaIconHtl }
-                                 <p><span className = "desc">发送状况好用户数</span>
-                                    <span 
-                                      className = "stroage_monitor_view_area_icon_items"
-                                      style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0] }}></span></p>
-                                 <p><span className = "desc">发送亚健康用户数</span>
-                                    <span 
-                                      className = "stroage_monitor_view_area_icon_items"
-                                      style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span></p>
-                                 <p><span className = "desc">发送不健康用户数</span>
-                                    <span 
-                                      className = "stroage_monitor_view_area_icon_items"
-                                      style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span></p>
-                                 <p><span className = "desc">发送未知用户数</span>
-                                    <span 
-                                      className = "stroage_monitor_view_area_icon_items"
-                                      style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span></p>
+                                 <p> 
+                                     <span 
+                                         className = "stroage_monitor_view_area_icon_items"
+                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0] }}></span>
+                                     <span className = "desc">发送状况好用户数</span>
+                                 </p>
+                                 <p>
+                                     <span 
+                                         className = "stroage_monitor_view_area_icon_items"
+                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span>
+                                     <span className = "desc">发送亚健康用户数</span>
+                                 </p>
+                                 <p>
+                                     <span 
+                                         className = "stroage_monitor_view_area_icon_items"
+                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span>
+                                     <span className = "desc">发送不健康用户数</span>
+                                 </p>
+                                 <p>
+                                     <span 
+                                         className = "stroage_monitor_view_area_icon_items"
+                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span>
+                                     <span className = "desc">发送未知用户数</span>
+                                 </p>
                              </Col>
                          </Row>
                      </Col>

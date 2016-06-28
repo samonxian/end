@@ -1,7 +1,7 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
 import * as d3 from "d3"
-import { AreaChart } from 'libs/defined-chart/AreasChart'
+import { StroageLineChart } from 'libs/defined-chart/StroageLineChart'
 import { isEmptyObj, generateMixed, Format } from 'libs/function'
 
 export class EquipmentUpAndDown extends Component{
@@ -75,7 +75,7 @@ export class EquipmentUpAndDown extends Component{
 			<div className = "stroage_monitor_view_char_equipment">
 			     <h1>5分钟上/下线设备数</h1>
 			     <div>
-			         <AreaChart
+			         <StroageLineChart
 		                 data={ totalArr }
 		                 width={ content_width } 
 		                 viewBox = { "0,0,"+content_width+",180" }
