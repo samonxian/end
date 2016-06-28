@@ -20,6 +20,7 @@ var Wedge = React.createClass({
         var _props = this.props;
         var fill = _props.fill;
         var d = _props.d;
+        var stroke = _props.stroke;
         var data = _props.data;
         var onMouseEnter = _props.onMouseEnter;
         var onMouseLeave = _props.onMouseLeave;
@@ -27,6 +28,7 @@ var Wedge = React.createClass({
         return React.createElement("path", {
             fill: fill,
             d: d,
+            stroke: stroke,
             onMouseMove: function (evt) {
                 onMouseEnter(evt, data);
             },
@@ -62,13 +64,21 @@ var DataSet = React.createClass({
         var opacity = _props.opacity;
         var x = _props.x;
         var y = _props.y;
+        var Highlight = _props.Highlight;
         var onMouseEnter = _props.onMouseEnter;
         var onMouseLeave = _props.onMouseLeave;
 
         var wedges = pie.map(function (e, index) {
             var yValue = y(e["data"]);
-
+            var areaName = x(e["data"]);
             var d = arc(e);
+            var strokeColor = "none";
+            
+            if(Highlight !== null && Highlight["type"] !== "status" ){
+                if(areaName === Highlight["x"]){
+                    strokeColor = "rgba(255,255,255,1)";
+                }
+            }
 
             var outPie = d3.layout
                            .pie()
@@ -81,14 +91,21 @@ var DataSet = React.createClass({
             var outPieData = outPie(yValue["children"]);
 
             var outd = outPieData.map(function(stack,index){
-                var out = outerArc(stack);
-
+                var out = outerArc(stack),
+                    outStroke = "none";
+                 
+                if(Highlight !== null && Highlight["type"] === "status" ){
+                    if(areaName === Highlight["areaName"] && x(stack["data"]) === Highlight["x"]){
+                        outStroke = "rgba(255,255,255,1)";
+                    }
+                }
+                
                 return React.createElement(Path, {
                     key: "."+x(stack.data)+"."+y(stack.data)+"."+index,
                     data: [stack.data],
                     fill: outArcColorScale(x(stack.data),index),
-                    stroke: "none",
-                    strokeWidth: "0",
+                    stroke: outStroke,
+                    strokeWidth: "2",
                     d: out,
                     onMouseEnter: function(evt){
                         var obj = stack.data;
@@ -110,6 +127,7 @@ var DataSet = React.createClass({
                 React.createElement(Wedge, {
                     data: e.data,
                     fill: colorScale(index),
+                    stroke: strokeColor,
                     d: d,
                     onMouseEnter: onMouseEnter,
                     onMouseLeave: onMouseLeave
@@ -128,9 +146,17 @@ var DataSet = React.createClass({
 export const StroagePie =  React.createClass({
     mixins: [DefaultPropsMixin, HeightWidthMixin, AccessorMixin, TooltipMixin],
 
-    _tooltipHtml: function _tooltipHtml(e, d, position) {
+    getInitialState: function(){
+        return {
+            data : null
+        }
+    },
 
+    _tooltipHtml: function _tooltipHtml(e, d, position) {
         var html = this.props.tooltipHtml(d);
+        this.setState({
+            data : d
+        });
         return [html, 0, 0];
     },
 
@@ -150,16 +176,21 @@ export const StroagePie =  React.createClass({
         var cornerRadius = _props.cornerRadius;
         var sort = _props.sort;
         var x = _props.x;
-        var y = _props.y;
+        var y = _props.y; 
         var values = _props.values;
         var innerWidth = this._innerWidth;
         var innerHeight = this._innerHeight;
+        var Highlight = this.state.data;
 
         var pie = d3.layout.pie().value(function (e) {
             var parents = y(e);
             return parents["total"];
         });
 
+        if(this.state.tooltip.hidden){
+            Highlight = null;
+        }
+                                                                                                                                                                               
         if (typeof sort !== "undefined") {
             pie = pie.sort(sort);
         }
@@ -176,7 +207,6 @@ export const StroagePie =  React.createClass({
         if (!labelRadius) {
             labelRadius = radius * 0.9;
         }
-
 
         var arc = d3.svg.arc().innerRadius(innerRadius)
                               .outerRadius(outerRadius)
@@ -202,6 +232,7 @@ export const StroagePie =  React.createClass({
                         height: innerHeight,
                         colorScale: colorScale,
                         outArcColorScale: outArcColorScale,
+                        Highlight: Highlight,
                         pie: pieData,
                         arc: arc,
                         outerArc: outerArc,

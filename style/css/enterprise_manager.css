@@ -116,3 +116,9 @@
 	text-align: center;
 	border-radius: 5px;
 }
+.enterprise_manager_authenticate_daliog img{
+	width: 100%;
+}
+.enterprise_manager_authenticate_table .color_blue{
+	cursor: pointer;
+}

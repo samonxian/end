@@ -4,8 +4,8 @@ import * as d3 from "d3"
 import { flowTransformToKbMBGB, transformToKbMbGb, generateMixed } from 'libs/function'
 
 export const STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR = [
-     "rgba(0, 0, 255, 0.3)",
-     "rgba(111, 179, 83, 0.5)",
+     "rgba(58, 123, 31, 0.5)",
+     "rgba(255, 255, 0, 0.8)",
      "rgba(236, 53, 53, 0.8)",
      "rgba(204, 204, 204, 0.5)"
 ]
@@ -92,13 +92,18 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     title: '组总容量',
 	     dataIndex: 'group_space_total',
 	     render : function(text){
-	     	 return <span>{ flowTransformToKbMBGB(text) }</span>
+	     	 var space = text === 0 ? 0 : flowTransformToKbMBGB(text);
+	     	 return <span>{ space }</span>
 	     }
 	}, {
 	     title: '组使用容量',
 	     dataIndex: 'group_space_used',
 	     render : function(text){
-	     	 return <span>{ flowTransformToKbMBGB(text) }</span>
+	     	 if(text === 0){
+	     	 	 return <span>{ text }</span>
+	     	 }else{
+	     	 	 return <span>{ flowTransformToKbMBGB(text) }</span>
+	     	 }
 	     }
 	}, {
 	     title: '实时健康度',
@@ -107,10 +112,12 @@ export const STROAGE_MONITOR_VIEW_DISK_DETAIL = [
 	     title: '带宽进/出',
 	     dataIndex: 'bandwidth_in',
 	     render : function(text, record){
-	     	return <span>{ transformToKbMbGb(text)}<span className = "split_line">/</span>{transformToKbMbGb(record["bandwidth_out"])}</span>
+	     	var bandwith_in = text === 0 ? 0 :　transformToKbMbGb(text),
+	     	    bandwidth_out = record["bandwidth_out"] === 0 ? 0 :　transformToKbMbGb(record["bandwidth_out"]);
+	     	return <span>{ bandwith_in }<span className = "split_line">/</span>{ bandwidth_out }</span>
 	    }
 	}, {
-	     title: '转发连接数',
+	     title: '转发服务器数',
 	     dataIndex: 'forwardNum'
 	}
 ]
@@ -138,7 +145,9 @@ export const STROAGE_MONITOR_VIEW_DISK_FORWORAD_DETAIL = [
 	     title: '带宽进/出',
 	     dataIndex: 'bandwidth_in',
 	     render : function(text, record){
-	     	return <span>{ transformToKbMbGb(text)}<span className = "split_line">/</span>{transformToKbMbGb(record["bandwidth_out"])}</span>
+	     	var bandwidth_in = text === 0 ? 0 : transformToKbMbGb(text),
+	     	    bandwidth_out = record["bandwidth_out"] === 0 ? 0 :　transformToKbMbGb(record["bandwidth_out"]);
+	     	return <span>{ bandwidth_in }<span className = "split_line">/</span>{ bandwidth_out }</span>
 	     }
 	}, {
 	     title: '转发能力值',
