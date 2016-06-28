@@ -41,7 +41,7 @@ export let title = {
 	'processLogout':'退出登陆',
 	'CNotifyCenter_addMessage':'添加消息',
 	'updateRelayInfo':'转发状态更新',
-	'threadReportPeerStatus':'peer状态上百',
+	'threadReportPeerStatus':'peer状态上报',
 	'selectRtmpRelay':'获取RTMP转发',
 	'@relayInfo':'获取转发详情',
 	'processDetectTracker':'探测tracker',
