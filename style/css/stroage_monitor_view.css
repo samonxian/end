@@ -110,6 +110,13 @@
 .stroage_monitor_char svg,.stroage_monitor_view_health svg{
 	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
 }
+.stroage_monitor_health_detail_char svg{
+	transform: rotate(30deg);
+	-ms-transform: rotate(30deg);
+	-webkit-transform: rotate(30deg);
+	-o-transform: rotate(30deg);		
+    -moz-transform: rotate(30deg);
+}
 .stroage_monitor_char{
 	margin-top: 20px;
 }
@@ -187,4 +194,14 @@
 	border-radius: 5px;
 	color:#000;
 	width: 200px;
+}
+.stroage_monitor_view_area_detail_message .ant-table tr.disc_message_deatail_error {
+	background: red;
+	color: #fff;
+}
+.stroage_monitor_view_area_detail_message .ant-table tr.disc_message_deatail_error .ant-table-row-expand-icon-cell{
+	color: #000;
+}
+.stroage_monitor_view_area_detail_message .ant-table tr.disc_message_deatail_error .split_line{
+	color: #fff;
 }

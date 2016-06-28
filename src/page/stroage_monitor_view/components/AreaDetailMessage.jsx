@@ -43,6 +43,23 @@ export class AreaDetailMessage extends Component{
                             size = { "small" }
                             bordered 
                             pagination={false}/> 
+            },
+            rowClassName(record){
+                var disc_arr = record["disc_list"],
+                    is_error = false;
+
+                for(var i = 0; i<disc_arr.length; i++){
+                    var tempArr = disc_arr[i];
+                    if(tempArr[1]){
+                        is_error = true;
+                    }
+                }
+
+                if(is_error){
+                    return "disc_message_deatail_error"
+                }else{
+                    return ""
+                }
             }
         }
     }
@@ -92,6 +109,7 @@ export class AreaDetailMessage extends Component{
                         size = { "middle" }
                         onRowClick = { this.handleRowClick }
                         defaultExpandedRowKeys = { this.defaultExpandedRowKeys }
+                        rowClassName = { this.rowClassName }
                         defaultExpandAllRows = { true }
                         pagination = { false }/>
 		     </div>

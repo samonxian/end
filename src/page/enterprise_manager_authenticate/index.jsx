@@ -48,8 +48,9 @@ class enterpriseManagerAuthenticate extends Component{
 		var _this = this;
 		let obj = {
 			authenticateAproval(data){
-				var title = <div>您正在处理{ data["email"] }用户的企业认证申请</div>,
-				    content = <div><p><span>企业名称：</span>{ data["name"] }</p>
+				var title = <span>您正在处理该用户的企业认证申请</span>,
+				    content = <div><p><span>邮箱：</span>{ data["manager_email"] }</p>
+				                   <p><span>企业名称：</span>{ data["name"] }</p>
 				                   <p><span>企业执照号：</span>{ data["code"] }</p>
 				                   <p><span>申请时间：</span>{ new Date(data["created"]).Format('yyyy-MM-dd hh:mm:ss') }</p></div>;
 				confirm({
@@ -157,7 +158,8 @@ class enterpriseManagerAuthenticate extends Component{
 			          dataSource={ authenticateList } 
 			          bordered
 			          loading = { loading }
-			          pagination={false} />
+			          pagination={false}
+			          className = "enterprise_manager_authenticate_table" />
 			     <div className="footer">
 					<Row type="flex" justify="end">
 					     <Pagination onChange={ this.turnPage } 

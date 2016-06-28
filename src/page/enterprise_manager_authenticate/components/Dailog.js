@@ -4,49 +4,6 @@ import { isEmptyObj, generateMixed } from 'libs/function'
 import { authenticateDailog } from '../action'
 import { Modal, Button, Spin } from 'antd'
 
-let ViewImg = React.createClass({
-    getInitialState(){
-        return {
-            visible : false
-        }
-    },
-
-    createDailogContainer(){
-        const { dailogData } = this.props;
-        if (!this.dailogContainer && !isEmptyObj(dailogData) && dailogData["param"]["visible"]) {
-            this.dailogContainer = document.createElement('div');
-            this.dailogContainer.setAttribute("id","img_view_layout");
-            this.dailogLoading = document.createElement('div');
-            this.dailogLoading.setAttribute("id","img_view_loading_content");
-            this.dailogContainer.appendChild(this.dailogLoading);
-            document.body.appendChild(this.dailogContainer);
-        }
-        this.dailogContainer;
-    },
-    
-    componentWillReceiveProps(nextProps){
-        const { visible } = nextProps;
-    },
-
-    componentDidUpdate(){
-        const { dailogData } = this.props;
-        var _this = this;
-
-        if(!this.dailogContainer){
-            this.createDailogContainer();
-        }
-
-        if(this.dailogContainer && this.state.visible ){
-            ReactDOM.render(<Spin />,document.getElementById("img_view_loading_content"));
-        }
-    },
-
-    render(){
-        const { dailogData } = this.props;
-        return null
-    }
-})
-
 export const Dailog = React.createClass({
 	getInitialState() {
         return { 
@@ -79,10 +36,14 @@ export const Dailog = React.createClass({
                     });
                 }.bind(this);
                 img.onload = function(){
+                    var imgWidth = img.width;
+
+                    if(imgWidth>800){
+                        imgWidth = 800;
+                    }
                     this.setState({
                         isFinished : true,
-                        width : img.width,
-                        height : img.height,
+                        width : imgWidth,
                         isSuccess : "success",
                         random : random
                     });
@@ -128,7 +89,6 @@ export const Dailog = React.createClass({
             return <Modal title="查看执照" className = "enterprise_manager_authenticate_daliog" 
                 visible={ _this.state.visible }
                 width = { _this.state.width + 60 }
-                height = { _this.state.height + 32 }
                 onOk = { _this.handleOk } 
                 onCancel = { _this.handleCancel }>
                 { htl }
