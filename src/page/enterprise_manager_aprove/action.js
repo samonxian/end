@@ -4,6 +4,7 @@ import Fetch from 'libs/fetch2'
 export const ENTERPRISE_MANAGER_APROVAL_REQ = 'ENTERPRISE_MANAGER_APROVAL_REQ'
 export const ENTERPRISE_MANAGER_APROVAL_DAILOG = 'ENTERPRISE_MANAGER_APROVAL_DAILOG'
 export const ENTERPRISE_MANAGER_APROVAL_AVALIABLE = 'ENTERPRISE_MANAGER_APROVAL_AVALIABLE'
+export const ENTERPRISE_MANAGER_HAVE_CID_LIST = 'ENTERPRISE_MANAGER_HAVE_CID_LIST'
 
 function  getEnterpriseManagerAprovalResponse(json,reddit){
     Object.assign(json,reddit);
@@ -31,6 +32,25 @@ function enterpriseManagerAprovalAvaliabel(params,json){
     return {
         type : ENTERPRISE_MANAGER_APROVAL_AVALIABLE,
         param : json
+    }
+}
+
+function haveCidDataList(params,json){
+    return {
+        type : ENTERPRISE_MANAGER_HAVE_CID_LIST,
+        param : json
+    }
+}
+
+export function getCurrentUserHaveCidFetch(){
+    var url = REQUESTURL+'/dev/v1/partitions?app_id='+reddit["app_id"]+'&app_code='+reddit["app_code"]+
+              '&identity='+reddit["identity"]+'&status='+reddit["aproval_status"]+'&page='+reddit["page"]+
+              '&size='+reddit["size"];
+    return dispatch => {
+        r3fetch({
+             urls:[url],
+             method: 'GET'
+        }).fetch(dispatch,haveCidDataList,{},null);
     }
 }
 

@@ -23,10 +23,10 @@ export class StorageHealth extends Component{
     							x : "发送状况好用户数",
     							y : data[i]["user_send_health"]
     						},{
-    							x : "发送状况亚健康用户数",
+    							x : "发送状况中用户数",
     							y : data[i]["user_send_subhealth"]
     						},{
-    							x : "发送状况不健康用户数",
+    							x : "发送状况差用户数",
     							y : data[i]["user_send_unhealth"]
     						},{
     							x : "发送状况未知用户数",
@@ -59,9 +59,9 @@ export class StorageHealth extends Component{
             outArcColorScale(desc,index){
                 if(desc === "发送状况好用户数"){
                     return STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0];
-                }else if(desc === "发送状况亚健康用户数"){
+                }else if(desc === "发送状况中用户数"){
                     return STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1];
-                }else if(desc === "发送状况不健康用户数"){
+                }else if(desc === "发送状况差用户数"){
                     return STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2];
                 }else if(desc === "发送状况未知用户数"){
                     return STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3];
@@ -126,19 +126,19 @@ export class StorageHealth extends Component{
                                      <span 
                                          className = "stroage_monitor_view_area_icon_items"
                                          style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span>
-                                     <span className = "desc">发送亚健康用户数</span>
+                                     <span className = "desc">发送状况中用户数</span>
                                  </p>
                                  <p>
                                      <span 
                                          className = "stroage_monitor_view_area_icon_items"
                                          style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span>
-                                     <span className = "desc">发送不健康用户数</span>
+                                     <span className = "desc">发送状况差用户数</span>
                                  </p>
                                  <p>
                                      <span 
                                          className = "stroage_monitor_view_area_icon_items"
                                          style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span>
-                                     <span className = "desc">发送未知用户数</span>
+                                     <span className = "desc">发送状况未知用户数</span>
                                  </p>
                              </Col>
                          </Row>
