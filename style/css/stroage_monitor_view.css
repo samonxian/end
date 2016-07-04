@@ -22,6 +22,24 @@
 }
 .stroage_monitor_view_char_health h1,.stroage_monitor_view_char_equipment h1{
 	color:#fff;
+	margin-right: 10px;
+}
+.stroage_monitor_view_char_equipment .stroage_monitor_view_fig{
+	float: left;
+	color: #fff;
+	height: 21px;
+	margin-top: 12px;
+}
+.stroage_monitor_view_char_equipment  .stroage_monitor_view_fig_items{
+	display: inline-block;
+	margin-right: 10px;
+}
+.stroage_monitor_view_char_equipment  .stroage_monitor_view_fig_items .desc{
+	float: left;
+}
+.stroage_monitor_view_char_equipment  .stroage_monitor_view_fig_items .stroage_monitor_view_area_icon_items{
+	margin-right: 5px;
+	float: left;
 }
 .stroage_monitor_view_disk_message .stroage_monitor_tooltips_contianer{
 	float: right;
@@ -108,7 +126,7 @@
 	fill: #fff;
 }
 .stroage_monitor_char svg,.stroage_monitor_view_health svg{
-	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+	-webkit-filter: drop-shadow(8px 4px 6px rgba(10, 10, 10, 0.8));
 }
 .stroage_monitor_health_detail_char svg{
 	transform: rotate(30deg);

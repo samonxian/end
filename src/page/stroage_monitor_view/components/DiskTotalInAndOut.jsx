@@ -76,7 +76,19 @@ export class DiskTotalInAndOut extends Component{
 
 		return (
 			<div className = "stroage_monitor_view_char_equipment">
-			     <h1>磁盘总进/出</h1>
+			     <div className = "clear">
+			         <h1>磁盘总进/出</h1>
+			         <div className = "stroage_monitor_view_fig">
+			             <span className = "stroage_monitor_view_fig_items">
+			                 <span className = "stroage_monitor_view_area_icon_items" style = {{background:"rgba(31, 119, 180, 1)"}}></span>
+			                 <span className = "desc">磁盘总进</span>
+			             </span>
+			             <span className = "stroage_monitor_view_fig_items">
+			                 <span className = "stroage_monitor_view_area_icon_items" style = {{background:"rgba(111, 179, 83, 1)"}}></span>
+			                 <span className = "desc">磁盘总出</span>
+			             </span>
+			         </div>
+			     </div>
 			     <div>
 				     <AreaChart
 		                 data={ tempArr }

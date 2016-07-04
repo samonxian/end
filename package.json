@@ -57,7 +57,7 @@
     "webpack-hot-middleware": "^2.6.4"
   },
   "scripts": {
-    "build": "set NODE_ENV=production && babel src -d lib && grunt",
+    "build": "set NODE_ENV=production && grunt",
     "start": "set NODE_ENV=development && node server.js",
     "buildm": "export NODE_ENV=production && grunt",
     "startm": "export NODE_ENV=development && node server.js",
