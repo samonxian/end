@@ -84,6 +84,9 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/stroage_monitor_view">存储监控视图</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/collect_message">汇总信息</Link>
+							</MenuItem>
 						</Menu>
 							
 					</Col>	
