@@ -100,6 +100,7 @@
 }
 .stroage_monitor_view_disk_message_items .disk_process_total{
 	background: #2C94C3;
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
 }
 .stroage_monitor_view_disk_message_items .disk_num{
 	padding-left: 10px;
