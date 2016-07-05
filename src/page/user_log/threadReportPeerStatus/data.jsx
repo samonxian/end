@@ -25,7 +25,7 @@ export function logData(user_log){
 	if(user_log.posts){
 		re = fieldSort(user_log.posts.logs,column_dataIndexs,columns,function(key,data){
 			var temp_data = data[key];
-			temp_data.status = common.getConfigType(temp_data.status);
+			temp_data.status = common.getCameraState(temp_data.status);
 			
 		})
 	}
