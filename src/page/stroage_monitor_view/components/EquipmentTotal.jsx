@@ -90,7 +90,7 @@ export class EquipmentTotal extends Component{
 
 		return (
 			<div className = "stroage_monitor_view_char_equipment">
-			     <h1>总设备数</h1>
+			     <h1>历史设备</h1>
 			     <div>
 				     <EquipmentChart
 		                 data = { equipment_total }
