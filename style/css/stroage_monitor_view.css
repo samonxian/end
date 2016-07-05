@@ -24,6 +24,17 @@
 	color:#fff;
 	margin-right: 10px;
 }
+.collect_message_content h2{
+	color: #fff;
+	font-size: 18px;
+	margin-top: 20px;
+}
+.collect_message_content .ant-table tr{
+	background: #fff;
+}
+.collect_message_content .relative,.collect_message_content h4.mt10{
+	color:#fff;
+}
 .stroage_monitor_view_char_equipment .stroage_monitor_view_fig{
 	float: left;
 	color: #fff;
@@ -223,4 +234,94 @@
 }
 .stroage_monitor_view_area_detail_message .ant-table tr.disc_message_deatail_error .split_line{
 	color: #fff;
+}
+.stroage_monitor_view_area_disk_items{
+	float: left;
+	width: 60px;
+	margin-right: 10px;
+}
+.stroage_monitor_view_area_disk_items:last-child{
+	margin-right: 0;
+}
+.stroage_monitor_view_area_disk_items .container{
+	height: 170px;
+	width: 100%;
+	position: relative;
+}
+.stroage_monitor_view_area_disk_items .desc{
+	width: 100%;
+	text-align: center;
+	line-height: 20px;
+	height: 20px;
+	margin-top: 10px;
+}
+.stroage_monitor_view_area_disk_items .desc .stroage_monitor_view_area_icon_items{
+	margin-right: 5px;
+}
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_disk_total,
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_space_total{
+	width: 20px;
+	position: absolute;
+	bottom: 0;
+}
+.stroage_monitor_view_area_disk_items .container_disk,.stroage_monitor_view_area_disk_items .container_space{
+	position: absolute;
+	width: 20px;
+	height: 100%;
+}
+.stroage_monitor_view_area_disk_items .container_disk{
+	left: 10px;
+}
+.stroage_monitor_view_area_disk_items .container_space{
+	right: 0px;
+}
+.stroage_monitor_view_area_disk_items .disk_wait,.stroage_monitor_view_area_disk_items .disk_error,
+.stroage_monitor_view_area_disk_items .disk_useing,.stroage_monitor_view_area_disk_items .disk_used{
+	position: absolute;
+	z-index: 999999;
+	width: 20px;
+	left: 0;
+}
+.stroage_monitor_view_area_disk_items .disk_wait{
+	background: blue;
+	bottom: 0;
+}
+.stroage_monitor_view_area_disk_items .disk_error{
+	background: #EC3535;
+}
+.stroage_monitor_view_area_disk_items .disk_useing{
+	background: #6FB353;
+}
+.stroage_monitor_view_area_disk_items .disk_used{
+	bottom: 0;
+	background: #6FB353;
+}
+.stroage_monitor_view_area_disk_items .rotate{
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);		/* IE 9 */
+	-webkit-transform: rotate(270deg);	/* Safari and Chrome */
+	-o-transform: rotate(270deg);		/* Opera */
+	-moz-transform: rotate(270deg);	
+	position: absolute;
+	padding-right: 2px;
+}
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_space_total .rotate{
+	right: -15px;
+	top:-22px;
+}
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_disk_total .rotate{
+	padding-right: 5px;
+	width: 20px;
+	top:-3px;
+	text-align: right;
+}
+.stroage_monitor_view_area_disk_items .container_space .total.rotate{
+	width: 20px;
+	right: 0px;
+	padding-left: 8px;
+}
+.stroage_monitor_view_area_disk_items .container_disk .total.rotate{
+	width: 20px;
+	right: 0px;
+	padding-left: 8px;
 }

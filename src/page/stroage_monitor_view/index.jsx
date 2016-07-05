@@ -10,6 +10,7 @@ import { AreaMessage } from './components/AreaMessage'
 import { AreaDetailMessage } from './components/AreaDetailMessage'
 import { CharMessage } from './components/CharMessage'
 import { EquipmentTotal } from './components/EquipmentTotal'
+import { AreaDiskMessage } from './components/AreaDiskMessage'
 
 let imgUrl = require('../../../style/img/background.jpg');
 require('css/stroage_monitor_view.css');
@@ -44,11 +45,13 @@ class StroageMonitorView extends Component{
                           <Col span="14" className = "stroage_monitor_char_items_left">
                                <EquipmentTotal { ...this.props }/>
                           </Col>
-                          <Col span="10" className = "stroage_monitor_char_items_right">
+                          <Col span="5" className = "stroage_monitor_char_items_left">
                                <StorageHealth { ...this.props } />
                           </Col>
+                          <Col span="5" className = "stroage_monitor_char_items_left">
+                               <AreaDiskMessage { ...this.props } />
+                          </Col>
                      </Row>
-                     <DiskMessage { ...this.props }/>
                      <CharMessage { ...this.props }/>
                      <AreaMessage { ...this.props }/>
                      <AreaDetailMessage { ...this.props }/>
