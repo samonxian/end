@@ -60,6 +60,48 @@ var DataSet = React.createClass({
 	}
 });
 
+var linePath = React.createClass({
+	displayName: "DataSet",
+
+	propTypes: {
+		data: React.PropTypes.array.isRequired,
+		line: React.PropTypes.func.isRequired,
+		colorScale: React.PropTypes.func.isRequired,
+		stroke: React.PropTypes.func.isRequired
+	},
+
+	render: function render() {
+		var _props = this.props;
+		var data = _props.data;
+		var line = _props.line;
+		var colorScale = _props.colorScale;
+		var stroke = _props.stroke;
+		var values = _props.values;
+		var label = _props.label;
+		var onMouseEnter = _props.onMouseEnter;
+		var onMouseLeave = _props.onMouseLeave;
+
+		var areas = data.map(function (stack, index) {
+			return React.createElement(Path, {
+				key: "" + label(stack) + "." + index,
+				className: "linear",
+				stroke: colorScale(label(stack)),
+				fill: "none",
+				d: values(stack)&& values(stack).length?line(values(stack)):"",
+				onMouseEnter: onMouseEnter,
+				onMouseLeave: onMouseLeave,
+				data: data
+			});
+		});
+
+		return React.createElement(
+			"g",
+			null,
+			areas
+		);
+	}
+});
+
 export const AreaChart = React.createClass({
 	displayName: "AreaChart",
 
@@ -159,9 +201,6 @@ export const AreaChart = React.createClass({
 		
 		var separate = _props.separate;
 
-		var stack = d3.layout.stack().offset("zero").order("default").x(x).y(y).values(values);
-		var data1 = stack([data[1]]);
-
 		var line = d3.svg.line().x(function (e) {
 			return xScale(x(e));
 		}).y(function (e) {
@@ -176,13 +215,11 @@ export const AreaChart = React.createClass({
 				return yScale(y0(e) + y(e));
 			}).interpolate(interpolate);
 
-		var area1 = d3.svg.area().x(function (e) {
-				return xScale(x(e));
-			}).y0(function (e) {
-				return yScale1(yScale1.domain()[0] + y0(e));
-			}).y1(function (e) {
-				return yScale1(y0(e) + y(e));
-			}).interpolate(interpolate);
+	    var line1 = d3.svg.line().x(function (e) {
+			return xScale(x(e));
+		}).y(function (e) {
+			return yScale1(y(e));
+		}).interpolate(interpolate).defined(defined);
 
 		return React.createElement(
 			"div",
@@ -207,11 +244,11 @@ export const AreaChart = React.createClass({
 					onMouseEnter: this.onMouseEnter,
 					onMouseLeave: this.onMouseLeave
 				}),
-				React.createElement(DataSet, {
+				React.createElement(linePath, {
 					data: [data[1]],
-					area: area1,
+					line: line1,
 					colorScale: function(){
-						return "rgba(111, 179, 83, 0.5)"
+						return "rgba(111, 179, 83, 1)"
 					},
 					stroke: stroke,
 					label: label,

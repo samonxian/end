@@ -73,7 +73,19 @@ export class EquipmentUpAndDown extends Component{
   
 		return (
 			<div className = "stroage_monitor_view_char_equipment">
-			     <h1>5分钟上/下线设备数</h1>
+			     <div className = "clear">
+			         <h1>5分钟上/下线设备数</h1>
+			         <div className = "stroage_monitor_view_fig">
+			             <span className = "stroage_monitor_view_fig_items">
+			                 <span className = "stroage_monitor_view_area_icon_items" style = {{background:"rgba(31, 119, 180, 1)"}}></span>
+			                 <span className = "desc">5分钟上线设备数</span>
+			             </span>
+			             <span className = "stroage_monitor_view_fig_items">
+			                 <span className = "stroage_monitor_view_area_icon_items" style = {{background:"rgba(111, 179, 83, 1)"}}></span>
+			                 <span className = "desc">5分钟下线设备数</span>
+			             </span>
+			         </div>
+			     </div>
 			     <div>
 			         <StroageLineChart
 		                 data={ totalArr }

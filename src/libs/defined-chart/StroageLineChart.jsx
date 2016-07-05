@@ -25,7 +25,6 @@ var DataSet = React.createClass({
 	propTypes: {
 		data: React.PropTypes.array.isRequired,
 		colorScale: React.PropTypes.func.isRequired,
-		stroke: React.PropTypes.func.isRequired
 	},
 
 	render: function render() {
@@ -33,7 +32,6 @@ var DataSet = React.createClass({
 		var data = _props.data;
 		var line = _props.line;
 		var colorScale = _props.colorScale;
-		var stroke = _props.stroke;
 		var values = _props.values;
 		var label = _props.label;
 		var onMouseEnter = _props.onMouseEnter;
@@ -158,9 +156,6 @@ export const StroageLineChart = React.createClass({
 		
 		var separate = _props.separate;
 
-		var stack = d3.layout.stack().offset("zero").order("default").x(x).y(y).values(values);
-		var data1 = stack([data[1]]);
-
 		var line = d3.svg.line().x(function (e) {
 			return xScale(x(e));
 		}).y(function (e) {
@@ -190,9 +185,6 @@ export const StroageLineChart = React.createClass({
 					colorScale: function(){
 						return "rgba(31, 119, 180, 1)"
 					},
-					stroke: function(){
-						return "rgba(31, 119, 180, 1)"
-					},
 					label: label,
 					values: values,
 					onMouseEnter: this.onMouseEnter,
@@ -202,10 +194,7 @@ export const StroageLineChart = React.createClass({
 					data: [data[1]],
 					line: line1,
 					colorScale: function(){
-						return "rgba(111, 179, 83, 0.5)"
-					},
-					stroke: function(){
-						return "rgb(111, 179, 83)"
+						return "rgba(111, 179, 83, 1)"
 					},
 					label: label,
 					values: values,

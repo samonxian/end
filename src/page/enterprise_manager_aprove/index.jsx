@@ -10,6 +10,7 @@ import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
 import { getEnterpriseManagerAprovalFetch, 
 	     enterpriseManagerAprovalDailog, 
 	     enterpriseManagerAprovalAvalibale,
+	     getCurrentUserHaveCidFetch,
 	     enterpriseManagerAprovallCancelFetch }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 
@@ -67,6 +68,9 @@ class enterpriseManagerAprove extends Component{
 				     	dispatch(enterpriseManagerAprovalAvalibale({
 				     		type : data["num_type"]
 				     	}));
+				     	// dispatch(getCurrentUserHaveCidFetch({
+				     	// 	type : data["num_type"]
+				     	// }));
 				        dispatch(enterpriseManagerAprovalDailog({
 							hidden : true
 						},data));

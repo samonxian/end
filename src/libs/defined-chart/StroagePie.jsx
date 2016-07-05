@@ -88,6 +88,8 @@ var DataSet = React.createClass({
                                 return y(e);
                             });
 
+                outPie.sort(null);
+
             var outPieData = outPie(yValue["children"]);
 
             var outd = outPieData.map(function(stack,index){
