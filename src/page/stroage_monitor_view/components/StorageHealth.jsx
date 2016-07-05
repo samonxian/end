@@ -105,62 +105,57 @@ export class StorageHealth extends Component{
         var tempData = stroageMonitorViewProps["param"]["area_info"];
         var healthData = this.adapterFormateData(tempData),
             areaIconHtl = this.adapterAreaIconHtl(tempData);
+
+         // <Col span = "10">
+         //     <Row>
+         //         <Col span = "24" className = "stroage_monitor_health_detail_char">
+         //             { areaIconHtl }
+         //             <p> 
+         //                 <span 
+         //                     className = "stroage_monitor_view_area_icon_items"
+         //                     style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0] }}></span>
+         //                 <span className = "desc">发送状况好用户数</span>
+         //             </p>
+         //             <p>
+         //                 <span 
+         //                     className = "stroage_monitor_view_area_icon_items"
+         //                     style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span>
+         //                 <span className = "desc">发送状况中用户数</span>
+         //             </p>
+         //             <p>
+         //                 <span 
+         //                     className = "stroage_monitor_view_area_icon_items"
+         //                     style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span>
+         //                 <span className = "desc">发送状况差用户数</span>
+         //             </p>
+         //             <p>
+         //                 <span 
+         //                     className = "stroage_monitor_view_area_icon_items"
+         //                     style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span>
+         //                 <span className = "desc">发送状况未知用户数</span>
+         //             </p>
+         //         </Col>
+         //     </Row>
+         // </Col>
 		        
 		return (
 			<div className = "stroage_monitor_view_char_health">
                  <div className = "clear">
 			         <h1>存储健康状态</h1>
                  </div>
-			     <Row>
-                     <Col span = "10">
-                         <Row>
-                             <Col span = "24" className = "stroage_monitor_health_detail_char">
-                                 { areaIconHtl }
-                                 <p> 
-                                     <span 
-                                         className = "stroage_monitor_view_area_icon_items"
-                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[0] }}></span>
-                                     <span className = "desc">发送状况好用户数</span>
-                                 </p>
-                                 <p>
-                                     <span 
-                                         className = "stroage_monitor_view_area_icon_items"
-                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[1] }}></span>
-                                     <span className = "desc">发送状况中用户数</span>
-                                 </p>
-                                 <p>
-                                     <span 
-                                         className = "stroage_monitor_view_area_icon_items"
-                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[2] }}></span>
-                                     <span className = "desc">发送状况差用户数</span>
-                                 </p>
-                                 <p>
-                                     <span 
-                                         className = "stroage_monitor_view_area_icon_items"
-                                         style = {{ background : STROAGE_MONITOR_USER_TOTAL_STATUS_COLOR[3] }}></span>
-                                     <span className = "desc">发送状况未知用户数</span>
-                                 </p>
-                             </Col>
-                         </Row>
-                     </Col>
-                     <Col span = "14" className = "stroage_monitor_health_detail_char">
-                         <Row>
-                             <Col span = "24">
-                                 <StroagePie
-                                     data = { healthData }
-                                     width = { 200 }
-                                     height = { 200 }
-                                     viewBox = { "0,0,200,200" }
-                                     outerRadius = { 0 }
-                                     colorScale = { this.colorScale }
-                                     tooltipOffset = {{top: -80, left: 0}}
-                                     outArcColorScale = { this.outArcColorScale }
-                                     style = {{ width:'200px',height:'200px' }}
-                                     tooltipHtml = { this.tooltipHtml }
-                                     sort = { sort }/>
-                             </Col>
-                         </Row>
-                     </Col>
+			     <Row className = "stroage_monitor_health_detail_char">
+                     <StroagePie
+                         data = { healthData }
+                         width = { 200 }
+                         height = { 200 }
+                         viewBox = { "0,0,200,200" }
+                         outerRadius = { 0 }
+                         colorScale = { this.colorScale }
+                         tooltipOffset = {{top: -80, left: 0}}
+                         outArcColorScale = { this.outArcColorScale }
+                         style = {{ width:'200px',height:'200px' }}
+                         tooltipHtml = { this.tooltipHtml }
+                         sort = { sort }/>
 			     </Row>
 			</div>
 		)

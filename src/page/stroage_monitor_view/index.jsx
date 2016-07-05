@@ -41,11 +41,11 @@ class StroageMonitorView extends Component{
     	            className = "stroage_monitor_view_page">
     	        <div className = "stroage_monitor_view_page_contianer">
                      <Row className = "stroage_monitor_view_health clear">
-                          <Col span="10" className = "stroage_monitor_char_items_left">
-                               <StorageHealth { ...this.props } />
-                          </Col>
-                          <Col span="14" className = "stroage_monitor_char_items_right">
+                          <Col span="14" className = "stroage_monitor_char_items_left">
                                <EquipmentTotal { ...this.props }/>
+                          </Col>
+                          <Col span="10" className = "stroage_monitor_char_items_right">
+                               <StorageHealth { ...this.props } />
                           </Col>
                      </Row>
                      <DiskMessage { ...this.props }/>
