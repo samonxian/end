@@ -15,7 +15,7 @@ var HeightWidthMixin = require("./HeightWidthMixin");
 var ArrayifyMixin = require("./ArrayifyMixin");
 var StackAccessorMixin = require("./StackAccessorMixin");
 var StackDataMixin = require("./defineStackDataMixin");
-var DefineScalesMixin = require("./DefineScalesMixin");
+var DefaultScalesMixin = require("./DefaultScalesMixin");
 var TooltipMixin = require("./TooltipMixin");
 var CoordinateLine = require("./CoordinateLine");
 
@@ -41,7 +41,7 @@ var DataSet = React.createClass({
 			return React.createElement(Path, {
 				key: "" + label(stack) + "." + index,
 				className: "area",
-				stroke: colorScale(),
+				stroke: colorScale(label(stack),index),
 				d: values(stack)&& values(stack).length?line(values(stack)):"",
 				onMouseEnter: onMouseEnter,
 				onMouseLeave: onMouseLeave,
@@ -60,7 +60,7 @@ var DataSet = React.createClass({
 export const StroageLineChart = React.createClass({
 	displayName: "StroageLineChart",
 
-	mixins: [DefaultPropsMixin, HeightWidthMixin, ArrayifyMixin, StackAccessorMixin, StackDataMixin, DefineScalesMixin, TooltipMixin],
+	mixins: [DefaultPropsMixin, HeightWidthMixin, ArrayifyMixin, StackAccessorMixin, StackDataMixin, DefaultScalesMixin, TooltipMixin],
 
 	propTypes: {
 		interpolate: React.PropTypes.string,
@@ -152,7 +152,6 @@ export const StroageLineChart = React.createClass({
 		var innerHeight = this._innerHeight;
 		var xScale = this._xScale;
 		var yScale = this._yScale;
-		var yScale1 = this._yScale1;
 		
 		var separate = _props.separate;
 
@@ -160,12 +159,6 @@ export const StroageLineChart = React.createClass({
 			return xScale(x(e));
 		}).y(function (e) {
 			return yScale(y(e));
-		}).interpolate(interpolate).defined(defined);
-
-		var line1 = d3.svg.line().x(function (e) {
-			return xScale(x(e));
-		}).y(function (e) {
-			return yScale1(y(e));
 		}).interpolate(interpolate).defined(defined);
 
 		return React.createElement(
@@ -180,22 +173,9 @@ export const StroageLineChart = React.createClass({
 				  preserveAspectRatio : preserveAspectRatio,
 				  style : style },
 				React.createElement(DataSet, {
-					data: [data[0]],
+					data: data,
 					line: line,
-					colorScale: function(){
-						return "rgba(31, 119, 180, 1)"
-					},
-					label: label,
-					values: values,
-					onMouseEnter: this.onMouseEnter,
-					onMouseLeave: this.onMouseLeave
-				}),
-				React.createElement(DataSet, {
-					data: [data[1]],
-					line: line1,
-					colorScale: function(){
-						return "rgba(111, 179, 83, 1)"
-					},
+					colorScale: colorScale,
 					label: label,
 					values: values,
 					onMouseEnter: this.onMouseEnter,
@@ -224,13 +204,6 @@ export const StroageLineChart = React.createClass({
 					height: innerHeight,
 					width: innerWidth
 				}, yAxis)),
-				React.createElement(Axis, _extends({
-					className: "y axis",
-					orientation: "right",
-					scale: yScale1,
-					height: innerHeight,
-					width: innerWidth
-				}, yAxisL)),
 				this.props.children
 			),
 			React.createElement(Tooltip, this.state.tooltip)

@@ -35,6 +35,9 @@ export class EquipmentUpAndDown extends Component{
     		},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
+			},
+			colorScale(data){
+				
 			}
     	}
     }
@@ -101,6 +104,7 @@ export class EquipmentUpAndDown extends Component{
 				         yAxis = {{
 				         	label : "单位：个"
 				         }}
+				         colorScale = { this.colorScale }
 				         xAxis={{
 				        	 tickFormat: this.formateDate,
 				             label : "时间"}}
