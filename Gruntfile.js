@@ -14,7 +14,7 @@ var config = Object.assign({}, webpack_config, {
     }),
 	module: {
         loaders: [
-			{test: /\.(jpg|png)$/, loader: "url?limit=8192"},
+			{ test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/, loader: 'url-loader?limit=50000&name=[path][name].[ext]'},
 			{ 
             	test: /\.js[x]?$/, 
             	loader: 'babel',
