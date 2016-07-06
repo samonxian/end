@@ -36,8 +36,12 @@ export class EquipmentUpAndDown extends Component{
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
 			},
-			colorScale(data){
-				
+			colorScale(desc,index){
+				if(desc === "5分钟上线设备数"){
+					return "rgba(31, 119, 180, 1)";
+				}else{
+					return "rgba(111, 179, 83, 1)";
+				}
 			}
     	}
     }

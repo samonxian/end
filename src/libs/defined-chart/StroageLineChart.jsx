@@ -93,24 +93,27 @@ export const StroageLineChart = React.createClass({
 		var label = _props.label;
 		var xScale = this._xScale;
 		var yScale = this._yScale;
-		var yScale1 = this._yScale1;
        
 		var xValueCursor = xScale.invert(position[0]);
 
 		var xBisector = d3.bisector(function (e) {
 			return x(e);
 		}).right;
-
+       
 		var xIndex = xBisector(values(d[0]), xScale.invert(position[0]));
-		var arr = values(data[0]);
-		var arr1 = values(data[1]);
-		var xValue = x(arr[xIndex - 1]);
-		var yValue = y(arr[xIndex - 1]);
-		var yValue1 = y(arr1[xIndex - 1]);
+		var arr = data.map(function(obj){
+			var tempArr = values(obj);
+			return tempArr[xIndex - 1];
+		})
+
+		var yValue = arr.map(function(arr){
+			return y(arr);
+		});
+
+		var xValue = x(arr[0]);
 
 		var xPos = xScale(xValue);
-		var yPos = yScale(yValue);
-		var yPos1 = yScale1(yValue1);
+		var yPos = yScale(d3.max(yValue));
 		var tooltipPos = yPos;
 
 		this.setState({
@@ -122,7 +125,7 @@ export const StroageLineChart = React.createClass({
         	}
         });
 
-		return [this.props.tooltipHtml([yValue,yValue1], xValue), xPos, tooltipPos];
+		return [this.props.tooltipHtml(yValue, xValue), xPos, tooltipPos];
 	},
 
 	render: function render() {

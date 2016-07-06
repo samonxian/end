@@ -325,3 +325,7 @@
 	right: 0px;
 	padding-left: 8px;
 }
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_disk_total,
+.stroage_monitor_view_area_disk_items .stroage_monitor_view_area_space_total{
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+}

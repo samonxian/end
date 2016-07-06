@@ -13,7 +13,7 @@ export let columns = [
 	},
 	
 	{
-		title: '设备数',
+		title: '公众设备数',
 		dataIndex: 'clients_num',
 	},
 	
@@ -23,18 +23,13 @@ export let columns = [
 	},
 	
 	{
-		title: '推送流量/带宽',
+		title: '推送/分发/观看流量',
 		dataIndex: 'publish_traffic_bandwidth',
 	},
 	
 	{
-		title: '分发流量/带宽',
+		title: '推送/分发/观看带宽',
 		dataIndex: 'inner_traffic_bandwidth',
-	},
-	 
-	{
-		title: '观看流量/带宽',
-		dataIndex: 'view_traffic_bandwidth',
 	},
 	{
 		title: '平均发送比',
@@ -56,9 +51,8 @@ export function dataAdapter(data){
 	let re = [];
 	re = r2fn.antdTabelFieldBind(data,columns,function(d,key){
 		var tdata = data[key];	
-		d.publish_traffic_bandwidth = r2fn.flowTransformToKbMBGB(tdata.publish_traffic) + " / " + r2fn.transformToKbMbGb(tdata.publish_bandwidth);
-		d.inner_traffic_bandwidth  = r2fn.flowTransformToKbMBGB(tdata.inner_traffic) + " / " + r2fn.transformToKbMbGb(tdata.inner_bandwidth);
-		d.view_traffic_bandwidth= r2fn.flowTransformToKbMBGB(tdata.view_traffic) + " / " + r2fn.transformToKbMbGb(tdata.view_bandwidth);
+		d.publish_traffic_bandwidth = r2fn.flowTransformToKbMBGB(tdata.publish_traffic) + " / " + r2fn.flowTransformToKbMBGB(tdata.inner_traffic)  +  " / " + r2fn.flowTransformToKbMBGB(tdata.view_traffic);
+		d.inner_traffic_bandwidth  = r2fn.transformToKbMbGb(tdata.publish_bandwidth) + " / " + r2fn.transformToKbMbGb(tdata.inner_bandwidth) + " / " + r2fn.transformToKbMbGb(tdata.view_bandwidth);
 		d.send_time = r2fn.secondTranformToMH(d.send_time)
 		d.view_time = r2fn.secondTranformToMH(d.view_time)
 	})
