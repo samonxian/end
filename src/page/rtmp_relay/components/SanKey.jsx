@@ -200,20 +200,20 @@ class SanKey extends Component {
 												{
 													icon
 												}
-												<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" fill="#fff" style={ { fontSize: 15, } }>
+												<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" fill="#fff" >
 													{ d.address }
 												</text>
 											</g>
 										}
 										{
 											!d.isFalse &&
-											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: 15, } } fill={bw_in_color}>
+											<text x={ d.x + 4 } y={ d.y+7+11 } dy="0.35em" fill={bw_in_color}>
 												{ r2fn.transformToKbMbGb(d.bw_in) }
 											</text>
 										}
 										{
 											!d.isFalse &&
-												<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: 15, } } fill={ rate_color }>
+												<text x={ d.x + 4 } y={ d.y+7+11+11 } dy="0.35em" fill={ rate_color }>
 												{ d.queues_ave + " / "+ d.queues_95peak +" / " + d.queues_peak}
 											</text>
 										}
