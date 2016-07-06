@@ -8,6 +8,7 @@ import SanKey from './components/SanKey'
 import * as deviceCameraDataSet from './dataSet/device_camera'
 import * as deviceUserDataSet from './dataSet/device_user'
 import * as errorServerDataSet from './dataSet/errorlist'
+require("css/rtmp_relay.css")
 
 class RtmpRelay extends Component {
 	constructor(){
@@ -75,7 +76,7 @@ class RtmpRelay extends Component {
 					var error_columns = errorServerDataSet.columns,
 						error_dataSource = errorServerDataSet.dataAdapter(serverAdapter.errorServer);
 				}
-				console.debug(sankeyData)
+				//console.debug(sankeyData)
 			return (
 				<div>
 					<h2>公众摄像机转发服务器运行监控</h2>

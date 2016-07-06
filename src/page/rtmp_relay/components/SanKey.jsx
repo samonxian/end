@@ -59,7 +59,7 @@ class SanKey extends Component {
 			this.sankey = this.getSankey();
 			var viewBox = `0 0 ${this.conDom.offsetWidth} ${ this.conDom.offsetHeight }`;
 			return (
-				<svg width={ this.conDom.offsetWidth } height={ this.conDom.offsetHeight } > 
+				<svg width={ this.conDom.offsetWidth } height={ this.conDom.offsetHeight } className="iconfont"> 
 					<linearGradient id="isp">
 						<stop stopColor="rgba(45, 183, 245, 0.40)" offset="0"/>
 						<stop stopColor="rgba(135, 208, 104, 0.38)" offset="1"/>
@@ -126,26 +126,67 @@ class SanKey extends Component {
 										}
 									</div>
 								) 
-								var node_bg = "rgba(45, 183, 245, 0.40)";
+								//运营商
+								var node_bg = "rgba(255, 255, 255, 0.40)";
+								var icon = (
+									<text x={ d.x + 120 } y={ d.y + 12 } dy="0.35em" fill="#000" style={ { fontSize: 25, } }>
+											-
+									</text>
+								)
 								switch(d.isp){
 									case "电信":
 										//蓝色
 										node_bg = "rgba(45, 183, 245, 0.40)";
+										icon = (
+											<text x={ d.x + 103 } y={ d.y + 15 } dy="0.35em" fill="#000" style={ { fontSize: 25, } }>
+													&#xe665;
+											</text>
+										)
 										break;
 									case "联通":
 										//绿色
 										node_bg = "rgba(135, 208, 104, 0.38)";
+										icon = (
+											<text x={ d.x + 103 } y={ d.y + 12 } dy="0.35em" fill="#000" style={ { fontSize: 25, } }>
+													&#xe6b8;
+											</text>
+										)
 										break;
 									case "电信联通":
 										node_bg = "url(#isp)";
+										icon = (
+											<text x={ d.x + 108 } y={ d.y + 15 } dy="0.35em" fill="#000" style={ { fontSize: 25, } }>
+													&
+											</text>
+										)
 										break;
 								}
+								//超时处理
 								if(d.timeout){
 									node_bg ="rgba(0, 0, 0, 0.2)";
 								}
+								//不存服务器节点在处理
 								if(d.isFalse){
 									node_bg ="rgba(255, 85, 0,0.8)";
 								}
+								//带宽质量颜色处理
+								var bw_in_color = "#fff";
+								//服务器平均峰值质量颜色处理
+								var rate_color = "#fff";
+								if(d.queues_ave >= 64 && d.queues_ave < 128){
+									rate_color = "#c57e46";
+									node_bg = "rgba(107, 82, 60, 0.68)";
+								}else if(d.queues_ave >= 128){
+									rate_color = "#aa4660";
+									node_bg = "rgba(101, 55, 68, 0.38)";
+								}
+								//if(d.queues_ave >= 64 && d.queues_ave < 128){
+									//bw_in_color = "rgba(107, 82, 60, 0.8)";
+									//node_bg = bw_in_color;
+								//}else if(d.queues_ave >= 128){
+									//bw_in_color = "rgba(101, 55, 68, 0.8)";
+									//node_bg = bw_in_color;
+								//}
 								return (
 									<g key={ k }>
 										<Antd.Popover overlayClassName="sankey-popover"  
@@ -155,19 +196,24 @@ class SanKey extends Component {
 										</Antd.Popover>
 										{
 											true &&
-											<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" style={ { fontSize: 15, } }>
-												{ d.address }
-											</text>
+											<g>
+												{
+													icon
+												}
+												<text x={ d.x + 4 } y={ d.y + 7 } dy="0.35em" fill="#fff" style={ { fontSize: 15, } }>
+													{ d.address }
+												</text>
+											</g>
 										}
 										{
 											!d.isFalse &&
-											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: 15, } }>
+											<text x={ d.x + 4 } y={ d.y+7+13 } dy="0.35em" style={ { fontSize: 15, } } fill={bw_in_color}>
 												{ r2fn.transformToKbMbGb(d.bw_in) }
 											</text>
 										}
 										{
 											!d.isFalse &&
-											<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: 15, } }>
+												<text x={ d.x + 4 } y={ d.y+7+13+13 } dy="0.35em" style={ { fontSize: 15, } } fill={ rate_color }>
 												{ d.queues_ave + " / "+ d.queues_95peak +" / " + d.queues_peak}
 											</text>
 										}
