@@ -68,9 +68,12 @@ class enterpriseManagerAprove extends Component{
 				     	dispatch(enterpriseManagerAprovalAvalibale({
 				     		type : data["num_type"]
 				     	}));
-				     	// dispatch(getCurrentUserHaveCidFetch({
-				     	// 	type : data["num_type"]
-				     	// }));
+				     	dispatch(getCurrentUserHaveCidFetch({
+				     		app_id : data["app_id"],
+				     		aproval_status : 1,
+				     		size : 5,
+				     		page : 1
+				     	}));
 				        dispatch(enterpriseManagerAprovalDailog({
 							hidden : true
 						},data));
@@ -155,51 +158,6 @@ class enterpriseManagerAprove extends Component{
 			defaultCurrent = enterpriseManagerAprovalList["data"]["data"]["current"];
 			total = enterpriseManagerAprovalList["data"]["data"]["total"];
 			status = enterpriseManagerAprovalList["data"]["aproval_status"];
-			// if(!enterpriseManagerAprovalList["data"]["data"]["partitions"].length){
-			// 	enterpriseManagerAprovalList["data"]["data"]["partitions"] = [{
-			// 		 id : 1000,
-	  //                status : 1,
-	  //                app_id : "Test",
-	  //                code : "demoapp",
-	  //                identity : "深圳羚羊极速科技有限公司",
-	  //                start : 536936448,
-	  //                end : 537001983,
-	  //                total : 65535,
-	  //                used : 35,
-	  //                usage_type : 1,
-	  //                num_type : "A",
-	  //                approve_time : "2016-03-14T11:19:36Z",
-	  //                created : "2016-04-11T12:30:30Z"
-			// 	},{
-			// 		 id : 10001,
-	  //                status : 1,
-	  //                app_id : "Test",
-	  //                code : "demoapp",
-	  //                identity : "深圳羚羊极速科技有限公司",
-	  //                start : 536936448,
-	  //                end : 537001983,
-	  //                total : 65535,
-	  //                used : 35,
-	  //                usage_type : 1,
-	  //                num_type : "B",
-	  //                approve_time : "2016-03-14T11:19:36Z",
-	  //                created : "2016-04-11T12:30:30Z"
-			// 	},{
-			// 		 id : 10003,
-	  //                status : 1,
-	  //                app_id : "Test",
-	  //                code : "demoapp",
-	  //                identity : "深圳羚羊极速科技有限公司",
-	  //                start : 536936448,
-	  //                end : 537001983,
-	  //                total : 65535,
-	  //                used : 35,
-	  //                usage_type : 1,
-	  //                num_type : "B",
-	  //                approve_time : "2016-03-14T11:19:36Z",
-	  //                created : "2016-04-11T12:30:30Z"
-			// 	}]
-			// }
             dataList = this.adapterDataList(enterpriseManagerAprovalList["data"]["data"]["partitions"],status);
             loading = false;
 		}
@@ -282,10 +240,12 @@ class enterpriseManagerAprove extends Component{
 }
 
 function mapStateToProps(state){
+	console.log("state",state);
 	return {
 	    enterpriseManagerAprovalList : state.enterpriseManagerAprovalList,
 	    enterpriseManagerAprovalAvalible : state.enterpriseManagerAprovalAvaliable,
         dailog_data : state.enterpriseManagerAprovalDailog,
+        enterpriseHistroyAprovalList : state.enterpriseManagerHaveCid
 	};
 }
 module.exports = connect(mapStateToProps)(enterpriseManagerAprove)

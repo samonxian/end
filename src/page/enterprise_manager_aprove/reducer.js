@@ -1,6 +1,7 @@
 import { ENTERPRISE_MANAGER_APROVAL_REQ, 
 	     ENTERPRISE_MANAGER_APROVAL_DAILOG,
-	     ENTERPRISE_MANAGER_APROVAL_AVALIABLE } from './action'
+	     ENTERPRISE_MANAGER_APROVAL_AVALIABLE,
+	     ENTERPRISE_MANAGER_HAVE_CID_LIST } from './action'
 
 export function enterpriseManagerAprovalDailog(state={},action){
 	 switch(action.type){
@@ -33,6 +34,20 @@ export function enterpriseManagerAprovalAvaliable(state={},action){
 		     return Object.assign({},state, {
 		     	data : action['param'],
 		        type : ENTERPRISE_MANAGER_APROVAL_AVALIABLE
+		     });
+		     break;
+		default :
+		     return state;
+		     break;
+	}
+}
+
+export function enterpriseManagerHaveCid(state={},action){
+	switch(action.type){
+		case ENTERPRISE_MANAGER_HAVE_CID_LIST : 
+		     return Object.assign({},state, {
+		     	data : action['param'],
+		        type : ENTERPRISE_MANAGER_HAVE_CID_LIST
 		     });
 		     break;
 		default :

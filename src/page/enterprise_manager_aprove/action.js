@@ -35,16 +35,16 @@ function enterpriseManagerAprovalAvaliabel(params,json){
     }
 }
 
-function haveCidDataList(params,json){
+export function haveCidDataList(params,json){
     return {
         type : ENTERPRISE_MANAGER_HAVE_CID_LIST,
         param : json
     }
 }
 
-export function getCurrentUserHaveCidFetch(){
-    var url = REQUESTURL+'/dev/v1/partitions?app_id='+reddit["app_id"]+'&app_code='+reddit["app_code"]+
-              '&identity='+reddit["identity"]+'&status='+reddit["aproval_status"]+'&page='+reddit["page"]+
+export function getCurrentUserHaveCidFetch(reddit){
+    var url = REQUESTURL+'/dev/v1/partitions?app_id='+reddit["app_id"]+'&app_code=""'+
+              '&identity=""&status='+reddit["aproval_status"]+'&page='+reddit["page"]+
               '&size='+reddit["size"];
     return dispatch => {
         r3fetch({
