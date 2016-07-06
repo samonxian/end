@@ -8,6 +8,7 @@ import SanKey from './components/SanKey'
 import * as deviceCameraDataSet from './dataSet/device_camera'
 import * as deviceUserDataSet from './dataSet/device_user'
 import * as errorServerDataSet from './dataSet/errorlist'
+require("css/rtmp_relay.css")
 
 class RtmpRelay extends Component {
 	constructor(){
