@@ -1,7 +1,7 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
 import * as d3 from "d3"
-import { AreaChart } from 'libs/defined-chart/AreasChart'
+import { BandWidthChart } from 'libs/defined-chart/BandWidthChar'
 import { isEmptyObj, generateMixed, Format } from 'libs/function'
 import { formate_yAxis_bandWidth, transformUnit } from './Until'
 
@@ -35,6 +35,9 @@ export class ForwardTotalInAndOut extends Component{
 			},
 			formateDate(value){
 				return new Date(value).Format("hh:mm");
+			},
+			lineStrokeFun(){
+				return "rgba(111, 179, 83, 1)";
 			}
     	}
     }
@@ -43,8 +46,7 @@ export class ForwardTotalInAndOut extends Component{
 		var _this = this;
 		return {
 			tooltipHtml(y,x){
-				var inUnit = _this.inUnit,
-				    outUnit = _this.outUnit;
+				var inUnit = _this.inUnit;
 
 				return <div className = "stroage_monitor_view_tooltips">
 					         <div>时间：{ new Date(x).Format("yyyy-MM-dd hh:mm") }</div>
@@ -71,11 +73,11 @@ export class ForwardTotalInAndOut extends Component{
 		    inObj = this.adapterFormateData(relayIn,"in"),
 		    outObj = this.adapterFormateData(relayOut,"out"),
 		    inBandWidth = formate_yAxis_bandWidth(inObj["values"]),
-		    outBandWidth = formate_yAxis_bandWidth(outObj["values"]),
+		    // outBandWidth = formate_yAxis_bandWidth(outObj["values"]),
 		    tempArr = [];
 
 		this.inUnit = inBandWidth["unit"];
-		this.outUnit = outBandWidth["unit"];
+		// this.outUnit = outBandWidth["unit"];
 
 		tempArr.push(inObj);
 		tempArr.push(outObj);
@@ -97,8 +99,9 @@ export class ForwardTotalInAndOut extends Component{
 			     </div>
 			     
 			     <div>
-				     <AreaChart
-		                 data={ tempArr }
+				     <BandWidthChart
+		                 data={ inObj }
+		                 cityEquipmentData = { [outObj] }
 		                 width={ content_width } 
 		                 viewBox = { "0,0,"+content_width+",180" }
 		                 tooltipHtml = { this.tooltipHtml }
@@ -107,12 +110,10 @@ export class ForwardTotalInAndOut extends Component{
 		                 height={ 180 }
 		                 yMax = { yMax }
 		                 separate = { true }
+		                 lineStrokeFun = { this.lineStrokeFun } 
 		                 yAxis = {{
 				        	 label : "单位：" + inBandWidth["unit"],
 				        	 tickFormat : inBandWidth["fn"] }}
-				         yAxisL = {{
-				        	 label : "单位：" + outBandWidth["unit"],
-				        	 tickFormat : outBandWidth["fn"] }}
 				         tooltipOffset = {{top : -100,left : 0}}
 				         xAxis={{
 				        	 tickFormat: this.formateDate,
