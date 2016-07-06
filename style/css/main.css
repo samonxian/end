@@ -617,10 +617,10 @@ div.ant-tabs-nav-scroll {
     transition-duration: 0.8s;
 }
 .rtmp_relay text {
-    pointer-events: none;
-    text-shadow: 0 1px 0 rgba(128, 128, 128, 0.70);
-    fill: #fff;
-    opacity: .4
+    /*pointer-events: none;*/
+    /*text-shadow: 0 1px 0 rgba(128, 128, 128, 0.70);*/
+    /*fill: #fff;*/
+	opacity: .8
 }
 .rtmp_relay path {
     /*shape-rendering: crispEdges;*/
