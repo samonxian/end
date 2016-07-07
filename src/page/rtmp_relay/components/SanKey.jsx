@@ -208,7 +208,14 @@ class SanKey extends Component {
 										{
 											!d.isFalse &&
 											<text x={ d.x + 4 } y={ d.y+7+11 } dy="0.35em" fill={bw_in_color}>
-												{ r2fn.transformToKbMbGb(d.bw_in) }
+												{
+													d.viwers != 0 &&
+													r2fn.transformToKbMbGb(d.bw_in) + " / " + d.viwers + "人" 
+												}
+												{
+													!d.viwers &&
+													r2fn.transformToKbMbGb(d.bw_in)
+												}
 											</text>
 										}
 										{
