@@ -352,8 +352,8 @@ let AddBackForm = React.createClass({
                          value = { this.state.num_type }
                          onChange = { this.handleChangeType }
                          style={{ width: "512px" }}>
-                         <Option value={ 1 }>观看用户</Option>
-                         <Option value={ 2 }>推流用户</Option>
+                         <Option value={ 1 }>推流设备</Option>
+                         <Option value={ 2 }>观看用户</Option>
                      </Select>
                 </FormItem>
                 <FormItem

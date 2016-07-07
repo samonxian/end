@@ -29,7 +29,7 @@ class View extends Component {
 			this.props.dispatch(actionCreator.fetchGetData());
 			this.props.dispatch(stroageMonitorViewFetch());
 			this.props.dispatch(stroageMonitorViewCharFetch());
-		},3000)
+		},30000)
 	}
 
 	shouldComponentUpdate(nextProps,nextState){
