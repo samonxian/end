@@ -1,6 +1,6 @@
 import React from 'react'
 
-const ENTERPRISE_MANAGER_APROVAL_TYPE = ["","观看用户","推流用户"]
+const ENTERPRISE_MANAGER_APROVAL_TYPE = ["","推流设备","观看用户"]
 
 export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
      {
@@ -60,4 +60,39 @@ export const ENTERPRISE_MANAGER_TABLE_ENTERPRISE = [
 		}
      }
 
+]
+
+export const ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE = [
+     {
+		title: '分段ID总数',
+		dataIndex: 'total'
+     },{
+		title: '已经使用的ID数量',
+		dataIndex: 'used'
+     },{
+		title: '新ID段用途',
+		dataIndex: 'usage_type',
+		render: function(text,record){
+			return <span>{ ENTERPRISE_MANAGER_APROVAL_TYPE[text]}</span>
+		}
+     },{
+		title: '新ID段类型',
+		dataIndex: 'num_type'
+     },{
+		title: '创建时间',
+		dataIndex: 'created',
+		render : function(text,record){
+			return <span>{ new Date(text).Format('yyyy-MM-dd hh:mm') }</span>
+		}
+     },{
+		title: '审核时间',
+		dataIndex: 'approve_time',
+		render : function(text,record){
+			if(text !== null && text !== undefined){
+				return <span>{ new Date(text).Format('yyyy-MM-dd hh:mm') }</span>
+			}else{
+				return <span></span>
+			}
+		}
+     }
 ]

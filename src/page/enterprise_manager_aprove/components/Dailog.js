@@ -1,15 +1,19 @@
 import React from 'react'
-import { Form, Button, Modal, Select, Input, Row } from 'antd'
-import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG } from './until'
-import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch, enterpriseManagerAprovalAvalibale } from '../action'
+import { Form, Button, Modal, Select, Input, Row, Table } from 'antd'
+import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG, ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE } from './until'
+import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch, enterpriseManagerAprovalAvalibale, haveCidDataList } from '../action'
 import { generateMixed, isEmptyObj } from 'libs/function'
 const createForm = Form.create;
 const FormItem = Form.Item;
 const confirm = Modal.confirm;
 const Option = Select.Option;
 const formItemLayout = {
-     labelCol: { span: 6 },
-     wrapperCol: { span: 14 },
+     labelCol: { span: 4 },
+     wrapperCol: { span: 16 },
+};
+const formItemLayoutTable = {
+     labelCol: { span: 4 },
+     wrapperCol: { span: 20 },
 };
 let AddBackForm = React.createClass({
     getInitialState(){
@@ -52,9 +56,6 @@ let AddBackForm = React.createClass({
         const { resetFields } = this.props.form;
         const { dailog_data, enterpriseManagerAprovalAvalible } = nextProps;
         let aprovalAvalible = this.props.enterpriseManagerAprovalAvalible;
-
-        console.log("=================================== aprovalAvalible",aprovalAvalible);
-        console.log("============================== enterpriseManagerAprovalAvalible",enterpriseManagerAprovalAvalible);
 
         if(!isEmptyObj(dailog_data)){
             if(!dailog_data["visible"]["hidden"]){
@@ -143,6 +144,7 @@ let AddBackForm = React.createClass({
         dispatch(enterpriseManagerAprovalDailog({
             hidden : false 
         },{}));
+        dispatch(haveCidDataList({},{}));
         this.setState({
             alloc_type : 1
         });
@@ -228,17 +230,48 @@ let AddBackForm = React.createClass({
                  alloc_type : this.state.alloc_type,
                  data : data
              }));
+             dispatch(haveCidDataList({},{}));
              this.setState({
                 alloc_type : 1
              });
         });
     },
 
+    adapterHistroyHtl(data){
+        var histroyList = data["partitions"],
+            histroySummary = data["summary"],
+            histroyListHtl = '';
+        
+        for(var i = 0; i<histroyList.length; i++){
+            histroyList[i]["key"] = "enterprise_manager_aproval_dailog_key_"+i;
+        } 
+
+        histroyListHtl = <FormItem 
+            { ...formItemLayoutTable }
+            label="用户使用情况：">
+            <p><span className = "enterprise_manager_aproval_dailog_desc">分段 ID 可用总数 : <span>{ histroySummary["total"] }</span></span><span>已经使用的 ID 数量 : <span>{ histroySummary["used"] }</span></span></p>
+            <Table columns={ ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE } 
+                   dataSource={ histroyList }
+                   bordered
+                   size = { "small" }
+                   pagination={false} />
+        </FormItem>
+
+        return histroyListHtl;
+    },
+
     render(){
         const { getFieldProps } = this.props.form;
-        const { enterpriseManagerAprovalAvalible } = this.props;
+        const { enterpriseManagerAprovalAvalible, enterpriseHistroyAprovalList } = this.props;
 
-        var htlArr = [];
+        var htlArr = [],
+            histroyHtl = '';
+
+        if(isEmptyObj(enterpriseHistroyAprovalList) || isEmptyObj(enterpriseHistroyAprovalList["data"])){
+            return false;
+        }else{
+            histroyHtl = this.adapterHistroyHtl(enterpriseHistroyAprovalList["data"]["data"]);
+        }
 
         if(this.state.alloc_type === 1){
             htlArr = <div>
@@ -268,7 +301,7 @@ let AddBackForm = React.createClass({
                          { ...getFieldProps('mask_str',{}) }
                          value = { this.state.mask_str }
                          onChange = { this.handleChangeMaskStr }
-                         style={{ width: "284px" }}>
+                         style={{ width: "512px" }}>
                          <Option value= "255.0.0.0">A类</Option>
                          <Option value= "255.255.0.0">B类</Option>
                          <Option value= "255.255.255.0">C类</Option>
@@ -318,9 +351,9 @@ let AddBackForm = React.createClass({
                      <Select 
                          value = { this.state.num_type }
                          onChange = { this.handleChangeType }
-                         style={{ width: "284px" }}>
-                         <Option value={ 1 }>观看用户</Option>
-                         <Option value={ 2 }>推流用户</Option>
+                         style={{ width: "512px" }}>
+                         <Option value={ 1 }>推流设备</Option>
+                         <Option value={ 2 }>观看用户</Option>
                      </Select>
                 </FormItem>
                 <FormItem
@@ -331,12 +364,13 @@ let AddBackForm = React.createClass({
                                 initialValue : this.state.alloc_type
                             }) 
                          }
-                         style={{ width: "284px" }} onChange = { this.handleChanageId }>
+                         style={{ width: "512px" }} onChange = { this.handleChanageId }>
                          <Option value= { 1 }>IP掩码方式</Option>
                          <Option value={ 2 }>起始点方式</Option>
                      </Select>
                 </FormItem>
                 { htlArr }
+                { histroyHtl }
                 <Row type="flex" justify="end">
                     <Button type="primary" className="enterprise_manager_back_dailog_btn cancel" onClick={this.cancelBtn}>取消</Button>
                     <Button type="primary" className="enterprise_manager_back_dailog_btn" onClick={this.handleSubmit}>确定</Button>
@@ -382,6 +416,7 @@ export const Dailog = React.createClass({
     render(){
     	return (
             <Modal title="CID段审核" 
+                 width = { 800 }
                  className = "enterprise_manager_back_dailog"
                  visible={this.state.visible}
 	             onOk={this.handleOk} 

@@ -122,3 +122,7 @@
 .enterprise_manager_authenticate_table .color_blue{
 	cursor: pointer;
 }
+.enterprise_manager_aproval_dailog_desc{
+	display: inline-block;
+	margin-right: 10px;
+}
