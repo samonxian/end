@@ -87,8 +87,10 @@ class Layout extends React.Component {
 							<MenuItem>
 								<Link to="/collect_message">汇总信息</Link>
 							</MenuItem>
+							<MenuItem>
+								<Link to="/video_search_tool">录像查询工具</Link>
+							</MenuItem>
 						</Menu>
-							
 					</Col>	
 					<Col className="contents b" id="contents">
 					{ this.props.contents || "" }
