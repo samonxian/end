@@ -5,6 +5,7 @@ import { tipsMessage } from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { Spin, Table, Row, Col, message } from 'antd'
 import { VIDEO_SEARCH_TOOL_TABLE } from './components/Until'
+import { push } from 'react-router-redux'
 import Clipboard from "clipboard"
 import { Tips } from 'libs/react-libs/Tips'
 import { Search } from './components/Search'
@@ -17,20 +18,23 @@ class VideoSearchTool extends Component{
         var clipboard = new Clipboard(".video_search_tool_copy")
         clipboard.on('success', function(e) {
           message.success("复制成功！")
-          console.info('Text:', e.text);
-          console.info('Trigger:', e.trigger);
           e.clearSelection();
         });
 
         clipboard.on('error', function(e) {
-          console.error('Action:', e.action);
-          console.error('Trigger:', e.trigger);
           message.info("请使用⌘-C完成复制！")
         });
+
+        const { userLoginStatus, dispatch } = this.props;
+
+        // if(isEmptyObj(userLoginStatus)){
+        //     dispatch(push("/user_login"));
+        // }
+
     }
 
     componentWillUnmount(){
-       
+        
     }
 
     dataAdapter(){
@@ -66,8 +70,6 @@ class VideoSearchTool extends Component{
 
         if(!isEmptyObj(videoSearchProps)){
             videoList = this.adapterDataList(videoSearchProps["param"]["data"]["record"]);
-            
-            console.log("==================== videoList",videoList.length);
 
             videoHtl = <Table columns={ VIDEO_SEARCH_TOOL_TABLE } 
                 dataSource = { videoList } 
@@ -90,6 +92,7 @@ class VideoSearchTool extends Component{
 function mapStateToProps(state){
   	return {
         tipsProps : state.getTipsMessage,
+        userLoginStatus : state.user_login_status,
         videoSearchProps : state.getVideoSearchToolData
   	};
 }
