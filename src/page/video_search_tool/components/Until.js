@@ -7,10 +7,16 @@ export const VIDEO_SEARCH_TOOL_TABLE = [
 	     dataIndex: 'ip',
 	     className: "video_search_tool_width",
 	     render : function(text, recode){
-	     	 if(text === "183.57.151.208"){
+	     	 var arr = text.split(".");
+	     	 if(arr[0] === "183" && arr[1] === "57" && arr[2] === "151"){
 	     	 	 return <span>佛山</span>
+	     	 }else if(arr[0] === "61" && arr[1] === "55" && arr[2] === "189"){
+	     	 	 return <span>石家庄</span>
+	     	 }else if(arr[0] === "122" && arr[1] === "226" && arr[2] === "181"){
+	     	 	 return <span>台州</span>
+	     	 }else{
+	     	 	 return <span>{ text }</span>
 	     	 }
-	     	 return <span>{ text }</span>
 	     }
 	},
     {
