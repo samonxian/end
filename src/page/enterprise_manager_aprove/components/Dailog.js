@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Modal, Select, Input, Row, Table } from 'antd'
+import { Form, Button, Modal, Select, Input, Row, Table, Spin } from 'antd'
 import { ENTERPRISE_MANAGER_TABLE_BACK_DAILOG, ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE } from './until'
 import { enterpriseManagerAprovalDailog, enterpriseManagerAprovalAgreeFetch, enterpriseManagerAprovalAvalibale, haveCidDataList } from '../action'
 import { generateMixed, isEmptyObj } from 'libs/function'
@@ -28,7 +28,7 @@ let AddBackForm = React.createClass({
     },
 
     componentWillMount(){
-        const { dailog_data } = this.props;
+        const { dailog_data, enterpriseManagerAprovalAvalible } = this.props;
         var type = "",
             type_value = "";
         if(!isEmptyObj(dailog_data)){
@@ -49,6 +49,13 @@ let AddBackForm = React.createClass({
                 num_type : dailog_data["json"]["usage_type"],
                 mask_str: type_value
             })
+        }
+
+        if(!isEmptyObj(enterpriseManagerAprovalAvalible)){
+            this.setState({
+                start_str_status :　"success",
+                start_str: enterpriseManagerAprovalAvalible["data"]["data"]["start_str"]
+            });
         }
     },
 
@@ -90,7 +97,7 @@ let AddBackForm = React.createClass({
                 })
             }
         }
-
+　　　　
         if(!isEmptyObj(enterpriseManagerAprovalAvalible)){
             if(isEmptyObj(aprovalAvalible)){
                 this.setState({
@@ -239,22 +246,27 @@ let AddBackForm = React.createClass({
 
     adapterHistroyHtl(data){
         var histroyList = data["partitions"],
-            histroySummary = data["summary"],
-            histroyListHtl = '';
+            histroySummary = data["summary"] === undefined ? {total : 0, used : 0} : data["summary"],
+            histroyListHtl = '',
+            histroyTableHtl = '';
         
         for(var i = 0; i<histroyList.length; i++){
             histroyList[i]["key"] = "enterprise_manager_aproval_dailog_key_"+i;
+        }
+
+        if(histroyList.length){
+            histroyTableHtl = <Table columns={ ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE } 
+                   dataSource={ histroyList }
+                   bordered
+                   size = { "small" }
+                   pagination={false} />
         } 
 
         histroyListHtl = <FormItem 
             { ...formItemLayoutTable }
             label="用户使用情况：">
             <p><span className = "enterprise_manager_aproval_dailog_desc">分段 ID 可用总数 : <span>{ histroySummary["total"] }</span></span><span>已经使用的 ID 数量 : <span>{ histroySummary["used"] }</span></span></p>
-            <Table columns={ ENTERPRISE_MANAGER_APROVAL_DAILOG_TABLE } 
-                   dataSource={ histroyList }
-                   bordered
-                   size = { "small" }
-                   pagination={false} />
+             { histroyTableHtl }
         </FormItem>
 
         return histroyListHtl;
@@ -384,7 +396,7 @@ AddBackForm = createForm()(AddBackForm);
 export const Dailog = React.createClass({
     getInitialState() {
         return { 
-            visible: false,
+            visible: false
         }
     },
 
@@ -414,14 +426,28 @@ export const Dailog = React.createClass({
     }, 
 
     render(){
+
+        const { enterpriseHistroyAprovalList } = this.props;
+        var htl = '',
+            cls = "enterprise_manager_back_dailog",
+            width = 800;
+
+        if(isEmptyObj(enterpriseHistroyAprovalList) || isEmptyObj(enterpriseHistroyAprovalList["data"])){
+            htl = <Spin/>;
+            width = 80;
+            cls = "enterprise_manager_prove_dailog_loading_cls";
+        }else{
+            htl = <AddBackForm { ...this.props }/>;
+        }
+
     	return (
             <Modal title="CID段审核" 
-                 width = { 800 }
-                 className = "enterprise_manager_back_dailog"
-                 visible={this.state.visible}
-	             onOk={this.handleOk} 
-	             onCancel={this.handleCancel} >
-	             <AddBackForm { ...this.props }/>
+                 width = { width }
+                 className = { cls }
+                 visible = { this.state.visible }
+	             onOk = { this.handleOk } 
+	             onCancel = { this.handleCancel } >
+	             { htl }
 	        </Modal>
     	)
     }

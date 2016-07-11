@@ -126,3 +126,12 @@
 	display: inline-block;
 	margin-right: 10px;
 }
+.enterprise_manager_prove_dailog_loading_cls .ant-modal-header{
+	display: none;
+}
+.enterprise_manager_prove_dailog_loading_cls .ant-modal-footer{
+	display: none;
+}
+.enterprise_manager_prove_dailog_loading_cls .ant-modal-close-x{
+	display: none;
+}
