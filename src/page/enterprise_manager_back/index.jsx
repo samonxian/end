@@ -3,6 +3,7 @@ import Component from 'libs/react-libs/Component'
 import { Table, Icon, Form, Select, message, Row, Pagination, Button, Modal } from 'antd'
 import { connect } from 'react-redux'
 import { Header } from '../enterprise_manager_authenticate/components/Header'
+import { loginIntoPage } from '../enterprise_manager_authenticate/action'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
@@ -18,6 +19,9 @@ const confirm = Modal.confirm;
 class enterpriseManagerBack extends Component{
 	componentDidMount(){
 		const { dispatch } = this.props;
+		dispatch(loginIntoPage({
+			url : "/enterprise_manager_back"
+		}));
 		dispatch(getEnterpriseManagerBackFetch({
 			page : 1,
 			size : 10,

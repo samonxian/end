@@ -18,7 +18,9 @@ function requestVideoSearch({},json){
 }
 
 export function videoSearchFetch(reddit){
-	var url = REQUESTURL+'/dev/v1/record?cid='+reddit["cid"]+"&begin="+reddit["start_time"]+"&end="+reddit["end_time"];
+
+	// var url = REQUESTURL+'/dev/v1/record?cid='+reddit["cid"]+"&begin="+reddit["start_time"]+"&end="+reddit["end_time"];
+	var url = 'http://192.168.2.52/dev/v1/record?cid='+reddit["cid"]+"&begin="+reddit["start_time"]+"&end="+reddit["end_time"];
     return dispatch => {
        r3fetch({
           urls:[url],
