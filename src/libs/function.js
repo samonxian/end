@@ -209,7 +209,7 @@ var fn = {
 	 *@param {int} t_value 转换值
 	 */
 	transformToKbMbGb(t_value,has8=true){
-		if(!t_value) return;
+		if(!t_value) return 0;
 		if(!has8){
 			t_value = t_value * 8;
 		}
@@ -230,7 +230,7 @@ var fn = {
 	 *@param {int} t_value 转换值
 	 */
 	flowTransformToKbMBGB(t_value){
-		if(!t_value) return;
+		if(!t_value) return 0;
 		let value = 0;
 		if(t_value > 1024 * 1024 * 1024 * 1024){
 			value = (Math.round(t_value / 1024 / 1024 / 1024 / 1024 * 100 ) / 100).toFixed(2)  + 'TB';	
