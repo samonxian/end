@@ -1,7 +1,7 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
 import { connect } from 'react-redux'
-import { tipsMessage, videoSearchFetch } from './action'
+import { tipsMessage, videoSearchFetch, requestVideoSearch } from './action'
 import { loginIntoPage } from '../enterprise_manager_authenticate/action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { Spin, Table, Row, Col, message } from 'antd'
@@ -42,6 +42,11 @@ class VideoSearchTool extends Component{
 
     }
 
+    componentWillUnmount(){
+        const { dispatch } = this.props;
+        dispatch(requestVideoSearch({},{}));
+    }
+
     dataAdapter(){
         var _this = this;
         let obj = {
@@ -73,7 +78,7 @@ class VideoSearchTool extends Component{
             }
         }
 
-        if(!isEmptyObj(videoSearchProps)){
+        if(!isEmptyObj(videoSearchProps) && !isEmptyObj(videoSearchProps["param"])){
             videoList = this.adapterDataList(videoSearchProps["param"]["data"]["record"]);
 
             videoHtl = <Table columns={ VIDEO_SEARCH_TOOL_TABLE } 

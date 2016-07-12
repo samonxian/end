@@ -10,7 +10,7 @@ export function tipsMessage(json){
 	}
 }
 
-function requestVideoSearch({},json){
+export function requestVideoSearch({},json){
 	return {
 		type : REQUUST_VIDEO_SEARCH_TOOL,
 		param : json
