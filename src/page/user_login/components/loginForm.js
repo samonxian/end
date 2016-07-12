@@ -1,6 +1,8 @@
 import React from 'react'
 import { Form, Input, Row, Button, Col, Icon, Checkbox } from 'antd'
 import { userLoginFetch } from '../action'
+import { REQUESTURL } from 'libs/common'
+import { isEmptyObj } from 'libs/function'
 const FormItem = Form.Item
 require('css/login.css')
 let imgData = require('img/login_icon.png')
@@ -9,14 +11,20 @@ export let LoginForm = React.createClass({
 
   handleSubmit(e){
      e.preventDefault();
-     const { dispatch } = this.props;
+     const { dispatch, intoPageProps } = this.props;
      this.props.form.validateFields((errors, values) => {
         if (!!errors) {
           console.log('Errors in form!!!');
           return;
         }
-        console.log("values",values);
-        dispatch(userLoginFetch(values));
+        var http = REQUESTURL;
+        if(!isEmptyObj(intoPageProps) && !isEmptyObj(intoPageProps["data"])){
+            var url = intoPageProps["data"]["url"];
+            if(url === "/video_search_tool"){
+                http = "http://192.168.2.52";
+            }
+        }
+        dispatch(userLoginFetch(values,http));
      });
   },
 

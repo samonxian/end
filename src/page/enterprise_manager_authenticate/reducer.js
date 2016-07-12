@@ -1,6 +1,7 @@
 import { ENTERPRISE_MANAGER_AUTHENTICATE_REQ, 
 	     ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL,
-	     ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG } from './action'
+	     ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG,
+	     LOGIN_INTO_PAGE_REQUEST } from './action'
 
 export function enterpriseManagerAuthenticate(state={},action){
     switch(action.type){
@@ -8,6 +9,20 @@ export function enterpriseManagerAuthenticate(state={},action){
 		     return Object.assign({},state, {
 		     	data : action['param'],
 		        type : ENTERPRISE_MANAGER_AUTHENTICATE_REQ
+		     });
+		     break;
+		default :
+		     return state;
+		     break;
+	}
+}
+
+export function loginIntoPage(state={},action){
+	switch(action.type){
+		case LOGIN_INTO_PAGE_REQUEST : 
+		     return Object.assign({},state, {
+		     	data : action['param'],
+		        type : LOGIN_INTO_PAGE_REQUEST
 		     });
 		     break;
 		default :

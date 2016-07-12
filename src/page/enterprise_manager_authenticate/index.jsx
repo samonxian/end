@@ -10,7 +10,8 @@ import { ENTERPRISE_MANAGER_AUTHENTICATE_TABLE } from './components/until'
 import { getEnterpriseManagerFetch, 
 	     authenticateDailog, 
 	     aprovalEnterpriseAuthenicateFetch,
-	     enterpriseManagerAuthenticateAproval }  from './action'
+	     enterpriseManagerAuthenticateAproval,
+	     loginIntoPage }  from './action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 require('css/enterprise_manager.css');
 const confirm = Modal.confirm;
@@ -18,6 +19,9 @@ const confirm = Modal.confirm;
 class enterpriseManagerAuthenticate extends Component{
 	componentDidMount(){
 		const { dispatch } = this.props;
+		dispatch(loginIntoPage({
+			url : "/enterprise_manager_authenticate"
+		}));
 		dispatch(getEnterpriseManagerFetch({
 			authenicate_status : 0,
 			name : '',

@@ -6,6 +6,7 @@ import { Header } from '../enterprise_manager_authenticate/components/Header'
 import { Query } from './components/Query'
 import { Dailog } from './components/Dailog'
 import { Tips } from 'libs/react-libs/Tips'
+import { loginIntoPage } from '../enterprise_manager_authenticate/action'
 import { ENTERPRISE_MANAGER_TABLE_ENTERPRISE } from './components/until'
 import { getEnterpriseManagerAprovalFetch, 
 	     enterpriseManagerAprovalDailog, 
@@ -22,6 +23,9 @@ require('css/enterprise_manager.css');
 class enterpriseManagerAprove extends Component{
 	componentDidMount(){
 		const { dispatch } = this.props;
+		dispatch(loginIntoPage({
+			url : "/enterprise_manager_aprove"
+		}));
 		dispatch(getEnterpriseManagerAprovalFetch({
 			page : 1,
 			size : 10,

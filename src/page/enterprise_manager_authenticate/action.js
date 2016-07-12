@@ -3,6 +3,7 @@ import Fetch from 'libs/fetch2'
 export const ENTERPRISE_MANAGER_AUTHENTICATE_REQ = 'ENTERPRISE_MANAGER_AUTHENTICATE_REQ'
 export const ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG = 'ENTERPRISE_MANAGER_AUTHENTICATE_DAILOG'
 export const ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL = 'ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL'
+export const LOGIN_INTO_PAGE_REQUEST = 'LOGIN_INTO_PAGE_REQUEST'
 
 function getEnterpriseManagerResponse(param={},json){
     Object.assign(json,param);
@@ -17,6 +18,13 @@ export function enterpriseManagerAuthenticateAproval(param={},json){
     return {
         type : ENTERPRISE_MANAGER_ANTHENTICATE_APROVAL,
         param : json
+    }
+}
+
+export function loginIntoPage(url){
+    return {
+        type : LOGIN_INTO_PAGE_REQUEST,
+        param : url
     }
 }
 
@@ -53,7 +61,6 @@ export function getEnterpriseManagerFetch(reddit){
 }
 
 export function aprovalEnterpriseAuthenicateFetch(reddit){
-    console.log("aprovalEnterpriseAuthenicateFetch reddit",reddit);
     var url = REQUESTURL+'/dev/v1/identities/'+reddit["id"];
     return dispatch => {
        r3fetch({

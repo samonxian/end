@@ -1,7 +1,8 @@
 import React from 'react'
 import Component from 'libs/react-libs/Component'
 import { connect } from 'react-redux'
-import { tipsMessage } from './action'
+import { tipsMessage, videoSearchFetch } from './action'
+import { loginIntoPage } from '../enterprise_manager_authenticate/action'
 import { isEmptyObj, generateMixed } from 'libs/function'
 import { Spin, Table, Row, Col, message } from 'antd'
 import { VIDEO_SEARCH_TOOL_TABLE } from './components/Until'
@@ -28,13 +29,17 @@ class VideoSearchTool extends Component{
         const { userLoginStatus, dispatch } = this.props;
 
         // if(isEmptyObj(userLoginStatus)){
-        //     dispatch(push("/user_login"));
+            
         // }
+        dispatch(videoSearchFetch({
+            cid : "",
+            start_time : parseInt(new Date().getTime()/1000),
+            end_time : parseInt(new Date().getTime()/1000)
+        }));
+        dispatch(loginIntoPage({
+            url : "/video_search_tool"
+        }));
 
-    }
-
-    componentWillUnmount(){
-        
     }
 
     dataAdapter(){
