@@ -77,7 +77,7 @@ export let Search = React.createClass({
 	                    { ... getFieldProps('start_time') } 
 	                    placeholder="请选择开始时间"
 	                    showTime 
-	                    format="yyyy-MM-dd HH:mm"/>
+	                    format="yyyy-MM-dd HH:mm:ss"/>
 	            </FormItem>
 	            <FormItem
 	                label="结束时间：">
@@ -85,7 +85,7 @@ export let Search = React.createClass({
 				         { ... getFieldProps('end_time') }
 				         placeholder="请选择结束时间"
 				         showTime 
-				         format="yyyy-MM-dd HH:mm"/>
+				         format="yyyy-MM-dd HH:mm:ss"/>
 	            </FormItem>
 	            <Button type="primary" htmlType="submit">查询</Button>
 	       </Form>
