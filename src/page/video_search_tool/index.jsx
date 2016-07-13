@@ -31,11 +31,11 @@ class VideoSearchTool extends Component{
         // if(isEmptyObj(userLoginStatus)){
             
         // }
-        dispatch(videoSearchFetch({
-            cid : "",
-            start_time : parseInt(new Date().getTime()/1000),
-            end_time : parseInt(new Date().getTime()/1000)
-        }));
+        // dispatch(videoSearchFetch({
+        //     cid : "",
+        //     start_time : parseInt(new Date().getTime()/1000),
+        //     end_time : parseInt(new Date().getTime()/1000)
+        // }));
         dispatch(loginIntoPage({
             url : "/video_search_tool"
         }));

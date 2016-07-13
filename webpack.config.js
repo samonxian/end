@@ -24,7 +24,7 @@ module.exports = {
 		path: __dirname + '/public/js/',
         filename: 'bundle.js',
 		libraryTarget: "umd",
-		chunkFilename: '[name].chunk.js'
+		chunkFilename: '[name].chunk.js?random='+new Date().getTime()
     },
 	module: {
         loaders: [
