@@ -38,19 +38,19 @@ export let columns = [
 		dataIndex: 'mode',
 	},
 	{
-		title: '下行连接数比',
+		title: '推送连接数比',
 		dataIndex: 'dconns',
 	},
 	{
-		title: '上行连接数比',
+		title: '接收连接数比',
 		dataIndex: 'uconns',
 	},
 	{
-		title: '上行带宽比',
+		title: '接收带宽比',
 		dataIndex: 'ubandwidth',
 	},
 	{
-		title: '下行带宽比',
+		title: '推送带宽比',
 		dataIndex: 'dbandwidth',
 	},
 ];
@@ -64,8 +64,8 @@ export function dataAdapter(data){
 		//console.debug(tdata.download_width)
 		d.dconns = tdata.down_conn + " / " + tdata.download_connections; 
 		d.uconns = tdata.up_conn + " / " + tdata.upload_connections; 
-		d.ubandwidth = r2fn.transformToKbMbGb(tdata.bw_in) + " / " + tdata.upload_width; 
-		d.dbandwidth = r2fn.transformToKbMbGb(tdata.bw_out) + " / " + tdata.download_width; 
+		d.ubandwidth = r2fn.transformToKbMbGb(tdata.bw_in) + " / " + r2fn.transformToKbMbGb(parseInt(tdata.upload_width,10)); 
+		d.dbandwidth = r2fn.transformToKbMbGb(tdata.bw_out) + " / " + r2fn.transformToKbMbGb(parseInt(tdata.download_width,10)); 
 	})
 	return re;
 }

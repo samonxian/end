@@ -9,6 +9,7 @@ let column_dataIndexs = [
 	'session',
 	'return_num',
 	'request_time',
+	'SDK_version',
 ]
 export let columns = [
 	{
@@ -32,6 +33,9 @@ export let columns = [
 	},
 	{
 		title: '耗时（int）',
+	},
+	{
+		title: 'sdk版本号',
 	},
 ];
 
