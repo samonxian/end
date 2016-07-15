@@ -1,0 +1,61 @@
+.level_warning_container{
+	background: url("../img/background.jpg");
+	width: 100%;
+	margin: -20px -40px;
+	height: 100%;
+	position: absolute;
+}
+.level_warning_container_padding{
+	padding:20px 40px;
+}
+.level_warning_container .level_warning_header{
+	color: #fff;
+	font-size: 16px;
+}
+.level_warning_container .level_warning_header h1{
+	font-size: 20px;
+}
+.level_warning_container .level_warning_refresh{
+	height: 57px;
+	line-height: 57px;
+	text-align: right;
+}
+.level_warning_items li{
+	float: left;
+	margin-left: 10px;
+	color:#fff;
+	height: 20px;
+}
+.level_warning_items li .desc{
+	float: left;
+}
+.level_warning_info,.level_warning_warning,.level_warning_error,.level_warning_crash{
+	display: inline-block;
+	width: 15px;
+	height: 15px;
+	border-radius: 5px;
+	margin-left: 5px;
+	margin-top: 2px;
+	float: left;
+}
+.level_warning_char svg {
+	height: auto;
+	width: auto;
+	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+}
+.level_warning_char svg text{
+	fill: #fff;
+}
+.level_warning_container .level_warning_tips{
+	background: #fff;
+	padding:10px;
+	border-radius: 5px;
+}
+.level_warning_container .level_warning_tips_span{
+	display: inline-block;
+	margin: 0 10px 0 0;
+}
+.level_warning_container .level_warning_char h2{
+	font-size: 18px;
+	margin-bottom: 10px;
+}
