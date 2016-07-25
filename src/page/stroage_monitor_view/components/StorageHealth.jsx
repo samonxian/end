@@ -101,11 +101,11 @@ export class StorageHealth extends Component{
         if(isEmptyObj(stroageMonitorViewProps)){
         	return false;
         }
-
+  
         var tempData = stroageMonitorViewProps["param"]["area_info"];
         var healthData = this.adapterFormateData(tempData),
             areaIconHtl = this.adapterAreaIconHtl(tempData);
-		        
+		         
 		return (
 			<div className = "stroage_monitor_view_char_health">
                  <div className = "clear">
