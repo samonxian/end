@@ -65,6 +65,7 @@ let AddBackForm = React.createClass({
         let aprovalAvalible = this.props.enterpriseManagerAprovalAvalible;
 
         if(!isEmptyObj(dailog_data)){
+            console.log("===================== dailog_data",dailog_data);
             if(!dailog_data["visible"]["hidden"]){
                  resetFields();
                  this.setState({
@@ -94,7 +95,9 @@ let AddBackForm = React.createClass({
                     num_type : dailog_data["json"]["usage_type"],
                     mask_str: type_value,
                     isInit : false
-                })
+                });
+
+                console.log("+++++++++++++++++++++++++++ this.state",this.state);
             }
         }
 　　　　
@@ -135,6 +138,9 @@ let AddBackForm = React.createClass({
         if(e === "255.255.255.0"){
             type = "C";
         }
+        this.setState({
+            isInit : false
+        });
         dispatch(enterpriseManagerAprovalAvalibale({
             type : type
         }));
