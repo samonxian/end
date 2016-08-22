@@ -5,7 +5,7 @@ export const REQUEST = 'REQUESTFORGET'
 export const RECIEVE = 'RECIEVEAFORGET'
 
 export function getToken(_params={},success) {
-	var url = `http://console.topvdn.com/v2/utils/devices/token`;
+	var url = `https://console.topvdn.com/v2/utils/devices/token`;
 	return r2fetch({
 		method: 'POST',
 		params: _params,

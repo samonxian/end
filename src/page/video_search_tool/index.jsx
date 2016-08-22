@@ -79,7 +79,9 @@ class VideoSearchTool extends Component{
         }
 
         if(!isEmptyObj(videoSearchProps) && !isEmptyObj(videoSearchProps["param"])){
-            videoList = this.adapterDataList(videoSearchProps["param"]["data"]["record"]);
+            if(!isEmptyObj(videoSearchProps["param"]["data"]) && videoSearchProps["param"]["data"]["record"]){
+                videoList = this.adapterDataList(videoSearchProps["param"]["data"]["record"]);
+            }
 
             videoHtl = <Table columns={ VIDEO_SEARCH_TOOL_TABLE } 
                 dataSource = { videoList } 
