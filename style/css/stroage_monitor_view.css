@@ -15,12 +15,16 @@
 }
 .stroage_monitor_view_disk_message h1,
 .stroage_monitor_view_char_health h1,
-.stroage_monitor_view_char_equipment h1{
+.stroage_monitor_view_char_equipment h1,
+.request-container h1{
 	font-size: 18px;
 	margin-bottom: 10px;
 	float: left;
 }
-.stroage_monitor_view_char_health h1,.stroage_monitor_view_char_equipment h1{
+.stroage_monitor_view_char_health h1,
+.stroage_monitor_view_char_equipment h1,
+.request-container h1
+{
 	color:#fff;
 	margin-right: 10px;
 }
@@ -60,17 +64,27 @@
 .stroage_monitor_view_disk_title{
 	overflow: hidden;
 }
-.stroage_monitor_view_tooltips_items{
+.stroage_monitor_view_tooltips_items,.collect_message_request_length_items{
 	float: left;
 	margin-left: 10px;
 }
 .stroage_monitor_view_tooltips_items span{
 	float: left;
 }
+.collect_message_request_length_items span{
+	color: #fff;
+	float: left;
+	display: inline-block;
+	margin-left: 5px;
+}
+.request-length-container{
+	margin-top: 20px;
+}
 .stroage_monitor_view_tooltips_items span.total,
 .stroage_monitor_view_tooltips_items span.used,
 .stroage_monitor_view_tooltips_items span.wait,
-.stroage_monitor_view_tooltips_items span.error{
+.stroage_monitor_view_tooltips_items span.error,
+.collect_message_request_length_items span.length{
 	width: 15px;
 	height: 15px;
 	border-radius: 5px;
@@ -134,10 +148,13 @@
 	padding:10px;
 	border-radius: 5px;
 }
-.stroage_monitor_char svg text,.stroage_monitor_view_health svg text{
+.stroage_monitor_char svg text,.stroage_monitor_view_health svg text, .request-container svg text{
 	fill: #fff;
 }
-.stroage_monitor_char svg,.stroage_monitor_view_health svg{
+.request-container svg{
+	height: auto;
+}
+.stroage_monitor_char svg{
 	-webkit-filter: drop-shadow(8px 4px 6px rgba(10, 10, 10, 0.8));
 }
 .stroage_monitor_health_detail_char svg{
@@ -328,4 +345,13 @@
 .stroage_monitor_view_area_disk_items .stroage_monitor_view_area_disk_total,
 .stroage_monitor_view_area_disk_items .stroage_monitor_view_area_space_total{
 	-webkit-filter: drop-shadow(4px 4px 4px rgba(10, 10, 10, 0.5));
+}
+.collect_message_tips{
+	background: #fff;
+	padding: 10px;
+	border-radius: 10px;
+}
+.collect_message_tips .collect_message_request_span{
+	display: inline-block;
+	margin-right: 10px;
 }
