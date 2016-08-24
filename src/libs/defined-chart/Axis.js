@@ -161,7 +161,7 @@ var Axis = React.createClass({
 
         return React.createElement(
             "g",
-            { ref: "axis", className: className, transform: this._getTranslateString(), style: { shapeRendering: "crispEdges" } },
+            { ref: "axis", className: className, transform: this._getTranslateString()},
             axisBackground,
             tickElements,
             pathElement,

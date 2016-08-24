@@ -262,6 +262,35 @@ var fn = {
 		}
 		return value;
 	},
+
+	getTimeUnitbyValue(t_value){
+		let value = 0;
+		if(t_value > 60 * 60 * 24){
+			value = '天';	
+		}else if(t_value > 60 * 60){
+			value = '小时';	
+		}else if(t_value > 60){
+			value = '分';	
+		}else if(t_value != 0){
+			value = '秒';	
+		}
+		return value;
+	},
+
+	getTimeDataByValueAndUnit(t_value,unit){
+		let value = 0;
+		if(unit === '天'){
+			value = (Math.round(t_value / 60 / 60 /24 * 100 ) / 100).toFixed(2);	
+		}else if(unit === '小时'){
+			value = (Math.round(t_value / 60 / 60 * 100 ) / 100).toFixed(2);	
+		}else if(unit === '分'){
+			value = (Math.round(t_value / 60 * 100) / 100).toFixed(2);	
+		}else if(t_value != 0){
+			value = t_value.toFixed(2) + '秒';	
+		}
+		return value;
+	},
+
 	/**
 	 *	生成随机数
 	 * @param [int] n 需要生成随机数的位数

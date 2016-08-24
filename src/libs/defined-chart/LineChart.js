@@ -48,7 +48,7 @@ var DataSet = React.createClass({
 				key: "" + label(stack) + "." + index,
 				className: "line",
 				d: line(values(stack)),
-				stroke: colorScale(label(stack)),
+				stroke: colorScale(label(stack),index),
 				strokeWidth: typeof strokeWidth === "function" ? strokeWidth(label(stack)) : strokeWidth,
 				strokeLinecap: typeof strokeLinecap === "function" ? strokeLinecap(label(stack)) : strokeLinecap,
 				strokeDasharray: typeof strokeDasharray === "function" ? strokeDasharray(label(stack)) : strokeDasharray,
@@ -217,14 +217,14 @@ var LineChart = React.createClass({
 		var tooltipSymbol = undefined;
 		if (!this.state.tooltip.hidden) {
 			var symbol = d3.svg.symbol().type(shape);
-			var symbolColor = shapeColor ? shapeColor : colorScale(this._tooltipData.label);
+			// var symbolColor = shapeColor ? shapeColor : colorScale(this._tooltipData.label);
 
 			var translate = this._tooltipData ? "translate(" + xScale(x(this._tooltipData.value)) + ", " + yScale(y(this._tooltipData.value)) + ")" : "";
 			tooltipSymbol = this.state.tooltip.hidden ? null : React.createElement("path", {
 				className: "dot",
 				d: symbol(),
 				transform: translate,
-				fill: symbolColor,
+				fill: "red",
 				onMouseEnter: function (evt) {
 					_this.onMouseEnter(evt, data);
 				},

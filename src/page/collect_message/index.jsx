@@ -7,11 +7,13 @@ import d3 from 'd3'
 //import d3c from 'react-d3-components'
 import Bar from "./components/Bar"
 import Pie from 'libs/d3-components/Pie'
-import { isEmptyObj } from 'libs/function'
+import { isEmptyObj, getTimeUnitbyValue, getTimeDataByValueAndUnit } from 'libs/function'
 import { EquipmentTotal } from '../stroage_monitor_view/components/EquipmentTotal'
 import { StorageHealth } from '../stroage_monitor_view/components/StorageHealth'
 import { AreaDiskMessage } from '../stroage_monitor_view/components/AreaDiskMessage'
 import { stroageMonitorViewFetch, stroageMonitorViewCharFetch } from '../stroage_monitor_view/action'
+import { RequestChar } from './components/Request_char'
+import { STROKE_COLOR } from './components/data'
 require("css/public_monitor.css")
 require('css/stroage_monitor_view.css');
 let imgUrl = require('../../../style/img/background.jpg');
@@ -22,13 +24,16 @@ class View extends Component {
 	}
 
 	componentDidMount(){
-		this.props.dispatch(actionCreator.fetchGetData())
-		this.props.dispatch(stroageMonitorViewFetch());
-		this.props.dispatch(stroageMonitorViewCharFetch());
+		const { dispatch } = this.props;
+		dispatch(actionCreator.fetchGetData())
+		dispatch(stroageMonitorViewFetch());
+		dispatch(stroageMonitorViewCharFetch());
+		dispatch(actionCreator.fetchCollectMonitorWeb());
 		this.clearInterval = setInterval(()=>{
-			this.props.dispatch(actionCreator.fetchGetData());
-			this.props.dispatch(stroageMonitorViewFetch());
-			this.props.dispatch(stroageMonitorViewCharFetch());
+			dispatch(actionCreator.fetchGetData());
+			dispatch(stroageMonitorViewFetch());
+			dispatch(stroageMonitorViewCharFetch());
+			dispatch(actionCreator.fetchCollectMonitorWeb());
 		},30000)
 	}
 
@@ -88,6 +93,36 @@ class View extends Component {
 				let dataset = { data : [one,two,three], fill : this.getFillColor() };
 				//console.debug(dataset)
 				return dataset;
+			},
+			adapterRequestWeb(data,props){
+				return data.map(function(stack,index){
+					var valueArr = stack[props].map(function(temp,index){
+						return {
+							x : new Date(temp[0]*1000),
+							y : temp[1]
+						}
+					});
+					return {
+						label : stack["type"],
+						values : valueArr
+					}
+				});
+			},
+			createRequestLengthHtl(data){
+				var arr = [];
+				for(var i = 0; i < data.length; i++){
+					arr.push(<div className = "collect_message_request_length_items"
+						     key = { "collect_message_request_length_key_"+i }>
+						<span className = "length" style = {{ backgroundColor : STROKE_COLOR[i] }}></span>
+						<span>{ data[i]["type"] }</span>
+						</div>)
+				}
+				return arr;
+			},
+			adapterTranformTime(unit){
+				return (value) => {
+					return getTimeDataByValueAndUnit(value,unit)
+				}
 			}
 		}
 		return obj; 
@@ -103,8 +138,20 @@ class View extends Component {
     render() {
 		super.render();
 		var _this = this;
-		let { targetProps, stroageMonitorViewProps, stroageCharProps } = this.props;
-		let targetData,listData,send_rate_detail,viwers_detail,publish_bandwidth_detail;
+		let { targetProps, stroageMonitorViewProps, stroageCharProps, requestWebProps } = this.props;
+		let targetData,
+		    listData,
+		    send_rate_detail,
+		    viwers_detail,
+		    lengthHtl = '',
+		    aveUnit = '',
+		    peekUnit = '',
+		    publish_bandwidth_detail,
+		    requestNumArr = [],
+		    requestSuccessArr = [],
+		    requestTimeAveArr = [],
+		    requestPeekArr = [];
+
 		var clientHeight = document.body.clientHeight;
 
         if(isEmptyObj(stroageMonitorViewProps) || isEmptyObj(stroageCharProps) || isEmptyObj(targetProps)){
@@ -124,6 +171,28 @@ class View extends Component {
 			this.viewBox = "0,0,2000,30"; 
 			var pie = d3.layout.pie();  
 		}
+        
+        if(!isEmptyObj(requestWebProps) && !isEmptyObj(requestWebProps["param"])){
+        	var requestArr = requestWebProps["param"]["web_request_stat"];
+        	lengthHtl = this.createRequestLengthHtl(requestArr);
+        	requestNumArr = this.adapterRequestWeb(requestArr,"request_count");
+        	requestSuccessArr = this.adapterRequestWeb(requestArr,"success_count");
+        	requestTimeAveArr = this.adapterRequestWeb(requestArr,"request_time_ave");
+        	requestPeekArr = this.adapterRequestWeb(requestArr,"request_time_95peek");
+        	var aveMax = d3.max(d3.merge(requestTimeAveArr.map(function(stack,index){
+        		return stack["values"].map(function(obj,index){
+        			return obj["y"]
+        		})
+        	})));
+        	var peekMax = d3.max(d3.merge(requestPeekArr.map(function(stack,index){
+        		return stack["values"].map(function(obj,index){
+        			return obj["y"]
+        		})
+        	})));
+        	aveUnit = getTimeUnitbyValue(aveMax);
+        	peekUnit = getTimeUnitbyValue(peekMax);
+        }
+	
 		return (
 			<div style = {{background:'url('+imgUrl+') repeat',margin:'-20px -40px',minHeight: clientHeight+"px"}} 
     	            className = "stroage_monitor_view_page">
@@ -194,16 +263,66 @@ class View extends Component {
 							}
 						</div>
 					}
+					<Antd.Row type="flex" justify="end" className = "request-length-container">
+					    { lengthHtl }
+					</Antd.Row>
+					{ 
+				    	requestSuccessArr.length?(<div><Antd.Row gutter = { 32 } className = "request-container">
+
+						    <Antd.Col className="gutter-row" span = "12">
+						        <div className="gutter-box">
+						             <h1>请求次数</h1>
+						             <RequestChar 
+						                  unit = { '次' }
+						                  charData = { requestNumArr } 
+						                  title = { "请求次数" }/>
+						        </div>
+						    </Antd.Col>
+						    <Antd.Col className="gutter-row" span = "12">
+						        <div className="gutter-box">
+						             <h1>请求成功次数 </h1>
+						             <RequestChar 
+						                  unit = { '次' }
+						                  charData = { requestSuccessArr } 
+						                  title = { "请求成功次数" }/>
+						        </div>
+						    </Antd.Col>
+						</Antd.Row>
+						<Antd.Row gutter = { 32 } className = "request-container">
+						    <Antd.Col className="gutter-row" span = "12">
+						        <div className="gutter-box">
+						             <h1>请求时间平均值</h1>
+						             <RequestChar 
+						                 unit = { aveUnit }
+						                 tickFormat = { this.adapterTranformTime(aveUnit) }
+						                 charData = { requestTimeAveArr } 
+						                 title = { "请求时间平均值" }/>
+						        </div>
+						    </Antd.Col>
+						    <Antd.Col className="gutter-row" span = "12">
+						        <div className="gutter-box">
+						             <h1>请求时间95峰值</h1>
+						             <RequestChar 
+						                 unit = { peekUnit }
+						                 tickFormat = { this.adapterTranformTime(peekUnit) }
+						                 charData = { requestPeekArr } 
+						                 title = { "请求时间95峰值" }/>
+						        </div>
+						    </Antd.Col>
+						</Antd.Row></div>) : ""
+				    }
+					
 				</div>
 			</div>
 		)	
     }
 }
 
-var ReduxView = connect((state)=>{
+var ReduxView = connect((state) => {
 	return {
 	    targetProps : state.collect_message_monitor,
 	    stroageMonitorViewProps : state.stroageMonitorView,
+	    requestWebProps : state.collect_message_web,
 	    stroageCharProps : state.stroageMonitorChar
 	};
 })(View)

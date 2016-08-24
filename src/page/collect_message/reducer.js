@@ -12,3 +12,12 @@ export function collect_message_monitor(state = {}, action) {
     }
 }
 
+export function collect_message_web(state = {}, action){
+	switch (action.type) {
+		case actionCreator.COLLECT_MONITOR_WEB: 	
+			return Object.assign({}, state,action);
+        default:
+			return state;
+    }
+}
+
