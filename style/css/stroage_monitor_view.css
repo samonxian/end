@@ -355,3 +355,6 @@
 	display: inline-block;
 	margin-right: 10px;
 }
+.request-container .tooltip{
+	width: 250px;
+}

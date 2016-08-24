@@ -171,8 +171,6 @@ class View extends Component {
 			this.viewBox = "0,0,2000,30"; 
 			var pie = d3.layout.pie();  
 		}
-
-		console.log("=================== requestWebProps",requestWebProps);
         
         if(!isEmptyObj(requestWebProps) && !isEmptyObj(requestWebProps["param"])){
         	var requestArr = requestWebProps["param"]["web_request_stat"];
