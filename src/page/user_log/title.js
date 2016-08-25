@@ -45,6 +45,11 @@ export let title = {
 	'selectRtmpRelay':'获取RTMP转发',
 	'@relayInfo':'获取转发详情',
 	'processDetectTracker':'探测tracker',
+	'rtmp_connect':'rtmp打开成功日志(新)',
+	'rtmp_open_time':'rtmp打开时间日志',
+	'record_download_success':'录像下载成功',
+	'record_download_failed':'录像下载失败',
+	'record_first_frame':'录像下载第一帧时间',
 }
 
 export let title_menu = {
