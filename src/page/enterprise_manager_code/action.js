@@ -28,7 +28,7 @@ export function enterpriseDailog(param,json){
 
 export function getEnterpriseManagerCodeFetch(reddit){
     var url = REQUESTURL+'/dev/v1/apps?type='+ reddit["type"]+"&name="+reddit["identity"]+"&code="+reddit["code"]+
-              '&page='+reddit["page"]+'&size='+reddit["size"]
+              '&page='+reddit["page"]+'&size='+reddit["size"];
     return dispatch => {
         r3fetch({
              urls:[url],
