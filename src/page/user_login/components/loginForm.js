@@ -21,7 +21,7 @@ export let LoginForm = React.createClass({
         if(!isEmptyObj(intoPageProps) && !isEmptyObj(intoPageProps["data"])){
             var url = intoPageProps["data"]["url"];
             if(url === "/video_search_tool"){
-                http = "http://192.168.2.52";
+                http = "http://console.topvdn.com";
             }
         }
         dispatch(userLoginFetch(values,http));
