@@ -56,6 +56,16 @@ pre {
 div.ant-tabs-nav-scroll {
     width: 100%;
 }
+div.ant-table-scroll td ,div.ant-table-scroll th {
+	white-space: normal;
+}
+//强制不换行
+div.ant-table td,.ant-table th {
+	white-space: nowrap;
+}
+div.ant-table {
+	overflow:scroll; 
+}
 /**base**/
 .mt10{
 	margin-top:10px;
