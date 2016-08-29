@@ -27,7 +27,7 @@ function receivePosts(json,json2,json3) {
 export function fetchData() {
     return dispatch => {
         dispatch(requestPosts())
-		var url = `http://223.202.103.147:8077/v1/diagram/rtmp_publish`;
+		var url = `http://120.26.74.53/v1/diagram/rtmp_publish`;
 		var url2 = `${common.REQUESTURL}get_diagram_data/servers_last`;
 		var url3 = `${common.REQUESTURL}get_diagram_data/app_count`;
 		Promise.all([
