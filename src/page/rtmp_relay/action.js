@@ -28,8 +28,8 @@ export function fetchData() {
     return dispatch => {
         dispatch(requestPosts())
 		var url = `http://120.26.74.53/v1/diagram/rtmp_publish`;
-		var url2 = `${common.REQUESTURL}get_diagram_data/servers_last`;
-		var url3 = `${common.REQUESTURL}get_diagram_data/app_count`;
+		var url2 = `http://120.26.74.53/v1/diagram/rtmp_relay/device_count`;
+		var url3 = `http://120.26.74.53/v1/diagram/rtmp_relay/app_count`;
 		Promise.all([
 			fetch(url).then(response => response.json()),
 			fetch(url2).then(response => response.json()),
